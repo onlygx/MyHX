@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context="com.example.viewpagerdemo.ui.activity.FindAddreesActivity">
+
+    <include
+        android:id="@+id/opt"
+        layout="@layout/jl_base_title_layout" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/address_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/add_address"
+        android:layout_below="@+id/opt">
+
+
+    </android.support.v7.widget.RecyclerView>
+
+
+    <LinearLayout
+        android:id="@+id/add_address"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/green"
+        android:gravity="center">
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:background="@drawable/shape_witer_yuan"
+            android:src="@drawable/demo_btn_add" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="添加收货地址"
+            android:textColor="@color/waiter"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+
+
+</RelativeLayout>

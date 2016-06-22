@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/other_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="20dp"
+    android:orientation="vertical"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp">
+
+
+    <ImageView
+        android:id="@+id/other_item_icon"
+        android:layout_width="150dp"
+        android:layout_height="100dp"
+        tools:src="@drawable/demo_tribe_header" />
+
+    <RelativeLayout
+        android:layout_toRightOf="@+id/other_item_icon"
+        android:id="@+id/other_item_layout"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginLeft="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/other_item_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="1"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/main_text"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_alignParentBottom="true"
+            android:id="@+id/other_item_pic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="0"
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/logding_bg"
+            android:textSize="18sp" />
+
+    </RelativeLayout>
+</RelativeLayout>

@@ -1,0 +1,167 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layouts"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <include layout="@layout/jl_base_title_layout" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@color/logding_bg"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/balancetv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="0"
+                tools:text="0.0"
+                android:textColor="@color/white"
+                android:textSize="22sp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="总资产 （BTC）"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/logding_bootm"
+            android:paddingBottom="1dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/sk"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:background="@color/waiter"
+                android:layout_marginRight="0.5dp"
+                android:layout_weight="1">
+
+                <LinearLayout
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:src="@drawable/shoukuan"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="收款"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        android:id="@+id/textView4" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/logding_bg"
+                 />
+
+            <LinearLayout
+                android:id="@+id/qbfk"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center"
+                android:layout_marginLeft="1dp"
+                android:layout_weight="1">
+                <LinearLayout
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:src="@drawable/fukuan"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="付款"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+    <RelativeLayout
+        android:layout_marginTop="5dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/noLoa"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/demo_greeting_message"
+                />
+
+            <Button
+                android:id="@+id/_add_log"
+                android:background="@drawable/shape_grenn_corners_pull"
+                android:layout_width="100dp"
+                android:layout_height="30dp"
+                android:textColor="@color/waiter"
+                android:text="登录"
+                />
+
+
+        </LinearLayout>
+
+        <!--<com.example.viewpagerdemo.ui.jlfragmenwork.view.PagerSlidingTabStrip
+            android:id="@+id/tabStrip_viewPagerFragment_tabs"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="#ffffff"
+            app:allowWidthFull="true"
+            app:bottomLineColor="@color/logding_bg"
+            app:disableTensileSlidingBlock="true" />
+
+        <com.example.viewpagerdemo.ui.jlfragmenwork.view.ViewPagerCompat
+            android:id="@+id/pager_viewPagerFragment_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />-->
+    </RelativeLayout>
+
+
+</LinearLayout>

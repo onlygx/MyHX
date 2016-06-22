@@ -1,0 +1,138 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/id_switch_tab_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:baselineAligned="false"
+        android:background="@drawable/shape_top_line"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/id_tab_chat_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/guide_round_selector"
+            android:gravity="center"
+            android:orientation="vertical"
+             >
+
+
+            <ImageView
+                android:id="@+id/home_iv"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/home_p" />
+
+            <TextView
+                android:id="@+id/id_chat_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/title_h"
+                android:textColor="@color/logding_bg"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/id_tab_friend_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/guide_round_selector"
+            android:clickable="true"
+            android:gravity="center"
+            android:orientation="vertical"
+             
+            android:saveEnabled="false">
+
+            <ImageView
+                android:id="@+id/money_iv"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/money_n" />
+
+            <TextView
+                android:id="@+id/id_friend_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/title_m"
+                android:textColor="@color/main_text"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/id_tab_contacts_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/guide_round_selector"
+            android:focusable="false"
+            android:gravity="center"
+            android:orientation="vertical"
+             >
+
+            <ImageView
+                android:id="@+id/addr_iv"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/addr_n" />
+
+
+            <TextView
+                android:id="@+id/id_contacts_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/title_t"
+                android:textColor="@color/main_text"
+                android:textSize="15sp" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/id_tab_friend_ll2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/guide_round_selector"
+            android:clickable="true"
+            android:gravity="center"
+            android:orientation="vertical"
+
+            android:saveEnabled="false">
+
+            <ImageView
+                android:id="@+id/find_iv"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/find_n" />
+
+            <TextView
+                android:id="@+id/id_friend_tv2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/title_f"
+                android:textColor="@color/main_text"
+                android:textSize="15sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/id_tab_line_iv"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/tab_selected_pressed_holo"
+        android:contentDescription="tab"
+        android:visibility="gone"></ImageView>
+
+
+</LinearLayout>

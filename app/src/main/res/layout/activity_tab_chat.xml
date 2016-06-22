@@ -1,0 +1,44 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/jl_home_title_layout" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <com.example.viewpagerdemo.ui.jlfragmenwork.view.PagerSlidingTabStrip
+            android:id="@+id/tabStrip_viewPagerFragment_tabs"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="#ffffff"
+            app:allowWidthFull="false"
+            app:bottomLineColor="@color/logding_bg"
+            app:disableTensileSlidingBlock="true"
+            app:paddingStart="10dp" />
+
+        <TextView
+            android:id="@+id/showOthoer"
+            android:layout_width="30dp"
+            android:layout_height="40dp"
+            android:layout_marginRight="10dp"
+            android:background="@color/white"
+            android:gravity="center"
+            android:text="..." />
+
+    </LinearLayout>
+
+    <com.example.viewpagerdemo.ui.jlfragmenwork.view.ViewPagerCompat
+        android:id="@+id/pager_viewPagerFragment_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+
+</LinearLayout>

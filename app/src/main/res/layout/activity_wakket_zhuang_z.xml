@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    android:background="@color/waiter"
+    tools:context="com.example.viewpagerdemo.ui.activity.WakketZhuangZActivity">
+
+
+    <include layout="@layout/jl_base_title_layout" android:id="@+id/top"/>
+
+    <LinearLayout
+        android:id="@+id/one"
+        android:layout_below="@+id/top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/logding_bootm"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+
+
+        <EditText
+            android:id="@+id/zz_userName"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/shape_bottom_line"
+            android:text=""
+            android:hint="请输入对方账号"
+            android:textSize="17sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_below="@+id/one"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/logding_bootm"
+        android:paddingLeft="10dp"
+        android:layout_marginTop="15dp"
+        android:paddingRight="10dp">
+
+
+
+        <EditText
+            android:id="@+id/zz_money"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="10dp"
+            android:inputType="numberDecimal"
+            android:background="@drawable/shape_bottom_line"
+            android:text=""
+            android:hint="请输入付款金额"
+            android:textSize="17sp" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/zz_submit"
+        android:layout_marginTop="30dp"
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:textColor="@color/waiter"
+        android:layout_alignParentBottom="true"
+        android:background="@color/logding_bg"
+        android:text="提交"
+        android:textSize="17sp"
+        />
+
+</RelativeLayout>

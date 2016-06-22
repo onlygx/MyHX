@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp"
+    android:background="@color/white"
+    android:orientation="horizontal">
+
+
+    <com.example.viewpagerdemo.ui.jlfragmenwork.util.CircleImageView
+        android:id="@+id/shenq_icon"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginLeft="10dp"
+        android:background="@null"
+        android:hint="姓名"
+        android:src="@drawable/pic"
+        android:text=""
+        android:textSize="17sp" />
+
+    <TextView
+        android:id="@+id/shenq_name"
+        android:layout_width="200dp"
+        android:layout_height="45dp"
+        android:layout_marginLeft="10dp"
+        android:gravity="center_vertical"
+        android:text="111" />
+
+    <LinearLayout
+        android:gravity="right"
+        android:layout_gravity="right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/shenq_ok"
+            android:layout_width="60dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="10dp"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:background="@drawable/shape_grenn_corners_pull"
+            android:text="同意" />
+
+        <TextView
+            android:id="@+id/shenq_no"
+            android:textColor="@color/white"
+            android:layout_marginTop="10dp"
+            android:layout_width="60dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="10dp"
+            android:gravity="center"
+            android:background="@drawable/shape_grenn_corners_pull"
+            android:text="拒绝" />
+
+
+    </LinearLayout>
+
+</LinearLayout>

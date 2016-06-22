@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@android:color/transparent" />
+    <corners android:topLeftRadius="33dp"
+        android:topRightRadius="33dp"
+        android:bottomRightRadius="33dp"
+        android:bottomLeftRadius="33dp"/>
+
+    <stroke android:color="@color/logding_bg" android:width="0.3dp"></stroke>
+</shape>

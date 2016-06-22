@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <LinearLayout 
+        android:id="@+id/address_province" 
+        android:layout_marginTop="5dip"
+        android:layout_width="match_parent"
+        android:gravity="center_vertical"
+   		 android:layout_height="40dip"
+   		 android:orientation="horizontal"
+   		 android:clickable="true"
+   		 android:focusable="true"
+   		 android:paddingLeft="10dip"
+        >
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.4"
+        android:text="省市区:"
+        android:textColor="@color/black"
+        />
+    <TextView 
+        android:id="@+id/address_province_ed" 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusable="false"
+        android:layout_marginLeft="2dip"
+        android:paddingLeft="10dip"
+        android:hint="点击选择所在的省市区"
+        android:textColor="@color/black"
+        android:layout_weight="0.1"
+        android:textSize="14sp"
+        />
+    </LinearLayout>
+ 
+</LinearLayout>
