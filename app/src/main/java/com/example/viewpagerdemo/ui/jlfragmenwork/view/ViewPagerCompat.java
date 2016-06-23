@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
  */
 public class ViewPagerCompat extends ViewPager {
 
+    boolean scrollble = false;
     public ViewPagerCompat(Context context) {
         super(context);
     }
@@ -47,5 +49,12 @@ public class ViewPagerCompat extends ViewPager {
         }else{
             return false;
         }
+    }
+    @Override
+    public boolean onTouchEvent(MotionEvent ev) {
+        if (!scrollble) {
+            return true;
+        }
+        return super.onTouchEvent(ev);
     }
 }

@@ -23,6 +23,7 @@ import com.example.viewpagerdemo.ui.fragment.WalletFragment;
 import com.example.viewpagerdemo.ui.jlfragmenwork.baseactivitywork.JLBaseFragmentActivity;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.DD;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.Tools;
+import com.example.viewpagerdemo.ui.views.NoScrollbleViewPager;
 import com.xingkesi.foodapp.R;
 
 import java.util.ArrayList;
@@ -34,7 +35,7 @@ import butterknife.OnClick;
 public class MainActivity extends JLBaseFragmentActivity {
 
     @Bind(R.id.id_page_vp)
-    ViewPager mPageVp;
+    NoScrollbleViewPager mPageVp;
 
 
     /**
@@ -85,14 +86,12 @@ public class MainActivity extends JLBaseFragmentActivity {
 
     @Override
     public int setViewLayout() {
-        Log.d("LD","Main--------setViewLayout---------");
         return R.layout.activity_main;
     }
 
 
     @Override
     public void initObject() {
-        Log.d("LD","Main--------initObject---------");
         init();
         initTabLineWidth();
     }
@@ -117,6 +116,7 @@ public class MainActivity extends JLBaseFragmentActivity {
 
         mFragmentAdapter = new FragmentAdapter(
                 this.getSupportFragmentManager(), mFragmentList);
+        mPageVp.setScanScroll(false);
         mPageVp.setAdapter(mFragmentAdapter);
         mPageVp.setCurrentItem(0);
        // mPageVp.setOffscreenPageLimit(1);

@@ -9,8 +9,10 @@
 
     <include
         android:id="@+id/opt"
-        layout="@layout/jl_base_title_layout" />
-
+        layout= "@layout/jl_base_title_layout" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -216,9 +218,12 @@
             android:background="@drawable/shape_grenn_corners_pull"
             android:text="承接"
             android:textColor="@color/white" />
-
-
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#FFFFFFFF"
+/>
     </LinearLayout>
-
+    </ScrollView>
 
 </LinearLayout>

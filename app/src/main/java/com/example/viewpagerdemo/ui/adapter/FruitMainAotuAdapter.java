@@ -9,9 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.example.viewpagerdemo.ui.bean.ShoppingListBanerBean;
 import com.example.viewpagerdemo.ui.activity.EatInfoActivity;
+import com.example.viewpagerdemo.ui.activity.IndexMainActivity;
+import com.example.viewpagerdemo.ui.bean.EatOneBaen;
+import com.example.viewpagerdemo.ui.bean.ShoppingListBanerBean;
 import com.example.viewpagerdemo.ui.jlfragmenwork.Contantor;
+import com.example.viewpagerdemo.ui.jlfragmenwork.util.DD;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.TS;
 import com.squareup.picasso.Picasso;
 import com.xingkesi.foodapp.R;
@@ -19,27 +22,19 @@ import com.xingkesi.foodapp.R;
 import java.util.List;
 
 /**
- * 商品轮播图
+ * Created by Administrator on 2016/5/20.
  */
-public class EateAotuAdapter extends PagerAdapter {
+public class FruitMainAotuAdapter extends PagerAdapter {
 
     Context context;
     List<ShoppingListBanerBean> list;
-    String id,shopid,name;
+    String id;
 
-    private onClickItemViewListener mOnClickItemViewListener;
+    public FruitMainAotuAdapter(Context context, List<ShoppingListBanerBean> list,String ids) {
+        this.context = context;
+        this.list = list;
+        this.id = ids;
 
-
-    public interface  onClickItemViewListener{
-        void onClick(int position);
-    }
-
-    public EateAotuAdapter(Context context, List<ShoppingListBanerBean> list, String id,String shopid,String name){
-        this.context=context;
-        this.list=list;
-        this.id=id;
-        this.shopid = shopid;
-        this.name=name;
     }
 
 
@@ -50,25 +45,29 @@ public class EateAotuAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
+
+
         ImageView iv = new ImageView(context);
         ((ViewPager) container).addView(iv);
         iv.setScaleType(ImageView.ScaleType.FIT_XY);
         //final AdDomain adDomain = adList.get(position);
         String url =list.get(position).getUrl();
-         Picasso.with(context).load(Contantor.Imagepost+url).
+        Picasso.with(context).load(Contantor.Imagepost+url).
                 placeholder(R.drawable.logding)
                 .error(R.drawable.dialogpop_bg2).into(iv);
         // 在这个方法里面设置图片的点击事件
         iv.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
-                Intent it =new Intent(context, EatInfoActivity.class);
+                // 处理跳转逻辑
+                Intent it =new Intent(context, IndexMainActivity.class);
+                it.putExtra("tag",0);
                 it.putExtra("id",id+"");
-                it.putExtra("shopID",shopid+"");
-                it.putExtra("name",name+"");
                 context.startActivity(it);
             }
         });
+
         return iv;
     }
 
@@ -100,14 +99,5 @@ public class EateAotuAdapter extends PagerAdapter {
     @Override
     public void finishUpdate(View arg0) {
 
-    }
-
-
-    public onClickItemViewListener getmOnClickItemViewListener() {
-        return mOnClickItemViewListener;
-    }
-
-    public void setmOnClickItemViewListener(onClickItemViewListener mOnClickItemViewListener) {
-        this.mOnClickItemViewListener = mOnClickItemViewListener;
     }
 }

@@ -52,6 +52,8 @@ public class OhterListMainActivity extends JLBaseActivity implements SwipeRefres
     OthorShopListItemAdpter eatReclerViewAdpter;
     LinearLayoutManager manager;
 
+    private String typeId;
+
     @Override
     public int setViewLayout() {
         return R.layout.activity_ohter_list_main;
@@ -68,6 +70,9 @@ public class OhterListMainActivity extends JLBaseActivity implements SwipeRefres
     @Override
     public void initObject() {
         super.initObject();
+
+        typeId = getIntent().getStringExtra("Type_Id");
+
         list = new ArrayList<>();
         eatReclerViewAdpter = new OthorShopListItemAdpter(this);
         eatRecycler.setAdapter(eatReclerViewAdpter);
@@ -90,6 +95,7 @@ public class OhterListMainActivity extends JLBaseActivity implements SwipeRefres
         AjaxParams map = new AjaxParams();
         map.put("page", page + "");//页码，第几页
         map.put("size", num + "");//每页几条
+        map.put("typeId",typeId+"");
         map.put("city", com.example.viewpagerdemo.ui.MyApplication.getInstan().getCity());//
         DD.d("主页其他商品列表参数：" + map.toString());
         new FinalHttp().post(Contantor.main_eat, map, new AjaxCallBack<String>() {
@@ -106,9 +112,6 @@ public class OhterListMainActivity extends JLBaseActivity implements SwipeRefres
                     eatRecycler.setAdapter(eatReclerViewAdpter);
                     eatReclerViewAdpter.notifyDataSetChanged();
                     eatReclerViewAdpter.getArrayLists().addAll(list);
-                   /* for (int i = 0; i < list.size(); i++) {
-                        DD.d("主页数据打印：" + i + "===list==" + list.get(i).getId() + "==" + list.get(i).getName() + "==");
-                    }*/
                 } else {
                     page = page - 1;
                     num = num - 10;
@@ -125,8 +128,6 @@ public class OhterListMainActivity extends JLBaseActivity implements SwipeRefres
                 }
             }
         });
-
-
     }
 
     @Override

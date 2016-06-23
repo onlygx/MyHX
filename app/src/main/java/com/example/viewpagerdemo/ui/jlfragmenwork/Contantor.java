@@ -69,4 +69,7 @@ public class Contantor {
     public static  String Canrecord=post+"/record/submit";//取消赞
 //    public static  String Canrecord=post+"/record/submit";//评论ss
 
+
+    public static String listTop = post+"/type/listTop";//首页分类
+
 }

@@ -34,7 +34,7 @@ public class ShoppingListBean {
     private int id;
     private String name;
     private String intro;
-    private int price;
+    private double price;
     private int peiSong;
     private int kuaiDi;
     private int ziTi;
@@ -47,6 +47,7 @@ public class ShoppingListBean {
     private ArrayList<ShoppingListBanerBean> bannerList;
     private String shopName;
     private String shopAddress;
+    private ShoppingListInfoBean shop;
 
 
 
@@ -90,11 +91,11 @@ public class ShoppingListBean {
         this.intro = intro;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
@@ -192,5 +193,13 @@ public class ShoppingListBean {
 
     public void setShopAddress(String shopAddress) {
         this.shopAddress = shopAddress;
+    }
+
+    public ShoppingListInfoBean getShop() {
+        return shop;
+    }
+
+    public void setShop(ShoppingListInfoBean shop) {
+        this.shop = shop;
     }
 }
