@@ -277,6 +277,10 @@ public class CirclePresenter extends BasePresenter<ICircleView> {
                         RecordListBean  newItem = DatasUtil.createPublicComment(id,content);
                         getView().update2AddComment(config.circlePosition, newItem);
 
+
+
+
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
