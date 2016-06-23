@@ -1,7 +1,5 @@
 package com.yiw.circledemo2.widgets;
 
-import java.util.ArrayList;
-
 import android.content.Context;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
@@ -16,6 +14,8 @@ import com.xingkesi.foodapp.R;
 import com.yiw.circledemo2.bean.ActionItem;
 import com.yiw.circledemo2.utils.DensityUtil;
 
+import java.util.ArrayList;
+
 /**
  * 朋友圈点赞评论的popupwindow
  * 
@@ -26,6 +26,8 @@ public class SnsPopupWindow extends PopupWindow implements OnClickListener{
 
 	private TextView digBtn;
 	private TextView commentBtn;
+
+	int posA;
 
 	// 实例化一个矩形
 	private Rect mRect = new Rect();
@@ -73,7 +75,7 @@ public class SnsPopupWindow extends PopupWindow implements OnClickListener{
 		addAction(new ActionItem("评论"));
 	}
 
-	public void showPopupWindow(View parent){
+	public void showPopupWindow(View parent, int position){
 		parent.getLocationOnScreen(mLocation);
 		// 设置矩形的大小
 		mRect.set(mLocation[0], mLocation[1], mLocation[0] + parent.getWidth(),mLocation[1] + parent.getHeight());

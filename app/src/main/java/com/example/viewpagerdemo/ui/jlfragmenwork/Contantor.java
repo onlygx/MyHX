@@ -66,5 +66,7 @@ public class Contantor {
     public static  String aboe=post+"/opinion/submit";//aboe
     public static  String delaboe=post+"/talk/deleteTalk";//a删除说说
     public static  String record=post+"/record/submit";//a赞
+    public static  String Canrecord=post+"/record/submit";//取消赞
+//    public static  String Canrecord=post+"/record/submit";//评论ss
 
 }

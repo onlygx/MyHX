@@ -165,7 +165,7 @@ public class LoginActivity extends JLBaseActivity implements View.OnClickListene
 
 
     /**
-     * 登录1
+     * 登录
      */
     public void login() {
         if (verfication()) {

@@ -4,7 +4,6 @@ import android.app.Application;
 import android.content.Context;
 import android.os.Environment;
 import android.support.multidex.MultiDex;
-import android.support.multidex.MultiDexApplication;
 
 import com.example.viewpagerdemo.ui.bean.UserBeanL;
 
@@ -34,6 +33,9 @@ public class MyApplication extends Application {
     String userName;
     String userPwd;
     public static String APP_KEY = "23386286";
+
+
+    public static String userPYId;
 
     @Override
     public void onCreate() {
@@ -112,5 +114,13 @@ public class MyApplication extends Application {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public static String getUserPYId() {
+        return userPYId;
+    }
+
+    public static void setUserPYId(String userPYId) {
+        MyApplication.userPYId = userPYId;
     }
 }

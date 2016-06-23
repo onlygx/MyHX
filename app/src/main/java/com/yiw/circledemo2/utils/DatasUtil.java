@@ -65,9 +65,9 @@ public class DatasUtil {
 		return item;
 	}*/
 	
-	public static ZanListBean createCurUserFavortItem() {
+	public static ZanListBean createCurUserFavortItem(String id) {
 		ZanListBean item = new ZanListBean();
-		item.setId("1");
+		item.setId(id);
 		item.setUser(curUser);
 		return item;
 	}
@@ -105,14 +105,39 @@ public class DatasUtil {
 	 * 创建发布评论
 	 * @return
 	 */
-	public static RecordListBean createPublicComment(String content){
+
+
+
+
+
+
+
+
+
+
+
+	public static RecordListBean createPublicComment(String id,String content){
 		RecordListBean item = new RecordListBean();
-		item.setId(String.valueOf(commentId++));
+		item.setId(id);
 		item.setContent(content);
 		item.setUser(curUser);
 		return item;
 	}
-	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	/**
 	 * 创建回复评论
 	 * @return
@@ -125,4 +150,6 @@ public class DatasUtil {
 		item.setUser(replyUser);
 		return item;
 	}
+
+
 }
