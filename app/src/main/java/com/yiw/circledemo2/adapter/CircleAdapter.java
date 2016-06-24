@@ -232,7 +232,7 @@ public class CircleAdapter extends BaseRecycleViewAdapter {
                 @Override
                 public void onClick(View view) {
                     //弹出popupwindow
-                    snsPopupWindow.showPopupWindow(view);
+                    snsPopupWindow.showPopupWindow(view,1);
                 }
             });
 
