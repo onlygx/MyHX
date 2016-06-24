@@ -1,10 +1,10 @@
 package com.yiw.circledemo2.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.media.MediaPlayer;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,28 +18,29 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.viewpagerdemo.ui.MyApplication;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.DD;
+import com.example.viewpagerdemo.ui.jlfragmenwork.util.Tools;
 import com.squareup.picasso.Picasso;
 import com.xingkesi.foodapp.R;
 import com.yiw.circledemo2.ImagePagerActivity;
 import com.yiw.circledemo2.bean.ActionItem;
 import com.yiw.circledemo2.bean.BannerListBean;
 import com.yiw.circledemo2.bean.CommentConfig;
-import com.yiw.circledemo2.bean.ListBean;
-import com.yiw.circledemo2.bean.RecordListBean;
 import com.yiw.circledemo2.bean.ToolsHost;
-import com.yiw.circledemo2.bean.ZanListBean;
 import com.yiw.circledemo2.mvp.presenter.CirclePresenter;
 import com.yiw.circledemo2.spannable.ISpanClick;
+import com.yiw.circledemo2.utils.DatasUtil;
 import com.yiw.circledemo2.utils.GlideCircleTransform;
 import com.yiw.circledemo2.utils.UrlUtils;
 import com.yiw.circledemo2.widgets.CircleVideoView;
 import com.yiw.circledemo2.widgets.CommentListView;
 import com.yiw.circledemo2.widgets.FavortListView;
+import com.yiw.circledemo2.bean.ListBean;
 import com.yiw.circledemo2.widgets.MagicTextView;
 import com.yiw.circledemo2.widgets.MultiImageView;
-import com.yiw.circledemo2.widgets.MyCircleFriendsActivity;
+import com.yiw.circledemo2.bean.RecordListBean;
 import com.yiw.circledemo2.widgets.SnsPopupWindow;
 import com.yiw.circledemo2.widgets.dialog.CommentDialog;
+import com.yiw.circledemo2.bean.ZanListBean;
 import com.yiw.circledemo2.widgets.videolist.model.VideoLoadMvpView;
 import com.yiw.circledemo2.widgets.videolist.widget.TextureVideoView;
 
@@ -94,7 +95,10 @@ public class CircleAdapter extends BaseRecycleViewAdapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         RecyclerView.ViewHolder viewHolder;
+        // Log.d("LD",viewType+"----------固定值:"+TYPE_HEAD);
+
         if (viewType == TYPE_HEAD) {
+            //TYPE_HEAD=100;
             View headView = LayoutInflater.from(parent.getContext()).inflate(R.layout.head_circle, parent, false);
             viewHolder = new HeaderViewHolder(headView);
         } else {
@@ -107,6 +111,7 @@ public class CircleAdapter extends BaseRecycleViewAdapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, final int position) {
+        //  Log.d("LD","进入onBindViewHolder:"+getItemViewType(position)+"=========="+position);
         if (getItemViewType(position) == TYPE_HEAD) {
             HeaderViewHolder holder = (HeaderViewHolder) viewHolder;
             holder.MeName.setText(MyApplication.getInstan().getUser().getData().getNickName());
@@ -115,7 +120,6 @@ public class CircleAdapter extends BaseRecycleViewAdapter {
             final CircleViewHolder holder = (CircleViewHolder) viewHolder;
             ListBean istBean = (ListBean) datas.get(circlePosition);
             final String circleId = istBean.getId();
-           // this.circleId=circleId;
             String name = istBean.getUser().getNickName();
             final String content = istBean.getContent();
             String headImg = ToolsHost.HEDEUT + istBean.getUser().getHead();
@@ -126,6 +130,7 @@ public class CircleAdapter extends BaseRecycleViewAdapter {
 
             boolean hasFavort = favortDatas.size() > 0 ? true : false;
             boolean hasComment = commentsDatas.size() > 0 ? true : false;
+            DD.d("位置："+position+"--赞表:"+favortDatas.size()+"===评论:"+commentsDatas.size());
 
             Glide.with(context).load(headImg).diskCacheStrategy(DiskCacheStrategy.ALL).placeholder(R.color.bg_no_photo).
                     transform(new GlideCircleTransform(context)).into(holder.headIv);
@@ -179,15 +184,11 @@ public class CircleAdapter extends BaseRecycleViewAdapter {
                         @Override
                         public void onItemClick(int commentPosition) {
                             RecordListBean commentItem = commentsDatas.get(commentPosition);
-
-                            if (String.valueOf(MyApplication.getInstan().getUser().getData().getId()).
-                                    equals(commentItem.getUser().getId())) {//复制或者删除自己的评论
+                            if (String.valueOf(MyApplication.getInstan().getUser().getData().getId()).equals(commentItem.getUser().getId())) {//复制或者删除自己的评论
                                 CommentDialog dialog = new CommentDialog(context, presenter, commentItem, circlePosition);
                                 dialog.show();
                             } else {//回复别人的评论
                                 if (presenter != null) {
-                                    DD.v("别人是-----："+commentItem.getId());
-                                    MyApplication.setUserPYId(commentItem.getId());
                                     CommentConfig config = new CommentConfig();
                                     config.circlePosition = circlePosition;
                                     config.commentPosition = commentPosition;
@@ -231,9 +232,7 @@ public class CircleAdapter extends BaseRecycleViewAdapter {
                 @Override
                 public void onClick(View view) {
                     //弹出popupwindow
-                  //  DD.d("这个逻辑是给了克里斯:"+circleId);
-                    MyApplication.setUserPYId(circleId+"");
-                    snsPopupWindow.showPopupWindow(view,position);
+                    snsPopupWindow.showPopupWindow(view);
                 }
             });
 
@@ -309,18 +308,7 @@ public class CircleAdapter extends BaseRecycleViewAdapter {
             MeTx = (ImageView) itemView.findViewById(R.id.meTx);
 
             MeName.setText(com.example.viewpagerdemo.ui.MyApplication.getInstan().getUser().getData().getNickName());
-            Picasso.with(context).load(ToolsHost.HEDEUT + com.example.viewpagerdemo.ui.MyApplication.getInstan().
-                    getUser().getData().getHead()).into(MeTx);
-
-            MeTx.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(context!=null){
-                        context.startActivity(new Intent(context, MyCircleFriendsActivity.class));
-                    }
-
-                }
-            });
+            Picasso.with(context).load(ToolsHost.HEDEUT + com.example.viewpagerdemo.ui.MyApplication.getInstan().getUser().getData().getHead()).into(MeTx);
         }
     }
 
@@ -485,13 +473,10 @@ public class CircleAdapter extends BaseRecycleViewAdapter {
                     break;
                 case 1://发布评论
                     if (presenter != null) {
-                        DD.v("=slkjsgljslgk=============："+MyApplication.getUserPYId());
-                        //MyApplication.setUserPYId(circleId);
                         CommentConfig config = new CommentConfig();
                         config.circlePosition = mCirclePosition;
                         config.commentType = CommentConfig.Type.PUBLIC;
                         presenter.showEditTextBody(config);
-
                     }
                     break;
                 default:
