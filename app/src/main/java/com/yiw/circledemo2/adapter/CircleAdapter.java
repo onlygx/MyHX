@@ -4,6 +4,7 @@ import android.content.Context;
 import android.media.MediaPlayer;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,7 +52,7 @@ import java.util.List;
  */
 public class CircleAdapter extends BaseRecycleViewAdapter {
 
-    public static int TYPE_HEAD = 0;
+    public static int TYPE_HEAD = 7;
     public final static int TYPE_URL = 1;
     public final static int TYPE_IMAGE = 2;
     public final static int TYPE_VIDEO = 3;
@@ -93,7 +94,7 @@ public class CircleAdapter extends BaseRecycleViewAdapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         RecyclerView.ViewHolder viewHolder;
-        // Log.d("LD",viewType+"----------固定值:"+TYPE_HEAD);
+         Log.e("LD",viewType+"----------固定值:"+TYPE_HEAD);
 
         if (viewType == TYPE_HEAD) {
             //TYPE_HEAD=100;
