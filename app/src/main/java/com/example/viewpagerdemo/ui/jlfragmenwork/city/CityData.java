@@ -1,19 +1,12 @@
 package com.example.viewpagerdemo.ui.jlfragmenwork.city;
 
 
-
 import com.example.viewpagerdemo.ui.bean.AddBookBean;
 import com.example.viewpagerdemo.ui.jlfragmenwork.Contantor;
-import com.example.viewpagerdemo.ui.jlfragmenwork.city.CityItem;
-import com.example.viewpagerdemo.ui.jlfragmenwork.city.ContactItemInterface;
-import com.example.viewpagerdemo.ui.jlfragmenwork.city.PinYin;
+import com.example.viewpagerdemo.ui.jlfragmenwork.util.DD;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 /**
  * 357个中国城市
@@ -45,47 +38,48 @@ public class CityData {
             ",'昌江','澄迈县','崇左','定安县','东方','济源','来宾','乐东','陵水','琼海','神农架林区','图木舒克','屯昌县','万宁','文昌','海南州']}";
 
     public static List<ContactItemInterface> getSampleContactList(List<AddBookBean> booklist) {
-        List<ContactItemInterface> list = new ArrayList<ContactItemInterface>();
+        List<ContactItemInterface> list = new ArrayList<>();
 
-        JSONObject jo1 = null;
-        try {
-            jo1 = new JSONObject(cityJson);
-            //JSONArray ja1 = jo1.getJSONArray("cities");
-
-           // ArrayList<CityInfoData> cityInfoDatas = MyApplication.cityDatas;
-          /*if (cityInfoDatas!=null && cityInfoDatas.size() > 0) {
-                for (int i = 0; i < cityInfoDatas.size(); i++) {
+        //-----模拟数据start
+           /*  JSONObject jo1 = new JSONObject(cityJson);
+            JSONArray ja1 = jo1.getJSONArray("cities");
+               for (int i = 0; i < cityInfoDatas.size(); i++) {
                     String cityName = cityInfoDatas.get(i).getName();
                     String id = cityInfoDatas.get(i).getId();
                     String type = cityInfoDatas.get(i).getType();
-
                     list.add(new CityItem(cityName, PinYin.getPinYin(cityName), id, type));
-                }
-            }else{ */  //-----模拟数据  正式版请去掉此判断--if (cityInfoDatas.size() > 0){}---else{}--------
-               for(int i = 0; i < booklist.size(); i++)
-                {
-                    AddBookBean abb =booklist.get(i);
-                    String cityName = abb.getName();
-                    long id=abb.getId();
-                    long friendId=abb.getFriendId();
-                    String phone=abb.getPhone();
-                    String thinksId;
-                    String icon;
-                    if(abb.getFriendUser()!=null && abb.getFriendUser().getHead()!=null) {
-                        icon= Contantor.Imagepost + abb.getFriendUser().getHead();
-                        thinksId=abb.getFriendUser().getThinksId();
-                    }else{
-                        icon="";
-                        thinksId="";
-                    }
-                    int friendStatus=abb.getFriendStatus();
-                    list.add(new CityItem(cityName, PinYin.getPinYin(cityName),i+"",0+"",friendId,phone,friendStatus,id,icon,thinksId));
-                }
-           // }
+                }*/
+        //-----模拟数据end
+        //----------------------------------------------
+        // 正式版
+        for (int i = 0; i < booklist.size(); i++) {
+            AddBookBean abb = booklist.get(i);
+            String cityName ;
+            if(abb.getFriendUser().getNickName().equals(null) || abb.getFriendUser().getNickName()==null){
+                cityName="";
+            } else{
+                cityName = abb.getFriendUser().getNickName();
+            }
 
-        } catch (JSONException e) {
-            e.printStackTrace();
+            long id = abb.getId();
+            long friendId = abb.getFriendId();
+            String phone = abb.getPhone();
+            String thinksId;
+            String icon;
+            if (abb.getFriendUser() != null && abb.getFriendUser().getHead() != null) {
+                icon = Contantor.Imagepost + abb.getFriendUser().getHead();
+                thinksId = abb.getFriendUser().getThinksId();
+            } else {
+                icon = "";
+                thinksId = "";
+            }
+
+            int friendStatus = abb.getFriendStatus();
+            DD.d("打印:"+cityName+"="+id+"=="+friendId+"=="+phone+"=="+thinksId+"=="+friendStatus);
+            list.add(new CityItem(cityName, PinYin.getPinYin(cityName), i + "", 0 + "",
+                    friendId, phone, friendStatus, id, icon, thinksId));
         }
+
         return list;
     }
 

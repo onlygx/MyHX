@@ -1,9 +1,11 @@
 package com.example.viewpagerdemo.ui.bean;
 
+import java.io.Serializable;
+
 /**
  * Created by Administrator on 2016/6/22.
  */
-public class ShenQBean {
+public class ShenQBean implements Serializable {
 
     /**
      * name :
@@ -92,7 +94,7 @@ public class ShenQBean {
         this.friendUserId = friendUserId;
     }
 
-    public static class FriendUserBean {
+    public static class FriendUserBean implements Serializable{
         private String name;
         private String id;
         private String head;

@@ -1,36 +1,24 @@
 package com.example.viewpagerdemo.ui.activity;
 
-import android.app.Activity;
 import android.graphics.Color;
-import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSONArray;
-import com.example.viewpagerdemo.ui.MyApplication;
-import com.example.viewpagerdemo.ui.adapter.CityAdapter;
-import com.example.viewpagerdemo.ui.adapter.OthorShopListItemAdpter;
 import com.example.viewpagerdemo.ui.adapter.ShenQAdpter;
-import com.example.viewpagerdemo.ui.bean.AddBookBean;
 import com.example.viewpagerdemo.ui.bean.ShenQBean;
-import com.example.viewpagerdemo.ui.bean.ShoppingListBean;
 import com.example.viewpagerdemo.ui.jlfragmenwork.Contantor;
 import com.example.viewpagerdemo.ui.jlfragmenwork.baseactivitywork.JLBaseActivity;
-import com.example.viewpagerdemo.ui.jlfragmenwork.city.CityData;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.DD;
-import com.example.viewpagerdemo.ui.jlfragmenwork.util.TS;
 import com.xingkesi.foodapp.R;
 
 import net.tsz.afinal.FinalHttp;
 import net.tsz.afinal.http.AjaxCallBack;
 import net.tsz.afinal.http.AjaxParams;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -67,6 +55,23 @@ public class ShenQFrendMainActivity extends JLBaseActivity implements SwipeRefre
     @Override
     public void initObject() {
         super.initObject();
+
+        eatRecycler.setHasFixedSize(true);
+        manager = new LinearLayoutManager(this);
+        eatRecycler.setLayoutManager(manager);
+        refreshlayout.setProgressBackgroundColorSchemeResource(R.color.white);
+        refreshlayout.setColorSchemeColors(Color.BLUE);
+        refreshlayout.setSize(SwipeRefreshLayout.DEFAULT);
+        refreshlayout.setOnRefreshListener(this);
+
+
+        list = (List<ShenQBean>) getIntent().getSerializableExtra("list");
+        if (list.size() > 0) {
+            eatReclerViewAdpter = new ShenQAdpter(this, this);
+            eatReclerViewAdpter.getArrayLists().addAll(list);
+            eatRecycler.setAdapter(eatReclerViewAdpter);
+            eatReclerViewAdpter.notifyDataSetChanged();
+        }
     }
 
     @Override
@@ -76,73 +81,21 @@ public class ShenQFrendMainActivity extends JLBaseActivity implements SwipeRefre
         iv_back.setImageResource(R.drawable.cp_fh);
         tv_title.setText("好友申请列表");
 
-        eatReclerViewAdpter = new ShenQAdpter(this,this);
-        eatRecycler.setAdapter(eatReclerViewAdpter);
-        eatRecycler.setHasFixedSize(true);
-        manager = new LinearLayoutManager(this);
-        eatRecycler.setLayoutManager(manager);
-        refreshlayout.setProgressBackgroundColorSchemeResource(R.color.white);
-        refreshlayout.setColorSchemeColors(Color.BLUE);
-        refreshlayout.setSize(SwipeRefreshLayout.DEFAULT);
-        refreshlayout.setOnRefreshListener(this);
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (MyApplication.getInstan().getUser() != null
-                && MyApplication.getInstan().getUser().getData().getId() != 0
-                ) {
-            getFrd();
-        }
     }
 
     @Override
     public void onRefresh() {
-        page = 1;
-        num = 10;
-        refreshlayout.setRefreshing(true);
-        getFrd();
+        // page = 1;
+        // num = 10;
+        // refreshlayout.setRefreshing(true);
     }
 
-    public void getFrd() {
-
-        AjaxParams pa = new AjaxParams();
-        pa.put("userId", MyApplication.getInstan().getUser().getData().getId() + "");
-        String url = Contantor.applyListByUserId;
-        DD.d("通讯录请求:" + url + "?" + pa.toString());
-        new FinalHttp().post(url, pa, new AjaxCallBack<String>() {
-            @Override
-            public void onSuccess(String s) {
-                super.onSuccess(s);
-                DD.d("通讯录s:" + s);
-                list = JSONArray.parseArray(s, ShenQBean.class);
-                if (refreshlayout.isRefreshing()) {
-                    refreshlayout.setRefreshing(false);
-                }
-                if (list.size() > 0) {
-                    eatReclerViewAdpter = new ShenQAdpter(ShenQFrendMainActivity.this, ShenQFrendMainActivity.this);
-                    eatRecycler.setAdapter(eatReclerViewAdpter);
-                    eatReclerViewAdpter.notifyDataSetChanged();
-                    eatReclerViewAdpter.getArrayLists().addAll(list);
-                } else {
-                    page = page - 1;
-                    num = num - 10;
-                    TS.shortTime("没有数据");
-                }
-            }
-
-            @Override
-            public void onFailure(Throwable t, int errorNo, String strMsg) {
-                super.onFailure(t, errorNo, strMsg);
-                if (refreshlayout.isRefreshing()) {
-                    refreshlayout.setRefreshing(false);
-                }
-            }
-        });
-
-
-    }
 
     @Override
     public void request(final int pos, String id, String state) {
@@ -157,9 +110,9 @@ public class ShenQFrendMainActivity extends JLBaseActivity implements SwipeRefre
             public void onSuccess(String s) {
                 super.onSuccess(s);
                 DD.d("处理好友申请s:" + s);
-                if(list.size()==1){
+                if (list.size() == 1) {
                     list.clear();
-                }else {
+                } else {
                     list.remove(pos);
                 }
                 eatReclerViewAdpter = new ShenQAdpter(ShenQFrendMainActivity.this, ShenQFrendMainActivity.this);

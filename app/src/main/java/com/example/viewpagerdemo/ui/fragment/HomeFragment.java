@@ -3,68 +3,64 @@ package com.example.viewpagerdemo.ui.fragment;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSON;
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.location.Poi;
 import com.example.viewpagerdemo.ui.MyApplication;
-import com.example.viewpagerdemo.ui.activity.ListTopClassActivity;
 import com.example.viewpagerdemo.ui.activity.OhterListMainActivity;
-import com.example.viewpagerdemo.ui.adapter.AnnounceItemAdpter;
-import com.example.viewpagerdemo.ui.bean.ListTopBean;
-import com.example.viewpagerdemo.ui.bean.ShopingBean;
-import com.example.viewpagerdemo.ui.jlfragmenwork.Contantor;
 import com.example.viewpagerdemo.ui.jlfragmenwork.adpter.FragmentArrayPageAdapter;
 import com.example.viewpagerdemo.ui.jlfragmenwork.basefregmetwork.JLBaseFragment;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.DD;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.MyDialog;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.TS;
-import com.example.viewpagerdemo.ui.jlfragmenwork.view.CollisionLoadingRenderer;
-import com.example.viewpagerdemo.ui.jlfragmenwork.view.LoadingDrawable;
 import com.example.viewpagerdemo.ui.jlfragmenwork.view.PagerSlidingTabStrip;
 import com.example.viewpagerdemo.ui.jlfragmenwork.view.WhiteTabStripController;
 import com.example.viewpagerdemo.ui.jlfragmenwork.view.WhiteTabViewFactory;
-import com.example.viewpagerdemo.ui.views.NoScrollbleViewPager;
+import com.example.viewpagerdemo.ui.searchfrend.CityListActivity;
+import com.mining.app.ScanMainActivity;
 import com.xingkesi.foodapp.R;
 
-import net.tsz.afinal.FinalHttp;
-import net.tsz.afinal.http.AjaxCallBack;
-import net.tsz.afinal.http.AjaxParams;
-
-import java.util.ArrayList;
 import java.util.List;
-import butterknife.ButterKnife;
+
 import butterknife.Bind;
+import butterknife.ButterKnife;
 
 public class HomeFragment extends JLBaseFragment {
 
     int CurPage = 0;
+
     @Bind(R.id.tabStrip_viewPagerFragment_tabs)
     PagerSlidingTabStrip pagerSlidingTabStrip;
     @Bind(R.id.pager_viewPagerFragment_content)
-    NoScrollbleViewPager viewPager;
+    ViewPager viewPager;
     @Bind(R.id.tv_left_text)
     TextView tv_left_text;
+
     @Bind(R.id.showOthoer)
     TextView showOthoer;
+    @Bind(R.id.iv_right_image)
+    ImageView iv_right_image;
+
 
     private FragmentArrayPageAdapter pageAdapter;
     WhiteTabViewFactory tabViewFactory;
     private WhiteTabStripController tabStripController;
     OrderChildPage defaultChildPage = OrderChildPage.NOT_FINISH;
 
-
     public LocationClient mLocationClient = null;
     public BDLocationListener myListener = new MyLocationListener();
 
     @Override
     public int setViewLayout() {
+        Log.d("LD", "HomeFragment---------------");
         return R.layout.activity_tab_chat;
     }
 
@@ -80,6 +76,17 @@ public class HomeFragment extends JLBaseFragment {
             mLocationClient.start();
         }
 
+
+        //首页放大镜
+        iv_right_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               // startActivity(new Intent(getActivity(), ScanMainActivity.class));
+                startActivity(new Intent(getActivity(), CityListActivity.class));
+
+
+            }
+        });
 
         OrderChildPage[] softwareChildPages = OrderChildPage.values();
         String[] tabNames = new String[softwareChildPages.length];
@@ -107,7 +114,6 @@ public class HomeFragment extends JLBaseFragment {
                 defaultChildPage = OrderChildPage.values()[position];
             }
         });
-        viewPager.setScanScroll(false);
         viewPager.setAdapter(pageAdapter);
         viewPager.setCurrentItem(defaultChildPage.getPageIndex());
         viewPager.setOffscreenPageLimit(viewPager.getAdapter().getCount());
@@ -115,11 +121,12 @@ public class HomeFragment extends JLBaseFragment {
         pagerSlidingTabStrip.setTabViewFactory(tabViewFactory);
         pagerSlidingTabStrip.setViewPager(viewPager);
 
+
         showOthoer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(),ListTopClassActivity.class));
-               /* final MyDialog md = new MyDialog(getActivity(), R.style.dialog);
+
+                final MyDialog md = new MyDialog(getActivity(), R.style.dialog);
                 md.setContentView(R.layout.other_layout);
                 md.setCanceledOnTouchOutside(true);
                 LinearLayout ot0 = (LinearLayout) md.getWindow().findViewById(R.id.ot0);
@@ -143,7 +150,7 @@ public class HomeFragment extends JLBaseFragment {
                     }
                 });
 
-                md.show();*/
+                md.show();
 
             }
         });
@@ -182,10 +189,8 @@ public class HomeFragment extends JLBaseFragment {
 
         public abstract Fragment buildFragment();
 
+
     }
-
-
-
 
     public class MyLocationListener implements BDLocationListener {
 

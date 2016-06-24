@@ -11,14 +11,14 @@ import com.example.viewpagerdemo.ui.jlfragmenwork.Contantor;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.DD;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.Tools;
 import com.yiw.circledemo2.bean.CommentConfig;
+import com.yiw.circledemo2.bean.FrendBean;
+import com.yiw.circledemo2.bean.ListBean;
+import com.yiw.circledemo2.bean.RecordListBean;
 import com.yiw.circledemo2.bean.ZanListBean;
 import com.yiw.circledemo2.mvp.modle.CircleModel;
 import com.yiw.circledemo2.mvp.modle.IDataRequestListener;
 import com.yiw.circledemo2.mvp.view.ICircleView;
 import com.yiw.circledemo2.utils.DatasUtil;
-import com.yiw.circledemo2.bean.ListBean;
-import com.yiw.circledemo2.bean.RecordListBean;
-import com.yiw.circledemo2.bean.FrendBean;
 
 import net.tsz.afinal.FinalHttp;
 import net.tsz.afinal.http.AjaxCallBack;
@@ -48,6 +48,10 @@ public class CirclePresenter extends BasePresenter<ICircleView> {
         this.loadType = loadType;
         getPY();
     }
+    public void MyloadData(final int loadType) {
+        this.loadType = loadType;
+        getMyPY();
+    }
 
     Handler han = new Handler() {
         @Override
@@ -59,17 +63,55 @@ public class CirclePresenter extends BasePresenter<ICircleView> {
     };
 
     public void getPY() {
+        if(datas!=null && datas.size()>0){
+            datas.clear();
+        }
         AjaxParams ap = new AjaxParams();
         ap.put("userId", MyApplication.getInstan().getUser().getData().getId() + "");
         ap.put("page", "1");
         ap.put("size", "10");
-        Log.v("LD", "PYQ:" + DatasUtil.userPY + "?" + ap.toString());
+        //Log.v("LD", "PYQ:" + DatasUtil.userPY + "?" + ap.toString());
         new FinalHttp().post(DatasUtil.userPY, ap, new AjaxCallBack<String>() {
             @Override
             public void onSuccess(String s) {
                 super.onSuccess(s);
                 FrendBean test = JSON.parseObject(s, FrendBean.class);
-                DD.v("LD PYQs:" + s);
+               // DD.v("LD PYQs:" + s);
+                if (test.getList().size() > 0) {
+                    datas = test.getList();
+                    for (int i = 0; i < datas.size(); i++) {
+                        if (datas.get(i).getBannerList().size() > 0) {
+                            datas.get(i).setType("2");
+                        }
+                    }
+                    han.sendEmptyMessage(0);
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t, int errorNo, String strMsg) {
+                super.onFailure(t, errorNo, strMsg);
+            }
+        });
+
+
+    }
+
+    public void getMyPY() {
+        if(datas!=null && datas.size()>0){
+            datas.clear();
+        }
+        AjaxParams ap = new AjaxParams();
+        ap.put("myId", MyApplication.getInstan().getUser().getData().getId() + "");
+        ap.put("page", "1");
+        ap.put("size", "10");
+        Log.v("LD", "wdPYQ:" + DatasUtil.userPY + "?" + ap.toString());
+        new FinalHttp().post(DatasUtil.userPY, ap, new AjaxCallBack<String>() {
+            @Override
+            public void onSuccess(String s) {
+                super.onSuccess(s);
+                FrendBean test = JSON.parseObject(s, FrendBean.class);
+                DD.v("LD wd---------PYQs:" + s);
                 if (test.getList().size() > 0) {
                     datas = test.getList();
                     for (int i = 0; i < datas.size(); i++) {
@@ -122,20 +164,18 @@ public class CirclePresenter extends BasePresenter<ICircleView> {
             @Override
             public void loadSuccess(Object object) {
 
-                Log.d("LD", "消：" + circlePosition );
-                String id=datas.get(circlePosition).getId();
-                questZ(id);
-               // ZanListBean item = DatasUtil.createCurUserFavortItem();
-               // getView().update2AddFavorite(circlePosition, item);
+                Log.d("LD", "消：" + circlePosition);
+                String id = datas.get(circlePosition).getId();
+                questZ(id, circlePosition);
             }
         });
     }
 
     //点
-    void questZ(String id) {
+    void questZ(String id, final int circlePosition) {
         String url = Contantor.record;
         AjaxParams ap = new AjaxParams();
-        ap.put("userId", MyApplication.getInstan().getUser().getData().getId()+"");
+        ap.put("userId", MyApplication.getInstan().getUser().getData().getId() + "");
         ap.put("infoId", id);
         ap.put("type", "0");
         DD.d("赞说说：" + url + "?" + ap.toString());
@@ -144,7 +184,16 @@ public class CirclePresenter extends BasePresenter<ICircleView> {
             public void onSuccess(String s) {
                 super.onSuccess(s);
                 DD.d("赞说说s：" + s);
-                if(Tools.getSourcess(s)){
+                if (Tools.getSourcess(s)) {
+                    try {
+                        JSONObject js = new JSONObject(s);
+                        String id = js.getJSONObject("data").getString("id");
+                        ZanListBean item = DatasUtil.createCurUserFavortItem(id);
+                        getView().update2AddFavorite(circlePosition, item);
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
 
 
                 }
@@ -161,26 +210,27 @@ public class CirclePresenter extends BasePresenter<ICircleView> {
 
     //取消赞
     void cancelZ(ZanListBean bena) {
-       /* String url = Contantor.record;
+        String url = "";
         AjaxParams ap = new AjaxParams();
         ap.put("userId", MyApplication.getInstan().getUser().getData().getId()+"");
-        ap.put("infoId", id);
+//        ap.put("infoId", id);
         ap.put("type", "0");
-        DD.d("赞说说：" + url + "?" + ap.toString());
+        DD.d("Z：" + url + "?" + ap.toString());
         new FinalHttp().post(url, ap, new AjaxCallBack<String>() {
             @Override
             public void onSuccess(String s) {
                 super.onSuccess(s);
-                DD.d("赞说说s：" + s);
+                DD.d("Zs：" + s);
             }
 
             @Override
             public void onFailure(Throwable t, int errorNo, String strMsg) {
                 super.onFailure(t, errorNo, strMsg);
             }
-        });*/
+        });
 
     }
+
     void DelePL(String commentId) {
         //删除
         String url = Contantor.delaboe;
@@ -237,17 +287,61 @@ public class CirclePresenter extends BasePresenter<ICircleView> {
             public void loadSuccess(Object object) {
                 RecordListBean newItem = null;
                 if (config.commentType == CommentConfig.Type.PUBLIC) {//创建
-                    newItem = DatasUtil.createPublicComment(content);
+
+                    addPP(config,content);
                 } else if (config.commentType == CommentConfig.Type.REPLY) {//回复
                     newItem = DatasUtil.createReplyComment(config.replyUser, content);
                 }
 
-                Log.d("LD", "增加：" + config.circlePosition + "===" + newItem.toString());
-                //getView().update2AddComment(config.circlePosition, newItem);
+
+                //getView().update2AddComment(config.circlePosition, newItem);   &type=1
             }
 
         });
     }
+
+    public void addPP(final CommentConfig config, final String content){
+        String url = Contantor.record;
+        AjaxParams ap = new AjaxParams();
+        ap.put("userId", MyApplication.getInstan().getUser().getData().getId() + "");
+        ap.put("infoId", MyApplication.getUserPYId());
+        ap.put("type", "1");
+        ap.put("content", content);
+        DD.d("fbpl：" + url + "?" + ap.toString());
+        new FinalHttp().post(url, ap, new AjaxCallBack<String>() {
+            @Override
+            public void onSuccess(String s) {
+                super.onSuccess(s);
+                DD.d("fbpls：" + s);
+                if (Tools.getSourcess(s)) {
+                    try {
+                        JSONObject js = new JSONObject(s);
+                       // String id = js.getJSONObject("data").getString("id");
+                        //RecordListBean  newItem = DatasUtil.createPublicComment(id,content);
+                       // getView().update2AddComment(config.circlePosition, newItem);
+
+
+                        getPY();
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Throwable t, int errorNo, String strMsg) {
+                super.onFailure(t, errorNo, strMsg);
+            }
+        });
+    }
+
+
+
+
 
     /**
      * @param @param circlePosition
@@ -270,12 +364,11 @@ public class CirclePresenter extends BasePresenter<ICircleView> {
     }
 
 
-
-
     /**
      * @param commentConfig
      */
     public void showEditTextBody(CommentConfig commentConfig) {
+        Log.d("LD","-:"+commentConfig.toString());
         getView().updateEditTextBodyVisible(View.VISIBLE, commentConfig);
     }
 

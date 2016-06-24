@@ -1,11 +1,6 @@
 package com.example.viewpagerdemo.ui.jlfragmenwork.city;
 
-import java.util.Collections;
-import java.util.List;
-
 import android.content.Context;
-import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +9,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.xingkesi.foodapp.R;
+
+import java.util.Collections;
+import java.util.List;
 
 
 public class ContactListAdapter extends ArrayAdapter<ContactItemInterface>
@@ -25,18 +23,14 @@ public class ContactListAdapter extends ArrayAdapter<ContactItemInterface>
 	private ContactsSectionIndexer indexer = null;
 
 	public ContactListAdapter(Context _context, int _resource,
-			List<ContactItemInterface> _items)
+							  List<ContactItemInterface> _items)
 	{
 		super(_context, _resource, _items);
 		resource = _resource;
 
 		// need to sort the items array first, then pass it to the indexer
-		if(_items!=null){
-		Collections.sort(_items, new ContactItemComparator());
-		}else{
-			return;
-		}
 
+		Collections.sort(_items, new ContactItemComparator());
 		setIndexer(new ContactsSectionIndexer(_items));
 
 	}
@@ -81,13 +75,14 @@ public class ContactListAdapter extends ArrayAdapter<ContactItemInterface>
 	// do all the data population for the row here
 	// subclass overwrite this to draw more items
 	public void populateDataForRow(View parentView, ContactItemInterface item,
-			int position)
+								   int position)
 	{
 		// default just draw the item only
-		View infoView = parentView.findViewById(R.id.infoRowContainer);
-		TextView nameView = (TextView) infoView.findViewById(R.id.cityName);
-		Log.v("LD", "--:" + item.getItemForIndex());
-		nameView.setText(item.getItemForIndex());
+		//View infoView = parentView.findViewById(R.id.infoRowContainer);
+		//TextView nameView = (TextView) infoView.findViewById(R.id.cityName);
+		//Log.v("LD", "--:" + item.getItemForIndex());
+		//nameView.setText(item.getDisplayInfo());   //名字
+
 	}
 
 	// this should be override by subclass if necessary
@@ -109,7 +104,9 @@ public class ContactListAdapter extends ArrayAdapter<ContactItemInterface>
 			parentView = (LinearLayout) convertView;
 		}
 
-		showSectionViewIfFirstItem(parentView, item, position);
+		if(parentView!=null  && item!=null) {
+			showSectionViewIfFirstItem(parentView, item, position);
+		}
 
 		populateDataForRow(parentView, item, position);
 

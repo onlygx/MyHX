@@ -1,0 +1,81 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F6F8" >
+
+    <include layout="@layout/base_title_layout" android:id="@+id/layout_title"/>
+
+    <RelativeLayout
+        android:layout_below="@+id/layout_title"
+        android:id="@+id/searchBarContainer"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/shape_gray_writesmall" >
+
+        <ImageButton
+            android:id="@+id/button_search"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/search_gray"
+            android:contentDescription="Search..."
+            android:scaleType="fitCenter" />
+
+        <EditText
+            android:id="@+id/input_search_query"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:imeOptions="actionDone"
+            android:maxLines="1"
+            android:background="@null"
+            android:paddingLeft="15dip"
+            android:textColor="@color/firstblack"
+            android:gravity="center"
+            android:layout_toRightOf="@+id/button_search"
+           android:layout_marginRight="10dp"
+            android:singleLine="true"
+            android:text=""
+            android:textSize="15sp" />
+
+
+    </RelativeLayout>
+    <TextView
+        android:id="@+id/listtag"
+        android:layout_below="@id/searchBarContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="#"
+        android:gravity="right"
+        android:paddingRight="10dp"
+        android:background="@drawable/shape_top_linef5"
+        android:textColor="@color/main_color"
+        />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/listtag" >
+
+        <com.example.viewpagerdemo.ui.sarchcity.ContactListViewImpl
+            android:id="@+id/listview"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="#ffffff"
+            android:cacheColorHint="#00000000"
+            android:divider="#E6E6E6"
+            android:dividerHeight="0.5dp"
+            android:fadingEdge="none"
+            android:fastScrollEnabled="false"
+            android:footerDividersEnabled="true"
+            android:headerDividersEnabled="true"
+            android:listSelector="#00000000"
+            android:smoothScrollbar="true" />
+    </LinearLayout>
+
+</RelativeLayout>

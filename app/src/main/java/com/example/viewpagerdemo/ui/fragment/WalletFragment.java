@@ -1,11 +1,6 @@
 package com.example.viewpagerdemo.ui.fragment;
 
 import android.content.Intent;
-import android.net.Uri;
-import android.os.Environment;
-import android.provider.MediaStore;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -21,22 +16,15 @@ import com.example.viewpagerdemo.ui.activity.WakketZhuangZActivity;
 import com.example.viewpagerdemo.ui.bean.QbaoBean;
 import com.example.viewpagerdemo.ui.jlfragmenwork.Contantor;
 import com.example.viewpagerdemo.ui.jlfragmenwork.actvity.LoginActivity;
-import com.example.viewpagerdemo.ui.jlfragmenwork.adpter.FragmentArrayPageAdapter;
 import com.example.viewpagerdemo.ui.jlfragmenwork.basefregmetwork.JLBaseFragment;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.DD;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.SelectFKPopupWindow;
-import com.example.viewpagerdemo.ui.jlfragmenwork.util.SelectPicPopupWindow2;
-import com.example.viewpagerdemo.ui.jlfragmenwork.util.Tools;
-import com.example.viewpagerdemo.ui.jlfragmenwork.view.PagerSlidingTabStrip;
-import com.example.viewpagerdemo.ui.jlfragmenwork.view.WhiteTabStripController;
-import com.example.viewpagerdemo.ui.jlfragmenwork.view.WhiteTabViewFactory;
+import com.karics.library.zxing.android.CaptureActivity;
 import com.xingkesi.foodapp.R;
 
 import net.tsz.afinal.FinalHttp;
 import net.tsz.afinal.http.AjaxCallBack;
 import net.tsz.afinal.http.AjaxParams;
-
-import java.io.File;
 
 import butterknife.Bind;
 
@@ -50,6 +38,10 @@ public class WalletFragment extends JLBaseFragment {
      PagerSlidingTabStrip pagerSlidingTabStrip;
      @Bind(R.id.pager_viewPagerFragment_content)
      ViewPager viewPager;*/
+    private static final int REQUEST_CODE_SCAN = 0x0000;
+
+    private static final String DECODED_CONTENT_KEY = "codedContent";
+    private static final String DECODED_BITMAP_KEY = "codedBitmap";
     @Bind(R.id.tv_title)
     TextView tv_title;
     @Bind(R.id.balancetv)
@@ -162,7 +154,14 @@ public class WalletFragment extends JLBaseFragment {
         sk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), ErWMain2Activity.class));
+                if (MyApplication.getInstan().getUser() == null || MyApplication.getInstan().getUser().getData().getId() == 0) {
+                    Intent intent = new Intent();
+                    intent.putExtra("tag", "finsh");
+                    intent.setClass(getActivity(), LoginActivity.class);
+                    startActivity(intent);
+                } else {
+                    startActivity(new Intent(getActivity(), ErWMain2Activity.class));
+                }
             }
         });
 
@@ -174,6 +173,25 @@ public class WalletFragment extends JLBaseFragment {
 
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_SCAN && resultCode == getActivity().RESULT_OK) {
+            if (data != null) {
+
+                String content = data.getStringExtra(DECODED_CONTENT_KEY);
+                // Bitmap bitmap = data.getParcelableExtra(DECODED_BITMAP_KEY);
+
+                Intent it = new Intent(getActivity(), WakketZhuangZActivity.class);
+
+                it.putExtra("tag", "no");
+                it.putExtra("mo", content);
+                startActivity(it);
+
+            }
+        }
+    }
+
     //为弹出窗口实现监听类
     private View.OnClickListener itemsOnClick = new View.OnClickListener() {
 
@@ -182,11 +200,15 @@ public class WalletFragment extends JLBaseFragment {
             switch (v.getId()) {
                 //二维码
                 case R.id.erweima:
-
+                    Intent intent = new Intent(getActivity(),
+                            CaptureActivity.class);
+                    startActivityForResult(intent, REQUEST_CODE_SCAN);
                     break;
                 //账号
                 case R.id.zhanghao:
-                    startActivity(new Intent(getActivity(), WakketZhuangZActivity.class));
+                    Intent it = new Intent(getActivity(), WakketZhuangZActivity.class);
+                    it.putExtra("tag", "yes");
+                    startActivity(it);
                     break;
                 default:
                     break;
@@ -196,35 +218,14 @@ public class WalletFragment extends JLBaseFragment {
     };
 
     @Override
-    public void onResume() {
-        super.onResume();
-        DD.v("179---------------------------");
-        if (MyApplication.getInstan().getUser() != null && MyApplication.getInstan().getUser().getData().getThinksId() != null) {
-            tv_title.setTextColor(getResources().getColor(R.color.waiter));
-            ll_base_title.setBackgroundColor(getResources().getColor(R.color.logding_bg));
-            getQBInfo();
-            noLoa.setVisibility(View.GONE);
-        } else {
-            noLoa.setVisibility(View.INVISIBLE);
-            tv_title.setTextColor(getResources().getColor(R.color.logding_bg));
-            ll_base_title.setBackgroundColor(getResources().getColor(R.color.waiter));
-        }
-    }
-
-    @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
-        //可见时加载数据相当于Fragment的onResume
-            DD.e("setUserVisibleHint============看得见");
+            //可见时加载数据相当于Fragment的onResume
             if (MyApplication.getInstan().getUser() != null && MyApplication.getInstan().getUser().getData().getThinksId() != null) {
-               // tv_title.setTextColor(getResources().getColor(R.color.waiter));
-               // ll_base_title.setBackgroundColor(getResources().getColor(R.color.logding_bg));
+                DD.e("钱============见");
                 getQBInfo();
             }
-        } else {
-            //不可见是不加载数据
-            DD.e("setUserVisibleHint============看不见");
         }
     }
 

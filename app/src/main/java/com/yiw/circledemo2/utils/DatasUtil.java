@@ -20,6 +20,7 @@ import java.util.Random;
 public class DatasUtil {
 	static List<ListBean> circleDatas;
 	public static String userPY= ToolsHost.HEDEUT+"/app/talk/listByRegion";
+	public static String userMyPY= ToolsHost.HEDEUT+"/app/talk/listByRegion";
 	static String userIdURL=ToolsHost.HEDEUT+"/app/talk/listByUserId";
 	public static String userL=ToolsHost.HEDEUT+"/app/user/login";
 

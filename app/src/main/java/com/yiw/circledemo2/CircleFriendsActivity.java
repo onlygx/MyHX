@@ -1,10 +1,8 @@
 package com.yiw.circledemo2;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Rect;
-import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -164,6 +162,7 @@ public class CircleFriendsActivity extends JLBaseActivity implements ICircleView
                         return;
                     }
                     mPresenter.addComment(content, mCommentConfig);
+                    mEditText.setText("");
                 }
                 updateEditTextBodyVisible(View.GONE, null);
             }
@@ -334,7 +333,7 @@ public class CircleFriendsActivity extends JLBaseActivity implements ICircleView
 
     @Override
     public void update2loadData(int loadType, List<ListBean> datas) {
-        Log.d("LD", "加载数据：" + datas.size() + "loadType====:" + loadType);
+        Log.d("LD", "加载数据：" + datas.size() + "==========loadType====:" + loadType);
 
         if (loadType == TYPE_PULLREFRESH) {
             mAdapter.setDatas(datas);

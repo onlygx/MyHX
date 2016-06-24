@@ -11,8 +11,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.MyDialog;
-import com.example.viewpagerdemo.ui.jlfragmenwork.util.TS;
-import com.example.viewpagerdemo.ui.jlfragmenwork.util.Tools;
 import com.example.viewpagerdemo.ui.jlfragmenwork.view.BoilingDialog;
 import com.example.viewpagerdemo.ui.jlfragmenwork.view.CollisionLoadingRenderer;
 import com.example.viewpagerdemo.ui.jlfragmenwork.view.LoadingDrawable;
@@ -61,6 +59,7 @@ public class JLBaseFragment extends Fragment {
             md = new MyDialog(getActivity(), R.style.dialog);
         }
         md.show();
+        if(mBalloonDrawable!=null)
         mBalloonDrawable.start();
     }
 

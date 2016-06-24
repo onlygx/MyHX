@@ -3,22 +3,16 @@ package com.example.viewpagerdemo.ui.activity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
-import com.example.viewpagerdemo.ui.adapter.AnnounceItemAdpter;
 import com.example.viewpagerdemo.ui.adapter.ListTopClassAdpter;
 import com.example.viewpagerdemo.ui.bean.ListTopBean;
-import com.example.viewpagerdemo.ui.jlfragmenwork.Contantor;
 import com.example.viewpagerdemo.ui.jlfragmenwork.baseactivitywork.JLBaseActivity;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.DD;
 import com.xingkesi.foodapp.R;
 
 import net.tsz.afinal.FinalHttp;
 import net.tsz.afinal.http.AjaxCallBack;
-import net.tsz.afinal.http.AjaxParams;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,10 +50,10 @@ public class ListTopClassActivity extends JLBaseActivity {
     }
 
     /**
-     * 请求主页商品列表
+     * 请求主页商品列表             Contantor.listTop
      */
     void RequsetDatas() {
-        new FinalHttp().post(Contantor.listTop, null, new AjaxCallBack<String>() {
+        new FinalHttp().post("", null, new AjaxCallBack<String>() {
             @Override
             public void onSuccess(String s) {
                 mListTopDatas = JSON.parseArray(s, ListTopBean.class);

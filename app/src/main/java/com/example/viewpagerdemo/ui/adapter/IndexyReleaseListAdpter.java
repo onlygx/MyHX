@@ -4,17 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.viewpagerdemo.ui.activity.EatInfoActivity;
 import com.example.viewpagerdemo.ui.activity.IndexMainActivity;
 import com.example.viewpagerdemo.ui.bean.IndexRaleaseBean;
 import com.example.viewpagerdemo.ui.bean.ShoppingListBanerBean;
@@ -27,9 +23,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import butterknife.Bind;
-import butterknife.ButterKnife;
 
 
 /**
@@ -138,34 +131,43 @@ public class IndexyReleaseListAdpter extends RecyclerView.Adapter<IndexyReleaseL
 
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.list_title)
+        //@Bind(R.id.list_title)
         TextView listTitle;
-        /*@Bind(R.id.list_scroe)
+        //@Bind(R.id.list_addr)
+        TextView listAddr;
+        //@Bind(R.id.list_money)
+        TextView listMoney;
+        //@Bind(R.id.list_image)
+        CircleImageView listImage;
+       // @Bind(R.id.list_name)
+        TextView listName;
+        //@Bind(R.id.eat_vptwo)
+        ViewPager eatVptwo;
+        //@Bind(R.id.infoLayout)
+        LinearLayout infoLayout;
+        //@Bind(R.id.dotone2)
+        LinearLayout dot_layout;
+
+      /*  @Bind(R.id.lunb)
+        LinearLayout lunb;
+        @Bind(R.id.righ)
+        RelativeLayout righ;
+         @Bind(R.id.list_scroe)
         TextView listScroe;
         @Bind(R.id.list_num)
         TextView listNum;*/
-        @Bind(R.id.list_addr)
-        TextView listAddr;
-        @Bind(R.id.list_money)
-        TextView listMoney;
-        @Bind(R.id.list_image)
-        CircleImageView listImage;
-        @Bind(R.id.list_name)
-        TextView listName;
-        @Bind(R.id.eat_vptwo)
-        ViewPager eatVptwo;
-        @Bind(R.id.infoLayout)
-        LinearLayout infoLayout;
-        @Bind(R.id.righ)
-        RelativeLayout righ;
-        @Bind(R.id.dotone2)
-        LinearLayout dot_layout;
-        @Bind(R.id.lunb)
-        LinearLayout lunb;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+            listTitle= (TextView) itemView.findViewById(R.id.list_title);
+            listAddr= (TextView) itemView.findViewById(R.id.list_addr);
+            listMoney= (TextView) itemView.findViewById(R.id.list_money);
+            listImage= (CircleImageView) itemView.findViewById(R.id.list_image);
+            listName= (TextView) itemView.findViewById(R.id.list_name);
+            eatVptwo= (ViewPager) itemView.findViewById(R.id.eat_vptwo);
+            infoLayout= (LinearLayout) itemView.findViewById(R.id.infoLayout);
+            dot_layout= (LinearLayout) itemView.findViewById(R.id.dotone2);
+            //ButterKnife.bind(this, itemView);
         }
     }
 

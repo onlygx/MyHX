@@ -29,7 +29,7 @@ public class CityItem implements ContactItemInterface
 	)
 	{
 		super();
-		this.nickName = nickName;
+		this.setNickName(nickName);
 		this.setFullName(fullName);
 		this.setId(id);
 		this.setType(type);

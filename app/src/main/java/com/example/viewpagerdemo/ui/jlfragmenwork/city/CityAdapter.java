@@ -2,12 +2,9 @@ package com.example.viewpagerdemo.ui.jlfragmenwork.city;
 
 import android.content.Context;
 import android.view.View;
-import android.widget.ImageView;
+import android.widget.Button;
 import android.widget.TextView;
 
-
-import com.example.viewpagerdemo.ui.jlfragmenwork.city.ContactItemInterface;
-import com.example.viewpagerdemo.ui.jlfragmenwork.city.ContactListAdapter;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.CircleImageView;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.DD;
 import com.squareup.picasso.Picasso;
@@ -30,26 +27,24 @@ public class CityAdapter extends ContactListAdapter {
         this.bcal = bcal;
     }
 
-  /*  @Override
-    public int getCount() {
-        DD.v("这是我的打印:"+_items.size());
-        return _items.size();
-    }*/
-
+    //重写
     public void populateDataForRow(View parentView, ContactItemInterface item, final int position) {
         View infoView = parentView.findViewById(R.id.infoRowContainer);
         TextView nicknameView = (TextView) infoView.findViewById(R.id.cityName);
         CircleImageView infoRowContainer = (CircleImageView) infoView.findViewById(R.id.cityimage);
-        TextView city_tag = (TextView) infoView.findViewById(R.id.city_tag);
+        Button city_tag = (Button) infoView.findViewById(R.id.city_tag);
         final int state = item.getStute();
         if (state == 1) {
             city_tag.setText("开始聊天");
         } else if (state == 2) {
+            city_tag.setEnabled(false);
+            city_tag.setBackgroundResource(R.drawable.shape_enbel_false);
             city_tag.setText("邀请中...");
         } else if (state == 0) {
             city_tag.setText("邀请好友");
         }
         nicknameView.setText(item.getDisplayInfo());
+        DD.v(item.getDisplayInfo() + "===========" + item.getIcons());
         if (!item.getIcons().equals("")) {
             Picasso.with(_context).load(item.getIcons()).placeholder(R.drawable.aliwx_default_photo_right)
                     .error(R.drawable.aliwx_fail_photo_right).into(infoRowContainer);

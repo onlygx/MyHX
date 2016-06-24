@@ -7,11 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-
 import com.example.viewpagerdemo.ui.MyApplication;
-import com.example.viewpagerdemo.ui.activity.AboutActivity;
 import com.example.viewpagerdemo.ui.activity.AboutWebActivity;
 import com.example.viewpagerdemo.ui.activity.AdviceMainActivity;
 import com.example.viewpagerdemo.ui.activity.ColltentMainActivit;
@@ -45,6 +44,8 @@ public class FindFragment extends JLBaseFragment {
 
     @Bind(R.id.tv_title)
     TextView tv_title;
+    @Bind(R.id.find_layout)
+    LinearLayout find_layout;
 
     @Bind(R.id.cache)
     TextView cache;
@@ -120,7 +121,8 @@ public class FindFragment extends JLBaseFragment {
 
     @OnClick({R.id.ll_find, R.id.ll_frend, R.id.ll_dd, R.id.ll_about,
             R.id.ll_jianyi, R.id.ll_prosion, R.id.ll_tel, R.id.ll_cache,
-            R.id.find_new_fbxq, R.id.find_new_xq, R.id.find_new_rw, R.id.find_new_sc})
+            R.id.find_new_fbxq, R.id.find_new_xq, R.id.find_new_rw,
+            R.id.find_new_sc,R.id.exit})
     public void onClick(View view) {
         Intent intent = new Intent();
         // DD.d();
@@ -212,8 +214,26 @@ public class FindFragment extends JLBaseFragment {
 
                 break;
             case R.id.find_new_sc://收藏列表
-
                 startActivity(new Intent(getActivity(), ColltentMainActivit.class));
+                break;
+
+            case R.id.exit://推出
+
+                MyApplication.getInstan().setUser(null);
+                MyApplication.getInstan().setUserName("");
+                MyApplication.getInstan().setUserPwd("");
+                if (!cache.equals("")) {
+                    Tools.clearAllCache(MyApplication.getContext());
+                    try {
+                        String size = Tools.getTotalCacheSize(MyApplication.getContext());
+                        cache.setText(size);
+                    }catch (Exception e){}
+                }
+                nikc.setText("");
+                icon.setImageResource(R.drawable.touxiang03);
+                find_layout.postInvalidate();
+
+               // startActivity(new Intent(getActivity(), ColltentMainActivit.class));
 
                 break;
 

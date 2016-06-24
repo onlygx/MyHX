@@ -8,22 +8,21 @@ import android.os.Message;
 import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.example.viewpagerdemo.ui.MyApplication;
-import com.example.viewpagerdemo.ui.adapter.EatInfoContentAdatper;
 import com.example.viewpagerdemo.ui.adapter.EateInfoAotuAdapter;
 import com.example.viewpagerdemo.ui.bean.Collection;
-import com.example.viewpagerdemo.ui.bean.ContentBean;
-import com.example.viewpagerdemo.ui.bean.ContentListBean;
 import com.example.viewpagerdemo.ui.bean.EatInfoOneBaen;
 import com.example.viewpagerdemo.ui.bean.ShopInfoListBean;
 import com.example.viewpagerdemo.ui.bean.ShoppingInfoBean;
@@ -31,7 +30,9 @@ import com.example.viewpagerdemo.ui.jlfragmenwork.Contantor;
 import com.example.viewpagerdemo.ui.jlfragmenwork.actvity.LoginActivity;
 import com.example.viewpagerdemo.ui.jlfragmenwork.baseactivitywork.JLBaseActivity;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.DD;
-import com.example.viewpagerdemo.ui.jlfragmenwork.util.TS;
+import com.example.viewpagerdemo.ui.jlfragmenwork.share.SelectPicPopupWindowShare;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.xingkesi.foodapp.R;
 
 import net.tsz.afinal.FinalHttp;
@@ -67,6 +68,7 @@ public class EatInfoActivity extends JLBaseActivity implements View.OnClickListe
     //----------------------------------
     @Bind(R.id.iv_right_image)
     ImageView iv_right_image;
+
     @Bind(R.id.tv_right_text)
     TextView tv_right_text;
     //--------------轮班---------------
@@ -74,6 +76,8 @@ public class EatInfoActivity extends JLBaseActivity implements View.OnClickListe
     ViewPager eatVpone;
     @Bind(R.id.dotone)
     LinearLayout dot_layout;
+    @Bind(R.id.eat_layout)
+    RelativeLayout eat_layout;
     //------------
     @Bind(R.id.shoppingName)//标题
             TextView shoppingName;
@@ -251,21 +255,14 @@ public class EatInfoActivity extends JLBaseActivity implements View.OnClickListe
             public void onSuccess(String s) {
                 super.onSuccess(s);
                 DD.d("详情s：" + s);
-                try{
-                    info = JSON.parseObject(s, ShoppingInfoBean.class);
-                }catch(Exception e){
-
-                }
-
-                if(info ==null) return;
-
+                info = JSON.parseObject(s, ShoppingInfoBean.class);
                 shoppingName.setText(info.getName());
                 Qpic = info.getPrice();
                 money.setText(info.getPrice() + "");
                 san_sc.setText(info.getCollectionCount() + "");
                 san_gm.setText(info.getPayCount() + "");
 
-                if (shopID!=null && shopID.equals("") && info!=null) {
+                if (shopID==null || shopID.equals("")) {
                     shopID = info.getShopId() + "";
                 }
 
@@ -301,9 +298,6 @@ public class EatInfoActivity extends JLBaseActivity implements View.OnClickListe
                 }
                 //轮播图数据
                 if (info.getBannerList().size() > 0) {
-                    adList.clear();
-                    dots.clear();
-                    dot_layout.removeAllViews();
                     adList = info.getBannerList();
                     int size = adList.size();
                     //DD.d("详情中的轮播图:" + size + "===" + name);
@@ -362,14 +356,42 @@ public class EatInfoActivity extends JLBaseActivity implements View.OnClickListe
         eatVpone.setAdapter(eateAdapter);// 设置填充ViewPager页面的适配器
         // 设置一个监听器，当ViewPager中的页面改变时调用
         eatVpone.setOnPageChangeListener(new MyPageChangeListener());
-        startAd();
-    }
 
+
+        //分享
+       tv_right_text.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SelectPicPopupWindowShare menuWindow = new SelectPicPopupWindowShare(EatInfoActivity.this, umShareListener);
+                //显示窗口
+                menuWindow.showAtLocation(eat_layout, Gravity.BOTTOM |
+                        Gravity.CENTER_HORIZONTAL, 0, 0); //设置layout在PopupWindow中显示的位置
+
+            }
+        });
+    }
+    private UMShareListener umShareListener = new UMShareListener() {
+        @Override
+        public void onResult(SHARE_MEDIA platform) {
+            Toast.makeText(EatInfoActivity.this, platform + " 分享成功啦", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onError(SHARE_MEDIA platform, Throwable t) {
+            Toast.makeText(EatInfoActivity.this, platform + " 分享失败啦", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onCancel(SHARE_MEDIA platform) {
+            Toast.makeText(EatInfoActivity.this, platform + " 分享取消了", Toast.LENGTH_SHORT).show();
+        }
+    };
     @Override
     protected void onResume() {
         super.onResume();
-        getShoppingInfo();
 
+        getShoppingInfo();
+        startAd();
     }
 
     @Override

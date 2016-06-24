@@ -33,6 +33,7 @@ public class WakketZhuangZActivity extends JLBaseActivity {
     @Bind(R.id.zz_money)
     EditText zzMoney;
 
+    String tag,mo;
     @Override
     public void initObject() {
         super.initObject();
@@ -44,6 +45,11 @@ public class WakketZhuangZActivity extends JLBaseActivity {
         tv_title.setText("付款");
         iv_back.setVisibility(View.VISIBLE);
         iv_back.setImageResource(R.drawable.cp_fh);
+        mo=getIntent().getStringExtra("mo");
+        tag=getIntent().getStringExtra("tag");
+        if(tag.equals("no")){
+            zzUserName.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -54,11 +60,16 @@ public class WakketZhuangZActivity extends JLBaseActivity {
 
     @OnClick(R.id.zz_submit)
     public void onClick() {
-        String name = zzUserName.getText().toString();
         String money = zzMoney.getText().toString();
-        if (TextUtils.isEmpty(name)) {
-            TS.shortTime("请输入对方账号");
-            return;
+        String name;
+        if(tag.equals("yes")) {
+             name = zzUserName.getText().toString();
+            if (TextUtils.isEmpty(name)) {
+                TS.shortTime("请输入对方账号");
+                return;
+            }
+        }else{
+            name=mo;
         }
 
         if (TextUtils.isEmpty(money)) {

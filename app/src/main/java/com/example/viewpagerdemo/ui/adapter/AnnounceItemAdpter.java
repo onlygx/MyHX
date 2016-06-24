@@ -9,21 +9,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.viewpagerdemo.ui.activity.EatInfoActivity;
 import com.example.viewpagerdemo.ui.bean.ShoppingListBanerBean;
 import com.example.viewpagerdemo.ui.bean.ShoppingListBean;
-import com.example.viewpagerdemo.ui.activity.EatInfoActivity;
 import com.example.viewpagerdemo.ui.jlfragmenwork.Contantor;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.CircleImageView;
-import com.example.viewpagerdemo.ui.jlfragmenwork.util.DD;
 import com.squareup.picasso.Picasso;
 import com.xingkesi.foodapp.R;
+
 import java.util.ArrayList;
 import java.util.List;
-import butterknife.ButterKnife;
-import butterknife.Bind;
 
 /**
  * 首页列表适配器
@@ -127,42 +125,46 @@ public class AnnounceItemAdpter extends RecyclerView.Adapter<AnnounceItemAdpter.
         return list.size();
     }
 
-    public interface delData {
-        void del(int tag, int postion, String state);
 
-        void startInfo(String id);
-    }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.list_title)
+       // @Bind(R.id.list_title)
         TextView listTitle;
         /*@Bind(R.id.list_scroe)
         TextView listScroe;
         @Bind(R.id.list_num)
         TextView listNum;*/
-        @Bind(R.id.list_addr)
+       // @Bind(R.id.list_addr)
         TextView listAddr;
-        @Bind(R.id.list_money)
+       // @Bind(R.id.list_money)
         TextView listMoney;
-        @Bind(R.id.list_image)
+       // @Bind(R.id.list_image)
         CircleImageView listImage;
-        @Bind(R.id.list_name)
+       // @Bind(R.id.list_name)
         TextView listName;
-        @Bind(R.id.eat_vptwo)
+      //  @Bind(R.id.eat_vptwo)
         ViewPager eatVptwo;
-        @Bind(R.id.infoLayout)
+       // @Bind(R.id.infoLayout)
         LinearLayout infoLayout;
-        @Bind(R.id.righ)
-        RelativeLayout righ;
-        @Bind(R.id.dotone2)
+        /*@Bind(R.id.righ)
+        RelativeLayout righ;*/
+       // @Bind(R.id.dotone2)
         LinearLayout dot_layout;
-        @Bind(R.id.lunb)
-        LinearLayout lunb;
-        @Bind(R.id.rl_parent)
-        RelativeLayout rl_parent;
+       /* @Bind(R.id.lunb)
+        LinearLayout lunb;*/
+       /* @Bind(R.id.rl_parent)
+        RelativeLayout rl_parent;*/
         public ViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+            listTitle= (TextView) itemView.findViewById(R.id.list_title);
+            listAddr= (TextView) itemView.findViewById(R.id.list_addr);
+            listMoney= (TextView) itemView.findViewById(R.id.list_money);
+            listName= (TextView) itemView.findViewById(R.id.list_name);
+            eatVptwo= (ViewPager) itemView.findViewById(R.id.eat_vptwo);
+            infoLayout= (LinearLayout) itemView.findViewById(R.id.infoLayout);
+            dot_layout= (LinearLayout) itemView.findViewById(R.id.dotone2);
+            listImage= (CircleImageView) itemView.findViewById(R.id.list_image);
+            //ButterKnife.bind(this, itemView);
         }
     }
 
