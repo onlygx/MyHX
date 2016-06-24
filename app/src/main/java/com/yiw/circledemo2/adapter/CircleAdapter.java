@@ -18,27 +18,29 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.viewpagerdemo.ui.MyApplication;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.DD;
+import com.example.viewpagerdemo.ui.jlfragmenwork.util.Tools;
 import com.squareup.picasso.Picasso;
 import com.xingkesi.foodapp.R;
 import com.yiw.circledemo2.ImagePagerActivity;
 import com.yiw.circledemo2.bean.ActionItem;
 import com.yiw.circledemo2.bean.BannerListBean;
 import com.yiw.circledemo2.bean.CommentConfig;
-import com.yiw.circledemo2.bean.ListBean;
-import com.yiw.circledemo2.bean.RecordListBean;
 import com.yiw.circledemo2.bean.ToolsHost;
-import com.yiw.circledemo2.bean.ZanListBean;
 import com.yiw.circledemo2.mvp.presenter.CirclePresenter;
 import com.yiw.circledemo2.spannable.ISpanClick;
+import com.yiw.circledemo2.utils.DatasUtil;
 import com.yiw.circledemo2.utils.GlideCircleTransform;
 import com.yiw.circledemo2.utils.UrlUtils;
 import com.yiw.circledemo2.widgets.CircleVideoView;
 import com.yiw.circledemo2.widgets.CommentListView;
 import com.yiw.circledemo2.widgets.FavortListView;
+import com.yiw.circledemo2.bean.ListBean;
 import com.yiw.circledemo2.widgets.MagicTextView;
 import com.yiw.circledemo2.widgets.MultiImageView;
+import com.yiw.circledemo2.bean.RecordListBean;
 import com.yiw.circledemo2.widgets.SnsPopupWindow;
 import com.yiw.circledemo2.widgets.dialog.CommentDialog;
+import com.yiw.circledemo2.bean.ZanListBean;
 import com.yiw.circledemo2.widgets.videolist.model.VideoLoadMvpView;
 import com.yiw.circledemo2.widgets.videolist.widget.TextureVideoView;
 
@@ -62,7 +64,6 @@ public class CircleAdapter extends BaseRecycleViewAdapter {
 
     private CirclePresenter presenter;
     private Context context;
-    String circleId;
 
     public void setCirclePresenter(CirclePresenter presenter) {
         this.presenter = presenter;
@@ -119,7 +120,6 @@ public class CircleAdapter extends BaseRecycleViewAdapter {
             final CircleViewHolder holder = (CircleViewHolder) viewHolder;
             ListBean istBean = (ListBean) datas.get(circlePosition);
             final String circleId = istBean.getId();
-           // this.circleId=circleId;
             String name = istBean.getUser().getNickName();
             final String content = istBean.getContent();
             String headImg = ToolsHost.HEDEUT + istBean.getUser().getHead();
@@ -232,9 +232,7 @@ public class CircleAdapter extends BaseRecycleViewAdapter {
                 @Override
                 public void onClick(View view) {
                     //弹出popupwindow
-                    DD.d("这个逻辑是给了克里斯:"+circleId);
-                    MyApplication.setUserPYId(circleId+"");
-                    snsPopupWindow.showPopupWindow(view,position);
+                    snsPopupWindow.showPopupWindow(view);
                 }
             });
 
@@ -475,12 +473,10 @@ public class CircleAdapter extends BaseRecycleViewAdapter {
                     break;
                 case 1://发布评论
                     if (presenter != null) {
-                        MyApplication.setUserPYId(circleId);
                         CommentConfig config = new CommentConfig();
                         config.circlePosition = mCirclePosition;
                         config.commentType = CommentConfig.Type.PUBLIC;
                         presenter.showEditTextBody(config);
-
                     }
                     break;
                 default:
