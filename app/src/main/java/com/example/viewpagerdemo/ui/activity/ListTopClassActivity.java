@@ -7,6 +7,7 @@ import android.view.View;
 import com.alibaba.fastjson.JSON;
 import com.example.viewpagerdemo.ui.adapter.ListTopClassAdpter;
 import com.example.viewpagerdemo.ui.bean.ListTopBean;
+import com.example.viewpagerdemo.ui.jlfragmenwork.Contantor;
 import com.example.viewpagerdemo.ui.jlfragmenwork.baseactivitywork.JLBaseActivity;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.DD;
 import com.xingkesi.foodapp.R;
@@ -53,7 +54,7 @@ public class ListTopClassActivity extends JLBaseActivity {
      * 请求主页商品列表             Contantor.listTop
      */
     void RequsetDatas() {
-        new FinalHttp().post("", null, new AjaxCallBack<String>() {
+        new FinalHttp().post(Contantor.listTop, null, new AjaxCallBack<String>() {
             @Override
             public void onSuccess(String s) {
                 mListTopDatas = JSON.parseArray(s, ListTopBean.class);

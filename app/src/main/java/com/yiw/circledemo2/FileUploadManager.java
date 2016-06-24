@@ -3,7 +3,7 @@ package com.yiw.circledemo2;
 import android.os.Handler;
 import android.util.Log;
 
-import com.example.viewpagerdemo.ui.*;
+import com.example.viewpagerdemo.ui.MyApplication;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.DD;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.TS;
 import com.yiw.circledemo2.bean.ToolsHost;
@@ -22,12 +22,8 @@ import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Interceptor;
-import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.RequestBody;
-import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -86,6 +82,9 @@ public class FileUploadManager {
             e.printStackTrace();
         }
 
+
+
+
         ap.put("content", desp);
         ap.put("userId", com.example.viewpagerdemo.ui.MyApplication.getInstan().getUser().getData().getId() + "");
         String pro, cti, dit, add;
@@ -118,12 +117,15 @@ public class FileUploadManager {
         ap.put("city", cti);
         ap.put("district", dit);
         ap.put("address", add);
-        DD.v("LD发朋友圈:" + rul + "?" + ap.toString());
+        DD.v("LD FSS:" + rul + "?" + ap.toString());
+
+
+      //  SocketHttpRequester.post(rul);
         new FinalHttp().post(rul, ap, new AjaxCallBack<String>() {
             @Override
             public void onSuccess(String s) {
                 super.onSuccess(s);
-                DD.d("LD LD发朋友圈s:" + s);
+                DD.d("LD FSSs:" + s);
                 try {
                     JSONObject js = new JSONObject(s);
                     if (js.getBoolean("success")) {
