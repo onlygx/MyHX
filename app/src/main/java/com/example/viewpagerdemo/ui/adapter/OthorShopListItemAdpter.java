@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -71,9 +72,9 @@ public class OthorShopListItemAdpter extends RecyclerView.Adapter<OthorShopListI
         }
 
         final String title = data.getName();
-        int pic = data.getPrice();
+        double price = data.getPrice();
         vh.otherItemName.setText(title);
-        vh.otherItemPic.setText(pic + "");
+        vh.otherItemPic.setText(price + "");
 
         //--------------------------------------
 
@@ -114,7 +115,7 @@ public class OthorShopListItemAdpter extends RecyclerView.Adapter<OthorShopListI
         @Bind(R.id.other_item_pic)
         TextView otherItemPic;
         @Bind(R.id.other_item_layout)
-        RelativeLayout otherItemLayout;
+        LinearLayout otherItemLayout;
         @Bind(R.id.other_layout)
         RelativeLayout otherLayout;
 

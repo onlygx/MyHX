@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_parent"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
     android:layout_marginTop="20dp"
-    android:orientation="vertical">
-
+   >
+    <!-- banner 轮播 -->
     <LinearLayout
         android:id="@+id/lunb"
         android:layout_width="match_parent"
@@ -32,135 +33,132 @@
             android:orientation="horizontal">
 
         </LinearLayout>
-
     </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/infoLayout"
-        android:layout_below="@+id/lunb"
-        android:layout_marginTop="10dp"
-        android:layout_toLeftOf="@+id/righ"
+    <!-- 具体信息 -->
+    <RelativeLayout
+        android:id="@+id/rl_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/list_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:textSize="18sp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/list_scroe"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textColor="@color/main_text"
-                android:textSize="15sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="分"
-                android:visibility="gone"
-                android:textColor="@color/main_text"
-                android:textSize="15sp" />
-
-            <TextView
-                android:id="@+id/list_num"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:textColor="@color/main_text"
-                android:text=""
-                android:textSize="15sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="人吃过"
-                android:visibility="gone"
-                android:textColor="@color/main_text"
-                android:textSize="15sp" />
-
-            <TextView
-                android:id="@+id/list_addr"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:maxLines="1"
-                android:ellipsize="end"
-                android:textColor="@color/main_text"
-                android:text="11"
-                android:textSize="15sp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="￥"
-                android:textColor="@color/logding_bg"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/list_money"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:text="0"
-                android:textColor="@color/logding_bg"
-                android:textSize="18sp" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
         android:layout_below="@+id/lunb"
         android:layout_marginTop="10dp"
-        android:id="@+id/righ"
-        android:layout_alignParentRight="true"
-        android:orientation="vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        >
+        <LinearLayout
+            android:id="@+id/infoLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/list_image"
+            android:orientation="vertical">
+            <!-- 商品标题 -->
+            <TextView
+                android:id="@+id/list_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:lines="1"
+                android:ellipsize="end"
+                android:layout_marginRight="5dp"
+                android:textSize="18sp" />
+            <!-- 所在地址 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/list_scroe"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:visibility="gone"
+                    android:textColor="@color/main_text"
+                    android:textSize="15sp" />
 
-        <ImageView
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="分"
+                    android:visibility="gone"
+                    android:textColor="@color/main_text"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/list_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:textColor="@color/main_text"
+                    android:text=""
+                    android:visibility="gone"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="人吃过"
+                    android:visibility="gone"
+                    android:textColor="@color/main_text"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/list_addr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:textColor="@color/main_text"
+                    android:text="11"
+                    android:textSize="15sp" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <com.example.viewpagerdemo.ui.jlfragmenwork.util.CircleImageView
             android:id="@+id/list_image"
             android:layout_gravity="right"
             android:src="@drawable/pic"
             android:layout_width="45dp"
             android:layout_marginTop="5dp"
+            android:layout_alignParentRight="true"
             android:layout_height="45dp" />
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/righ"
+        android:layout_below="@+id/rl_title"
+        android:gravity="center_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <!-- 商品价格 -->
+        <TextView
+            android:id="@+id/list_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="0"
+            android:textColor="@color/logding_bg"
+            android:textSize="18sp" />
+        <!-- 店铺名称-->
         <LinearLayout
             android:layout_width="wrap_content"
             android:background="@drawable/tanchu"
             android:layout_marginRight="10dp"
             android:layout_marginTop="5dp"
+            android:layout_alignParentRight="true"
             android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/list_name"
-            android:padding="3dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text=""
-            android:textColor="@color/logding_bg"
-            android:textSize="14sp" />
+            <TextView
+                android:id="@+id/list_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+                android:text=""
+                android:textColor="@color/logding_bg"
+                android:textSize="12sp" />
         </LinearLayout>
-        
-    </LinearLayout>
+    </RelativeLayout>
 
 </RelativeLayout>

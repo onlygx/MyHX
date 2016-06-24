@@ -34,6 +34,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -75,6 +76,8 @@ public class LoginActivity extends JLBaseActivity implements View.OnClickListene
     TextView iv_show;
     @Bind(R.id.rlayout)
     RelativeLayout rlayout;
+    @Bind(R.id.btn_cancel)
+    ImageView btn_cancel;
 
     private String currentUsername;
     private String currentPassword;
@@ -119,6 +122,7 @@ public class LoginActivity extends JLBaseActivity implements View.OnClickListene
         tv_loginForgot.setOnClickListener(this);
         iv_show.setOnClickListener(this);
         bt_logoButton.setOnClickListener(this);
+        btn_cancel.setOnClickListener(this);
         mc = new MyCount(60000, 1000);
     }
 
@@ -272,6 +276,9 @@ public class LoginActivity extends JLBaseActivity implements View.OnClickListene
             case R.id.tv_loginForgot:
                 // startActivity(new Intent(LoginActivity.this, ForgotPasswordActivity.class));
                 registers();
+                break;
+            case R.id.btn_cancel:
+                finish();
                 break;
         }
     }

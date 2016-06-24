@@ -248,7 +248,7 @@ public class IndexRaleaseBean {
          * url : /images/demand/9065134423808427121.jpg
          */
 
-        private List<BannerListBean> bannerList;
+        private List<ShoppingListBanerBean> bannerList;
 
         public String getAddress() {
             return address;
@@ -346,11 +346,11 @@ public class IndexRaleaseBean {
             this.sendUser = sendUser;
         }
 
-        public List<BannerListBean> getBannerList() {
+        public List<ShoppingListBanerBean> getBannerList() {
             return bannerList;
         }
 
-        public void setBannerList(List<BannerListBean> bannerList) {
+        public void setBannerList(List<ShoppingListBanerBean> bannerList) {
             this.bannerList = bannerList;
         }
 
@@ -429,43 +429,5 @@ public class IndexRaleaseBean {
             }
         }
 
-        public static class BannerListBean {
-            private long id;
-            private int type;
-            private long info;
-            private String url;
-
-            public long getId() {
-                return id;
-            }
-
-            public void setId(long id) {
-                this.id = id;
-            }
-
-            public int getType() {
-                return type;
-            }
-
-            public void setType(int type) {
-                this.type = type;
-            }
-
-            public long getInfo() {
-                return info;
-            }
-
-            public void setInfo(long info) {
-                this.info = info;
-            }
-
-            public String getUrl() {
-                return url;
-            }
-
-            public void setUrl(String url) {
-                this.url = url;
-            }
-        }
     }
 }

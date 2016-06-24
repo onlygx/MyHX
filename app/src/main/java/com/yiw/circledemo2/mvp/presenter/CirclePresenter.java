@@ -11,14 +11,14 @@ import com.example.viewpagerdemo.ui.jlfragmenwork.Contantor;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.DD;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.Tools;
 import com.yiw.circledemo2.bean.CommentConfig;
-import com.yiw.circledemo2.bean.FrendBean;
-import com.yiw.circledemo2.bean.ListBean;
-import com.yiw.circledemo2.bean.RecordListBean;
 import com.yiw.circledemo2.bean.ZanListBean;
 import com.yiw.circledemo2.mvp.modle.CircleModel;
 import com.yiw.circledemo2.mvp.modle.IDataRequestListener;
 import com.yiw.circledemo2.mvp.view.ICircleView;
 import com.yiw.circledemo2.utils.DatasUtil;
+import com.yiw.circledemo2.bean.ListBean;
+import com.yiw.circledemo2.bean.RecordListBean;
+import com.yiw.circledemo2.bean.FrendBean;
 
 import net.tsz.afinal.FinalHttp;
 import net.tsz.afinal.http.AjaxCallBack;
@@ -122,18 +122,20 @@ public class CirclePresenter extends BasePresenter<ICircleView> {
             @Override
             public void loadSuccess(Object object) {
 
-                Log.d("LD", "消：" + circlePosition);
-                String id = datas.get(circlePosition).getId();
-                questZ(id, circlePosition);
+                Log.d("LD", "消：" + circlePosition );
+                String id=datas.get(circlePosition).getId();
+                questZ(id);
+               // ZanListBean item = DatasUtil.createCurUserFavortItem();
+               // getView().update2AddFavorite(circlePosition, item);
             }
         });
     }
 
     //点
-    void questZ(String id, final int circlePosition) {
+    void questZ(String id) {
         String url = Contantor.record;
         AjaxParams ap = new AjaxParams();
-        ap.put("userId", MyApplication.getInstan().getUser().getData().getId() + "");
+        ap.put("userId", MyApplication.getInstan().getUser().getData().getId()+"");
         ap.put("infoId", id);
         ap.put("type", "0");
         DD.d("赞说说：" + url + "?" + ap.toString());
@@ -142,16 +144,7 @@ public class CirclePresenter extends BasePresenter<ICircleView> {
             public void onSuccess(String s) {
                 super.onSuccess(s);
                 DD.d("赞说说s：" + s);
-                if (Tools.getSourcess(s)) {
-                    try {
-                        JSONObject js = new JSONObject(s);
-                        String id = js.getJSONObject("data").getString("id");
-                        ZanListBean item = DatasUtil.createCurUserFavortItem(id);
-                        getView().update2AddFavorite(circlePosition, item);
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                if(Tools.getSourcess(s)){
 
 
                 }
@@ -168,27 +161,26 @@ public class CirclePresenter extends BasePresenter<ICircleView> {
 
     //取消赞
     void cancelZ(ZanListBean bena) {
-        String url = Contantor.Canrecord;
+       /* String url = Contantor.record;
         AjaxParams ap = new AjaxParams();
         ap.put("userId", MyApplication.getInstan().getUser().getData().getId()+"");
-//        ap.put("infoId", id);
+        ap.put("infoId", id);
         ap.put("type", "0");
-        DD.d("Z：" + url + "?" + ap.toString());
+        DD.d("赞说说：" + url + "?" + ap.toString());
         new FinalHttp().post(url, ap, new AjaxCallBack<String>() {
             @Override
             public void onSuccess(String s) {
                 super.onSuccess(s);
-                DD.d("Zs：" + s);
+                DD.d("赞说说s：" + s);
             }
 
             @Override
             public void onFailure(Throwable t, int errorNo, String strMsg) {
                 super.onFailure(t, errorNo, strMsg);
             }
-        });
+        });*/
 
     }
-
     void DelePL(String commentId) {
         //删除
         String url = Contantor.delaboe;
@@ -245,61 +237,17 @@ public class CirclePresenter extends BasePresenter<ICircleView> {
             public void loadSuccess(Object object) {
                 RecordListBean newItem = null;
                 if (config.commentType == CommentConfig.Type.PUBLIC) {//创建
-
-                    addPP(config,content);
+                    newItem = DatasUtil.createPublicComment(content);
                 } else if (config.commentType == CommentConfig.Type.REPLY) {//回复
                     newItem = DatasUtil.createReplyComment(config.replyUser, content);
                 }
 
-
+                Log.d("LD", "增加：" + config.circlePosition + "===" + newItem.toString());
                 //getView().update2AddComment(config.circlePosition, newItem);
             }
 
         });
     }
-
-    public void addPP(final CommentConfig config, final String content){
-        String url = Contantor.record;
-        AjaxParams ap = new AjaxParams();
-        ap.put("userId", MyApplication.getInstan().getUser().getData().getId() + "");
-        ap.put("infoId", MyApplication.getUserPYId());
-        ap.put("type", "1");
-        DD.d("fbpl：" + url + "?" + ap.toString());
-        new FinalHttp().post(url, ap, new AjaxCallBack<String>() {
-            @Override
-            public void onSuccess(String s) {
-                super.onSuccess(s);
-                DD.d("fbpls：" + s);
-                if (Tools.getSourcess(s)) {
-                    try {
-                        JSONObject js = new JSONObject(s);
-                        String id = js.getJSONObject("data").getString("id");
-                        RecordListBean  newItem = DatasUtil.createPublicComment(id,content);
-                        getView().update2AddComment(config.circlePosition, newItem);
-
-
-
-
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
-
-                }
-
-            }
-
-            @Override
-            public void onFailure(Throwable t, int errorNo, String strMsg) {
-                super.onFailure(t, errorNo, strMsg);
-            }
-        });
-    }
-
-
-
-
 
     /**
      * @param @param circlePosition
@@ -322,11 +270,12 @@ public class CirclePresenter extends BasePresenter<ICircleView> {
     }
 
 
+
+
     /**
      * @param commentConfig
      */
     public void showEditTextBody(CommentConfig commentConfig) {
-        Log.d("LD","-:"+commentConfig.toString());
         getView().updateEditTextBodyVisible(View.VISIBLE, commentConfig);
     }
 

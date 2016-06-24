@@ -9,31 +9,29 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-
+import android.widget.Toast;
 import com.example.viewpagerdemo.ui.bean.ShoppingListBanerBean;
 import com.example.viewpagerdemo.ui.bean.ShoppingListBean;
 import com.example.viewpagerdemo.ui.activity.EatInfoActivity;
+import com.example.viewpagerdemo.ui.jlfragmenwork.Contantor;
+import com.example.viewpagerdemo.ui.jlfragmenwork.util.CircleImageView;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.DD;
-import com.example.viewpagerdemo.ui.jlfragmenwork.util.TS;
+import com.squareup.picasso.Picasso;
 import com.xingkesi.foodapp.R;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import butterknife.ButterKnife;
 import butterknife.Bind;
-
 
 /**
  * 首页列表适配器
  */
 public class AnnounceItemAdpter extends RecyclerView.Adapter<AnnounceItemAdpter.ViewHolder> {
 
-
     Context c;
     ArrayList<ShoppingListBean> list;
-    int currentItem;
     private ArrayList<View> dots; // 图片标题正文的那些点;
     private List<ShoppingListBanerBean> adList;
     EateAotuAdapter eateAdapter;
@@ -73,52 +71,48 @@ public class AnnounceItemAdpter extends RecyclerView.Adapter<AnnounceItemAdpter.
                 LinearLayout.LayoutParams viewL = new LinearLayout.LayoutParams(10, 10);
                 viewL.setMargins(5, 0, 5, 0);
                 view.setLayoutParams(viewL);
+                if(i==0){
+                    view.setBackgroundResource(R.drawable.dot_focused);
+                }
                 dots.add(view);
                 vh.dot_layout.addView(view);
             }
         }
 
-       /* Picasso.with(c).load(Contantor.Imagepost+url).
-                placeholder(R.drawable.logding)
-                .error(R.drawable.dialogpop_bg2).into(view);*/
-        //--------------------------------------
-        final long shopID=data.getShopId();
-        final int id=data.getId();
-        final String name =data.getName();
-        eateAdapter = new EateAotuAdapter(c, adList,id+"",name);
+        eateAdapter = new EateAotuAdapter(c, adList,data.getId()+"",data.getShopId()+"",data.getName());
         vh.eatVptwo.setAdapter(eateAdapter);// 设置填充ViewPager页面的适配器
         // 设置一个监听器，当ViewPager中的页面改变时调用
         vh.eatVptwo.setOnPageChangeListener(new MyPageChangeListener());
+        /*eateAdapter.setmOnClickItemViewListener(new EateAotuAdapter.onClickItemViewListener() {
+            @Override
+            public void onClick() {
+               *//* Toast.makeText(c,"点击轮播",Toast.LENGTH_LONG);
+                Intent it =new Intent(c, EatInfoActivity.class);
+                it.putExtra("id",data.getId()+"");
+                it.putExtra("shopID",data.getShopId()+"");
+                it.putExtra("name",data.getName()+"");
+                c.startActivity(it);*//*
+            }
+        });*/
+        vh.listTitle.setText(data.getName());//标题名称
 
-        vh.listTitle.setText(data.getName());
-        vh.listScroe.setText(data.getSort() + "");//评分
-        vh.listNum.setText("暂无");//多少人吃过
         vh.listAddr.setText(data.getShopAddress());//地址
-        vh.listMoney.setText(data.getPrice() + "");//价格
+        vh.listMoney.setText("￥"+data.getPrice() + "");//价格
         vh.listName.setText(data.getShopName());//卖家名称
-        //-------------
-        vh.listImage.setImageResource(R.drawable.pic);//卖家头像
+        //店铺头像
+        Picasso.with(c).load(Contantor.Imagepost+data.getShop().getIcon()).
+                placeholder(R.drawable.logding)
+                .error(R.drawable.dialogpop_bg2).into(  vh.listImage);
 
         //商品详情
         vh.infoLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                DD.v("单机了："+name+"=="+id+"=="+shopID);
                 Intent it =new Intent(c, EatInfoActivity.class);
-                it.putExtra("id",id+"");
-                it.putExtra("shopID",shopID+"");
-                it.putExtra("name",name+"");
+                it.putExtra("id",data.getId()+"");
+                it.putExtra("shopID",data.getShopId()+"");
+                it.putExtra("name",data.getName()+"");
                 c.startActivity(it);
-            }
-        });
-
-        //商家信息
-        vh.righ.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TS.shortTime("商家信息");
-
             }
         });
     }
@@ -142,16 +136,16 @@ public class AnnounceItemAdpter extends RecyclerView.Adapter<AnnounceItemAdpter.
     static class ViewHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.list_title)
         TextView listTitle;
-        @Bind(R.id.list_scroe)
+        /*@Bind(R.id.list_scroe)
         TextView listScroe;
         @Bind(R.id.list_num)
-        TextView listNum;
+        TextView listNum;*/
         @Bind(R.id.list_addr)
         TextView listAddr;
         @Bind(R.id.list_money)
         TextView listMoney;
         @Bind(R.id.list_image)
-        ImageView listImage;
+        CircleImageView listImage;
         @Bind(R.id.list_name)
         TextView listName;
         @Bind(R.id.eat_vptwo)
@@ -159,10 +153,13 @@ public class AnnounceItemAdpter extends RecyclerView.Adapter<AnnounceItemAdpter.
         @Bind(R.id.infoLayout)
         LinearLayout infoLayout;
         @Bind(R.id.righ)
-        LinearLayout righ;
+        RelativeLayout righ;
         @Bind(R.id.dotone2)
         LinearLayout dot_layout;
-
+        @Bind(R.id.lunb)
+        LinearLayout lunb;
+        @Bind(R.id.rl_parent)
+        RelativeLayout rl_parent;
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
@@ -170,9 +167,6 @@ public class AnnounceItemAdpter extends RecyclerView.Adapter<AnnounceItemAdpter.
     }
 
     class MyPageChangeListener implements ViewPager.OnPageChangeListener {
-
-        private int oldPosition2 = 0;
-
         @Override
         public void onPageScrollStateChanged(int arg0) {
 
@@ -185,13 +179,14 @@ public class AnnounceItemAdpter extends RecyclerView.Adapter<AnnounceItemAdpter.
 
         @Override
         public void onPageSelected(int position) {
-            currentItem = position;
-            dots.get(oldPosition2).setBackgroundResource(R.drawable.dot_normal);
-            dots.get(position).setBackgroundResource(R.drawable.dot_focused);
-            oldPosition2 = position;
+            Toast.makeText(c,"position"+position,Toast.LENGTH_LONG);
+            for(int i=0;i<dots.size();i++){
+                if(position == i){
+                    dots.get(position).setBackgroundResource(R.drawable.dot_focused);
+                }else{
+                    dots.get(i).setBackgroundResource(R.drawable.dot_normal);
+                }
+            }
         }
     }
-
-
-
 }

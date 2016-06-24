@@ -222,13 +222,9 @@ public class HomeeateListFragment extends JLBaseFragment implements SwipeRefresh
                     eatRecycler.setAdapter(eatReclerViewAdpter);
                     eatReclerViewAdpter.notifyDataSetChanged();
                     eatReclerViewAdpter.getArrayLists().addAll(list);
-                   /* for (int i = 0; i < list.size(); i++) {
-                        DD.d("主页数据打印：" + i + "===list==" + list.get(i).getId() + "==" + list.get(i).getName() + "==");
-                    }*/
                 } else {
                     page = page - 1;
                     num = num - 10;
-                    TS.shortTime("没有数据");
                 }
             }
 

@@ -87,11 +87,12 @@ public class CommentAdapter {
         final CircleMovementMethod circleMovementMethod = new CircleMovementMethod(R.color.name_selector_color,
                 R.color.name_selector_color);
 
+        Log.d("LD","----1:"+mDatas.toString());
         final RecordListBean bean = mDatas.get(position);
-        Log.d("LD","----1:"+bean.toString()+"---"+mDatas.toString());
-        Log.d("LD","----2:"+bean.getUser().toString() );
+     //   Log.d("LD","----1:"+bean.toString()+"---"+mDatas.toString());
+//        Log.d("LD","----2:"+bean.getUser().toString() );
         String name = bean.getUser().getNickName();
-        String id = bean.getId()+"";
+       // String id = bean.getId()+"";
         String toReplyName = "";
         if (bean.getUser() != null) {
             toReplyName = bean.getUser().getNickName();

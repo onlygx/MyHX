@@ -322,6 +322,11 @@
         <activity android:name="com.example.viewpagerdemo.ui.activity.ErWMain2Activity" />
         <activity android:name="com.example.viewpagerdemo.ui.activity.OhterListMainActivity" />
         <activity android:name="com.example.viewpagerdemo.ui.activity.ShenQFrendMainActivity"></activity>
+        <activity android:name="com.example.viewpagerdemo.ui.activity.ListTopClassActivity"></activity>
+
+
+
+
     </application>
 
 </manifest>

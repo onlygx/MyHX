@@ -16,11 +16,11 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <android.support.v4.view.ViewPager
+        <com.example.viewpagerdemo.ui.views.NoScrollbleViewPager
             android:id="@+id/id_page_vp"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"></android.support.v4.view.ViewPager>
+            android:layout_weight="1"/>
 
         <include layout="@layout/activity_main_top_tab" />
     </LinearLayout>

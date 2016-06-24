@@ -251,14 +251,21 @@ public class EatInfoActivity extends JLBaseActivity implements View.OnClickListe
             public void onSuccess(String s) {
                 super.onSuccess(s);
                 DD.d("详情s：" + s);
-                info = JSON.parseObject(s, ShoppingInfoBean.class);
+                try{
+                    info = JSON.parseObject(s, ShoppingInfoBean.class);
+                }catch(Exception e){
+
+                }
+
+                if(info ==null) return;
+
                 shoppingName.setText(info.getName());
                 Qpic = info.getPrice();
                 money.setText(info.getPrice() + "");
                 san_sc.setText(info.getCollectionCount() + "");
                 san_gm.setText(info.getPayCount() + "");
 
-                if (shopID.equals("")) {
+                if (shopID!=null && shopID.equals("") && info!=null) {
                     shopID = info.getShopId() + "";
                 }
 
@@ -294,6 +301,9 @@ public class EatInfoActivity extends JLBaseActivity implements View.OnClickListe
                 }
                 //轮播图数据
                 if (info.getBannerList().size() > 0) {
+                    adList.clear();
+                    dots.clear();
+                    dot_layout.removeAllViews();
                     adList = info.getBannerList();
                     int size = adList.size();
                     //DD.d("详情中的轮播图:" + size + "===" + name);
@@ -352,14 +362,14 @@ public class EatInfoActivity extends JLBaseActivity implements View.OnClickListe
         eatVpone.setAdapter(eateAdapter);// 设置填充ViewPager页面的适配器
         // 设置一个监听器，当ViewPager中的页面改变时调用
         eatVpone.setOnPageChangeListener(new MyPageChangeListener());
+        startAd();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
         getShoppingInfo();
-        startAd();
+
     }
 
     @Override
