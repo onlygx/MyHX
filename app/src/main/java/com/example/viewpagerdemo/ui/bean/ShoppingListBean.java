@@ -1,33 +1,13 @@
 package com.example.viewpagerdemo.ui.bean;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Administrator on 2016/5/24.
  */
 public class ShoppingListBean {
 
-
-    /**
-     * ids : null
-     * seCode : null
-     * id : 363228213
-     * name : 婴儿奶粉
-     * intro : 
-     * price : 98
-     * peiSong : 1
-     * kuaiDi : 1
-     * ziTi : 1
-     * baoYou : 1
-     * youPrice : 0
-     * sort : 3
-     * shopId : 3632282114678831000
-     * setTime : 1463899276000
-     * content : 这里是网页简介
-     * bannerList : null
-     * shopName : 小宝贝卖场
-     * shopAddress : 三孔桥
-     */
 
     private String ids;
     private String seCode;
@@ -44,13 +24,13 @@ public class ShoppingListBean {
     private long shopId;
     private long setTime;
     private String content;
-    private ArrayList<ShoppingListBanerBean> bannerList;
+    private List<ShoppingListBanerBean> bannerList;
     private int bannerSelect;
     private String shopName;
     private String shopAddress;
     private ShoppingListInfoBean shop;
 
-
+    private int isBanner = 0;//是否是banner
 
     public String getIds() {
         return ids;
@@ -172,11 +152,11 @@ public class ShoppingListBean {
         this.content = content;
     }
 
-    public ArrayList<ShoppingListBanerBean> getBannerList() {
+    public List<ShoppingListBanerBean> getBannerList() {
         return bannerList;
     }
 
-    public void setBannerList(ArrayList<ShoppingListBanerBean> bannerList) {
+    public void setBannerList(List<ShoppingListBanerBean> bannerList) {
         this.bannerList = bannerList;
     }
 
@@ -210,5 +190,13 @@ public class ShoppingListBean {
 
     public void setBannerSelect(int bannerSelect) {
         this.bannerSelect = bannerSelect;
+    }
+
+    public int getIsBanner() {
+        return isBanner;
+    }
+
+    public void setIsBanner(int isBanner) {
+        this.isBanner = isBanner;
     }
 }

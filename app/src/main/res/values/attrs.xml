@@ -18,4 +18,12 @@
         <attr name="bottomLineHeight" format="dimension"/>
     </declare-styleable>
 
+
+
+
+    <declare-styleable name="ConvenientBanner">
+        <attr name="canLoop" format="boolean" />
+        <attr name="showStyle" format="integer"/>
+    </declare-styleable>
+
 </resources>

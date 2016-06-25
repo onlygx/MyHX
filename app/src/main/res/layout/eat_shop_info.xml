@@ -63,17 +63,15 @@
 
             </LinearLayout>
 
-
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="60dp"
                 android:background="@color/white"
                 android:gravity="center_vertical">
 
                 <ImageView
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:layout_marginLeft="10dp"
                     android:src="@drawable/cp_gg" />
 
 
@@ -92,13 +90,11 @@
                       android:layout_height="wrap_content">-->
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="100dp"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
                     android:ellipsize="end"
                     android:gravity="center"
-                    android:maxLines="2"
+                    android:maxLines="1"
                     android:text="暂无"
                     android:textColor="@color/gray"
                     android:textSize="18sp" />
@@ -124,7 +120,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="60dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
@@ -144,7 +140,7 @@
                         android:textSize="18sp" />
 
                     <TextView
-                        android:id="@+id/privoer"
+                        android:id="@+id/address"
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
                         android:layout_marginLeft="10dp"
@@ -155,25 +151,6 @@
 
 
                 </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="85dp">
-
-                    <TextView
-                        android:id="@+id/city"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="10dp"
-                        android:gravity="center"
-                        android:text=""
-                        android:textColor="@color/info"
-                        android:textSize="18sp" />
-
-                </LinearLayout>
-
 
             </LinearLayout>
 
@@ -283,7 +260,7 @@
                     android:id="@+id/money_num"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text="10"
+                    tools:text="0.00"
                     android:text=""
                     android:textColor="@color/logding_bg"
                     android:textSize="18sp" />

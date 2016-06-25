@@ -2,6 +2,7 @@ package com.example.viewpagerdemo.ui.activity;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -18,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
 import com.example.viewpagerdemo.ui.adapter.EatShopInfoListAdatper2;
@@ -28,6 +30,7 @@ import com.example.viewpagerdemo.ui.jlfragmenwork.Contantor;
 import com.example.viewpagerdemo.ui.jlfragmenwork.baseactivitywork.JLBaseActivity;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.DD;
 import com.example.viewpagerdemo.ui.jlfragmenwork.view.BadgeView;
+import com.example.viewpagerdemo.ui.units.StringUtils;
 import com.xingkesi.foodapp.R;
 
 import net.tsz.afinal.FinalHttp;
@@ -67,10 +70,8 @@ public class EatShopInfoActivity extends JLBaseActivity implements View.OnClickL
             TextView addrson;*/
    /* @Bind(R.id.shop_name)//主打菜
             TextView shop_name;*/
-    @Bind(R.id.privoer)//省区
-            TextView privoer;
-    @Bind(R.id.city)//
-            TextView city;
+    @Bind(R.id.address)//省区
+            TextView address;
     @Bind(R.id.money_num)//
             TextView money_num;
     @Bind(R.id.carlist)//
@@ -137,13 +138,7 @@ public class EatShopInfoActivity extends JLBaseActivity implements View.OnClickL
                 goodsList = sb.getGoodsList();
                 //-----------------------------------------------------
                 shoppingName.setText(sb.getIntro());//简介
-             //   Picasso.with(EatShopInfoActivity.this).load(Contantor.Imagepost + sb.getIcon()).into(master_iv);//头像
-              //  shop_name.setText(sb.getName());//主打菜
-               // addrson.setText(sb.getProvince() + sb.getCity() + "人");//。。。人
-                privoer.setText(sb.getProvince());//省区
-                city.setText(sb.getCity());//城市
-
-                DD.v("商品数量：" + goodsList.size());
+                address.setText(sb.getAddress());//地址
 
                 //---------------商品列表----------------------------------
                 es = new EatShopInfoListAdatper2(EatShopInfoActivity.this, goodsList, EatShopInfoActivity.this);
@@ -168,9 +163,11 @@ public class EatShopInfoActivity extends JLBaseActivity implements View.OnClickL
         iv_back.setVisibility(View.VISIBLE);
         iv_back.setImageResource(R.drawable.cp_fh);
         iv_right_image.setVisibility(View.VISIBLE);
-        tv_right_text.setVisibility(View.VISIBLE);
         iv_right_image.setImageResource(R.drawable.cp_xx);
-        tv_right_text.setBackgroundResource(R.drawable.icon_share_blue);
+        Drawable drawable= getResources().getDrawable(R.drawable.fenxiang);
+        drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+        tv_right_text.setCompoundDrawables(drawable,null,null,null);
+
         tv_title.setText(name);
 
         WindowManager wm = EatShopInfoActivity.this.getWindowManager();
@@ -180,13 +177,9 @@ public class EatShopInfoActivity extends JLBaseActivity implements View.OnClickL
             @Override
             public void onClick(View v) {
                 //评论页
-                Log.d("LD", "============11:" + id);
-                DD.d("到的：" + id);
                 Intent it = new Intent(EatShopInfoActivity.this, CommentsActivity.class);
                 it.putExtra("id", id);
                 startActivity(it);
-
-
             }
         });
 
@@ -195,7 +188,6 @@ public class EatShopInfoActivity extends JLBaseActivity implements View.OnClickL
         es = new EatShopInfoListAdatper2(getApplicationContext(), goodsList, this);
         mylist.setAdapter(es);
 
-
         getShopInfo();
 
 
@@ -203,7 +195,10 @@ public class EatShopInfoActivity extends JLBaseActivity implements View.OnClickL
         shopme.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if(carLiat==null || carLiat.size()<=0){
+                    Toast.makeText(EatShopInfoActivity.this, "请选择需要购买的商品！", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 Intent it =new Intent(EatShopInfoActivity.this, ShoppingDDCarActivity.class);
                 it.putExtra("id",id);
                 it.putExtra("car",(Serializable)carLiat);
@@ -415,7 +410,6 @@ public class EatShopInfoActivity extends JLBaseActivity implements View.OnClickL
     @Override
     public void setAnim(int sb, ImageView ball, int[] startLocation) {
         ShopInfoListBean sif = goodsList.get(sb);
-        DD.v(carLiat.size() + "加前：" + sif.getCurrNum());
         if (carLiat.size() == 0) {
             carLiat.add(sif);
         } else {
@@ -424,7 +418,6 @@ public class EatShopInfoActivity extends JLBaseActivity implements View.OnClickL
                 ShopInfoListBean si = carLiat.get(i);
                 DD.i(sif.getId()+"==="+si.getId());
                 if (sif.getId() == si.getId()) {
-                    DD.v("包含不加");
                     tag=1;
                     break;
                 }
@@ -432,7 +425,6 @@ public class EatShopInfoActivity extends JLBaseActivity implements View.OnClickL
             if(tag==0){
                 carLiat.add(sif);
             }
-            DD.v(carLiat.size() + "加完：" + sif.getCurrNum());
         }
         double money = sif.getPrice();
         setAnims(ball, startLocation);
@@ -444,7 +436,7 @@ public class EatShopInfoActivity extends JLBaseActivity implements View.OnClickL
             txtMoney = Double.parseDouble(str);
         }
         double num = txtMoney + money;
-        money_num.setText(num + "");
+        money_num.setText(StringUtils.toTwoDouble(num) + "");
     }
 
     @Override
@@ -452,7 +444,6 @@ public class EatShopInfoActivity extends JLBaseActivity implements View.OnClickL
         buyNum--;//让购买数量加1
         buyNumView.setText(buyNum + "");//
         ShopInfoListBean sif = goodsList.get(sb);
-        DD.v(carLiat.size() + "循环jian移除前甲烷：" + sif.getCurrNum());
         if (carLiat.size() > 0 &&  sif.getCurrNum()==0) {
                 for (int i = 0; i < carLiat.size(); i++) {
                     ShopInfoListBean si = carLiat.get(i);
@@ -471,8 +462,7 @@ public class EatShopInfoActivity extends JLBaseActivity implements View.OnClickL
             txtMoney = Double.parseDouble(str);
         }
         double num = txtMoney - money;
-        money_num.setText(num + "");
-        DD.v(carLiat.size() + "循环jian移除--后甲烷：" + sif.getCurrNum());
+        money_num.setText(StringUtils.toTwoDouble(num) + "");
     }
 
     @Override
@@ -491,7 +481,7 @@ public class EatShopInfoActivity extends JLBaseActivity implements View.OnClickL
             txtMoney = Double.parseDouble(str);
         }
         double num = txtMoney + money;
-        money_num.setText(num + "");
+        money_num.setText(StringUtils.toTwoDouble(num) + "");
 
        // v.setVisibility(View.GONE);
         buyNum++;//让购买数量加1
@@ -517,7 +507,7 @@ public class EatShopInfoActivity extends JLBaseActivity implements View.OnClickL
             txtMoney = Double.parseDouble(str);
         }
         double num = txtMoney - money;
-        money_num.setText(num + "");
+        money_num.setText(StringUtils.toTwoDouble(num) + "");
 
         //v.setVisibility(View.GONE);
         buyNum--;//让购买数量加1

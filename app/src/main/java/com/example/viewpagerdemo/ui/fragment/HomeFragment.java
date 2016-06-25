@@ -128,31 +128,6 @@ public class HomeFragment extends JLBaseFragment {
             public void onClick(View v) {
                 startActivity(new Intent(getActivity(), ListTopClassActivity.class));
                 final MyDialog md = new MyDialog(getActivity(), R.style.dialog);
-               /* md.setContentView(R.layout.other_layout);
-                md.setCanceledOnTouchOutside(true);
-                LinearLayout ot0 = (LinearLayout) md.getWindow().findViewById(R.id.ot0);
-                LinearLayout ot1 = (LinearLayout) md.getWindow().findViewById(R.id.ot1);
-
-                ot0.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        TS.shortTime("糖果");
-                        startActivity(new Intent(getActivity(), OhterListMainActivity.class));
-                        md.cancel();
-
-                    }
-                });
-                ot1.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        startActivity(new Intent(getActivity(), OhterListMainActivity.class));
-                        TS.shortTime("水果");
-                        md.cancel();
-                    }
-                });
-
-                md.show();*/
-
             }
         });
     }

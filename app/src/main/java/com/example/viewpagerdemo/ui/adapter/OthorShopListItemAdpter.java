@@ -74,7 +74,7 @@ public class OthorShopListItemAdpter extends RecyclerView.Adapter<OthorShopListI
         final String title = data.getName();
         double price = data.getPrice();
         vh.otherItemName.setText(title);
-        vh.otherItemPic.setText(price + "");
+        vh.otherItemPic.setText("￥ "+price + "");
 
         //--------------------------------------
 
@@ -83,7 +83,6 @@ public class OthorShopListItemAdpter extends RecyclerView.Adapter<OthorShopListI
         vh.otherLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 DD.v("单机了：" + title + "==" + id + "==" + shopID);
                 Intent it = new Intent(c, EatInfoActivity.class);
                 it.putExtra("id", id + "");
@@ -92,8 +91,6 @@ public class OthorShopListItemAdpter extends RecyclerView.Adapter<OthorShopListI
                 c.startActivity(it);
             }
         });
-
-
     }
 
     @Override

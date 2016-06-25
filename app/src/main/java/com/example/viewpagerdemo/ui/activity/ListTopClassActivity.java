@@ -3,6 +3,7 @@ package com.example.viewpagerdemo.ui.activity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.alibaba.fastjson.JSON;
 import com.example.viewpagerdemo.ui.adapter.ListTopClassAdpter;
@@ -32,6 +33,9 @@ public class ListTopClassActivity extends JLBaseActivity {
 
     @Bind(R.id.refresh_view)
     RecyclerView refresh_view;
+
+    @Bind(R.id.lin_parent)
+    LinearLayout lin_parent;
 
     ListTopClassAdpter mListTopAdapter;
 
@@ -69,9 +73,12 @@ public class ListTopClassActivity extends JLBaseActivity {
         });
     }
 
-    @OnClick({})
+    @OnClick({R.id.lin_parent})
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.lin_parent:
+                finish();
+                break;
         }
     }
 }

@@ -6,14 +6,20 @@ package com.example.viewpagerdemo.ui.bean;
 public class ShoppingListBanerBean {
 
     private Long id;
-
     private Integer type;
-
     private String intro;
-
     private String url;
+    private String name;
+    private Long info;//商品id
 
-    private Long info;
+/*
+    String id;
+    String name;
+    String url;
+    String type;
+    String intro;
+    String info;*/
+
 
 
     public Long getId() {
@@ -54,5 +60,13 @@ public class ShoppingListBanerBean {
 
     public void setInfo(Long info) {
         this.info = info;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

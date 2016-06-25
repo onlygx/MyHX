@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -19,6 +21,7 @@ import com.example.viewpagerdemo.ui.activity.ShenQFrendMainActivity;
 import com.example.viewpagerdemo.ui.bean.AddBookBean;
 import com.example.viewpagerdemo.ui.bean.ShenQBean;
 import com.example.viewpagerdemo.ui.jlfragmenwork.Contantor;
+import com.example.viewpagerdemo.ui.jlfragmenwork.actvity.LoginActivity;
 import com.example.viewpagerdemo.ui.jlfragmenwork.basefregmetwork.JLBaseFragment;
 import com.example.viewpagerdemo.ui.jlfragmenwork.city.CityAdapter;
 import com.example.viewpagerdemo.ui.jlfragmenwork.city.CityData;
@@ -63,7 +66,8 @@ public class AddressBookFragment extends JLBaseFragment implements TextWatcher, 
     EditText searchBox;
     @Bind(R.id.noLoa)
     LinearLayout noLoa;
-
+    @Bind(R.id._add_log)
+    Button _add_log;
     private String searchString;
     private Object searchLock = new Object();
     boolean inSearchMode = false;
@@ -87,6 +91,14 @@ public class AddressBookFragment extends JLBaseFragment implements TextWatcher, 
     @Override
     public void onResume() {
         super.onResume();
+        //登录状态
+        //登录状态
+        if (MyApplication.getInstan().getUser() != null && MyApplication.getInstan().getUser().getData().getThinksId() != null) {
+            noLoa.setVisibility(View.GONE);
+        } else {
+            noLoa.setVisibility(View.VISIBLE);
+        }
+
         if (MyApplication.getInstan().getUser() != null &&
                 MyApplication.getInstan().getUser().getData().getThinksId() != null) {
             DD.v("友---------onResume------------------");
@@ -181,8 +193,16 @@ public class AddressBookFragment extends JLBaseFragment implements TextWatcher, 
         });*/
 
         searchBox.addTextChangedListener(this);
-
-
+        //登录按钮
+         _add_log.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.putExtra("tag", "finsh");
+                intent.setClass(getActivity(), LoginActivity.class);
+                startActivity(intent);
+            }
+        });
         //处理好友申请列表
         iv_back.setOnClickListener(new View.OnClickListener() {
             @Override

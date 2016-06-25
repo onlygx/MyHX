@@ -3,13 +3,14 @@
     android:id="@+id/layouts"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/waiter"
     >
 
     <include android:id="@+id/header" layout="@layout/jl_base_title_layout" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/logding_bg"
         android:layout_below="@+id/header"
         android:orientation="vertical">

@@ -67,6 +67,9 @@ public class EatInfoActivity extends JLBaseActivity implements View.OnClickListe
 
     @Bind(R.id.iv_right_text)
     ImageView iv_right_text;
+    @Bind(R.id.tv_right_text)
+    TextView tv_right_text;
+
     //--------------轮班---------------
     @Bind(R.id.eat_vpone)
     ViewPager eatVpone;
@@ -304,6 +307,8 @@ public class EatInfoActivity extends JLBaseActivity implements View.OnClickListe
                 if (info.getBannerList().size() > 0) {
                     adList = info.getBannerList();
                     int size = adList.size();
+                    dots .clear();
+                    dot_layout.removeAllViews();
                     //DD.d("详情中的轮播图:" + size + "===" + name);
                     for (int i = 0; i < size; i++) {
                         ImageView view = new ImageView(EatInfoActivity.this);
@@ -335,8 +340,12 @@ public class EatInfoActivity extends JLBaseActivity implements View.OnClickListe
         iv_right_image.setVisibility(View.VISIBLE);
         iv_right_text.setVisibility(View.VISIBLE);
         iv_right_image.setImageResource(R.drawable.cp_xx);
-        iv_right_text.setBackgroundResource(R.drawable.icon_share_blue);
         tv_title.setText(name);
+        Drawable drawable= getResources().getDrawable(R.drawable.fenxiang);
+        drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+        tv_right_text.setCompoundDrawables(drawable,null,null,null);
+
+
         //
         iv_right_image.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -360,6 +369,7 @@ public class EatInfoActivity extends JLBaseActivity implements View.OnClickListe
         eatVpone.setAdapter(eateAdapter);// 设置填充ViewPager页面的适配器
         // 设置一个监听器，当ViewPager中的页面改变时调用
         eatVpone.setOnPageChangeListener(new MyPageChangeListener());
+        startAd();
 
 
         //分享
@@ -393,9 +403,7 @@ public class EatInfoActivity extends JLBaseActivity implements View.OnClickListe
     @Override
     protected void onResume() {
         super.onResume();
-
         getShoppingInfo();
-        startAd();
     }
 
     @Override

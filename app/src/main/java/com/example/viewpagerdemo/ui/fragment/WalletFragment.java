@@ -1,6 +1,7 @@
 package com.example.viewpagerdemo.ui.fragment;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -81,11 +82,9 @@ public class WalletFragment extends JLBaseFragment {
         tv_title.setText("钱包");
         //登录状态
         if (MyApplication.getInstan().getUser() != null && MyApplication.getInstan().getUser().getData().getThinksId() != null) {
-            tv_title.setTextColor(getResources().getColor(R.color.waiter));
             noLoa.setVisibility(View.GONE);
         } else {
             noLoa.setVisibility(View.VISIBLE);
-            tv_title.setTextColor(getResources().getColor(R.color.logding_bg));
         }
 
 
@@ -257,11 +256,21 @@ public class WalletFragment extends JLBaseFragment {
     @Override
     public void onStart() {
         super.onStart();
-        DD.v("219---------------------------");
 
     }
 
-   /* public enum OrderChildPage {
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.e("x","--------------------Onresume");
+        //登录状态
+        if (MyApplication.getInstan().getUser() != null && MyApplication.getInstan().getUser().getData().getThinksId() != null) {
+            noLoa.setVisibility(View.GONE);
+        } else {
+            noLoa.setVisibility(View.VISIBLE);
+        }
+    }
+    /* public enum OrderChildPage {
         NOT_FINISH(0, "收款") {
             @Override
             public Fragment buildFragment() {

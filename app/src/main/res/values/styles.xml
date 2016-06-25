@@ -7,6 +7,18 @@
         <!--<item name="actionBarTheme">@style/actionBarTheme</item>-->
         <!--<item name="actionBarPopupTheme">@style/actionBarPopupTheme</item>-->
     </style>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryDark">@color/black</item>
+        <item name="colorAccent">@color/gray_text</item>
+    </style>
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
     <!-- 设置ActionBar菜单字体 -->
     <style name="ActionMenuTextStyle" parent="TextAppearance.AppCompat.Widget.ActionBar.Menu">
         <item name="android:textSize">@dimen/action_text_size</item>
@@ -40,10 +52,6 @@
         <item name="android:backgroundDimAmount">0.6</item>
     </style>
 
-    <!-- Application theme. -->
-    <style name="AppTheme" parent="AppBaseTheme">
-        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
-    </style>
     <style name="Dialog_Fullscreen">
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowNoTitle">true</item>
@@ -154,5 +162,11 @@
         <!-- 显示对话框时当前的屏幕是否变暗 -->
         <item name="android:backgroundDimEnabled">true</item>
     </style>
+
+
+    <style name="m_loading">
+        <item name="android:indeterminateDrawable">@drawable/loading</item>
+    </style>
+
 
 </resources>

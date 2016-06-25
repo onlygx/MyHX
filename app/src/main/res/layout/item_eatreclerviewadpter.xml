@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
     android:layout_marginTop="20dp"
@@ -16,23 +16,11 @@
         android:layout_marginTop="10dp"
         android:orientation="vertical">
 
-        <android.support.v4.view.ViewPager
-            android:id="@+id/eat_vptwo"
+        <com.example.viewpagerdemo.ui.views.banner.ConvenientBanner
+            android:id="@+id/convenientBanner"
             android:layout_width="match_parent"
-            android:layout_height="190dp"
-            android:layout_gravity="center"
-            android:gravity="center" />
-
-        <LinearLayout
-            android:id="@+id/dotone2"
-            android:layout_width="match_parent"
-            android:layout_height="10dp"
-            android:layout_marginTop="-15dp"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-        </LinearLayout>
-
+            android:layout_height="160dp"
+            />
     </LinearLayout>
 
     <LinearLayout
@@ -50,6 +38,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text=""
+            android:lines="1"
+            android:ellipsize="end"
             android:textSize="18sp" />
 
         <LinearLayout
@@ -135,7 +125,7 @@
     <LinearLayout
         android:layout_below="@+id/lunb"
         android:layout_marginTop="10dp"
-        android:id="@+id/righ"
+        android:id="@+id/shop_layout"
         android:layout_alignParentRight="true"
         android:orientation="vertical"
         android:layout_width="wrap_content"

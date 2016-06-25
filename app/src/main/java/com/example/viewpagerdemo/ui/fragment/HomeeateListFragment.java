@@ -17,6 +17,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.example.viewpagerdemo.ui.bean.EatOneBaen;
 import com.example.viewpagerdemo.ui.bean.ShopingBean;
+import com.example.viewpagerdemo.ui.bean.ShoppingListBanerBean;
 import com.example.viewpagerdemo.ui.bean.ShoppingListBean;
 import com.example.viewpagerdemo.ui.MyApplication;
 import com.example.viewpagerdemo.ui.adapter.AnnounceItemAdpter;
@@ -48,66 +49,52 @@ import butterknife.Bind;
  */
 public class HomeeateListFragment extends JLBaseFragment implements SwipeRefreshLayout.OnRefreshListener {
 
-    @Bind(R.id.eat_vpone)
-    ViewPager eatVpone;
 
     @Bind(R.id.eat_recycler)
-    RecyclerView eatRecycler;
+    RecyclerView recycler_view;
     @Bind(R.id.refreshlayout)
     SwipeRefreshLayout refreshlayout;
 
-    @Bind(R.id.dotone)
-    LinearLayout dot_layout;
-
-
-    @Bind(R.id.sc)
-    ScrollView sc;
 
     int page = 1;
     int num = 10;
     boolean tag = true;
 
 
-    //-------------第1轮-----------------------
-    private ArrayList<View> dots; // 图片标题正文的那些点
-    private int currentItem = 0; // 当前图片的索引号
-    ScheduledExecutorService scheduledExecutorService;
-    EateMainAotuAdapter eateAdapter;
-    // 轮播banner的数据
-    private List<EatOneBaen> adList;
 
+    private ShoppingListBean  bannerBean;
 
     //--------------列表---------------------------------
-    ArrayList<ShoppingListBean> list;
-    AnnounceItemAdpter eatReclerViewAdpter;
+    ArrayList<ShoppingListBean> mDatas = new ArrayList<>();
+    AnnounceItemAdpter mAdpter;
     int scrollPostion = 0;
-    LinearLayoutManager manager;
-
-
-    private Handler handler = new Handler() {
-        public void handleMessage(android.os.Message msg) {
-            eatVpone.setCurrentItem(currentItem);
-        }
-    };
-
 
     @Override
     public int setViewLayout() {
         return R.layout.homeeatelistfragmet;
     }
 
+
     @Override
-    public void SetData() {
-        RequestBanner();
-        RequsetDatas();
-        sc.smoothScrollBy(0, 0);
-        eatRecycler.setOnScrollListener(new RecyclerView.OnScrollListener() {
+    public void InitObject() {
+        // 广告数据
+        recycler_view.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mAdpter = new AnnounceItemAdpter(getActivity(),mDatas);
+        recycler_view.setAdapter(mAdpter);
+        recycler_view.setAdapter(mAdpter);
+/*        recycler_view.setHasFixedSize(true);
+        refreshlayout.setProgressBackgroundColorSchemeResource(R.color.white);
+        refreshlayout.setColorSchemeColors(Color.BLUE);
+        refreshlayout.setSize(SwipeRefreshLayout.DEFAULT);*/
+        refreshlayout.setOnRefreshListener(this);
+        mAdpter.notifyDataSetChanged();
+
+        recycler_view.setOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-
                 if (newState == RecyclerView.SCROLL_STATE_IDLE && scrollPostion + 1
-                        == eatReclerViewAdpter.getItemCount() && tag) {
+                        == mAdpter.getItemCount() && tag) {
                     page = page + 1;
                     num = num + 10;
                     RequsetDatas();
@@ -119,33 +106,22 @@ public class HomeeateListFragment extends JLBaseFragment implements SwipeRefresh
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                scrollPostion = ((LinearLayoutManager) eatRecycler.getLayoutManager()).findLastVisibleItemPosition();
-                if (scrollPostion != eatReclerViewAdpter.getItemCount()) {
+                scrollPostion = ((LinearLayoutManager) recycler_view.getLayoutManager()).findLastVisibleItemPosition();
+                if (scrollPostion != mAdpter.getItemCount()) {
                     tag = true;
                 }
             }
         });
-
     }
+
 
 
     @Override
-    public void onPause() {
-        super.onPause();
-        if (scheduledExecutorService != null) {
-            scheduledExecutorService.shutdown();
-        }
+    public void SetData() {
+        RequestBanner();
+        RequsetDatas();
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-    }
 
     /**
      * 主页Banner图片
@@ -155,25 +131,22 @@ public class HomeeateListFragment extends JLBaseFragment implements SwipeRefresh
             @Override
             public void onSuccess(String s) {
                 super.onSuccess(s);
-                DD.v("轮播图:" + s);
                 if (s != null) {
-                    adList = JSONArray.parseArray(s, EatOneBaen.class);
-                    for (int i = 0; i < adList.size(); i++) {
-                        ImageView view = new ImageView(getActivity());
-                        view.setBackgroundResource(R.drawable.dot_normal);
-                        LinearLayout.LayoutParams viewL = new LinearLayout.LayoutParams(10, 10);
-                        viewL.setMargins(5, 0, 5, 0);
-                        view.setLayoutParams(viewL);
-                        dots.add(view);
-                        dot_layout.addView(view);
+                 List<ShoppingListBanerBean>  bannerList = JSONArray.parseArray(s, ShoppingListBanerBean.class);
+
+                    ShoppingListBean bannerListBean = new ShoppingListBean();
+                    bannerListBean.setBannerList(bannerList);
+                    bannerListBean.setIsBanner(1);
+                    bannerBean = bannerListBean;
+                    List<ShoppingListBean> listBanner = new ArrayList<>();
+                    listBanner.add(bannerListBean);
+                    for(int i=0;i<mDatas.size();i++){
+                        listBanner.add(mDatas.get(i));
                     }
-                    eateAdapter = new EateMainAotuAdapter(getActivity(), adList);
-                    eatVpone.setAdapter(eateAdapter);// 设置填充ViewPager页面的适配器
-                    eateAdapter.notifyDataSetChanged();
-                    // 设置一个监听器，当ViewPager中的页面改变时调用
-                    han.sendEmptyMessage(0);
-
-
+                    mDatas.clear();
+                    mDatas.addAll(listBanner);
+                    mAdpter.notifyDataSetChanged();
+                    Log.e("x","--------------Datas:"+mDatas.size());
                 }
             }
 
@@ -185,24 +158,12 @@ public class HomeeateListFragment extends JLBaseFragment implements SwipeRefresh
 
     }
 
-    Handler han = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            if (eatVpone != null)
-                eatVpone.setOnPageChangeListener(new MyPageChangeListener());
-
-            startAd();
-        }
-    };
 
 
     /**
      * 请求主页商品列表
      */
     void RequsetDatas() {
-
-        //showWait();
         AjaxParams map = new AjaxParams();
         map.put("page", page + "");//页码，第几页
         map.put("size", num + "");//每页几条
@@ -212,19 +173,30 @@ public class HomeeateListFragment extends JLBaseFragment implements SwipeRefresh
             @Override
             public void onSuccess(String s) {
                 ShopingBean sb = JSON.parseObject(s, ShopingBean.class);
-                list = sb.getList();
                 DD.v("主页返回数据：" + s);
                 if (refreshlayout.isRefreshing()) {
                     refreshlayout.setRefreshing(false);
                 }
-                if (list.size() > 0) {
-                    eatReclerViewAdpter = new AnnounceItemAdpter(getActivity());
-                    eatRecycler.setAdapter(eatReclerViewAdpter);
-                    eatReclerViewAdpter.notifyDataSetChanged();
-                    eatReclerViewAdpter.getArrayLists().addAll(list);
-                } else {
-                    page = page - 1;
-                    num = num - 10;
+                if(sb!=null && sb.getList().size()>0) {
+                    //第一页
+                    if(page ==1){
+                        mDatas.clear();
+                        if(bannerBean!=null){
+                            mDatas.add(bannerBean);
+                        }
+                    }
+
+                    for (int i = 0; i < sb.getList().size(); i++) {
+                        mDatas.add(sb.getList().get(i));
+                    }
+
+                    if (sb.getList().size()<10) {
+                    } else {
+                        page = page - 1;
+                        num = num - 10;
+                    }
+                    Log.e("x","--------------Datas:"+mDatas.size());
+                    mAdpter.notifyDataSetChanged();
                 }
             }
 
@@ -242,41 +214,22 @@ public class HomeeateListFragment extends JLBaseFragment implements SwipeRefresh
     }
 
 
+
     @Override
-    public void InitObject() {
-        dots = new ArrayList<>();
-        // 广告数据
-        adList = new ArrayList<>();// = testgetBannerAd();
-        list = new ArrayList<>();
-        eatReclerViewAdpter = new AnnounceItemAdpter(getActivity());
-
-       /* eatReclerViewAdpter.setOnBannerSelectItemClitener(new AnnounceItemAdpter.OnBannerSelectItemClitener() {
-            @Override
-            public void onBanner(int position, int select) {
-                list.get(position).setBannerSelect(select);
-                eatReclerViewAdpter.notifyDataSetChanged();
-            }
-        });*/
-        eatRecycler.setAdapter(eatReclerViewAdpter);
-        eatRecycler.setHasFixedSize(true);
-        manager = new LinearLayoutManager(getActivity());
-        eatRecycler.setLayoutManager(manager);
-        refreshlayout.setProgressBackgroundColorSchemeResource(R.color.white);
-        refreshlayout.setColorSchemeColors(Color.BLUE);
-        refreshlayout.setSize(SwipeRefreshLayout.DEFAULT);
-        refreshlayout.setOnRefreshListener(this);
-
-
-
+    public void onPause() {
+        super.onPause();
     }
 
-
-    private void startAd() {
-//        if(scheduledExecutorService==null)
-        scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
-        // 当Activity显示出来后，每两秒切换一次图片显示
-        scheduledExecutorService.scheduleAtFixedRate(new ScrollTask(), 1, 2, TimeUnit.SECONDS);
+    @Override
+    public void onResume() {
+        super.onResume();
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
+
 
     @Override
     public void onRefresh() {
@@ -286,45 +239,9 @@ public class HomeeateListFragment extends JLBaseFragment implements SwipeRefresh
         RequsetDatas();
     }
 
-    private class ScrollTask implements Runnable {
-
-        @Override
-        public void run() {
-            synchronized (eatVpone) {
-                currentItem = (currentItem + 1) % adList.size();
-                handler.obtainMessage().sendToTarget();
-            }
-        }
-    }
-
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-    }
-
-
-    class MyPageChangeListener implements ViewPager.OnPageChangeListener {
-
-        int oldPosition = 0;
-
-        @Override
-        public void onPageScrollStateChanged(int arg0) {
-
-        }
-
-        @Override
-        public void onPageScrolled(int arg0, float arg1, int arg2) {
-
-        }
-
-        @Override
-        public void onPageSelected(int position) {
-            currentItem = position;
-            dots.get(oldPosition).setBackgroundResource(R.drawable.dot_normal);
-            dots.get(position).setBackgroundResource(R.drawable.dot_focused);
-            oldPosition = position;
-        }
     }
 
 

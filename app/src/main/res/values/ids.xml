@@ -36,4 +36,8 @@
   
   <item type="id" name="about_version_code">false</item>
   <item type="id" name="split">false</item>
+
+
+
+  <item name="cb_item_tag" type="id"></item>
 </resources>
