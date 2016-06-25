@@ -1,6 +1,8 @@
 package com.example.viewpagerdemo.ui.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.viewpagerdemo.ui.activity.EatInfoActivity;
 import com.example.viewpagerdemo.ui.bean.ShopInfoListBean;
 import com.example.viewpagerdemo.ui.Contantor;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.DD;
@@ -97,6 +100,7 @@ public class EatShopInfoListAdatper2 extends BaseAdapter {
         vh.listGongx.setText(cb.getContent());//介绍
         vh.money.setText(cb.getPrice() + "");//现价
         vh.listOldmoney.setText(cb.getPrice() + "");//原价
+        vh.listOldmoney.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG); //中划线
         StringBuffer str = new StringBuffer();
 
 
@@ -148,6 +152,27 @@ public class EatShopInfoListAdatper2 extends BaseAdapter {
                 vh.ivKd2.setVisibility(View.VISIBLE);
             }
         }
+
+        vh.image_small.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent it =new Intent(context, EatInfoActivity.class);
+                it.putExtra("id",cb.getId()+"");
+                it.putExtra("shopID",cb.getShopId()+"");
+                it.putExtra("name",cb.getName()+"");
+                context.startActivity(it);
+            }
+        });
+        vh.listCongtent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent it =new Intent(context, EatInfoActivity.class);
+                it.putExtra("id",cb.getId()+"");
+                it.putExtra("shopID",cb.getShopId()+"");
+                it.putExtra("name",cb.getName()+"");
+                context.startActivity(it);
+            }
+        });
 
 
         vh.addNum.setOnClickListener(new View.OnClickListener() {

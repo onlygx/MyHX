@@ -5,8 +5,13 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
+<<<<<<< HEAD
 import android.widget.AdapterView;
+=======
+import android.widget.Button;
+>>>>>>> origin/master
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -22,6 +27,11 @@ import com.example.viewpagerdemo.ui.activity.ABooksZActivity;
 import com.example.viewpagerdemo.ui.activity.ShenQFrendMainActivity;
 import com.example.viewpagerdemo.ui.bean.AddBookBean;
 import com.example.viewpagerdemo.ui.bean.ShenQBean;
+<<<<<<< HEAD
+=======
+import com.example.viewpagerdemo.ui.jlfragmenwork.Contantor;
+import com.example.viewpagerdemo.ui.jlfragmenwork.actvity.LoginActivity;
+>>>>>>> origin/master
 import com.example.viewpagerdemo.ui.jlfragmenwork.basefregmetwork.JLBaseFragment;
 import com.example.viewpagerdemo.ui.jlfragmenwork.city.CityAdapter;
 import com.example.viewpagerdemo.ui.jlfragmenwork.city.CityData;
@@ -66,7 +76,8 @@ public class AddressBookFragment extends JLBaseFragment implements TextWatcher, 
     EditText searchBox;
     @Bind(R.id.noLoa)
     LinearLayout noLoa;
-
+    @Bind(R.id._add_log)
+    Button _add_log;
     private String searchString;
     private Object searchLock = new Object();
     boolean inSearchMode = false;
@@ -91,6 +102,14 @@ public class AddressBookFragment extends JLBaseFragment implements TextWatcher, 
     @Override
     public void onResume() {
         super.onResume();
+        //登录状态
+        //登录状态
+        if (MyApplication.getInstan().getUser() != null && MyApplication.getInstan().getUser().getData().getThinksId() != null) {
+            noLoa.setVisibility(View.GONE);
+        } else {
+            noLoa.setVisibility(View.VISIBLE);
+        }
+
         if (MyApplication.getInstan().getUser() != null &&
                 MyApplication.getInstan().getUser().getData().getThinksId() != null) {
             getFrd();
@@ -105,7 +124,6 @@ public class AddressBookFragment extends JLBaseFragment implements TextWatcher, 
             //可见时加载数据相当于Fragment的onResume
             if (MyApplication.getInstan().getUser() != null &&
                     MyApplication.getInstan().getUser().getData().getThinksId() != null) {
-                DD.v("友---------------------------");
                 getFrd();
                 getNewNum();
             }
@@ -116,6 +134,7 @@ public class AddressBookFragment extends JLBaseFragment implements TextWatcher, 
     void getNewNum() {
         AjaxParams pa = new AjaxParams();
         pa.put("userId", MyApplication.getInstan().getUser().getData().getId() + "");
+<<<<<<< HEAD
         String url = Contantor.applyListByUserId;
        // DD.d("通讯录最新数量:" + url + "?" + pa.toString());
         new FinalHttp().post(url, pa, new AjaxCallBack<String>() {
@@ -123,6 +142,12 @@ public class AddressBookFragment extends JLBaseFragment implements TextWatcher, 
             public void onSuccess(String s) {
                 super.onSuccess(s);
               //  DD.d("通讯录最新数量s:" + s);
+=======
+        new FinalHttp().post(Contantor.applyListByUserId, pa, new AjaxCallBack<String>() {
+            @Override
+            public void onSuccess(String s) {
+                super.onSuccess(s);
+>>>>>>> origin/master
                 if (s != null && !s.equals("")) {
                     list = JSONArray.parseArray(s, ShenQBean.class);
                     if (list.size() > 0) {
@@ -208,8 +233,16 @@ public class AddressBookFragment extends JLBaseFragment implements TextWatcher, 
         });*/
 
         searchBox.addTextChangedListener(this);
-
-
+        //登录按钮
+         _add_log.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.putExtra("tag", "finsh");
+                intent.setClass(getActivity(), LoginActivity.class);
+                startActivity(intent);
+            }
+        });
         //处理好友申请列表
         iv_back.setOnClickListener(new View.OnClickListener() {
             @Override

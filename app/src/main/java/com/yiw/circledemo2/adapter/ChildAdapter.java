@@ -1,7 +1,6 @@
 package com.yiw.circledemo2.adapter;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
@@ -157,7 +156,7 @@ public class ChildAdapter {
         return convertView;
     }
 
-    @NonNull
+
     private SpannableString setClickableSpan(final String textStr, final String id) {
         SpannableString subjectSpanText = new SpannableString(textStr);
         subjectSpanText.setSpan(new SpannableClickable() {

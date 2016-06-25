@@ -1,6 +1,7 @@
 package com.example.viewpagerdemo.ui.activity;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
@@ -280,7 +281,9 @@ public class EatShopInfoActivity2 extends JLBaseActivity implements View.OnClick
         iv_right_image.setVisibility(View.VISIBLE);
         tv_right_text.setVisibility(View.VISIBLE);
         iv_right_image.setImageResource(R.drawable.cp_xx);
-        tv_right_text.setBackgroundResource(R.drawable.icon_share_blue);
+        Drawable drawable= getResources().getDrawable(R.drawable.fenxiang);
+        drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+        tv_right_text.setCompoundDrawables(drawable,null,null,null);
         tv_title.setText(name);
         //
         iv_right_image.setOnClickListener(new View.OnClickListener() {

@@ -8,8 +8,6 @@ import com.alibaba.mobileim.aop.custom.IMNotification;
 import com.alibaba.mobileim.conversation.YWConversation;
 import com.alibaba.mobileim.conversation.YWMessage;
 import com.xingkesi.foodapp.R;
-import com.taobao.openimui.demo.DemoApplication;
-import com.taobao.openimui.demo.FragmentTabs;
 
 /**
  * 通知栏的一些自定义设置

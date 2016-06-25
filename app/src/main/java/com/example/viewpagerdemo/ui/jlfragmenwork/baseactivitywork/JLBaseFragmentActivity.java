@@ -26,7 +26,7 @@ public class JLBaseFragmentActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+      //  getWindow().requestFeature(Window.FEATURE_NO_TITLE);
        /* if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             Tools.setTranslucentStatus(JLBaseFragmentActivity.this,true);
             SystemBarTintManager tintManager = new SystemBarTintManager(this);
@@ -51,10 +51,10 @@ public class JLBaseFragmentActivity extends FragmentActivity {
             Window window = getWindow();
                 /*window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
                 WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);*/
-            window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-
+          //  window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+/*
             int statusBarHeight = getStatusBarHeight(this.getBaseContext());
-            view.setPadding(0, statusBarHeight, 0, 0);
+            view.setPadding(0, statusBarHeight, 0, 0);*/
         }
     }
 

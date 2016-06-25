@@ -27,7 +27,6 @@ import com.alibaba.mobileim.ui.thridapp.ParamConstant;
 import com.alibaba.mobileim.utility.YWTrackUtil;
 import com.alibaba.openIMUIDemo.LoginActivity;
 import com.xingkesi.foodapp.R;
-import com.taobao.openimui.demo.DemoApplication;
 import com.taobao.openimui.sample.LoginSampleHelper;
 
 import java.util.List;

@@ -12,6 +12,11 @@ import android.widget.TextView;
 
 import com.example.viewpagerdemo.ui.bean.EatOneBaen;
 import com.example.viewpagerdemo.ui.bean.ShoppingListBean;
+import com.example.viewpagerdemo.ui.units.PixelsUtils;
+import com.example.viewpagerdemo.ui.views.HomeBannerImageHolderView;
+import com.example.viewpagerdemo.ui.views.banner.CBViewHolderCreator;
+import com.example.viewpagerdemo.ui.views.banner.ConvenientBanner;
+import com.example.viewpagerdemo.ui.views.banner.OnItemClickListener;
 import com.xingkesi.foodapp.R;
 
 import java.util.ArrayList;
@@ -73,22 +78,25 @@ public class EatListViewAdpter extends BaseAdapter {
         }
         //ces
         adList = testgetBannerAd();
-        //
 
-        for (int i = 0; i < adList.size(); i++) {
-            ImageView view = new ImageView(c);
-            view.setBackgroundResource(R.drawable.dot_normal);
-            LinearLayout.LayoutParams viewL = new LinearLayout.LayoutParams(10, 10);
-            viewL.setMargins(5, 0, 5, 0);
-            view.setLayoutParams(viewL);
-            dots.add(view);
-            vh.dot_layout.addView(view);
-        }
-       // eateAdapter = new EateAotuAdapter(c, adList);
-        vh.eatVptwo.setAdapter(eateAdapter);// 设置填充ViewPager页面的适配器
-        // 设置一个监听器，当ViewPager中的页面改变时调用
-        vh.eatVptwo.setOnPageChangeListener(new MyPageChangeListener());
+        vh.convenientBanner.setPages(new CBViewHolderCreator<HomeBannerImageHolderView>() {
+            @Override
+            public HomeBannerImageHolderView createHolder() {
+                return new HomeBannerImageHolderView();
+            }
+        }, adList);
+        vh.convenientBanner.setPageIndicator(new int[]{R.drawable.icon_dot_green,
+                R.drawable.icon_dot_white});
+        vh.convenientBanner.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
 
+            }
+        });
+
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                PixelsUtils.getWidth(c)-PixelsUtils.getScale(c,20), PixelsUtils.getScale(c,160));
+        vh.convenientBanner.setLayoutParams(params);
 
         ShoppingListBean data =list.get(position);
 
@@ -109,10 +117,6 @@ public class EatListViewAdpter extends BaseAdapter {
 
 
     /**
-     * This class contains all butterknife-injected Views & Layouts from layout file 'item_eatreclerviewadpter.xml'
-     * for easy to all layout elements.
-     *
-     * @author ButterKnifeZelezny, plugin for Android Studio by Avast Developers (http://github.com/avast)
      */
     static  class ViewHolder {
         @Bind(R.id.list_title)
@@ -129,11 +133,8 @@ public class EatListViewAdpter extends BaseAdapter {
         ImageView listImage;
         @Bind(R.id.list_name)
         TextView listName;
-        @Bind(R.id.eat_vptwo)
-        ViewPager eatVptwo;
-        @Bind(R.id.dotone2)
-        LinearLayout dot_layout;
-
+        @Bind(R.id.convenientBanner)
+        ConvenientBanner convenientBanner;
         ViewHolder(View view) {
             ButterKnife.bind(this, view);
         }
@@ -150,29 +151,5 @@ public class EatListViewAdpter extends BaseAdapter {
             list.add(eb);
         }
         return list;
-    }
-
-
-    class MyPageChangeListener implements ViewPager.OnPageChangeListener {
-
-        private int oldPosition2 = 0;
-
-        @Override
-        public void onPageScrollStateChanged(int arg0) {
-
-        }
-
-        @Override
-        public void onPageScrolled(int arg0, float arg1, int arg2) {
-
-        }
-
-        @Override
-        public void onPageSelected(int position) {
-             currentItem = position;
-            dots.get(oldPosition2).setBackgroundResource(R.drawable.dot_normal);
-            dots.get(position).setBackgroundResource(R.drawable.dot_focused);
-            oldPosition2 = position;
-        }
     }
 }

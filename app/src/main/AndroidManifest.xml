@@ -72,6 +72,7 @@
         <activity
             android:name="com.example.viewpagerdemo.ui.jlfragmenwork.actvity.SplashActivity"
             android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -81,27 +82,39 @@
         </activity>
         <activity
             android:name="com.example.viewpagerdemo.ui.jlfragmenwork.baseactivitywork.JLBaseActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            />
         <activity
             android:name="com.example.viewpagerdemo.ui.activity.MainActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name="com.example.viewpagerdemo.ui.jlfragmenwork.actvity.RegisterActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name="com.example.viewpagerdemo.ui.jlfragmenwork.actvity.NavigationActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name="com.example.viewpagerdemo.ui.jlfragmenwork.actvity.LoginActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name="com.example.viewpagerdemo.ui.activity.EatInfoActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name="com.example.viewpagerdemo.ui.activity.CommentsActivity"
-            android:screenOrientation="portrait" />
-        <activity android:name="com.example.viewpagerdemo.ui.activity.ShoppingDDActivity" />
-        <activity android:name="com.example.viewpagerdemo.ui.activity.ShoppingDDCarActivity" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="com.example.viewpagerdemo.ui.activity.ShoppingDDActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="com.example.viewpagerdemo.ui.activity.ShoppingDDCarActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
 
         <service
             android:name="com.baidu.location.f"
@@ -112,19 +125,45 @@
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="6hcA4CZQyK3B6CL5RkqRuo277ZhOiZQb" />
 
-        <activity android:name="com.example.viewpagerdemo.ui.activity.AllContentActivity" />
-        <activity android:name="com.example.viewpagerdemo.ui.activity.EatShopInfoActivity" />
-        <activity android:name="com.example.viewpagerdemo.ui.activity.AddressActivity" />
-        <activity android:name="com.example.viewpagerdemo.ui.activity.FindActivity" />
-        <activity android:name="com.example.viewpagerdemo.ui.activity.FindSetNameActivity" />
-        <activity android:name="com.example.viewpagerdemo.ui.activity.FindAddreesActivity" />
-        <activity android:name="com.example.viewpagerdemo.ui.activity.SettingPasswordActivity" />
-        <activity android:name="com.example.viewpagerdemo.ui.activity.NoteMainActivity" />
-        <activity android:name="com.example.viewpagerdemo.ui.activity.AboutActivity" />
-        <activity android:name="com.example.viewpagerdemo.ui.activity.AdviceMainActivity" />
-        <activity android:name="com.yiw.circledemo2.CircleFriendsActivity" />
-        <activity android:name="com.yiw.circledemo2.ReleaseFrendActivity" />
-        <activity android:name="com.yiw.circledemo2.ImagePagerActivity" />
+        <activity android:name="com.example.viewpagerdemo.ui.activity.AllContentActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="com.example.viewpagerdemo.ui.activity.EatShopInfoActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="com.example.viewpagerdemo.ui.activity.AddressActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="com.example.viewpagerdemo.ui.activity.FindActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="com.example.viewpagerdemo.ui.activity.FindSetNameActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="com.example.viewpagerdemo.ui.activity.FindAddreesActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="com.example.viewpagerdemo.ui.activity.SettingPasswordActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="com.example.viewpagerdemo.ui.activity.NoteMainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="com.example.viewpagerdemo.ui.activity.AboutActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="com.example.viewpagerdemo.ui.activity.AdviceMainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="com.yiw.circledemo2.CircleFriendsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="com.yiw.circledemo2.ReleaseFrendActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="com.yiw.circledemo2.ImagePagerActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name="com.lidong.photopicker.PhotoPreviewActivity"
             android:theme="@style/PhotoPickerTheme" />
@@ -136,20 +175,43 @@
             android:name="com.yiw.circledemo2.MyGlideModule"
             android:value="GlideModule" />
 
-        <activity android:name="com.example.viewpagerdemo.ui.activity.FindDDListActivity" />
-        <activity android:name="com.example.viewpagerdemo.ui.activity.WakketZhuangZActivity" />
-        <activity android:name="com.example.viewpagerdemo.ui.activity.ABooksZActivity" />
-        <activity android:name="com.example.viewpagerdemo.ui.activity.ColltentMainActivit" />
-        <activity android:name="com.example.viewpagerdemo.ui.activity.PlayMainActivity" />
-        <activity android:name="com.example.viewpagerdemo.ui.activity.ReleaseNeedActivity" />
-        <activity android:name="com.example.viewpagerdemo.ui.activity.MyReleaseListActivity" />
-        <activity android:name="com.example.viewpagerdemo.ui.activity.OrderInfoActivity" />
-        <activity android:name="com.example.viewpagerdemo.ui.activity.PingJiaMainActivity" />
-        <activity android:name="com.example.viewpagerdemo.ui.activity.IndexMainActivity" />
-        <activity android:name="com.example.viewpagerdemo.ui.activity.MyOderListActivity" />
+        <activity android:name="com.example.viewpagerdemo.ui.activity.FindDDListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="com.example.viewpagerdemo.ui.activity.WakketZhuangZActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="com.example.viewpagerdemo.ui.activity.ABooksZActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="com.example.viewpagerdemo.ui.activity.ColltentMainActivit"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="com.example.viewpagerdemo.ui.activity.PlayMainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="com.example.viewpagerdemo.ui.activity.ReleaseNeedActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="com.example.viewpagerdemo.ui.activity.MyReleaseListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="com.example.viewpagerdemo.ui.activity.OrderInfoActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="com.example.viewpagerdemo.ui.activity.PingJiaMainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="com.example.viewpagerdemo.ui.activity.IndexMainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="com.example.viewpagerdemo.ui.activity.MyOderListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name="com.example.viewpagerdemo.ui.activity.AboutWebActivity"
             android:label="@string/title_activity_about_web" />
+
         <activity android:name="com.example.viewpagerdemo.ui.activity.UpdataSexActivity" />
         <activity android:name="com.example.viewpagerdemo.ui.activity.UpdataWXActivity" />
         <activity android:name="com.example.viewpagerdemo.ui.activity.UpdataQQActivity" />
@@ -161,6 +223,38 @@
         <activity android:name="com.yiw.circledemo2.widgets.MyCircleFriendsActivity" />
         <activity android:name="com.example.viewpagerdemo.ui.searchfrend.CityListActivity" />
         <activity android:name="com.example.viewpagerdemo.ui.activity.ListTopClassActivity" />
+
+       <!-- <activity android:name="com.example.viewpagerdemo.ui.activity.UpdataSexActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="com.example.viewpagerdemo.ui.activity.UpdataWXActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="com.example.viewpagerdemo.ui.activity.UpdataQQActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="com.example.viewpagerdemo.ui.activity.UpdataQMActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="com.example.viewpagerdemo.ui.activity.ErWMain2Activity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="com.example.viewpagerdemo.ui.activity.OhterListMainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name="com.example.viewpagerdemo.ui.activity.ShenQFrendMainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name="com.mining.app.ScanMainActivity"></activity>
+        <activity android:name="com.yiw.circledemo2.widgets.MyCircleFriendsActivity"></activity>
+        <activity android:name="com.example.viewpagerdemo.ui.searchfrend.CityListActivity"></activity>
+
+        <activity android:name="com.example.viewpagerdemo.ui.activity.ListTopClassActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            />-->
+
+
         <activity
             android:name="com.karics.library.zxing.android.CaptureActivity"
             android:screenOrientation="portrait"
@@ -190,54 +284,7 @@
             android:name="UMENG_APPKEY"
             android:value="561f5cc8e0f55a08ea006bc7" />
 
-        <activity
-            android:name="com.alibaba.mobileim.ui.WxChattingActvity"
-            android:configChanges="keyboardHidden|orientation"
-            android:screenOrientation="portrait"
-            android:theme="@style/Aliwx_ChattingDetailStyle_default"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity
-            android:name="com.alibaba.mobileim.ui.WxConversationActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:screenOrientation="portrait"
-            android:theme="@style/Aliwx_ConverationStyle_default" />
-        <activity
-            android:name="com.alibaba.mobileim.ui.chat.MultiImageActivity"
-            android:launchMode="singleTop"
-            android:screenOrientation="sensor"
-            android:theme="@style/Aliwx_ContentOverlay_default"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name="com.alibaba.mobileim.ui.multi.lightservice.MultiPickGalleryActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:screenOrientation="portrait"
-            android:theme="@style/Aliwx_ConverationStyle_default" />
 
-        <service
-            android:name="com.alibaba.mobileim.appmonitor.tiptool.TooltipService"
-            android:exported="false" />
-        <service
-            android:name="com.alibaba.tcms.service.TCMSService"
-            android:exported="true"
-            android:process=":TcmsService" />
-        <!-- 用于接收从TCMSService发送的命令 -->
-        <service
-            android:name="com.alibaba.tcms.service.ListenerService"
-            android:exported="true" />
-
-        <!--
-        <activity
-            android:name=".LoginActivity"
-            android:configChanges="orientation|keyboardHidden|navigation"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        -->
 
         <activity
             android:name="com.taobao.openimui.demo.FragmentTabs"
@@ -267,26 +314,7 @@
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:theme="@style/Aliwx_ConverationStyle_default" />
-        <!-- @消息相关 -->
-        <activity
-            android:name="com.alibaba.mobileim.ui.atmessage.AtMsgListActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:theme="@style/Aliwx_ConverationStyle_default" />
-        <activity
-            android:name="com.alibaba.mobileim.ui.atmessage.SendAtMessageDetailActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:theme="@style/Aliwx_ConverationStyle_default" />
-        <activity
-            android:name="com.alibaba.mobileim.kit.chat.SelectTribeMemberActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity android:name="com.taobao.openimui.test.TestActivity1" />
-        <activity android:name="com.taobao.openimui.test.TestActivity2" />
+
         <activity
             android:name="com.taobao.openimui.tribe.TribeMembersActivity"
             android:screenOrientation="portrait"
@@ -340,10 +368,7 @@
             android:label="@string/title_activity_tribe_msg_rec_type_set"
             android:screenOrientation="portrait"
             android:theme="@style/Aliwx_ContentOverlay_default" />
-        <activity android:name="com.taobao.openimui.privateimage.PreviewImageActivity" />
-        <activity
-            android:name="com.taobao.openimui.privateimage.PictureActivity"
-            android:theme="@style/Aliwx_Theme.Translucent" />
+
         <activity android:name="com.example.viewpagerdemo.ui.activity.AbouFrendtMainActivity"></activity>
     </application>
 

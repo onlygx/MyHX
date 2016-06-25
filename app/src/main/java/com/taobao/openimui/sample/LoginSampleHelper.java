@@ -2,7 +2,6 @@ package com.taobao.openimui.sample;
 
 import android.app.Application;
 import android.content.Intent;
-import android.os.Debug;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.widget.Toast;
@@ -41,7 +40,6 @@ import com.alibaba.tcms.env.YWEnvType;
 import com.taobao.openimui.common.Notification;
 import com.taobao.openimui.contact.ContactCacheUpdateListenerImpl;
 import com.taobao.openimui.contact.ContactOperateNotifyListenerImpl;
-import com.taobao.openimui.demo.DemoApplication;
 
 import org.json.JSONException;
 import org.json.JSONObject;

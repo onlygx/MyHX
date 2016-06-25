@@ -18,7 +18,6 @@ import com.alibaba.mobileim.contact.IYWContactHeadClickCallback;
 import com.alibaba.mobileim.contact.IYWContactService;
 import com.alibaba.mobileim.contact.IYWCrossContactProfileCallback;
 import com.alibaba.mobileim.lib.model.contact.Contact;
-import com.taobao.openimui.demo.DemoApplication;
 
 /**
  * 用户自定义昵称和头像

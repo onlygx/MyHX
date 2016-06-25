@@ -2,7 +2,6 @@ package com.taobao.openimui.contact;
 
 import com.alibaba.mobileim.contact.IYWContactCacheUpdateListener;
 import com.taobao.openimui.common.Notification;
-import com.taobao.openimui.demo.DemoApplication;
 
 /**
  * Created by ShuHeng on 16/2/26.

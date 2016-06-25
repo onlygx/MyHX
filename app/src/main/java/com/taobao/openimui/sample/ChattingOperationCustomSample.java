@@ -46,7 +46,6 @@ import com.alibaba.mobileim.kit.common.IMUtility;
 import com.alibaba.mobileim.kit.contact.YWContactHeadLoadHelper;
 import com.xingkesi.foodapp.R;
 import com.taobao.openimui.common.Notification;
-import com.taobao.openimui.demo.DemoApplication;
 
 import org.json.JSONException;
 import org.json.JSONObject;

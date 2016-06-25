@@ -1,5 +1,6 @@
 package com.example.viewpagerdemo.ui.activity;
 
+import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -67,7 +68,9 @@ public class CommentsActivity extends JLBaseActivity {
         iv_right_image.setVisibility(View.VISIBLE);
         tv_right_text.setVisibility(View.VISIBLE);
         iv_right_image.setImageResource(R.drawable.cp_xx);
-        tv_right_text.setBackgroundResource(R.drawable.icon_share_blue);
+        Drawable drawable= getResources().getDrawable(R.drawable.fenxiang);
+        drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+        tv_right_text.setCompoundDrawables(drawable,null,null,null);
         tv_title.setText("评论");
 
 

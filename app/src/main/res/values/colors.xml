@@ -287,9 +287,27 @@
     <color name="more_line_color">#cccccc</color>
     <color name="more_bg_nor">#ffffff</color>
     <color name="more_bg_p">#f5f5f5</color>
-
+    <color name="gray_text">#353535</color>
     <!-- 群组 -->
     <color name="tribe_host">#FFBD04 </color>
     <color name="tribe_manager">#45D282 </color>
+
+
+    <!-- 黑色透明色 -->
+    <color name="full_transparent">#00000000</color><!-- 全透明 -->
+    <color name="full_transparent_one">#19000000</color><!-- 0.1透明 -->
+    <color name="full_transparent_two">#33000000</color><!-- 0.2透明 -->
+    <color name="full_transparent_three">#4C000000</color><!-- 0.3透明 -->
+    <color name="full_transparent_four">#66000000</color><!-- 0.4透明 -->
+    <color name="full_transparent_five">#7F000000</color><!-- 0.5透明 -->
+    <color name="full_transparent_six">#99000000</color><!-- 0.6透明 -->
+    <color name="full_transparent_senve">#B2000000</color><!-- 0.7透明 -->
+    <color name="full_transparent_eight">#C8000000</color><!-- 0.8透明 -->
+    <color name="full_transparent_nine">#E5000000</color><!-- 0.9透明 -->
+
+    <color name="full_transparent_gray">#19808080</color>
+
+
+    <color name="write_transparent_three">#4C000000</color><!-- 0.8透明 -->
 
 </resources>

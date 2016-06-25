@@ -11,7 +11,6 @@ import com.alibaba.mobileim.conversation.YWConversationType;
 import com.alibaba.mobileim.conversation.YWCustomConversationBody;
 import com.xingkesi.foodapp.R;
 import com.taobao.openimui.contact.ContactSystemMessageActivity;
-import com.taobao.openimui.demo.DemoApplication;
 import com.taobao.openimui.demo.FragmentTabs;
 import com.taobao.openimui.tribe.TribeSystemMessageActivity;
 

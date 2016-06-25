@@ -16,6 +16,7 @@ import com.example.viewpagerdemo.ui.bean.DDListBean;
 import com.example.viewpagerdemo.ui.bean.ShoppingInfoBean;
 import com.example.viewpagerdemo.ui.jlfragmenwork.baseactivitywork.JLBaseActivity;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.DD;
+import com.example.viewpagerdemo.ui.units.StringUtils;
 import com.xingkesi.foodapp.R;
 
 import java.util.ArrayList;
@@ -135,7 +136,7 @@ public class ShoppingDDActivity extends JLBaseActivity implements DDReclerViewAd
 
 
         num.setText(fnum + "");
-        money.setText(fmoney + "");
+        money.setText(StringUtils.toTwoDouble(fmoney) + "");
 
     }
 
