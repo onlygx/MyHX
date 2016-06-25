@@ -8,6 +8,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -60,7 +61,8 @@ public class AddressBookFragment extends JLBaseFragment implements TextWatcher, 
     ContactListViewImpl listview;
     @Bind(R.id.input_search_query)
     EditText searchBox;
-
+    @Bind(R.id.noLoa)
+    LinearLayout noLoa;
 
     private String searchString;
     private Object searchLock = new Object();
@@ -141,7 +143,21 @@ public class AddressBookFragment extends JLBaseFragment implements TextWatcher, 
         bookList = new ArrayList<>();
         iv_back.setImageResource(R.drawable.tianjia);
         tv_title.setText("通讯录");
-        iv_right_image.setVisibility(View.VISIBLE);
+
+
+        //登录状态
+        if (MyApplication.getInstan().getUser() != null && MyApplication.getInstan().getUser().getData().getThinksId() != null) {
+            tv_title.setTextColor(getResources().getColor(R.color.waiter));
+            iv_back.setVisibility(View.VISIBLE);
+            noLoa.setVisibility(View.GONE);
+            iv_right_image.setVisibility(View.VISIBLE);
+            noLoa.setVisibility(View.GONE);
+        } else {
+            noLoa.setVisibility(View.VISIBLE);
+            iv_back.setVisibility(View.GONE);
+            iv_right_image.setVisibility(View.GONE);
+        }
+
         filterList = new ArrayList<>();
         mContext = getActivity();
         list = new ArrayList<>();

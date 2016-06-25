@@ -58,11 +58,9 @@ public class WalletFragment extends JLBaseFragment {
     @Bind(R.id.qbfk)
     LinearLayout qbfk;
     @Bind(R.id.layouts)
-    LinearLayout layouts;
+    RelativeLayout layouts;
     @Bind(R.id.sk)
     LinearLayout sk;
-    @Bind(R.id.ll_base_title)
-    RelativeLayout ll_base_title;
 
     SelectFKPopupWindow menuWindow;
 
@@ -81,15 +79,13 @@ public class WalletFragment extends JLBaseFragment {
         iv_back.setVisibility(View.GONE);
         iv_right_image.setVisibility(View.GONE);
         tv_title.setText("钱包");
-
+        //登录状态
         if (MyApplication.getInstan().getUser() != null && MyApplication.getInstan().getUser().getData().getThinksId() != null) {
             tv_title.setTextColor(getResources().getColor(R.color.waiter));
-            ll_base_title.setBackgroundColor(getResources().getColor(R.color.logding_bg));
             noLoa.setVisibility(View.GONE);
         } else {
-            noLoa.setVisibility(View.INVISIBLE);
+            noLoa.setVisibility(View.VISIBLE);
             tv_title.setTextColor(getResources().getColor(R.color.logding_bg));
-            ll_base_title.setBackgroundColor(getResources().getColor(R.color.waiter));
         }
 
 

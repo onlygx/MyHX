@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,10 +31,16 @@ public class AnnounceItemAdpter extends RecyclerView.Adapter<AnnounceItemAdpter.
 
     Context c;
     ArrayList<ShoppingListBean> list;
-    private ArrayList<View> dots; // 图片标题正文的那些点;
+    private static ArrayList<View> dots; // 图片标题正文的那些点;
     private List<ShoppingListBanerBean> adList;
     EateAotuAdapter eateAdapter;
 
+    public OnBannerSelectItemClitener onBannerSelectItemClitener;
+
+
+    public  interface  OnBannerSelectItemClitener{
+        void onBanner(int position,int select);
+    }
     public AnnounceItemAdpter(Context c) {
         this.c = c;
         list = new ArrayList<>();
@@ -51,7 +58,7 @@ public class AnnounceItemAdpter extends RecyclerView.Adapter<AnnounceItemAdpter.
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder vh, final int position) {
+    public void onBindViewHolder(final ViewHolder vh, final int position) {
         //-------------------
         //ces
         final ShoppingListBean data = list.get(position);
@@ -69,31 +76,56 @@ public class AnnounceItemAdpter extends RecyclerView.Adapter<AnnounceItemAdpter.
                 LinearLayout.LayoutParams viewL = new LinearLayout.LayoutParams(10, 10);
                 viewL.setMargins(5, 0, 5, 0);
                 view.setLayoutParams(viewL);
+                view.setTag(data.getId()+i+"");
                 if(i==0){
                     view.setBackgroundResource(R.drawable.dot_focused);
                 }
                 dots.add(view);
                 vh.dot_layout.addView(view);
+                vh.dot_layout.setTag(data.getId()+"dot_layout");
             }
         }
 
         eateAdapter = new EateAotuAdapter(c, adList,data.getId()+"",data.getShopId()+"",data.getName());
         vh.eatVptwo.setAdapter(eateAdapter);// 设置填充ViewPager页面的适配器
         // 设置一个监听器，当ViewPager中的页面改变时调用
-        vh.eatVptwo.setOnPageChangeListener(new MyPageChangeListener());
-        /*eateAdapter.setmOnClickItemViewListener(new EateAotuAdapter.onClickItemViewListener() {
+        vh.eatVptwo.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onClick() {
-               *//* Toast.makeText(c,"点击轮播",Toast.LENGTH_LONG);
-                Intent it =new Intent(c, EatInfoActivity.class);
-                it.putExtra("id",data.getId()+"");
-                it.putExtra("shopID",data.getShopId()+"");
-                it.putExtra("name",data.getName()+"");
-                c.startActivity(it);*//*
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
             }
-        });*/
-        vh.listTitle.setText(data.getName());//标题名称
 
+            @Override
+            public void onPageSelected(int selectPosition) {
+                Log.e("x","--------------OnBanner:"+selectPosition);
+                Log.e("x","--------------OnBanner:"+AnnounceItemAdpter.this.onBannerSelectItemClitener);
+                if(onBannerSelectItemClitener!=null)
+                    AnnounceItemAdpter.this.onBannerSelectItemClitener.onBanner(position,selectPosition);
+                for(int i=0;i<dots.size();i++){
+                    if(selectPosition == i){
+                        dots.get(i).setBackgroundResource(R.drawable.dot_focused);
+                    }else{
+                        dots.get(i).setBackgroundResource(R.drawable.dot_normal);
+                    }
+                }
+            }
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                Toast.makeText(c,"position"+state,Toast.LENGTH_LONG);
+              /*  Log.e("x","--------------OnBanner:"+onBannerSelectItemClitener);
+                if(onBannerSelectItemClitener!=null)
+                onBannerSelectItemClitener.onBanner(position,state);*/
+               /* Log.e("x","-------------------Select:"+state);
+                for(int i=0;i<dots.size();i++){
+                    if(state == i){
+                        dots.get(i).setBackgroundResource(R.drawable.dot_focused);
+                    }else{
+                        dots.get(i).setBackgroundResource(R.drawable.dot_normal);
+                    }
+                }*/
+            }
+        });
+
+        vh.listTitle.setText(data.getName());//标题名称
         vh.listAddr.setText(data.getShopAddress());//地址
         vh.listMoney.setText("￥"+data.getPrice() + "");//价格
         vh.listName.setText(data.getShopName());//卖家名称
@@ -182,6 +214,7 @@ public class AnnounceItemAdpter extends RecyclerView.Adapter<AnnounceItemAdpter.
         @Override
         public void onPageSelected(int position) {
             Toast.makeText(c,"position"+position,Toast.LENGTH_LONG);
+            Log.e("x","-------------------Select:"+position);
             for(int i=0;i<dots.size();i++){
                 if(position == i){
                     dots.get(position).setBackgroundResource(R.drawable.dot_focused);
@@ -190,5 +223,11 @@ public class AnnounceItemAdpter extends RecyclerView.Adapter<AnnounceItemAdpter.
                 }
             }
         }
+    }
+
+    public void setOnBannerSelectItemClitener(OnBannerSelectItemClitener onSelectItemClitener) {
+        Log.e("x","--------------OnBanner:111"+onSelectItemClitener);
+        this.onBannerSelectItemClitener = onSelectItemClitener;
+        Log.e("x","--------------OnBanner:222"+onBannerSelectItemClitener);
     }
 }

@@ -18,7 +18,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.alibaba.fastjson.JSON;
 import com.example.viewpagerdemo.ui.MyApplication;
 import com.example.viewpagerdemo.ui.adapter.EateInfoAotuAdapter;
@@ -34,14 +33,11 @@ import com.example.viewpagerdemo.ui.jlfragmenwork.share.SelectPicPopupWindowShar
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.xingkesi.foodapp.R;
-
 import net.tsz.afinal.FinalHttp;
 import net.tsz.afinal.http.AjaxCallBack;
 import net.tsz.afinal.http.AjaxParams;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;

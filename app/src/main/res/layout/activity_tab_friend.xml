@@ -1,17 +1,17 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layouts"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical">
+    >
 
-    <include layout="@layout/jl_base_title_layout" />
+    <include android:id="@+id/header" layout="@layout/jl_base_title_layout" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="match_parent"
         android:background="@color/logding_bg"
+        android:layout_below="@+id/header"
         android:orientation="vertical">
 
         <LinearLayout
@@ -113,55 +113,32 @@
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-    <RelativeLayout
-        android:layout_marginTop="5dp"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
+    <!-- 未登录界面-->
         <LinearLayout
             android:id="@+id/noLoa"
             android:orientation="vertical"
             android:gravity="center"
-            android:visibility="gone"
+            android:visibility="visible"
+            android:layout_below="@+id/header"
+            android:background="@color/waiter"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:src="@drawable/demo_greeting_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/qianbaotishi"
                 />
 
             <Button
                 android:id="@+id/_add_log"
                 android:background="@drawable/shape_grenn_corners_pull"
                 android:layout_width="100dp"
-                android:layout_height="30dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="40dp"
                 android:textColor="@color/waiter"
                 android:text="登录"
                 />
 
-
         </LinearLayout>
-
-        <!--<com.example.viewpagerdemo.ui.jlfragmenwork.view.PagerSlidingTabStrip
-            android:id="@+id/tabStrip_viewPagerFragment_tabs"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="#ffffff"
-            app:allowWidthFull="true"
-            app:bottomLineColor="@color/logding_bg"
-            app:disableTensileSlidingBlock="true" />
-
-        <com.example.viewpagerdemo.ui.jlfragmenwork.view.ViewPagerCompat
-            android:id="@+id/pager_viewPagerFragment_content"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />-->
     </RelativeLayout>
-
-
-</LinearLayout>

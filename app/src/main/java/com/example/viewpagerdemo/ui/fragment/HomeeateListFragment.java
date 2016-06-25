@@ -249,6 +249,14 @@ public class HomeeateListFragment extends JLBaseFragment implements SwipeRefresh
         adList = new ArrayList<>();// = testgetBannerAd();
         list = new ArrayList<>();
         eatReclerViewAdpter = new AnnounceItemAdpter(getActivity());
+
+        eatReclerViewAdpter.setOnBannerSelectItemClitener(new AnnounceItemAdpter.OnBannerSelectItemClitener() {
+            @Override
+            public void onBanner(int position, int select) {
+                list.get(position).setBannerSelect(select);
+                eatReclerViewAdpter.notifyDataSetChanged();
+            }
+        });
         eatRecycler.setAdapter(eatReclerViewAdpter);
         eatRecycler.setHasFixedSize(true);
         manager = new LinearLayoutManager(getActivity());
@@ -257,6 +265,9 @@ public class HomeeateListFragment extends JLBaseFragment implements SwipeRefresh
         refreshlayout.setColorSchemeColors(Color.BLUE);
         refreshlayout.setSize(SwipeRefreshLayout.DEFAULT);
         refreshlayout.setOnRefreshListener(this);
+
+
+
     }
 
 

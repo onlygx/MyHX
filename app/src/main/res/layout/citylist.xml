@@ -1,17 +1,23 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F5F6F8"
     android:orientation="vertical">
 
-    <include layout="@layout/jl_base_title_layout" />
+    <include android:id="@+id/header" layout="@layout/jl_base_title_layout" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_below="@+id/header"
+        >
 
     <RelativeLayout
         android:id="@+id/searchBarContainer"
         android:layout_width="fill_parent"
         android:layout_height="45dp"
-        android:layout_below="@+id/layout_title"
+
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
@@ -44,10 +50,7 @@
             android:text=""
             android:textColor="@color/firstblack"
             android:textSize="15sp" />
-
-
     </RelativeLayout>
-
     <TextView
         android:id="@+id/listtag"
         android:layout_width="match_parent"
@@ -80,5 +83,35 @@
             android:listSelector="#00000000"
             android:smoothScrollbar="true" />
     </LinearLayout>
+    </LinearLayout>
+    <!-- 未登录界面-->
+    <LinearLayout
+        android:id="@+id/noLoa"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:visibility="visible"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/header"
+        android:background="@color/waiter"
+        android:layout_height="match_parent">
 
-</LinearLayout>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/tongxunlutishi"
+            />
+
+        <Button
+            android:id="@+id/_add_log"
+            android:background="@drawable/shape_grenn_corners_pull"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="40dp"
+            android:textColor="@color/waiter"
+            android:text="登录"
+            />
+
+    </LinearLayout>
+
+
+</RelativeLayout>

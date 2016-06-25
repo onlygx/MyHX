@@ -13,7 +13,6 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.PopupWindow;
 import android.widget.Toast;
-
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
