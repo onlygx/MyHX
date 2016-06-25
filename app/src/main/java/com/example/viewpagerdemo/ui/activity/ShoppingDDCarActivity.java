@@ -6,16 +6,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RadioGroup;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.example.viewpagerdemo.ui.MyApplication;
 import com.example.viewpagerdemo.ui.adapter.DDCarReclerViewAdpter;
-import com.example.viewpagerdemo.ui.adapter.DDReclerViewAdpter;
-import com.example.viewpagerdemo.ui.bean.DDListBean;
 import com.example.viewpagerdemo.ui.bean.ShopInfoListBean;
-import com.example.viewpagerdemo.ui.bean.ShoppingInfoBean;
 import com.example.viewpagerdemo.ui.jlfragmenwork.Contantor;
 import com.example.viewpagerdemo.ui.jlfragmenwork.baseactivitywork.JLBaseActivity;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.DD;
@@ -54,8 +50,7 @@ public class ShoppingDDCarActivity extends JLBaseActivity implements DDCarRecler
     TextView num;//总数
     @Bind(R.id.dd_sc)
     ScrollView dd_sc;
-    @Bind(R.id.radiog)
-    RadioGroup radiog;
+
 
     @Bind(R.id.dd_list)
     RecyclerView ddList;
@@ -69,7 +64,7 @@ public class ShoppingDDCarActivity extends JLBaseActivity implements DDCarRecler
     @Bind(R.id.text_beiz)
     TextView textBeiz;
 
-    String shopId, receiptAddressId;//商铺ID  地址ID
+    String id,shopId, receiptAddressId;//商铺ID  地址ID
 
     // ShoppingInfoBean info;
     ArrayList<ShopInfoListBean> carLiat;
@@ -86,16 +81,19 @@ public class ShoppingDDCarActivity extends JLBaseActivity implements DDCarRecler
         iv_back.setImageResource(R.drawable.cp_fh);
         tv_title.setText("订单");
         tv_title.setTextColor(getResources().getColor(R.color.black));
-        shopId = getIntent().getStringExtra("id");
+        id = getIntent().getStringExtra("id");
+        shopId = getIntent().getStringExtra("Sid");
         carLiat = (ArrayList<ShopInfoListBean>) getIntent().getSerializableExtra("car");
-        //id=getIntent().getStringExtra("id");
-        //info= (ShoppingInfoBean) getIntent().getSerializableExtra("info");
+
+        for(ShopInfoListBean ib:carLiat){
+            DD.v("订单中:"+id+"==="+ib.getCurrNum());
+        }
 
         LinearLayoutManager man = new LinearLayoutManager(ShoppingDDCarActivity.this);
         man.setOrientation(LinearLayoutManager.VERTICAL);
         ddList.setLayoutManager(man);
 
-        radiog.check(R.id.ps);
+        /*radiog.check(R.id.ps);
         radiog.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -112,7 +110,7 @@ public class ShoppingDDCarActivity extends JLBaseActivity implements DDCarRecler
                 }
 
             }
-        });
+        });*/
 
     }
 
@@ -168,7 +166,7 @@ public class ShoppingDDCarActivity extends JLBaseActivity implements DDCarRecler
                     ap.put("userId", MyApplication.getInstan().getUser().getData().getId() + "");
                     ap.put("shopId", shopId);
                     ap.put("intro", textBeiz.getText().toString());
-                    ap.put("sendType", PEISONG + "");
+                    ap.put("sendType", "1");//PEISONG + "");
                     ap.put("receiptAddressId", receiptAddressId + "");
 
                     StringBuffer sb = new StringBuffer();
@@ -186,7 +184,7 @@ public class ShoppingDDCarActivity extends JLBaseActivity implements DDCarRecler
                     ap.put("goodsList", sb.toString());
                     String url = Contantor.submitAddr;
 
-                    //DD.v("下单:" + url + "?" + ap.toString());
+                    DD.v("下单:" + url + "?" + ap.toString());
                     new FinalHttp().post(url, ap, new AjaxCallBack<String>() {
                         @Override
                         public void onSuccess(String s) {

@@ -1,26 +1,14 @@
 package com.example.viewpagerdemo.ui.activity;
 
-import android.os.Bundle;
-import android.app.Activity;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSON;
-import com.example.viewpagerdemo.ui.MyApplication;
-import com.example.viewpagerdemo.ui.bean.UserBeanL;
-import com.example.viewpagerdemo.ui.jlfragmenwork.Contantor;
 import com.example.viewpagerdemo.ui.jlfragmenwork.baseactivitywork.JLBaseActivity;
-import com.example.viewpagerdemo.ui.jlfragmenwork.util.DD;
-import com.example.viewpagerdemo.ui.jlfragmenwork.util.TS;
 import com.xingkesi.foodapp.R;
 import com.yiw.circledemo2.bean.ToolsHost;
-
-import net.tsz.afinal.FinalHttp;
-import net.tsz.afinal.http.AjaxCallBack;
-import net.tsz.afinal.http.AjaxParams;
 
 import butterknife.Bind;
 

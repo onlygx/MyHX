@@ -3,67 +3,58 @@ package com.example.viewpagerdemo.ui.jlfragmenwork.util;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * Created by huaping on 2016/6/24.
+ * �ϴ��ļ�
  */
 public class FormFile {
-    /* 上传文件的数据 */
+    /* �ϴ��ļ������� */
     private byte[] data;
     private InputStream inStream;
     private File file;
-
+    //�ϴ��ļ���С
     private int fileSize;
-    /* 文件名称 */
-    private String filname;
-    /* 请求参数名称*/
+    /* �ϴ��ļ����ƣ�������Ϊ����������ʾ���ļ�����*/
+    private String filename;
+    /* ����������� <input type="file" name="file" /> ��Ӧ����input�е�name*/
     private String parameterName;
-    /* 内容类型 */
+    /* �������� */
     private String contentType = "application/octet-stream";
-
-    public FormFile(String filname, byte[] data, String parameterName, String contentType) {
-        this.data = data;
-        this.filname = filname;
-        this.parameterName = parameterName;
-        if(contentType!=null) this.contentType = contentType;
-    }
-
+    
     public FormFile(String filname, File file, String parameterName, String contentType) {
-        this.filname = filname;
+        this.filename = filname;
         this.parameterName = parameterName;
         this.file = file;
-        try {
-            this.inStream = new FileInputStream(file);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+        if (this.file == null) {
+        	throw new NullPointerException("file ����Ϊ��");
         }
         if(contentType!=null) this.contentType = contentType;
     }
+    
+	public int getFileSize() {
+		return fileSize;
+	}
 
-
-
-    public FormFile(InputStream inStream, int fileSize, String filname,
-                    String parameterName, String contentType) {
-        super();
-        this.inStream = inStream;
-        this.fileSize = fileSize;
-        this.filname = filname;
-        this.parameterName = parameterName;
-        this.contentType = contentType;
-    }
-
-
-
-    public int getFileSize() {
-        return fileSize;
-    }
-
-    public File getFile() {
+	public File getFile() {
         return file;
     }
 
     public InputStream getInStream() {
+    	if (inStream != null) {
+    		try {
+				inStream.close();
+				inStream = null;
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+    	}
+    	try {
+            this.inStream = new FileInputStream(file);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         return inStream;
     }
 
@@ -72,11 +63,11 @@ public class FormFile {
     }
 
     public String getFilname() {
-        return filname;
+        return filename;
     }
 
     public void setFilname(String filname) {
-        this.filname = filname;
+        this.filename = filname;
     }
 
     public String getParameterName() {
@@ -94,4 +85,5 @@ public class FormFile {
     public void setContentType(String contentType) {
         this.contentType = contentType;
     }
+    
 }

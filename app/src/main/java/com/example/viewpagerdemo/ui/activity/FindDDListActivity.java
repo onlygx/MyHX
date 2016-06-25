@@ -1,8 +1,6 @@
 package com.example.viewpagerdemo.ui.activity;
 
-import android.app.Activity;
 import android.graphics.Color;
-import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,13 +10,9 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.example.viewpagerdemo.ui.MyApplication;
-import com.example.viewpagerdemo.ui.adapter.DDReclerViewAdpter;
-import com.example.viewpagerdemo.ui.adapter.FindDDReclerViewAdpter;
 import com.example.viewpagerdemo.ui.adapter.FindDDShopReclerViewAdpter;
-import com.example.viewpagerdemo.ui.bean.DDListBean;
 import com.example.viewpagerdemo.ui.bean.FindDDListBean;
 import com.example.viewpagerdemo.ui.bean.FindDDListShopBean;
-import com.example.viewpagerdemo.ui.bean.FindDDListShopGoodsBean;
 import com.example.viewpagerdemo.ui.jlfragmenwork.Contantor;
 import com.example.viewpagerdemo.ui.jlfragmenwork.baseactivitywork.JLBaseActivity;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.DD;

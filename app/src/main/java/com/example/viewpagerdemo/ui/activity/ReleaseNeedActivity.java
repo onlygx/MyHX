@@ -1,17 +1,16 @@
 package com.example.viewpagerdemo.ui.activity;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
-import android.os.Looper;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
@@ -20,34 +19,36 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.Volley;
 import com.example.viewpagerdemo.ui.MyApplication;
 import com.example.viewpagerdemo.ui.adapter.ImageAdapter;
 import com.example.viewpagerdemo.ui.jlfragmenwork.Contantor;
 import com.example.viewpagerdemo.ui.jlfragmenwork.baseactivitywork.JLBaseActivity;
 import com.example.viewpagerdemo.ui.jlfragmenwork.city.widget.SelectPicPopupWindow;
-import com.example.viewpagerdemo.ui.jlfragmenwork.util.BitmapUtils;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.CommonUtils;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.DD;
-import com.example.viewpagerdemo.ui.jlfragmenwork.util.Request;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.SelectPicPopupWindow2;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.TS;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.Tools;
-import com.squareup.picasso.Picasso;
 import com.xingkesi.foodapp.R;
+import com.yiw.circledemo2.utils.MultipartRequest;
 
 import net.tsz.afinal.FinalHttp;
 import net.tsz.afinal.http.AjaxCallBack;
 import net.tsz.afinal.http.AjaxParams;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -92,6 +93,8 @@ public class ReleaseNeedActivity extends JLBaseActivity {
     ImageAdapter adapter;
     int MAX_LENGTH = 500;                   //最大输入字符数500
     int Rest_Length = MAX_LENGTH;
+    RequestQueue mSingleQueue;
+
     @Override
     public void initID() {
         iv_back.setVisibility(View.VISIBLE);
@@ -100,6 +103,7 @@ public class ReleaseNeedActivity extends JLBaseActivity {
         tv_title.setText("发布需求");
         tv_right_text.setVisibility(View.VISIBLE);
         tv_right_text.setText("发布");
+        mSingleQueue = Volley.newRequestQueue(ReleaseNeedActivity.this);
         tv_right_text.setTextColor(getResources().getColor(R.color.logding_bg));
         ioncList = new ArrayList<>();
         StringBuffer sb = new StringBuffer();
@@ -124,11 +128,11 @@ public class ReleaseNeedActivity extends JLBaseActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 // TODO Auto-generated method stub
-                if(content.length()>=MAX_LENGTH){
+                if (content.length() >= MAX_LENGTH) {
                     TS.shortTime("字数过多");
                     return;
                 }
-                if(Rest_Length > 0){
+                if (Rest_Length > 0) {
                     Rest_Length = MAX_LENGTH - content.getText().length();
                 }
             }
@@ -137,13 +141,13 @@ public class ReleaseNeedActivity extends JLBaseActivity {
             public void beforeTextChanged(CharSequence s, int start, int count,
                                           int after) {
                 // TODO Auto-generated method stub
-                numz.setText(Rest_Length+"");
+                numz.setText(Rest_Length + "");
             }
 
             @Override
             public void afterTextChanged(Editable s) {
                 // TODO Auto-generated method stub
-                numz.setText(Rest_Length+"");
+                numz.setText(Rest_Length + "");
             }
         });
 
@@ -174,51 +178,86 @@ public class ReleaseNeedActivity extends JLBaseActivity {
                     TS.shortTime("请填写详细地址");
                     return;
                 }
-
-                showWait();
-                AjaxParams ap = new AjaxParams();
-                ap.put("title", titles);
-                ap.put("content", contents);
-                ap.put("price", prices);
-                ap.put("sendUserId", MyApplication.getInstan().getUser().getData().getId() + "");
-                ap.put("province", pro);
-                ap.put("city", city);
-                ap.put("district", dro);
-                ap.put("address", addresss);
-                try {
-                    ap.put("files", new File(ioncList.get(0)));
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
                 String url = Contantor.Ralesepay;
-                DD.v("发布需求:" + url + "?" + ap.toString());
-
-                new FinalHttp().post(url, ap, new AjaxCallBack<String>() {
-                    @Override
-                    public void onSuccess(String s) {
-                        super.onSuccess(s);
-                        DD.v("发布需求s:" + s);
-                        try {
-                            JSONObject js = new JSONObject(s);
-                            if (js.getBoolean("success")) {
-                                TS.shortTime("发布成功");
-                                finish();
-                            } else {
-                                TS.shortTime("发布失败");
-
-                            }
-                            closeWait();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                showWait();
+                if (ioncList.size() > 0) {
+                    List<File> f = new ArrayList<File>();
+                    for (String s : ioncList) {
+                        if (!s.equals("000000")) {
+                            f.add(new File(s));
                         }
                     }
+                    Map<String, String> ap = new HashMap<String, String>();
+                    ap.put("title", titles);
+                    ap.put("content", contents);
+                    ap.put("price", prices);
+                    ap.put("sendUserId", MyApplication.getInstan().getUser().getData().getId() + "");
+                    ap.put("province", pro);
+                    ap.put("city", city);
+                    ap.put("district", dro);
+                    ap.put("address", addresss);
 
-                    @Override
-                    public void onFailure(Throwable t, int errorNo, String strMsg) {
-                        super.onFailure(t, errorNo, strMsg);
-                        closeWait();
-                    }
-                });
+                    MultipartRequest request = new MultipartRequest(url, new Response.Listener<String>() {
+
+                        @Override
+                        public void onResponse(String response) {
+                            Toast.makeText(ReleaseNeedActivity.this, "uploadSuccess,response = " + response, Toast.LENGTH_SHORT).show();
+                            Log.i("YanZi", "success,response = " + response);
+                            closeWait();
+                            finish();
+                            //han.sendEmptyMessage(0);
+                        }
+                    }, new Response.ErrorListener() {
+
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            //han.sendEmptyMessage(2);
+                            closeWait();
+                            Toast.makeText(ReleaseNeedActivity.this, "uploadError,response = " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                            Log.i("YanZi", "error,response = " + error.getMessage());
+                        }
+                    }, "files", f, ap);
+                    mSingleQueue.add(request);
+                } else {
+                    AjaxParams ap = new AjaxParams();
+                    ap.put("title", titles);
+                    ap.put("content", contents);
+                    ap.put("price", prices);
+                    ap.put("sendUserId", MyApplication.getInstan().getUser().getData().getId() + "");
+                    ap.put("province", pro);
+                    ap.put("city", city);
+                    ap.put("district", dro);
+                    ap.put("address", addresss);
+                    ap.put("files", "");
+
+                    new FinalHttp().post(url, ap, new AjaxCallBack<String>() {
+                        @Override
+                        public void onSuccess(String s) {
+                            super.onSuccess(s);
+                            //DD.v("发布需求s:" + s);
+                            try {
+                                JSONObject js = new JSONObject(s);
+                                if (js.getBoolean("success")) {
+                                    TS.shortTime("发布成功");
+                                    finish();
+                                } else {
+                                    TS.shortTime("发布失败");
+                                }
+                                closeWait();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Throwable t, int errorNo, String strMsg) {
+                            super.onFailure(t, errorNo, strMsg);
+                            closeWait();
+                        }
+                    });
+                }
+
+
             }
         });
     }

@@ -65,8 +65,8 @@ public class EatInfoActivity extends JLBaseActivity implements View.OnClickListe
     @Bind(R.id.iv_right_image)
     ImageView iv_right_image;
 
-    @Bind(R.id.tv_right_text)
-    TextView tv_right_text;
+    @Bind(R.id.iv_right_text)
+    ImageView iv_right_text;
     //--------------轮班---------------
     @Bind(R.id.eat_vpone)
     ViewPager eatVpone;
@@ -79,7 +79,7 @@ public class EatInfoActivity extends JLBaseActivity implements View.OnClickListe
             TextView shoppingName;
     @Bind(R.id.san_sc)//标题
             TextView san_sc;
-    @Bind(R.id.san_pf)//标题
+    @Bind(R.id.san_pf)//评价
             TextView san_pf;
     @Bind(R.id.san_gm)//标题
             TextView san_gm;
@@ -258,10 +258,18 @@ public class EatInfoActivity extends JLBaseActivity implements View.OnClickListe
                 san_sc.setText(info.getCollectionCount() + "");
                 san_gm.setText(info.getPayCount() + "");
 
+
+
                 if (shopID==null || shopID.equals("")) {
                     shopID = info.getShopId() + "";
                 }
 
+
+                if(info.getScore()==null || info.getScore().equals("")){
+                    san_pf.setText("0");
+                }else{
+                    san_pf.setText(info.getScore());
+                }
 //                http://119.188.182.131:8080/app/goods/findById?userId=7227619999906416263&id=6403945117280157140
                /* if (info.getBaoYou() != 1) {
                     iv_kd.setVisibility(View.GONE);
@@ -325,9 +333,9 @@ public class EatInfoActivity extends JLBaseActivity implements View.OnClickListe
         iv_back.setVisibility(View.VISIBLE);
         iv_back.setImageResource(R.drawable.cp_fh);
         iv_right_image.setVisibility(View.VISIBLE);
-        tv_right_text.setVisibility(View.VISIBLE);
+        iv_right_text.setVisibility(View.VISIBLE);
         iv_right_image.setImageResource(R.drawable.cp_xx);
-        tv_right_text.setBackgroundResource(R.drawable.icon_share_blue);
+        iv_right_text.setBackgroundResource(R.drawable.icon_share_blue);
         tv_title.setText(name);
         //
         iv_right_image.setOnClickListener(new View.OnClickListener() {
@@ -355,7 +363,7 @@ public class EatInfoActivity extends JLBaseActivity implements View.OnClickListe
 
 
         //分享
-       tv_right_text.setOnClickListener(new View.OnClickListener() {
+       iv_right_text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 SelectPicPopupWindowShare menuWindow = new SelectPicPopupWindowShare(EatInfoActivity.this, umShareListener);
@@ -436,6 +444,7 @@ public class EatInfoActivity extends JLBaseActivity implements View.OnClickListe
                     startActivity(intent);
                 } else {
                     intent.setClass(EatInfoActivity.this, EatShopInfoActivity.class);
+
                     intent.putExtra("id", shopID);
                     intent.putExtra("name", name);
                     startActivity(intent);
@@ -451,13 +460,15 @@ public class EatInfoActivity extends JLBaseActivity implements View.OnClickListe
                 } else {
                     ArrayList<ShopInfoListBean> carLiat = new ArrayList<>();
                     ShopInfoListBean cb = new ShopInfoListBean();
+                    cb.setId(Integer.parseInt(id));
                     cb.setShopId(Long.valueOf(shopID));
                     cb.setName(shoppingName.getText().toString());
                     cb.setCurrNum(1);
                     cb.setPrice(Qpic);
                     carLiat.add(cb);
                     Intent it = new Intent(EatInfoActivity.this, ShoppingDDCarActivity.class);
-                    it.putExtra("id", shopID);
+                    intent.putExtra("id", id);
+                    it.putExtra("Sid", shopID);
                     it.putExtra("car", (Serializable) carLiat);
                     startActivity(it);
 

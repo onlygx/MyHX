@@ -3,7 +3,6 @@ package com.example.viewpagerdemo.ui.activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
@@ -11,14 +10,11 @@ import android.os.Message;
 import android.provider.MediaStore;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.viewpagerdemo.ui.MyApplication;
-import com.example.viewpagerdemo.ui.bean.UserBeanL;
 import com.example.viewpagerdemo.ui.bean.UserBeanLO;
 import com.example.viewpagerdemo.ui.jlfragmenwork.Contantor;
 import com.example.viewpagerdemo.ui.jlfragmenwork.baseactivitywork.JLBaseActivity;
@@ -40,7 +36,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class FindActivity extends JLBaseActivity {

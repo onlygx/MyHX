@@ -19,7 +19,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.graphics.Rect;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -34,21 +33,40 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
-
+import com.alibaba.mobileim.IYWLoginService;
+import com.alibaba.mobileim.YWChannel;
+import com.alibaba.mobileim.YWIMKit;
+import com.alibaba.mobileim.YWLoginParam;
+import com.alibaba.mobileim.channel.event.IWxCallback;
+import com.alibaba.mobileim.channel.util.YWLog;
+import com.alibaba.mobileim.fundamental.widget.YWAlertDialog;
+import com.alibaba.mobileim.login.YWLoginCode;
+import com.alibaba.mobileim.login.YWLoginState;
+import com.alibaba.mobileim.utility.AccountInfoTools;
+import com.alibaba.mobileim.utility.IMNotificationUtils;
+import com.alibaba.mobileim.utility.IMPrefsTools;
+import com.alibaba.tcms.client.ServiceChooseHelper;
+import com.alibaba.tcms.env.EnvManager;
+import com.alibaba.tcms.env.TcmsEnvType;
+import com.alibaba.tcms.env.YWEnvManager;
+import com.alibaba.tcms.env.YWEnvType;
+import com.example.viewpagerdemo.ui.jlfragmenwork.Contantor;
 import com.example.viewpagerdemo.ui.MyApplication;
 import com.example.viewpagerdemo.ui.activity.MainActivity;
 import com.example.viewpagerdemo.ui.bean.UserBeanL;
-import com.example.viewpagerdemo.ui.jlfragmenwork.Contantor;
 import com.example.viewpagerdemo.ui.jlfragmenwork.baseactivitywork.JLBaseActivity;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.DD;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.TS;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.Tools;
+import com.taobao.openimui.demo.FragmentTabs;
+import com.taobao.openimui.sample.LoginSampleHelper;
+import com.taobao.openimui.sample.NotificationInitSampleHelper;
+import com.taobao.openimui.sample.UserProfileSampleHelper;
 import com.xingkesi.foodapp.R;
 
 import net.tsz.afinal.FinalHttp;
@@ -74,25 +92,118 @@ public class LoginActivity extends JLBaseActivity implements View.OnClickListene
     TextView tv_loginForgot;
     @Bind(R.id.iv_show)
     TextView iv_show;
+    @Bind(R.id.forpass)
+    TextView forpass;
     @Bind(R.id.rlayout)
     RelativeLayout rlayout;
-    @Bind(R.id.btn_cancel)
-    ImageView btn_cancel;
+
+    //@Bind(R.id.appkey)
+    // EditText appKeyView;
+
+    private boolean autoLogin = false;
+    boolean show = false;
 
     private String currentUsername;
     private String currentPassword;
     MyCount mc;
 
+    //------------------------------
+    public static final String AUTO_LOGIN_STATE_ACTION = "com.openim.autoLoginStateActionn";
+    private static final int GUEST = 1;
+    private static final String USER_ID = "userId";
+    private static final String PASSWORD = "password";
+    private static final String TAG = LoginActivity.class.getSimpleName();
+    private LoginSampleHelper loginHelper;
+
+    //private ProgressBar progressBar;
+    private Handler handler = new Handler(Looper.getMainLooper());
+    //private ImageView lg;
+    public static String APPKEY;
+    private int mClickCount = 0;
 
 
     String tag;
+
+
+    private BroadcastReceiver mAutoLoginStateReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            final int state = intent.getIntExtra("state", -1);
+            YWLog.i(TAG, "mAutoLoginStateReceiver, loginState = " + state);
+            if (state == -1) {
+                return;
+            }
+            handleAutoLoginState(state);
+        }
+    };
 
 
     @Override
     public void initID() {
         super.initID();
         tag = getIntent().getStringExtra("tag");
+        loginHelper = LoginSampleHelper.getInstance();
+       /*
+        //读取登录成功后保存的用户名和密码
+        String localId = IMPrefsTools.getStringPrefs(LoginActivity.this, USER_ID, "");
+        if (!TextUtils.isEmpty(localId)) {
+            usernameEditText.setText(localId);
+            String localPassword = IMPrefsTools.getStringPrefs(LoginActivity.this, PASSWORD, "");
+            if (!TextUtils.isEmpty(localPassword)) {
+                passwordEditText.setText(localPassword);
+            }
+        }
 
+        if (LoginSampleHelper.sEnvType == YWEnvType.ONLINE) {
+            if (TextUtils.isEmpty(usernameEditText.getText())) {
+                usernameEditText.setText(getRandAccount());
+            }
+            if (TextUtils.isEmpty(passwordEditText.getText())) {
+                passwordEditText.setText("taobao1234");
+            }
+            if (TextUtils.isEmpty(appKeyView.getText())) {
+                appKeyView.setText(LoginSampleHelper.APP_KEY);
+            }
+        } else if (LoginSampleHelper.sEnvType == YWEnvType.TEST) {
+            if (TextUtils.isEmpty(usernameEditText.getText())) {
+                Random r = new Random();
+                int suffix = Math.abs(r.nextInt() % 100);
+                usernameEditText.setText("fk" + suffix);
+            }
+            if (TextUtils.isEmpty(passwordEditText.getText())) {
+                passwordEditText.setText("taobao1234");
+            }
+            if (TextUtils.isEmpty(appKeyView.getText())) {
+                appKeyView.setText(LoginSampleHelper.APP_KEY_TEST);
+            }
+
+        } else if (LoginSampleHelper.sEnvType == YWEnvType.PRE) {
+            if (TextUtils.isEmpty(usernameEditText.getText())) {
+                usernameEditText.setText("testpro74");
+            }
+            if (TextUtils.isEmpty(passwordEditText.getText())) {
+                passwordEditText.setText("taobao1234");
+            }
+            if (TextUtils.isEmpty(appKeyView.getText())) {
+                appKeyView.setText(LoginSampleHelper.APP_KEY);
+            }
+        }
+
+
+        init(usernameEditText.getText().toString(), appKeyView.getText().toString());
+
+        myRegisterReceiver();
+
+        //一些其它的初始化
+        //自定义消息处理初始化(如果不需要自定义消息，则可以省去)
+//				CustomMessageSampleHelper.initHandler();
+
+        // bt_logoButton = (Button) findViewById(R.id.login);
+        // annoybt_logoButton = (Button) findViewById(R.id.annoylogin);
+
+
+        //  lg = (ImageView) findViewById(R.id.logo);
+        //  lg.setImageBitmap(logo);*/
         usernameEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -122,8 +233,12 @@ public class LoginActivity extends JLBaseActivity implements View.OnClickListene
         tv_loginForgot.setOnClickListener(this);
         iv_show.setOnClickListener(this);
         bt_logoButton.setOnClickListener(this);
-        btn_cancel.setOnClickListener(this);
         mc = new MyCount(60000, 1000);
+        //String userid = "testpro1";
+        // String password = "taobao1234";
+//        usernameEditText.setText("13306400280");
+        usernameEditText.setText("13306400282");
+        passwordEditText.setText("1");
     }
 
     @Override
@@ -147,8 +262,8 @@ public class LoginActivity extends JLBaseActivity implements View.OnClickListene
         currentUsername = usernameEditText.getText().toString().trim();
         currentPassword = passwordEditText.getText().toString().trim();
 
-        if (TextUtils.isEmpty(currentUsername)) {
-            TS.shortTime("请输入账号");
+        if (TextUtils.isEmpty(currentUsername) || currentUsername.length() != 11) {
+            TS.shortTime("请输入11位手机号");
             return false;
         }
 
@@ -178,6 +293,7 @@ public class LoginActivity extends JLBaseActivity implements View.OnClickListene
             final String paws = passwordEditText.getText().toString();
             AjaxParams ajaxParams = new AjaxParams();
             ajaxParams.put("thinksId", name);
+//            ajaxParams.put("password", MD5Util.md5xs(paws));
             ajaxParams.put("password", paws);
             DD.d(Contantor.logdin + "?" + ajaxParams.toString());
 
@@ -187,32 +303,20 @@ public class LoginActivity extends JLBaseActivity implements View.OnClickListene
 
                     DD.d("登录0:" + s);
                     UserBeanL user = JSON.parseObject(s, UserBeanL.class);
-                    // user.setUserName(name);
-                    //user.setUserPws(paws);
 
                     if (user.isSuccess()) {
                         DD.d("登录ID:" + user.getData().getId() + "===" + user.getData().getThinksId());
                         MyApplication.getInstan().setUser(user);
-                        //---------正式版请将下面的放开--------------------
-                        try {
-                            if(MyApplication.getInstan().getUserName()!=null && !MyApplication.getInstan().getUserName().equals("13306400282")) {
-                                DD.d("上传通讯录");
-                                new Tools().init(getApplicationContext());
-                            }else{
-                                DD.d("不去上传通讯录");
-
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        closeWait();
+                        MyApplication.getInstan().setUserName(name);
+                        MyApplication.getInstan().setUserPwd(paws);
                         finish();
-                        //startActivity(new );
+                        //---------正式版请将下面的放开--------------------
+                        //LogdindOpenIME(user);
 
                     } else {
                         TS.shortTime("登录失败,请重新登录");
-                        closeWait();
                     }
+                    closeWait();
 
 
                 }
@@ -246,12 +350,20 @@ public class LoginActivity extends JLBaseActivity implements View.OnClickListene
     @Override
     protected void onResume() {
         super.onResume();
-
+        if (autoLogin) {
+            return;
+        }
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+
+            case R.id.forpass:
+
+                DD.v("忘记密码---");
+
+                break;
 
             //登录
             case R.id.bt_logoButton:
@@ -276,9 +388,6 @@ public class LoginActivity extends JLBaseActivity implements View.OnClickListene
             case R.id.tv_loginForgot:
                 // startActivity(new Intent(LoginActivity.this, ForgotPasswordActivity.class));
                 registers();
-                break;
-            case R.id.btn_cancel:
-                finish();
                 break;
         }
     }
@@ -328,7 +437,244 @@ public class LoginActivity extends JLBaseActivity implements View.OnClickListene
         }
     }
 
+    /**
+     * 生成随机帐号
+     *
+     * @return
+     */
+    private String getRandAccount() {
+        final int max = 90;
+        final int min = 10;
+        Random random = new Random();
+
+        return "testpro" + (random.nextInt(max) % (max - min + 1) + min);
+    }
+
+    private YWEnvType envType = YWEnvType.ONLINE;
+    private AlertDialog dialog;
+
+    private void switchAndSaveEnv() {
+        final String[] items = {"线上", "预发", "测试"};
+        if (dialog == null) {
+            dialog = new YWAlertDialog.Builder(this)
+                    .setTitle("设置网络")
+                    .setItems(items,
+                            new DialogInterface.OnClickListener() {
+
+                                @Override
+                                public void onClick(
+                                        DialogInterface dialog,
+                                        int which) {
+
+                                    TcmsEnvType tcmsEnvType = TcmsEnvType.ONLINE;
+                                    if (which == 0) {
+                                        envType = YWEnvType.ONLINE;
+                                    } else if (which == 1) {
+                                        envType = YWEnvType.PRE;
+                                        tcmsEnvType = TcmsEnvType.PRE;
+                                    } else if (which == 2) {
+                                        envType = YWEnvType.TEST;
+                                        tcmsEnvType = TcmsEnvType.TEST;
+                                    }
+
+                                    EnvManager.getInstance().resetEnvType(MyApplication.getContext(), tcmsEnvType);
+                                    YWEnvManager.prepare(MyApplication.getContext(), envType);
+                                    IMNotificationUtils.showToast("切换环境，程序退出，请再次启动", LoginActivity.this);
+                                    ServiceChooseHelper.exitService(LoginActivity.this);//xianzhen: service must restart too.
+
+                                    AccountInfoTools.saveAnnoyAccount("", "");
 
 
+                                    handler.postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            System.exit(0);
+                                        }
+                                    }, 1000);
+                                }
+                            }).setNegativeButton(
+                            getResources().getString(R.string.cancel),
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog,
+                                                    int id) {
+                                    dialog.cancel();
+                                }
+                            }).create();
+        }
+        dialog.show();
+    }
 
+    private void handleAutoLoginState(int loginState) {
+        if (loginState == YWLoginState.logining.getValue()) {
+           /* if (progressBar.getVisibility() != View.VISIBLE){
+                progressBar.setVisibility(View.VISIBLE);
+            }*/
+            showWait();
+            bt_logoButton.setClickable(false);
+        } else if (loginState == YWLoginState.success.getValue()) {
+            bt_logoButton.setClickable(true);
+            // progressBar.setVisibility(View.GONE);
+            closeWait();
+            Intent intent = new Intent(LoginActivity.this, FragmentTabs.class);
+            LoginActivity.this.startActivity(intent);
+            LoginActivity.this.finish();
+        } else {
+            YWIMKit ywimKit = LoginSampleHelper.getInstance().getIMKit();
+            if (ywimKit != null) {
+                if (ywimKit.getIMCore().getLoginState() == YWLoginState.success) {
+                    bt_logoButton.setClickable(true);
+                    //progressBar.setVisibility(View.GONE);
+                    closeWait();
+                    Intent intent = new Intent(LoginActivity.this, FragmentTabs.class);
+                    LoginActivity.this.startActivity(intent);
+                    LoginActivity.this.finish();
+                    return;
+                }
+            }
+            //当作失败处理
+            // progressBar.setVisibility(View.GONE);
+            closeWait();
+            bt_logoButton.setClickable(true);
+        }
+    }
+
+    private void init(String userId, String appKey) {
+        //初始化imkit
+        DD.i("login 旺旺 初始化1!");
+        LoginSampleHelper.getInstance().initIMKit(userId, appKey);
+        DD.i("login 旺旺 初始化2!");
+        //自定义头像和昵称回调初始化(如果不需要自定义头像和昵称，则可以省去)
+        UserProfileSampleHelper.initProfileCallback();
+        //通知栏相关的初始化
+        NotificationInitSampleHelper.init();
+
+    }
+
+    /**
+     * 保存登录的用户名密码到本地
+     *
+     * @param userId
+     * @param password
+     */
+    private void saveIdPasswordToLocal(String userId, String password) {
+        IMPrefsTools.setStringPrefs(LoginActivity.this, USER_ID, userId);
+        IMPrefsTools.setStringPrefs(LoginActivity.this, PASSWORD, password);
+
+    }
+
+    private void myRegisterReceiver() {
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(AUTO_LOGIN_STATE_ACTION);
+        LocalBroadcastManager.getInstance(YWChannel.getApplication()).registerReceiver(mAutoLoginStateReceiver, filter);
+    }
+
+    private void myUnregisterReceiver() {
+        LocalBroadcastManager.getInstance(YWChannel.getApplication()).unregisterReceiver(mAutoLoginStateReceiver);
+    }
+
+    void LogdindOpenIME(int i) {
+        //判断当前网络状态，若当前无网络则提示用户无网络
+        if (YWChannel.getInstance().getNetWorkState().isNetWorkNull()) {
+            Toast.makeText(LoginActivity.this, "网络已断开，请稍后再试哦~", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        //开始登录
+        String userid = "testpro1";
+        String password = "taobao1234";
+        init(userid, MyApplication.APP_KEY);
+        YWIMKit mIMKit = LoginSampleHelper.getInstance().getIMKit();
+        IYWLoginService loginService = mIMKit.getLoginService();
+        YWLoginParam loginParam = YWLoginParam.createLoginParam(userid, password);
+        loginService.login(loginParam, new IWxCallback() {
+
+            @Override
+            public void onSuccess(Object... arg0) {
+                DD.i("login 旺旺 登录!onSuccess");
+            }
+
+            @Override
+            public void onProgress(int arg0) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void onError(int errCode, String description) {
+                //如果登录失败，errCode为错误码,description是错误的具体描述信息
+                DD.i("login 旺旺 登录!onSuccess");
+            }
+        });
+
+    }
+
+    void LogdindOpenIME(UserBeanL user) {
+        //判断当前网络状态，若当前无网络则提示用户无网络
+        if (YWChannel.getInstance().getNetWorkState().isNetWorkNull()) {
+            Toast.makeText(LoginActivity.this, "网络已断开，请稍后再试哦~", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        bt_logoButton.setClickable(false);
+        final Editable userId = usernameEditText.getText();
+        final Editable password = passwordEditText.getText();
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(usernameEditText.getWindowToken(), 0);
+        imm.hideSoftInputFromWindow(passwordEditText.getWindowToken(), 0);
+        LoginSampleHelper.APP_KEY = MyApplication.APP_KEY;
+        String wanName = MyApplication.getInstan().getUser().getData().getThinksId();
+
+        init(wanName, MyApplication.APP_KEY);
+        APPKEY = MyApplication.APP_KEY;
+        DD.i("login 开始 旺旺 登录!账号:" + wanName);
+        loginHelper.login_Sample(wanName, "123456", MyApplication.APP_KEY, new IWxCallback() {
+
+            @Override
+            public void onSuccess(Object... arg0) {
+                saveIdPasswordToLocal(userId.toString(), password.toString());
+
+                bt_logoButton.setClickable(true);
+                // progressBar.setVisibility(View.GONE);
+                Toast.makeText(LoginActivity.this, "登录成功",
+                        Toast.LENGTH_SHORT).show();
+                DD.i("login 旺旺 登录成功!");
+               /* Intent intent = new Intent(LoginActivity.this, FragmentTabs.class);
+                intent.putExtra(FragmentTabs.LOGIN_SUCCESS, "loginSuccess");
+                LoginActivity.this.startActivity(intent);
+                LoginActivity.this.finish();*/
+
+                // MyApplication.getInstan().setUser(user);
+                MyApplication.getInstan().setUserName(userId.toString());
+                MyApplication.getInstan().setUserPwd(password.toString());
+                closeWait();
+                if (tag.equals("logding")) {
+                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                }
+                finish();
+
+//						YWIMKit mKit = LoginSampleHelper.getInstance().getIMKit();
+//						EServiceContact contact = new EServiceContact("qn店铺测试账号001:找鱼");
+//						LoginActivity.this.startActivity(mKit.getChattingActivityIntent(contact));
+//                        mockConversationForDemo();
+            }
+
+            @Override
+            public void onProgress(int arg0) {
+
+            }
+
+            @Override
+            public void onError(int errorCode, String errorMessage) {
+                //progressBar.setVisibility(View.GONE);
+                if (errorCode == YWLoginCode.LOGON_FAIL_INVALIDUSER) { //若用户不存在，则提示使用游客方式登陆
+                    showDialog(GUEST);
+                    closeWait();
+                    DD.i("login 旺旺 失败1：" + errorMessage + "===" + errorCode);
+                } else {
+                    DD.w("login 旺旺 失败2:" + errorMessage + "===" + errorCode);
+                    bt_logoButton.setClickable(true);
+                    YWLog.w(TAG, "登录失败，错误码：" + errorCode + "  错误信息：" + errorMessage);
+                    //Notification.showToastMsg(LoginActivity.this, errorMessage);
+                }
+            }
+        });
+    }
 }

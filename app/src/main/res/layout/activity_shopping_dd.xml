@@ -38,20 +38,14 @@
                     android:gravity="center_vertical"
                     android:text="就餐方式"
                     android:textSize="15sp" />
-                <RadioGroup
-                    android:id="@+id/radiog"
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:gravity="center_vertical"
-                    android:layout_height="match_parent">
 
-                <RadioButton
-                    android:id="@+id/ps"
+
+                <Button
                     android:layout_width="70dp"
                     android:layout_height="30dp"
                     android:layout_marginLeft="15dp"
                     android:button="@null"
-                    android:background="@drawable/select_dd_ridobutton"
+                    android:background="@drawable/shape_witer_cornersed"
                     android:gravity="center"
                     android:text="配送"
                     android:textColor="@drawable/selector_fong_color"
@@ -64,23 +58,13 @@
                     android:layout_marginLeft="15dp"
                     android:background="@drawable/select_dd_ridobutton"
                     android:gravity="center"
+                    android:checked="true"
                     android:text="快递"
                     android:button="@null"
                     android:textColor="@drawable/selector_fong_color"
                     android:textSize="15sp" />
 
-                <RadioButton
-                    android:id="@+id/zt"
-                    android:layout_width="70dp"
-                    android:layout_height="30dp"
-                    android:layout_marginLeft="15dp"
-                    android:background="@drawable/select_dd_ridobutton"
-                    android:gravity="center"
-                    android:button="@null"
-                    android:text="自提"
-                    android:textColor="@drawable/selector_fong_color"
-                    android:textSize="15sp" />
-                </RadioGroup>
+
 
             </LinearLayout>
 

@@ -1,14 +1,10 @@
 package com.example.viewpagerdemo.ui.activity;
 
-import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSON;
 import com.example.viewpagerdemo.ui.MyApplication;
-import com.example.viewpagerdemo.ui.adapter.EatInfoContentReclerAdatper;
-import com.example.viewpagerdemo.ui.bean.ContentBean;
 import com.example.viewpagerdemo.ui.jlfragmenwork.Contantor;
 import com.example.viewpagerdemo.ui.jlfragmenwork.baseactivitywork.JLBaseActivity;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.DD;
@@ -23,7 +19,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**

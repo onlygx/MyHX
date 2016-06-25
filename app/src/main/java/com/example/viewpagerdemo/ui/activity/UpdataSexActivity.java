@@ -1,9 +1,6 @@
 package com.example.viewpagerdemo.ui.activity;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -16,7 +13,6 @@ import com.example.viewpagerdemo.ui.bean.BaseBean;
 import com.example.viewpagerdemo.ui.jlfragmenwork.Contantor;
 import com.example.viewpagerdemo.ui.jlfragmenwork.baseactivitywork.JLBaseActivity;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.DD;
-import com.example.viewpagerdemo.ui.jlfragmenwork.util.TS;
 import com.xingkesi.foodapp.R;
 
 import net.tsz.afinal.FinalHttp;
@@ -24,7 +20,6 @@ import net.tsz.afinal.http.AjaxCallBack;
 import net.tsz.afinal.http.AjaxParams;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class UpdataSexActivity extends JLBaseActivity {

@@ -13,9 +13,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.example.viewpagerdemo.ui.MyApplication;
 import com.example.viewpagerdemo.ui.jlfragmenwork.baseactivitywork.JLBaseActivity;
+import com.example.viewpagerdemo.ui.jlfragmenwork.util.TS;
 import com.lidong.photopicker.ImageCaptureManager;
 import com.lidong.photopicker.PhotoPickerActivity;
 import com.lidong.photopicker.PhotoPreviewActivity;
@@ -23,10 +30,21 @@ import com.lidong.photopicker.SelectModel;
 import com.lidong.photopicker.intent.PhotoPickerIntent;
 import com.lidong.photopicker.intent.PhotoPreviewIntent;
 import com.xingkesi.foodapp.R;
+import com.yiw.circledemo2.bean.ToolsHost;
+import com.yiw.circledemo2.utils.MultipartRequest;
+
+import net.tsz.afinal.FinalHttp;
+import net.tsz.afinal.http.AjaxCallBack;
+import net.tsz.afinal.http.AjaxParams;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author lidong
@@ -39,6 +57,8 @@ public class ReleaseFrendActivity extends JLBaseActivity {
     private static final int REQUEST_PREVIEW_CODE = 20;
     private ArrayList<String> imagePaths = new ArrayList<>();
     private ImageCaptureManager captureManager; // 相机拍照处理类
+    private static RequestQueue mSingleQueue;
+    private static String ENDPOINT = ToolsHost.HEDEUT;
 
     private GridView gridView;
     private GridAdapter gridAdapter;
@@ -47,6 +67,7 @@ public class ReleaseFrendActivity extends JLBaseActivity {
     private EditText textView;
     private String TAG = ReleaseFrendActivity.class.getSimpleName();
 
+    String rul = ToolsHost.HEDEUT + "/app/talk/submit";
 
     @Override
     public int setViewLayout() {
@@ -64,6 +85,7 @@ public class ReleaseFrendActivity extends JLBaseActivity {
         gridView = (GridView) findViewById(R.id.gridView);
         mButton = (Button) findViewById(R.id.button);
         textView = (EditText) findViewById(R.id.et_context);
+        mSingleQueue = Volley.newRequestQueue(ReleaseFrendActivity.this);
 
         int cols = getResources().getDisplayMetrics().widthPixels / getResources().getDisplayMetrics().densityDpi;
         cols = cols < 3 ? 3 : cols;
@@ -96,27 +118,133 @@ public class ReleaseFrendActivity extends JLBaseActivity {
             @Override
             public void onClick(View v) {
                 depp = textView.getText().toString().trim() != null ? textView.getText().toString().trim() : "woowoeo";
-                new Thread() {
-                    @Override
-                    public void run() {
-                        super.run();
-                        new FileUploadManager().uploadMany(imagePaths, depp,han);
-//                        FileUploadManager.upload(imagePaths,depp);
-                    }
-                }.start();
+                uploadMany(imagePaths, depp, han);
             }
         });
     }
 
+    public void uploadMany(ArrayList<String> paths, String desp, final Handler han) {
+        String pro, cti, dit, add;
+        Map<String, String> ap2 = new HashMap<String, String>();
+        try {
+            han.sendEmptyMessage(1);
+            mSingleQueue = Volley.newRequestQueue(ReleaseFrendActivity.this);
+            if (MyApplication.getInstan().getSheng() == null) {
+                pro = "";
+            } else {
+                pro = MyApplication.getInstan().getSheng();
+            }
+            //----------------
+            if (MyApplication.getInstan().getCity() == null) {
+                cti = "";
+            } else {
+                cti = MyApplication.getInstan().getCity();
+            }
+            //----------------
+            if (MyApplication.getInstan().getQu() == null) {
+                dit = "";
+            } else {
+                dit = MyApplication.getInstan().getQu();
+            }
+            if (MyApplication.getInstan().getAddress() == null) {
+                add = "";
+            } else {
+                add = MyApplication.getInstan().getAddress();
+            }
+            if (paths.size() > 0) {
+                List<File> f = new ArrayList<File>();
+                for (String s : paths) {
+                    if (!s.equals("000000")) {
+                        f.add(new File(s));
+                    }
+                }
 
-    Handler han =new Handler(){
+                ap2.put("content", desp);
+                ap2.put("userId", com.example.viewpagerdemo.ui.MyApplication.getInstan().getUser().getData().getId() + "");
+                ap2.put("province", pro);
+                ap2.put("city", cti);
+                ap2.put("district", dit);
+                ap2.put("address", add);
+                MultipartRequest request = new MultipartRequest(rul, new Response.Listener<String>() {
+
+                    @Override
+                    public void onResponse(String response) {
+                        Toast.makeText(ReleaseFrendActivity.this, "uploadSuccess,response = " + response, Toast.LENGTH_SHORT).show();
+                        Log.i("YanZi", "success,response = " + response);
+                        han.sendEmptyMessage(0);
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        han.sendEmptyMessage(2);
+                        Toast.makeText(ReleaseFrendActivity.this, "uploadError,response = " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Log.i("YanZi", "error,response = " + error.getMessage());
+                    }
+                }, "files", f, ap2); //注意这个key必须是f_file[],后面的[]不能少
+                mSingleQueue.add(request);
+            } else {
+
+                AjaxParams ap = new AjaxParams();
+                ap2.put("content", desp);
+                ap2.put("userId", com.example.viewpagerdemo.ui.MyApplication.getInstan().getUser().getData().getId() + "");
+                ap2.put("province", pro);
+                ap2.put("city", cti);
+                ap2.put("district", dit);
+                ap2.put("address", add);
+                ap.put("files", "");
+
+                new FinalHttp().post(rul, ap, new AjaxCallBack<String>() {
+                    @Override
+                    public void onSuccess(String s) {
+                        super.onSuccess(s);
+                        //DD.v("发布需求s:" + s);
+                        try {
+                            JSONObject js = new JSONObject(s);
+                            if (js.getBoolean("success")) {
+                                TS.shortTime("SS发布成功");
+                                finish();
+                            } else {
+                                TS.shortTime("SS发布失败");
+                            }
+                            closeWait();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Throwable t, int errorNo, String strMsg) {
+                        super.onFailure(t, errorNo, strMsg);
+                        closeWait();
+                    }
+                });
+
+            }
+
+
+        } catch (Exception e) {
+        }
+    }
+
+    Handler han = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            finish();
+            int wt = msg.what;
+            switch (wt) {
+                case 0:
+                    finish();
+                    break;
+                case 1:
+                    showWait();
+                    break;
+                case 2:
+                    closeWait();
+                    break;
+            }
         }
     };
-
 
 
     @Override

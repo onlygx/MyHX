@@ -33,7 +33,6 @@ import com.example.viewpagerdemo.ui.bean.CodeBean;
 import com.example.viewpagerdemo.ui.jlfragmenwork.Contantor;
 import com.example.viewpagerdemo.ui.jlfragmenwork.baseactivitywork.JLBaseActivity;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.DD;
-import com.example.viewpagerdemo.ui.jlfragmenwork.util.MD5Util;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.TS;
 import com.xingkesi.foodapp.R;
 

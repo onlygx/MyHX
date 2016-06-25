@@ -250,13 +250,13 @@ public class HomeeateListFragment extends JLBaseFragment implements SwipeRefresh
         list = new ArrayList<>();
         eatReclerViewAdpter = new AnnounceItemAdpter(getActivity());
 
-        eatReclerViewAdpter.setOnBannerSelectItemClitener(new AnnounceItemAdpter.OnBannerSelectItemClitener() {
+       /* eatReclerViewAdpter.setOnBannerSelectItemClitener(new AnnounceItemAdpter.OnBannerSelectItemClitener() {
             @Override
             public void onBanner(int position, int select) {
                 list.get(position).setBannerSelect(select);
                 eatReclerViewAdpter.notifyDataSetChanged();
             }
-        });
+        });*/
         eatRecycler.setAdapter(eatReclerViewAdpter);
         eatRecycler.setHasFixedSize(true);
         manager = new LinearLayoutManager(getActivity());

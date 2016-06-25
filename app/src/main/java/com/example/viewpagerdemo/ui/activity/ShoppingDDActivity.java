@@ -44,8 +44,8 @@ public class ShoppingDDActivity extends JLBaseActivity implements DDReclerViewAd
     TextView num;//总数
     @Bind(R.id.dd_sc)
     ScrollView dd_sc;
-    @Bind(R.id.radiog)
-    RadioGroup radiog;
+  /*  @Bind(R.id.radiog)
+    RadioGroup radiog;*/
 
     @Bind(R.id.dd_list)
     RecyclerView ddList;
@@ -81,7 +81,7 @@ public class ShoppingDDActivity extends JLBaseActivity implements DDReclerViewAd
         man.setOrientation(LinearLayoutManager.VERTICAL);
         ddList.setLayoutManager(man);
 
-        radiog.check(R.id.ps);
+      /*  radiog.check(R.id.ps);
         radiog.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -98,7 +98,7 @@ public class ShoppingDDActivity extends JLBaseActivity implements DDReclerViewAd
                 }
 
             }
-        });
+        });*/
 
     }
 

@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.viewpagerdemo.ui.bean.ColltentBean;
 import com.example.viewpagerdemo.ui.bean.MyReleaseBean;
 import com.example.viewpagerdemo.ui.jlfragmenwork.Contantor;
 import com.squareup.picasso.Picasso;

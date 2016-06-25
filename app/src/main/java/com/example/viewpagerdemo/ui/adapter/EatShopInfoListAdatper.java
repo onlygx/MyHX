@@ -8,15 +8,10 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.viewpagerdemo.ui.bean.ContentListBean;
 import com.example.viewpagerdemo.ui.bean.ShopInfoListBean;
-import com.example.viewpagerdemo.ui.jlfragmenwork.Contantor;
-import com.squareup.picasso.Picasso;
 import com.xingkesi.foodapp.R;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 import butterknife.ButterKnife;
 import butterknife.Bind;

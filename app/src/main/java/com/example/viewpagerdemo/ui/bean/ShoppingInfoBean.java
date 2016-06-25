@@ -26,11 +26,21 @@ public class ShoppingInfoBean implements Serializable {
     private long shopId;
     private long setTime;
     private String content;
+    private String score;
     private String shopName;
     private String shopAddress;
 
 
     Collection collection;
+
+
+    public String getScore() {
+        return score;
+    }
+
+    public void setScore(String score) {
+        this.score = score;
+    }
 
     public int getPayCount() {
         return payCount;

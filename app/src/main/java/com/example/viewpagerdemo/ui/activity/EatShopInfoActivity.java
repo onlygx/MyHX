@@ -1,45 +1,33 @@
 package com.example.viewpagerdemo.ui.activity;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ColorDrawable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
-import android.view.animation.Transformation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.PopupWindow;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
-import com.example.viewpagerdemo.ui.adapter.EatShopInfoListAdatper;
 import com.example.viewpagerdemo.ui.adapter.EatShopInfoListAdatper2;
 import com.example.viewpagerdemo.ui.adapter.EatShopInfoListAdatperCar;
 import com.example.viewpagerdemo.ui.bean.ShopInfoBean;
 import com.example.viewpagerdemo.ui.bean.ShopInfoListBean;
 import com.example.viewpagerdemo.ui.jlfragmenwork.Contantor;
 import com.example.viewpagerdemo.ui.jlfragmenwork.baseactivitywork.JLBaseActivity;
-import com.example.viewpagerdemo.ui.jlfragmenwork.city.widget.SelectPicPopupWindow;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.DD;
-import com.example.viewpagerdemo.ui.jlfragmenwork.util.MyDialog;
 import com.example.viewpagerdemo.ui.jlfragmenwork.view.BadgeView;
-import com.squareup.picasso.Picasso;
 import com.xingkesi.foodapp.R;
 
 import net.tsz.afinal.FinalHttp;

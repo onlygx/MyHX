@@ -4,16 +4,11 @@ import android.graphics.Color;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 
 import com.alibaba.fastjson.JSONObject;
 import com.example.viewpagerdemo.ui.MyApplication;
-import com.example.viewpagerdemo.ui.adapter.ColltentItemAdpter;
 import com.example.viewpagerdemo.ui.adapter.IndexyReleaseListAdpter;
-import com.example.viewpagerdemo.ui.adapter.MyReleaseListAdpter;
-import com.example.viewpagerdemo.ui.bean.ColltentBean;
 import com.example.viewpagerdemo.ui.bean.IndexRaleaseBean;
-import com.example.viewpagerdemo.ui.bean.MyReleaseBean;
 import com.example.viewpagerdemo.ui.jlfragmenwork.Contantor;
 import com.example.viewpagerdemo.ui.jlfragmenwork.basefregmetwork.JLBaseFragment;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.DD;

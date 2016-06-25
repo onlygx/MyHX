@@ -70,13 +70,13 @@ public class CirclePresenter extends BasePresenter<ICircleView> {
         ap.put("userId", MyApplication.getInstan().getUser().getData().getId() + "");
         ap.put("page", "1");
         ap.put("size", "10");
-        //Log.v("LD", "PYQ:" + DatasUtil.userPY + "?" + ap.toString());
+        Log.v("LD", "PYQ:" + DatasUtil.userPY + "?" + ap.toString());
         new FinalHttp().post(DatasUtil.userPY, ap, new AjaxCallBack<String>() {
             @Override
             public void onSuccess(String s) {
                 super.onSuccess(s);
                 FrendBean test = JSON.parseObject(s, FrendBean.class);
-               // DD.v("LD PYQs:" + s);
+                 DD.v("LD PYQs:" + s);
                 if (test.getList().size() > 0) {
                     datas = test.getList();
                     for (int i = 0; i < datas.size(); i++) {

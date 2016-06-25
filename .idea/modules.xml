@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/MyHX.iml" filepath="$PROJECT_DIR$/MyHX.iml" />
+      <module fileurl="file://$PROJECT_DIR$/OneSDK/OneSDK.iml" filepath="$PROJECT_DIR$/OneSDK/OneSDK.iml" />
+      <module fileurl="file://$PROJECT_DIR$/YunWangVideoSDK/YunWangVideoSDK.iml" filepath="$PROJECT_DIR$/YunWangVideoSDK/YunWangVideoSDK.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/photopicker/photopicker.iml" filepath="$PROJECT_DIR$/photopicker/photopicker.iml" />
     </modules>

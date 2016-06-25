@@ -1,6 +1,5 @@
 package com.example.viewpagerdemo.ui.activity;
 
-import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
@@ -17,7 +16,6 @@ import com.example.viewpagerdemo.ui.MyApplication;
 import com.example.viewpagerdemo.ui.bean.CodeBean;
 import com.example.viewpagerdemo.ui.bean.UserBeanLO;
 import com.example.viewpagerdemo.ui.jlfragmenwork.Contantor;
-import com.example.viewpagerdemo.ui.jlfragmenwork.actvity.RegisterActivity;
 import com.example.viewpagerdemo.ui.jlfragmenwork.baseactivitywork.JLBaseActivity;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.DD;
 import com.xingkesi.foodapp.R;
@@ -26,10 +24,6 @@ import net.tsz.afinal.FinalHttp;
 import net.tsz.afinal.http.AjaxCallBack;
 import net.tsz.afinal.http.AjaxParams;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import butterknife.ButterKnife;
 import butterknife.Bind;
 import butterknife.OnClick;
 

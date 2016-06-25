@@ -1,8 +1,6 @@
 package com.example.viewpagerdemo.ui.activity;
 
-import android.app.Activity;
 import android.graphics.Color;
-import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,9 +11,7 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.example.viewpagerdemo.ui.MyApplication;
-import com.example.viewpagerdemo.ui.adapter.ColltentItemAdpter;
 import com.example.viewpagerdemo.ui.adapter.MyOderItemAdpter;
-import com.example.viewpagerdemo.ui.bean.ColltentBean;
 import com.example.viewpagerdemo.ui.bean.MyOderListBean;
 import com.example.viewpagerdemo.ui.bean.MyOderOBean;
 import com.example.viewpagerdemo.ui.jlfragmenwork.Contantor;

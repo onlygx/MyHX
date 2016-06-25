@@ -30,7 +30,9 @@ public class ContactListAdapter extends ArrayAdapter<ContactItemInterface>
 
 		// need to sort the items array first, then pass it to the indexer
 
-		Collections.sort(_items, new ContactItemComparator());
+		if(_items!=null) {
+			Collections.sort(_items, new ContactItemComparator());
+		}
 		setIndexer(new ContactsSectionIndexer(_items));
 
 	}

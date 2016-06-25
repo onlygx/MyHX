@@ -70,7 +70,6 @@ public class CircleFriendsActivity extends JLBaseActivity implements ICircleView
     private final static int TYPE_UPLOADREFRESH = 2;
 
 
-
     @Override
     public void initID() {
         super.initID();
@@ -83,15 +82,11 @@ public class CircleFriendsActivity extends JLBaseActivity implements ICircleView
     @Override
     protected void onResume() {
         super.onResume();
-        if(MyApplication.getInstan().getUser()!=null && MyApplication.getInstan().getUser().getData().getId()!=-1){
+        if (MyApplication.getInstan().getUser() != null && MyApplication.getInstan().getUser().getData().getId() != -1) {
             mPresenter.loadData(TYPE_PULLREFRESH);
         }
     }
 
-    @Override
-    public void initObject() {
-        super.initObject();
-    }
 
     @Override
     public int setViewLayout() {
@@ -143,7 +138,6 @@ public class CircleFriendsActivity extends JLBaseActivity implements ICircleView
         });
 
 
-
         mAdapter = new CircleAdapter(this);
         mAdapter.setCirclePresenter(mPresenter);
         recyclerView.setAdapter(mAdapter);
@@ -155,7 +149,7 @@ public class CircleFriendsActivity extends JLBaseActivity implements ICircleView
             @Override
             public void onClick(View v) {
                 if (mPresenter != null) {
-                    //发
+                    //发评论
                     String content = mEditText.getText().toString().trim();
                     if (TextUtils.isEmpty(content)) {
                         Toast.makeText(CircleFriendsActivity.this, "内容不能为空...", Toast.LENGTH_SHORT).show();
@@ -182,7 +176,7 @@ public class CircleFriendsActivity extends JLBaseActivity implements ICircleView
             @Override
             public void performAction(View view) {
                 //Toast.makeText(CircleFriendsActivity.this, "敬请期待...", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(CircleFriendsActivity.this,ReleaseFrendActivity.class));
+                startActivity(new Intent(CircleFriendsActivity.this, ReleaseFrendActivity.class));
             }
         });
         textView.setTextColor(getResources().getColor(R.color.white));

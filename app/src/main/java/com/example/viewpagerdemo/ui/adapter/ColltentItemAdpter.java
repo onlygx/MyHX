@@ -2,7 +2,6 @@ package com.example.viewpagerdemo.ui.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,7 +24,6 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 
 /**

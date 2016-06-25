@@ -118,6 +118,7 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/forpass"
                     android:layout_alignParentRight="true"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"

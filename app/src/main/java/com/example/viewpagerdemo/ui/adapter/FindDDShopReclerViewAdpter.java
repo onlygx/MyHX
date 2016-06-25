@@ -10,15 +10,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.viewpagerdemo.ui.activity.OrderInfoActivity;
-import com.example.viewpagerdemo.ui.activity.PlayMainActivity;
 import com.example.viewpagerdemo.ui.bean.FindDDListShopBean;
-import com.example.viewpagerdemo.ui.bean.FindDDListShopGoodsBean;
 import com.example.viewpagerdemo.ui.jlfragmenwork.Contantor;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.DD;
 import com.squareup.picasso.Picasso;
 import com.xingkesi.foodapp.R;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
