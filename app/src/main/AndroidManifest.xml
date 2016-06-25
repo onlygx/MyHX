@@ -233,7 +233,11 @@
         <activity android:name="com.mining.app.ScanMainActivity"></activity>
         <activity android:name="com.yiw.circledemo2.widgets.MyCircleFriendsActivity"></activity>
         <activity android:name="com.example.viewpagerdemo.ui.searchfrend.CityListActivity"></activity>
-        <activity android:name="com.example.viewpagerdemo.ui.activity.ListTopClassActivity"></activity>
+
+        <activity android:name="com.example.viewpagerdemo.ui.activity.ListTopClassActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            />
 
         <activity
             android:name="com.karics.library.zxing.android.CaptureActivity"

@@ -101,7 +101,6 @@ public class AddressBookFragment extends JLBaseFragment implements TextWatcher, 
 
         if (MyApplication.getInstan().getUser() != null &&
                 MyApplication.getInstan().getUser().getData().getThinksId() != null) {
-            DD.v("友---------onResume------------------");
             getFrd();
             getNewNum();
         }
@@ -114,7 +113,6 @@ public class AddressBookFragment extends JLBaseFragment implements TextWatcher, 
             //可见时加载数据相当于Fragment的onResume
             if (MyApplication.getInstan().getUser() != null &&
                     MyApplication.getInstan().getUser().getData().getThinksId() != null) {
-                DD.v("友---------------------------");
                 getFrd();
                 getNewNum();
             }
@@ -125,13 +123,10 @@ public class AddressBookFragment extends JLBaseFragment implements TextWatcher, 
     void getNewNum() {
         AjaxParams pa = new AjaxParams();
         pa.put("userId", MyApplication.getInstan().getUser().getData().getId() + "");
-        String url = Contantor.applyListByUserId;
-        DD.d("ZXHYS:" + url + "?" + pa.toString());
-        new FinalHttp().post(url, pa, new AjaxCallBack<String>() {
+        new FinalHttp().post(Contantor.applyListByUserId, pa, new AjaxCallBack<String>() {
             @Override
             public void onSuccess(String s) {
                 super.onSuccess(s);
-                DD.d("ZXHYSs:" + s);
                 if (s != null && !s.equals("")) {
                     list = JSONArray.parseArray(s, ShenQBean.class);
                     if (list.size() > 0) {
@@ -155,7 +150,6 @@ public class AddressBookFragment extends JLBaseFragment implements TextWatcher, 
         bookList = new ArrayList<>();
         iv_back.setImageResource(R.drawable.tianjia);
         tv_title.setText("通讯录");
-
 
         //登录状态
         if (MyApplication.getInstan().getUser() != null && MyApplication.getInstan().getUser().getData().getThinksId() != null) {

@@ -292,12 +292,12 @@
         "source": "D:\\work\\androidStudioProject\\MyHX\\OneSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\aliwx_multi_pick_album.xml"
     },
     {
-        "merged": "D:\\work\\androidStudioProject\\MyHX\\OneSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\aliwx_image_detail_fragment.xml",
-        "source": "D:\\work\\androidStudioProject\\MyHX\\OneSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\aliwx_image_detail_fragment.xml"
-    },
-    {
         "merged": "D:\\work\\androidStudioProject\\MyHX\\OneSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\aliwx_search_text.xml",
         "source": "D:\\work\\androidStudioProject\\MyHX\\OneSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\aliwx_search_text.xml"
+    },
+    {
+        "merged": "D:\\work\\androidStudioProject\\MyHX\\OneSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\aliwx_image_detail_fragment.xml",
+        "source": "D:\\work\\androidStudioProject\\MyHX\\OneSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\aliwx_image_detail_fragment.xml"
     },
     {
         "merged": "D:\\work\\androidStudioProject\\MyHX\\OneSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\aliwx_default_chatting_title.xml",

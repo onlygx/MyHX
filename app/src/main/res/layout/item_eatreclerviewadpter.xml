@@ -2,18 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingLeft="10dp"
-    android:paddingRight="10dp"
-    android:layout_marginTop="20dp"
+    android:layout_marginTop="10dp"
     android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/lunb"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:layout_marginTop="10dp"
+        android:gravity="center_horizontal"
         android:orientation="vertical">
 
         <com.example.viewpagerdemo.ui.views.banner.ConvenientBanner
@@ -26,19 +22,17 @@
     <LinearLayout
         android:id="@+id/infoLayout"
         android:layout_below="@+id/lunb"
-        android:layout_marginTop="10dp"
-        android:layout_toLeftOf="@+id/righ"
-        android:layout_marginBottom="10dp"
+        android:layout_margin="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-
         <TextView
             android:id="@+id/list_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text=""
             android:lines="1"
+            android:layout_marginRight="65dp"
             android:ellipsize="end"
             android:textSize="18sp" />
 
@@ -97,11 +91,11 @@
         </LinearLayout>
 
         <LinearLayout
-
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
             android:orientation="horizontal">
 
             <TextView
@@ -125,6 +119,7 @@
     <LinearLayout
         android:layout_below="@+id/lunb"
         android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
         android:id="@+id/shop_layout"
         android:layout_alignParentRight="true"
         android:orientation="vertical"

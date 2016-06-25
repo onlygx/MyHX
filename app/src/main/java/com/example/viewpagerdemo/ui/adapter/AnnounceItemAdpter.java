@@ -2,6 +2,7 @@ package com.example.viewpagerdemo.ui.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.PixelFormat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import com.example.viewpagerdemo.ui.bean.ShoppingListBanerBean;
 import com.example.viewpagerdemo.ui.bean.ShoppingListBean;
 import com.example.viewpagerdemo.ui.jlfragmenwork.Contantor;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.CircleImageView;
+import com.example.viewpagerdemo.ui.units.PixelsUtils;
 import com.example.viewpagerdemo.ui.views.HomeBannerImageHolderView;
 import com.example.viewpagerdemo.ui.views.banner.CBViewHolderCreator;
 import com.example.viewpagerdemo.ui.views.banner.ConvenientBanner;
@@ -89,6 +91,12 @@ public class AnnounceItemAdpter extends RecyclerView.Adapter<AnnounceItemAdpter.
             vh.infoLayout.setVisibility(View.VISIBLE);
             vh.shopLayout.setVisibility(View.VISIBLE);
 
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                    PixelsUtils.getWidth(context)-PixelsUtils.getScale(context,20), PixelsUtils.getScale(context,160));
+            vh.convenientBanner.setLayoutParams(params);
+
+            //banner 不允许滑动
+            vh.convenientBanner.stopTurning();
             vh.listTitle.setText(data.getName());//标题名称
             vh.listAddr.setText(data.getShopAddress());//地址
             vh.listMoney.setText(data.getPrice() + "");//价格
@@ -114,6 +122,9 @@ public class AnnounceItemAdpter extends RecyclerView.Adapter<AnnounceItemAdpter.
             vh.infoLayout.setVisibility(View.GONE);
             vh.shopLayout.setVisibility(View.GONE);
             vh.convenientBanner.startTurning(2000);
+           LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT, PixelsUtils.getScale(context,160));
+            vh.convenientBanner.setLayoutParams(params);
         }
 
 

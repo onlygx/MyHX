@@ -16,6 +16,7 @@ import com.example.viewpagerdemo.ui.bean.IndexRaleaseBean;
 import com.example.viewpagerdemo.ui.bean.ShoppingListBanerBean;
 import com.example.viewpagerdemo.ui.jlfragmenwork.Contantor;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.CircleImageView;
+import com.example.viewpagerdemo.ui.units.PixelsUtils;
 import com.example.viewpagerdemo.ui.views.HomeBannerImageHolderView;
 import com.example.viewpagerdemo.ui.views.banner.CBViewHolderCreator;
 import com.example.viewpagerdemo.ui.views.banner.ConvenientBanner;
@@ -81,7 +82,9 @@ public class IndexyReleaseListAdpter extends RecyclerView.Adapter<IndexyReleaseL
 
             }
         });
-
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                PixelsUtils.getWidth(c)-PixelsUtils.getScale(c,20), PixelsUtils.getScale(c,160));
+        vh.convenientBanner.setLayoutParams(params);
 
         vh.listTitle.setText(data.getTitle());
         String content =data.getContent();

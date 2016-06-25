@@ -49,22 +49,17 @@ import butterknife.Bind;
  */
 public class HomeeateListFragment extends JLBaseFragment implements SwipeRefreshLayout.OnRefreshListener {
 
-
     @Bind(R.id.eat_recycler)
     RecyclerView recycler_view;
     @Bind(R.id.refreshlayout)
     SwipeRefreshLayout refreshlayout;
 
-
     int page = 1;
     int num = 10;
     boolean tag = true;
 
-
-
     private ShoppingListBean  bannerBean;
 
-    //--------------列表---------------------------------
     ArrayList<ShoppingListBean> mDatas = new ArrayList<>();
     AnnounceItemAdpter mAdpter;
     int scrollPostion = 0;
@@ -146,7 +141,6 @@ public class HomeeateListFragment extends JLBaseFragment implements SwipeRefresh
                     mDatas.clear();
                     mDatas.addAll(listBanner);
                     mAdpter.notifyDataSetChanged();
-                    Log.e("x","--------------Datas:"+mDatas.size());
                 }
             }
 
@@ -168,12 +162,10 @@ public class HomeeateListFragment extends JLBaseFragment implements SwipeRefresh
         map.put("page", page + "");//页码，第几页
         map.put("size", num + "");//每页几条
         map.put("city", com.example.viewpagerdemo.ui.MyApplication.getInstan().getCity());//
-        DD.d("主页商品列表参数：" + map.toString());
         new FinalHttp().post(Contantor.main_eat, map, new AjaxCallBack<String>() {
             @Override
             public void onSuccess(String s) {
                 ShopingBean sb = JSON.parseObject(s, ShopingBean.class);
-                DD.v("主页返回数据：" + s);
                 if (refreshlayout.isRefreshing()) {
                     refreshlayout.setRefreshing(false);
                 }
@@ -195,7 +187,6 @@ public class HomeeateListFragment extends JLBaseFragment implements SwipeRefresh
                         page = page - 1;
                         num = num - 10;
                     }
-                    Log.e("x","--------------Datas:"+mDatas.size());
                     mAdpter.notifyDataSetChanged();
                 }
             }
@@ -203,13 +194,11 @@ public class HomeeateListFragment extends JLBaseFragment implements SwipeRefresh
             @Override
             public void onFailure(Throwable t, int errorNo, String strMsg) {
                 super.onFailure(t, errorNo, strMsg);
-                //closeWait();
                 if (refreshlayout.isRefreshing()) {
                     refreshlayout.setRefreshing(false);
                 }
             }
         });
-
 
     }
 
@@ -243,6 +232,5 @@ public class HomeeateListFragment extends JLBaseFragment implements SwipeRefresh
     public void onDestroyView() {
         super.onDestroyView();
     }
-
 
 }

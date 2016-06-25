@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.example.viewpagerdemo.ui.bean.EatOneBaen;
 import com.example.viewpagerdemo.ui.bean.ShoppingListBean;
+import com.example.viewpagerdemo.ui.units.PixelsUtils;
 import com.example.viewpagerdemo.ui.views.HomeBannerImageHolderView;
 import com.example.viewpagerdemo.ui.views.banner.CBViewHolderCreator;
 import com.example.viewpagerdemo.ui.views.banner.ConvenientBanner;
@@ -93,6 +94,9 @@ public class EatListViewAdpter extends BaseAdapter {
             }
         });
 
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                PixelsUtils.getWidth(c)-PixelsUtils.getScale(c,20), PixelsUtils.getScale(c,160));
+        vh.convenientBanner.setLayoutParams(params);
 
         ShoppingListBean data =list.get(position);
 

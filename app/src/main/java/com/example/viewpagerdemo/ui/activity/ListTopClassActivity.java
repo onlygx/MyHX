@@ -62,7 +62,6 @@ public class ListTopClassActivity extends JLBaseActivity {
             @Override
             public void onSuccess(String s) {
                 mListTopDatas = JSON.parseArray(s, ListTopBean.class);
-                DD.v("主页返回数据：" + s);
                 mListTopAdapter.getArrayLists().addAll(mListTopDatas);
                 mListTopAdapter.notifyDataSetChanged();
             }

@@ -82,10 +82,7 @@ public class HomeFragment extends JLBaseFragment {
         iv_right_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // startActivity(new Intent(getActivity(), ScanMainActivity.class));
-                startActivity(new Intent(getActivity(), CityListActivity.class));
-
-
+            startActivity(new Intent(getActivity(), CityListActivity.class));
             }
         });
 
@@ -103,13 +100,9 @@ public class HomeFragment extends JLBaseFragment {
         tabStripController = new WhiteTabStripController(getActivity(), pagerSlidingTabStrip);
         pagerSlidingTabStrip.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            }
-
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) { }
             @Override
-            public void onPageScrollStateChanged(int state) {
-            }
-
+            public void onPageScrollStateChanged(int state) {}
             @Override
             public void onPageSelected(int position) {
                 defaultChildPage = OrderChildPage.values()[position];
@@ -127,7 +120,6 @@ public class HomeFragment extends JLBaseFragment {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getActivity(), ListTopClassActivity.class));
-                final MyDialog md = new MyDialog(getActivity(), R.style.dialog);
             }
         });
     }

@@ -120,12 +120,12 @@
         "source": "D:\\work\\androidStudioProject\\MyHX\\YunWangVideoSDK\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\taofilter_jiaopian.jpg"
     },
     {
-        "merged": "D:\\work\\androidStudioProject\\MyHX\\YunWangVideoSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\taorecorder_img_tutorial_cf.png",
-        "source": "D:\\work\\androidStudioProject\\MyHX\\YunWangVideoSDK\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\taorecorder_img_tutorial_cf.png"
-    },
-    {
         "merged": "D:\\work\\androidStudioProject\\MyHX\\YunWangVideoSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\taofilter_richu.jpg",
         "source": "D:\\work\\androidStudioProject\\MyHX\\YunWangVideoSDK\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\taofilter_richu.jpg"
+    },
+    {
+        "merged": "D:\\work\\androidStudioProject\\MyHX\\YunWangVideoSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\taorecorder_img_tutorial_cf.png",
+        "source": "D:\\work\\androidStudioProject\\MyHX\\YunWangVideoSDK\\build\\intermediates\\bundles\\debug\\res\\drawable-xhdpi-v4\\taorecorder_img_tutorial_cf.png"
     },
     {
         "merged": "D:\\work\\androidStudioProject\\MyHX\\YunWangVideoSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xhdpi-v4\\taorecorder_playfill.png",

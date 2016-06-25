@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.viewpagerdemo.ui.activity.EatInfoActivity;
@@ -59,36 +60,8 @@ public class ColltentItemAdpter extends RecyclerView.Adapter<ColltentItemAdpter.
         final ColltentBean.ListBean data = adList.get(position);
         final String name = data.getGoods().getName();
         vh.findshopTitle.setText(name);
-        String content = data.getGoods().getContent();
-        int by = data.getGoods().getBaoYou();
-        int peiSong = data.getGoods().getPeiSong();
-        int kuaiDi = data.getGoods().getKuaiDi();
-        int ZiTi = data.getGoods().getZiTi();
-        StringBuffer sb = new StringBuffer();
-        if (peiSong == 1) {
-            sb.append("配送");
-        }
-        if (peiSong == 1 && kuaiDi == 1) {
-            sb.append("/快递");
-        } else if (peiSong != 1 && kuaiDi == 1) {
-            sb.append("快递");
-        }
-        if ((peiSong == 1 && kuaiDi == 1 && ZiTi == 1) || (kuaiDi == 1 && ZiTi == 1)) {
-            sb.append("/自提");
-        } else {
-            sb.append("自提");
-        }
-        vh.findshopNum.setText(sb.toString());
-        if (by == 1) {
-            vh.baoyou.setVisibility(View.VISIBLE);
-        }
-        double Price = data.getGoods().getPrice();
-        vh.findshopSummongye.setText(Price + "");
-        long dates = data.getGoods().getSetTime();
-        SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd HH:ss");
-        String da = sdf.format(new Date(dates));
-        vh.newDate.setText(da);
-
+        vh.tv_price.setText("￥"+data.getGoods().getPrice());
+        //图片地址
         if (data.getGoods().getBannerList().size() > 0) {
             String url = data.getGoods().getBannerList().get(0).getUrl();
             Picasso.with(c).load(Contantor.Imagepost + url).placeholder(R.drawable.aliwx_default_photo_right)
@@ -96,15 +69,7 @@ public class ColltentItemAdpter extends RecyclerView.Adapter<ColltentItemAdpter.
         } else {
             Picasso.with(c).load(R.drawable.aliwx_default_photo_right).into(vh.shopIocn);
         }
-
-
-        vh.findshopDel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                del.del(position);
-            }
-        });
-        vh.shopIocn.setOnClickListener(new View.OnClickListener() {
+        vh.rl_parent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent it = new Intent(c, EatInfoActivity.class);
@@ -112,18 +77,6 @@ public class ColltentItemAdpter extends RecyclerView.Adapter<ColltentItemAdpter.
                 it.putExtra("shopID", data.getGoods().getShopId() + "");
                 it.putExtra("name", name + "");
                 c.startActivity(it);
-
-            }
-        });
-        vh.ta.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent it = new Intent(c, EatInfoActivity.class);
-                it.putExtra("id", data.getGoods().getId() + "");
-                it.putExtra("shopID", data.getGoods().getShopId() + "");
-                it.putExtra("name", name + "");
-                c.startActivity(it);
-
             }
         });
     }
@@ -147,23 +100,12 @@ public class ColltentItemAdpter extends RecyclerView.Adapter<ColltentItemAdpter.
     static class ViewHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.shop_iocn)
         ImageView shopIocn;
-        @Bind(R.id.baoyou)
-        ImageView baoyou;
-
         @Bind(R.id.findshop_title)
         TextView findshopTitle;
-        @Bind(R.id.findshop_summongye)
-        TextView findshopSummongye;
-        @Bind(R.id.findshop_num)
-        TextView findshopNum;
-
-        @Bind(R.id.newDate)
-        TextView newDate;
-        @Bind(R.id.findshop_del)
-        Button findshopDel;
-        @Bind(R.id.ta)
-        LinearLayout ta;
-
+        @Bind(R.id.tv_price)
+        TextView tv_price;
+        @Bind(R.id.rl_parent)
+        RelativeLayout rl_parent;
         ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);

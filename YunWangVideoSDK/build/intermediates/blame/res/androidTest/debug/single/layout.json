@@ -28,12 +28,12 @@
         "source": "D:\\work\\androidStudioProject\\MyHX\\YunWangVideoSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\taorecorder_timeline.xml"
     },
     {
-        "merged": "D:\\work\\androidStudioProject\\MyHX\\YunWangVideoSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\aliwx_sv_select_dialog.xml",
-        "source": "D:\\work\\androidStudioProject\\MyHX\\YunWangVideoSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\aliwx_sv_select_dialog.xml"
-    },
-    {
         "merged": "D:\\work\\androidStudioProject\\MyHX\\YunWangVideoSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\taorecorder_view_radio_item.xml",
         "source": "D:\\work\\androidStudioProject\\MyHX\\YunWangVideoSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\taorecorder_view_radio_item.xml"
+    },
+    {
+        "merged": "D:\\work\\androidStudioProject\\MyHX\\YunWangVideoSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\aliwx_sv_select_dialog.xml",
+        "source": "D:\\work\\androidStudioProject\\MyHX\\YunWangVideoSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\aliwx_sv_select_dialog.xml"
     },
     {
         "merged": "D:\\work\\androidStudioProject\\MyHX\\YunWangVideoSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\aliwx_sv_alert_dialog.xml",

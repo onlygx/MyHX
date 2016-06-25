@@ -49,7 +49,7 @@ configurations {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', exclude: ['multidex.1.0.1.jar'], include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], exclude: ['multidex.1.0.1.jar'], dir: 'libs')
     compile 'com.android.support:multidex:1.0.1'
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.3.0'
@@ -119,4 +119,5 @@ dependencies {
     compile files('libs/httpcore-4.3.2.jar')
     compile project(':YunWangVideoSDK')
     compile project(':OneSDK')
+    compile files('libs/multidex.1.0.1.jar')
 }
