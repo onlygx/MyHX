@@ -17,7 +17,6 @@ import com.example.viewpagerdemo.ui.bean.ShoppingListBanerBean;
 import com.example.viewpagerdemo.ui.bean.ShoppingListBean;
 import com.example.viewpagerdemo.ui.jlfragmenwork.Contantor;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.CircleImageView;
-import com.example.viewpagerdemo.ui.jlfragmenwork.util.DD;
 import com.squareup.picasso.Picasso;
 import com.xingkesi.foodapp.R;
 
@@ -165,11 +164,11 @@ public class AnnounceItemAdpter extends RecyclerView.Adapter<AnnounceItemAdpter.
             infoLayout= (LinearLayout) itemView.findViewById(R.id.infoLayout);
             dot_layout= (LinearLayout) itemView.findViewById(R.id.dotone2);
             listImage= (CircleImageView) itemView.findViewById(R.id.list_image);
+            //ButterKnife.bind(this, itemView);
         }
     }
 
     class MyPageChangeListener implements ViewPager.OnPageChangeListener {
-        int oldPosition = 0;
         @Override
         public void onPageScrollStateChanged(int arg0) {
 
@@ -182,19 +181,14 @@ public class AnnounceItemAdpter extends RecyclerView.Adapter<AnnounceItemAdpter.
 
         @Override
         public void onPageSelected(int position) {
-          //  Toast.makeText(c,"position"+position,Toast.LENGTH_LONG);
-            DD.v("滑动-------------------------------："+position);
-           // currentItem = position;
-            dots.get(oldPosition).setBackgroundResource(R.drawable.dot_normal);
-            dots.get(position).setBackgroundResource(R.drawable.dot_focused);
-            oldPosition = position;
-           /* for(int i=0;i<dots.size();i++){
+            Toast.makeText(c,"position"+position,Toast.LENGTH_LONG);
+            for(int i=0;i<dots.size();i++){
                 if(position == i){
                     dots.get(position).setBackgroundResource(R.drawable.dot_focused);
                 }else{
                     dots.get(i).setBackgroundResource(R.drawable.dot_normal);
                 }
-            }*/
+            }
         }
     }
 }

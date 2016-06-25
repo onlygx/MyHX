@@ -15,8 +15,8 @@ public class Contantor {
 
     public static final String GETUPLOADINFO =  "oss/sign";
 
-//    public static  String Imagepost="http://120.27.120.27:8080";
-    public static  String Imagepost="http://119.188.182.131:8080";
+    public static  String Imagepost="http://120.27.120.27:8080";
+//    public static  String Imagepost="http://119.188.182.131:8080";
     public static  String post=Imagepost+"/app";
     public static  String logdin=post+"/user/login";
     public static  String code=post+"/user/sendCode";

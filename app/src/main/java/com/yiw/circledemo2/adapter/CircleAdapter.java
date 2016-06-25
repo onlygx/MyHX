@@ -54,7 +54,7 @@ import java.util.List;
  */
 public class CircleAdapter extends BaseRecycleViewAdapter {
 
-    public static int TYPE_HEAD = 0;
+    public static int TYPE_HEAD = 7;
     public final static int TYPE_URL = 1;
     public final static int TYPE_IMAGE = 2;
     public final static int TYPE_VIDEO = 3;

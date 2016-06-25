@@ -55,7 +55,7 @@ public class CityData {
         for (int i = 0; i < booklist.size(); i++) {
             AddBookBean abb = booklist.get(i);
             String cityName ;
-            if(abb.getFriendUser().getNickName().equals(null) || abb.getFriendUser().getNickName()==null){
+            if(abb.getFriendUser()==null || abb.getFriendUser().getNickName().equals(null) || abb.getFriendUser().getNickName()==null){
                 cityName="";
             } else{
                 cityName = abb.getFriendUser().getNickName();

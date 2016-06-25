@@ -15,6 +15,7 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.location.Poi;
 import com.example.viewpagerdemo.ui.MyApplication;
+import com.example.viewpagerdemo.ui.activity.ListTopClassActivity;
 import com.example.viewpagerdemo.ui.activity.OhterListMainActivity;
 import com.example.viewpagerdemo.ui.jlfragmenwork.adpter.FragmentArrayPageAdapter;
 import com.example.viewpagerdemo.ui.jlfragmenwork.basefregmetwork.JLBaseFragment;
@@ -125,9 +126,9 @@ public class HomeFragment extends JLBaseFragment {
         showOthoer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                startActivity(new Intent(getActivity(), ListTopClassActivity.class));
                 final MyDialog md = new MyDialog(getActivity(), R.style.dialog);
-                md.setContentView(R.layout.other_layout);
+               /* md.setContentView(R.layout.other_layout);
                 md.setCanceledOnTouchOutside(true);
                 LinearLayout ot0 = (LinearLayout) md.getWindow().findViewById(R.id.ot0);
                 LinearLayout ot1 = (LinearLayout) md.getWindow().findViewById(R.id.ot1);
@@ -150,7 +151,7 @@ public class HomeFragment extends JLBaseFragment {
                     }
                 });
 
-                md.show();
+                md.show();*/
 
             }
         });

@@ -45,6 +45,7 @@ public class ShoppingListBean {
     private long setTime;
     private String content;
     private ArrayList<ShoppingListBanerBean> bannerList;
+    private int bannerSelect;
     private String shopName;
     private String shopAddress;
     private ShoppingListInfoBean shop;
@@ -201,5 +202,13 @@ public class ShoppingListBean {
 
     public void setShop(ShoppingListInfoBean shop) {
         this.shop = shop;
+    }
+
+    public int getBannerSelect() {
+        return bannerSelect;
+    }
+
+    public void setBannerSelect(int bannerSelect) {
+        this.bannerSelect = bannerSelect;
     }
 }
