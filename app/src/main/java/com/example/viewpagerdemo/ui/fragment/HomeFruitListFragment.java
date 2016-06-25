@@ -9,10 +9,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.example.viewpagerdemo.ui.MyApplication;
 import com.example.viewpagerdemo.ui.adapter.IndexyReleaseListAdpter;
 import com.example.viewpagerdemo.ui.bean.IndexRaleaseBean;
-import com.example.viewpagerdemo.ui.jlfragmenwork.Contantor;
+import com.example.viewpagerdemo.ui.Contantor;
 import com.example.viewpagerdemo.ui.jlfragmenwork.basefregmetwork.JLBaseFragment;
-import com.example.viewpagerdemo.ui.jlfragmenwork.util.DD;
-import com.example.viewpagerdemo.ui.jlfragmenwork.util.TS;
 import com.xingkesi.foodapp.R;
 
 import net.tsz.afinal.FinalHttp;
@@ -96,7 +94,7 @@ public class HomeFruitListFragment extends JLBaseFragment implements SwipeRefres
         ap.put("page", page + "");
         ap.put("size", num + "");
 
-        DD.v("首页需求：" + url + "?" + ap.toString());
+       // DD.v("首页需求：" + url + "?" + ap.toString());
         new FinalHttp().post(url, ap, new AjaxCallBack<String>() {
             @Override
             public void onSuccess(String s) {
@@ -115,11 +113,11 @@ public class HomeFruitListFragment extends JLBaseFragment implements SwipeRefres
                     } else {*/
                     page = page - 1;
                     num = num - 10;
-                    TS.shortTime("没有数据");
+                  //  TS.shortTime("没有数据");
                     // }
                 }
                 refreshlayout.setRefreshing(false);
-                DD.d("首页需求s：" + s);
+              //  DD.d("首页需求s：" + s);
             }
 
             @Override

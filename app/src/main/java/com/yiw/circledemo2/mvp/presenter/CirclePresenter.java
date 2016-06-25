@@ -7,13 +7,19 @@ import android.view.View;
 
 import com.alibaba.fastjson.JSON;
 import com.example.viewpagerdemo.ui.MyApplication;
-import com.example.viewpagerdemo.ui.jlfragmenwork.Contantor;
+import com.example.viewpagerdemo.ui.Contantor;
+import com.example.viewpagerdemo.ui.bean.ReplyChildContentsBean;
+import com.example.viewpagerdemo.ui.bean.ReplyContentsBean;
+import com.example.viewpagerdemo.ui.bean.UserBeanL;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.DD;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.Tools;
+import com.yiw.circledemo2.bean.ChildBean;
 import com.yiw.circledemo2.bean.CommentConfig;
 import com.yiw.circledemo2.bean.FrendBean;
 import com.yiw.circledemo2.bean.ListBean;
+import com.yiw.circledemo2.bean.ReceiveUserBean;
 import com.yiw.circledemo2.bean.RecordListBean;
+import com.yiw.circledemo2.bean.UserBean;
 import com.yiw.circledemo2.bean.ZanListBean;
 import com.yiw.circledemo2.mvp.modle.CircleModel;
 import com.yiw.circledemo2.mvp.modle.IDataRequestListener;
@@ -27,6 +33,7 @@ import net.tsz.afinal.http.AjaxParams;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -37,7 +44,6 @@ import java.util.List;
  */
 public class CirclePresenter extends BasePresenter<ICircleView> {
     private CircleModel mCircleModel;
-    List<ListBean> datas;
     int loadType;
 
     public CirclePresenter() {
@@ -48,6 +54,7 @@ public class CirclePresenter extends BasePresenter<ICircleView> {
         this.loadType = loadType;
         getPY();
     }
+
     public void MyloadData(final int loadType) {
         this.loadType = loadType;
         getMyPY();
@@ -57,28 +64,28 @@ public class CirclePresenter extends BasePresenter<ICircleView> {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            Log.d("LD", "datas:" + datas.size());
-            getView().update2loadData(loadType, datas);
+            getView().update2loadData(loadType, MyApplication.datas);
         }
     };
 
     public void getPY() {
-        if(datas!=null && datas.size()>0){
+        /*if(datas!=null && datas.size()>0){
             datas.clear();
-        }
+        }*/
         AjaxParams ap = new AjaxParams();
         ap.put("userId", MyApplication.getInstan().getUser().getData().getId() + "");
         ap.put("page", "1");
         ap.put("size", "10");
-        Log.v("LD", "PYQ:" + DatasUtil.userPY + "?" + ap.toString());
+        DD.v("LD 朋友圈:" + DatasUtil.userPY + "?" + ap.toString());
         new FinalHttp().post(DatasUtil.userPY, ap, new AjaxCallBack<String>() {
             @Override
             public void onSuccess(String s) {
                 super.onSuccess(s);
                 FrendBean test = JSON.parseObject(s, FrendBean.class);
-                 DD.v("LD PYQs:" + s);
+                DD.v("LD 朋友圈s:" + s);
                 if (test.getList().size() > 0) {
-                    datas = test.getList();
+                    List<ListBean> datas = test.getList();
+                    MyApplication.datas.addAll(datas);
                     for (int i = 0; i < datas.size(); i++) {
                         if (datas.get(i).getBannerList().size() > 0) {
                             datas.get(i).setType("2");
@@ -98,9 +105,9 @@ public class CirclePresenter extends BasePresenter<ICircleView> {
     }
 
     public void getMyPY() {
-        if(datas!=null && datas.size()>0){
+        /*if(datas!=null && datas.size()>0){
             datas.clear();
-        }
+        }*/
         AjaxParams ap = new AjaxParams();
         ap.put("myId", MyApplication.getInstan().getUser().getData().getId() + "");
         ap.put("page", "1");
@@ -113,7 +120,8 @@ public class CirclePresenter extends BasePresenter<ICircleView> {
                 FrendBean test = JSON.parseObject(s, FrendBean.class);
                 DD.v("LD wd---------PYQs:" + s);
                 if (test.getList().size() > 0) {
-                    datas = test.getList();
+                    List<ListBean> datas = test.getList();
+                    MyApplication.mdatas.addAll(datas);
                     for (int i = 0; i < datas.size(); i++) {
                         if (datas.get(i).getBannerList().size() > 0) {
                             datas.get(i).setType("2");
@@ -165,7 +173,7 @@ public class CirclePresenter extends BasePresenter<ICircleView> {
             public void loadSuccess(Object object) {
 
                 Log.d("LD", "消：" + circlePosition);
-                String id = datas.get(circlePosition).getId();
+                String id = MyApplication.datas.get(circlePosition).getId();
                 questZ(id, circlePosition);
             }
         });
@@ -212,7 +220,7 @@ public class CirclePresenter extends BasePresenter<ICircleView> {
     void cancelZ(ZanListBean bena) {
         String url = "";
         AjaxParams ap = new AjaxParams();
-        ap.put("userId", MyApplication.getInstan().getUser().getData().getId()+"");
+        ap.put("userId", MyApplication.getInstan().getUser().getData().getId() + "");
 //        ap.put("infoId", id);
         ap.put("type", "0");
         DD.d("Z：" + url + "?" + ap.toString());
@@ -277,7 +285,7 @@ public class CirclePresenter extends BasePresenter<ICircleView> {
      * @Title: addComment
      * @Description: 增加评论
      */
-    public void addComment(final String content, final CommentConfig config) {
+    public void addComment(final String content, final CommentConfig config, Handler han) {
         if (config == null) {
             return;
         }
@@ -285,51 +293,64 @@ public class CirclePresenter extends BasePresenter<ICircleView> {
 
             @Override
             public void loadSuccess(Object object) {
-                RecordListBean newItem = null;
-                if (config.commentType == CommentConfig.Type.PUBLIC) {//创建
-
-                    addPP(config,content);
-                } else if (config.commentType == CommentConfig.Type.REPLY) {//回复
-                    newItem = DatasUtil.createReplyComment(config.replyUser, content);
-                }
-
-
-                //getView().update2AddComment(config.circlePosition, newItem);   &type=1
+                addPP(config, content);
             }
 
         });
     }
 
-    public void addPP(final CommentConfig config, final String content){
+    public void addPP(final CommentConfig config, final String content) {
         String url = Contantor.record;
+        List<ListBean> fdata = MyApplication.datas;
+        final ListBean bean = fdata.get(config.circlePosition);
+        String infoID = bean.getId();
         AjaxParams ap = new AjaxParams();
         ap.put("userId", MyApplication.getInstan().getUser().getData().getId() + "");
-        ap.put("infoId", MyApplication.getUserPYId());
-        ap.put("type", "1");
+        if (config.commentType == CommentConfig.Type.PUBLIC) {
+            ap.put("infoId", infoID);//说说ID
+            ap.put("type", "1");//类型 0 --点赞     1 --对说说评论    2--对评论做评论
+        } else {
+            ap.put("infoId", bean.getRecordList().get(config.commentPosition).getId());//说说ID
+            ap.put("type", "2");
+            String receiveId = bean.getRecordList().get(config.commentPosition).getUser().getId();
+            ap.put("receiveId", receiveId);//所评论用户的userId
+        }
         ap.put("content", content);
-        DD.d("fbpl：" + url + "?" + ap.toString());
+        DD.d("创建评论：" + url + "?" + ap.toString());
         new FinalHttp().post(url, ap, new AjaxCallBack<String>() {
             @Override
             public void onSuccess(String s) {
                 super.onSuccess(s);
-                DD.d("fbpls：" + s);
+                DD.d("创建评论s：" + s);
                 if (Tools.getSourcess(s)) {
-                    try {
-                        JSONObject js = new JSONObject(s);
-                       // String id = js.getJSONObject("data").getString("id");
-                        //RecordListBean  newItem = DatasUtil.createPublicComment(id,content);
-                       // getView().update2AddComment(config.circlePosition, newItem);
-
-
-                        getPY();
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                    if (config.commentType == CommentConfig.Type.PUBLIC) {
+                        ReplyContentsBean reply = JSON.parseObject(s, ReplyContentsBean.class);
+                        RecordListBean replys = reply.getData();
+                        UserBean user = new UserBean();
+                        UserBeanL userb = MyApplication.getInstan().getUser();
+                        user.setId(userb.getData().getId() + "");
+                        user.setHead(userb.getData().getHead());
+                        user.setNickName(userb.getData().getNickName() != null ? userb.getData().getNickName() : "匿名");
+                        replys.setUser(user);
+                        // DD.w("评论成功:"+replys.getContent());
+                        getView().update2AddComment(config.circlePosition, config.commentPosition, replys, null);
+                    } else {
+                        ReplyChildContentsBean reply = JSON.parseObject(s, ReplyChildContentsBean.class);
+                        RecordListBean replysd =new RecordListBean();
+                        replysd.setType(2);
+                        ChildBean replys = reply.getData();
+                        UserBean user = new UserBean();
+                        UserBeanL userb = MyApplication.getInstan().getUser();
+                        user.setId(userb.getData().getId() + "");
+                        user.setHead(userb.getData().getHead());
+                        user.setNickName(userb.getData().getNickName() != null ? userb.getData().getNickName() : "匿名");
+                        ReceiveUserBean ub =new ReceiveUserBean();//
+                        ub.setNickName(bean.getRecordList().get(config.commentPosition).getUser().getNickName());
+                        replys.setReceiveUser(ub);
+                        replys.setUser(user);
+                        getView().update2AddComment(config.circlePosition, config.commentPosition, replysd, replys);
                     }
-
-
                 }
-
             }
 
             @Override
@@ -338,9 +359,6 @@ public class CirclePresenter extends BasePresenter<ICircleView> {
             }
         });
     }
-
-
-
 
 
     /**
@@ -368,7 +386,7 @@ public class CirclePresenter extends BasePresenter<ICircleView> {
      * @param commentConfig
      */
     public void showEditTextBody(CommentConfig commentConfig) {
-        Log.d("LD","-:"+commentConfig.toString());
+        Log.d("LD", "关于发评论的：" + commentConfig.toString());
         getView().updateEditTextBodyVisible(View.VISIBLE, commentConfig);
     }
 

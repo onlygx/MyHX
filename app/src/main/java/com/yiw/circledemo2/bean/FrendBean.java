@@ -15,8 +15,6 @@ public class FrendBean {
     private List<ListBean> list;
 
     public List<ListBean> getList() {
-        Log.d("LD","调用");
-
         return list;
     }
 

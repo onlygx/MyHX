@@ -115,31 +115,7 @@ public class SmilyCustomSample {
     }
 
     public static void addNewImageSmiley() {
-        addImageSmiley(smileResArray, 4, 2);
-    }
-
-    /**
-     * 隐藏默认表情，注意此方法需要在添加前调用
-     */
-    public static void hideDefaultSmiley() {
-        YWSmilyMgr.hideDefaultSmiley();
-    }
-
-    /**
-     * 添加默认表情
-     */
-    public static void addDefaultSmiley() {
-        YWSmilyMgr.addDefaultSmiley();
-    }
-
-    /**
-     * 设置表情尺寸
-     * sdk默认为32dp*32dp
-     * @param type 表情类型，Emoji表情{@link YWIMSmiley#SMILEY_TYPE_EMOJI},图片表情{@link YWIMSmiley#SMILEY_TYPE_IMAGE}
-     * @param size 尺寸，单位dp
-     */
-    public static void setSmileySize(int type, int size) {
-        YWSmilyMgr.setSmileySize(type, size);
+        addImageSmiley(smileResArray, 6, 3);
     }
 
     public static int[] smileResArray = new int[] {

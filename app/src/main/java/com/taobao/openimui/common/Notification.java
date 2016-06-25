@@ -13,7 +13,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.alibaba.mobileim.conversation.YWMessage;
-import com.alibaba.mobileim.lib.model.contact.Contact;
 import com.xingkesi.foodapp.R;
 
 public class Notification {
@@ -46,15 +45,6 @@ public class Notification {
 			}
 		});
 	}
-
-    public static void showToastMsg(final Context context, final int resId){
-        mHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                Toast.makeText(context, resId, Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
 	
 	/**
 	 * 显示图片

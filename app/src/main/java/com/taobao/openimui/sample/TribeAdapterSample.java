@@ -12,8 +12,8 @@ import com.alibaba.mobileim.gingko.model.tribe.YWTribe;
 import com.alibaba.mobileim.gingko.model.tribe.YWTribeType;
 import com.alibaba.mobileim.kit.common.YWAsyncBaseAdapter;
 import com.alibaba.mobileim.kit.contact.YWContactHeadLoadHelper;
-import com.taobao.openimui.tribe.TribeAndRoomList;
 import com.xingkesi.foodapp.R;
+import com.taobao.openimui.tribe.TribeAndRoomList;
 
 public class TribeAdapterSample extends YWAsyncBaseAdapter {
     private static final String TAG = "TribeAdapterSample";

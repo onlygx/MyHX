@@ -7,7 +7,7 @@ import android.view.View;
 
 import com.alibaba.fastjson.JSON;
 import com.example.viewpagerdemo.ui.MyApplication;
-import com.example.viewpagerdemo.ui.jlfragmenwork.Contantor;
+import com.example.viewpagerdemo.ui.Contantor;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.DD;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.Tools;
 import com.yiw.circledemo2.bean.FrendBean;

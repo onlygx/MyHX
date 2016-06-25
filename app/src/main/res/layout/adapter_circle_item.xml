@@ -16,8 +16,9 @@
             android:id="@+id/headIv"
             android:layout_width="48dp"
             android:layout_height="48dp"
+            android:layout_gravity="center_horizontal"
             android:layout_marginRight="10dip"
-            android:scaleType="fitCenter"
+            android:scaleType="fitXY"
             android:src="@drawable/im_pub_no_image" />
 
         <LinearLayout
@@ -35,6 +36,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:singleLine="true"
+                    android:text=""
+                    android:layout_marginTop="10dp"
                     android:textColor="@color/color_8290AF"
                     android:textSize="15sp" />
 
@@ -42,7 +45,8 @@
                     android:id="@+id/urlTipTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
                     android:text="分享了一个连接"
                     android:singleLine="true"
                     android:ellipsize="end"

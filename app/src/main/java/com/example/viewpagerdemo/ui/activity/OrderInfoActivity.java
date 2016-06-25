@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.example.viewpagerdemo.ui.adapter.OderInfoListAdpter;
 import com.example.viewpagerdemo.ui.bean.OderInfoBean;
-import com.example.viewpagerdemo.ui.jlfragmenwork.Contantor;
+import com.example.viewpagerdemo.ui.Contantor;
 import com.example.viewpagerdemo.ui.jlfragmenwork.baseactivitywork.JLBaseActivity;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.DD;
 import com.xingkesi.foodapp.R;

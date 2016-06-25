@@ -5,30 +5,30 @@
     android:background="@color/color_aeaeae"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
-    tools:context="com.yiw.circledemo2.CircleFriendsActivity" >
+    tools:context="com.yiw.circledemo2.CircleFriendsActivity">
 
-    <include layout="@layout/layout_main_titlebar"/>
+    <include layout="@layout/layout_main_titlebar" />
 
     <RelativeLayout
         android:id="@+id/bodyLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent">
 
-        <com.malinskiy.superrecyclerview.SuperRecyclerView
-            xmlns:app="http://schemas.android.com/apk/res-auto"
+        <com.malinskiy.superrecyclerview.SuperRecyclerView xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:mainLayoutId="@layout/layout_recyclerview_verticalscroll"
             app:layout_moreProgress="@layout/view_more_progress"
+            app:mainLayoutId="@layout/layout_recyclerview_verticalscroll"
             app:recyclerClipToPadding="true"
             app:scrollbarStyle="outsideOverlay" />
 
+
         <include
+            layout="@layout/layout_editview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            layout="@layout/layout_editview"/>
+            android:layout_alignParentBottom="true" />
 
     </RelativeLayout>
 

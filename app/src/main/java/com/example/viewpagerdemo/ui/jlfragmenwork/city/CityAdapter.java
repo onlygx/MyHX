@@ -29,35 +29,43 @@ public class CityAdapter extends ContactListAdapter {
 
     //重写
     public void populateDataForRow(View parentView, ContactItemInterface item, final int position) {
+
         View infoView = parentView.findViewById(R.id.infoRowContainer);
         TextView nicknameView = (TextView) infoView.findViewById(R.id.cityName);
         CircleImageView infoRowContainer = (CircleImageView) infoView.findViewById(R.id.cityimage);
-        Button city_tag = (Button) infoView.findViewById(R.id.city_tag);
+        TextView city_tag = (TextView) infoView.findViewById(R.id.city_tag);
+        infoRowContainer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DD.v("===================================0");
+            }
+        });
         final int state = item.getStute();
         if (state == 1) {
             city_tag.setText("开始聊天");
+            city_tag.setBackgroundResource(R.drawable.shape_bt_grenn_corners);
         } else if (state == 2) {
-            city_tag.setEnabled(false);
             city_tag.setBackgroundResource(R.drawable.shape_enbel_false);
             city_tag.setText("邀请中...");
         } else if (state == 0) {
+            city_tag.setBackgroundResource(R.drawable.shape_bt_grenn_corners);
             city_tag.setText("邀请好友");
         }
         nicknameView.setText(item.getDisplayInfo());
-        DD.v(item.getDisplayInfo() + "===========" + item.getIcons());
         if (!item.getIcons().equals("")) {
             Picasso.with(_context).load(item.getIcons()).placeholder(R.drawable.aliwx_default_photo_right)
                     .error(R.drawable.aliwx_fail_photo_right).into(infoRowContainer);
         } else {
-            Picasso.with(_context).load(R.drawable.aliwx_default_photo_right)
-                    .error(R.drawable.aliwx_fail_photo_right).into(infoRowContainer);
+            infoRowContainer.setImageResource(R.drawable.aliwx_default_photo_right);
         }
 
-        city_tag.setOnClickListener(new View.OnClickListener() {
+        /*city_tag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DD.d("点击了==========" + bcal.toString());
-                bcal.callbook(position, state);
+                if (state != 2) {
+                    bcal.callbook(position, state);
+                }
             }
         });
         infoRowContainer.setOnClickListener(new View.OnClickListener() {
@@ -65,7 +73,7 @@ public class CityAdapter extends ContactListAdapter {
             public void onClick(View v) {
                 DD.d("点击了==========infoRowContainer");
             }
-        });
+        });*/
 
     }
 
@@ -73,5 +81,8 @@ public class CityAdapter extends ContactListAdapter {
     public interface BookCall {
         void callbook(int pos, int state);
     }
+
+
+
 
 }

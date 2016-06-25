@@ -20,7 +20,7 @@ import com.example.viewpagerdemo.ui.activity.MyOderListActivity;
 import com.example.viewpagerdemo.ui.activity.MyReleaseListActivity;
 import com.example.viewpagerdemo.ui.activity.ReleaseNeedActivity;
 import com.example.viewpagerdemo.ui.bean.UserBeanLO;
-import com.example.viewpagerdemo.ui.jlfragmenwork.Contantor;
+import com.example.viewpagerdemo.ui.Contantor;
 import com.example.viewpagerdemo.ui.jlfragmenwork.actvity.LoginActivity;
 import com.example.viewpagerdemo.ui.jlfragmenwork.basefregmetwork.JLBaseFragment;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.CircleImageView;
@@ -88,18 +88,18 @@ public class FindFragment extends JLBaseFragment {
     @Override
     public void onStart() {
         super.onStart();
-        DD.v("个人onStart:");
+        //DD.v("个人onStart:");
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        DD.v("个人onResume:");
+       // DD.v("个人onResume:");
 
         if (MyApplication.getInstan().getUser() != null) {
             user = MyApplication.getInstan().getUser().getData();
             if (user != null && user.getId() != 0) {
-                DD.v("个人:" + user.toString() + "===" + user.getNickName());
+               // DD.v("个人:" + user.toString() + "===" + user.getNickName());
                 nikc.setText(user.getNickName());
                 Picasso.with(getContext()).load(Contantor.Imagepost + user.getHead()).into(icon);
 

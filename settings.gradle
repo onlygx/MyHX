@@ -1,1 +1,1 @@
-include ':app', ':photopicker', ':YunWangVideoSDK', ':OneSDK'
+include ':app', ':photopicker'

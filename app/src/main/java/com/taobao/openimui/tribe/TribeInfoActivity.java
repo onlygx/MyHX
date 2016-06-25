@@ -31,11 +31,11 @@ import com.alibaba.mobileim.gingko.model.tribe.YWTribeRole;
 import com.alibaba.mobileim.gingko.presenter.tribe.IYWTribeChangeListener;
 import com.alibaba.mobileim.tribe.IYWTribeService;
 import com.alibaba.mobileim.utility.IMNotificationUtils;
+import com.xingkesi.foodapp.R;
 import com.taobao.openimui.common.Notification;
 import com.taobao.openimui.demo.FragmentTabs;
 import com.taobao.openimui.sample.LoginSampleHelper;
 import com.taobao.openimui.sample.TribeMsgRecTypeSetActivity;
-import com.xingkesi.foodapp.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +61,6 @@ public class TribeInfoActivity extends Activity {
     private Handler mHandler = new Handler(Looper.getMainLooper());
 
     private TextView mTribeName;
-    private TextView mTribeMaster;  //群主
     private TextView mTribeDesc;
     private TextView mMemberCount;
     private TextView mQuiteTribe;
@@ -136,8 +135,6 @@ public class TribeInfoActivity extends Activity {
         mTribeName = (TextView) findViewById(R.id.tribe_name);
         TextView tribeId = (TextView) findViewById(R.id.tribe_id);
         tribeId.setText("群号 " + mTribeId);
-
-        mTribeMaster = (TextView) findViewById(R.id.tribe_master);
 
         mTribeDesc = (TextView) findViewById(R.id.tribe_description);
         mMemberCount = (TextView) findViewById(R.id.member_count);
@@ -288,10 +285,6 @@ public class TribeInfoActivity extends Activity {
 
     private void updateView() {
         mTribeName.setText(mTribe.getTribeName());
-        IYWContact master = mTribe.getTribeMaster();
-        if (master != null) {
-            mTribeMaster.setText(master.getUserId());
-        }
         mTribeDesc.setText(mTribe.getTribeNotice());
         mMyTribeNick.setText(getLoginUserTribeNick());
         if (mTribeMemberCount > 0) {

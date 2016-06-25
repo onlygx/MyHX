@@ -114,7 +114,8 @@ public class MultiImageView extends LinearLayout {
 		int wrap = LayoutParams.WRAP_CONTENT;
 		int match = LayoutParams.MATCH_PARENT;
 
-		onePicPara = new LayoutParams(pxOneMaxWandH, wrap);
+		onePicPara = new LayoutParams(200,200);
+//		onePicPara = new LayoutParams(pxOneMaxWandH, wrap);
 
 		moreParaColumnFirst = new LayoutParams(pxMoreWandH, pxMoreWandH);
 		morePara = new LayoutParams(pxMoreWandH, pxMoreWandH);
@@ -176,6 +177,7 @@ public class MultiImageView extends LinearLayout {
 	private ImageView createImageView(int position, final boolean isMultiImage) {
 		String url = ToolsHost.HEDEUT+imagesList.get(position).getUrl();
 		ImageView imageView = new ColorFilterImageView(getContext());
+
 		if(isMultiImage){
 			imageView.setScaleType(ScaleType.CENTER_CROP);
 			imageView.setLayoutParams(position % MAX_PER_ROW_COUNT == 0 ?moreParaColumnFirst : morePara);

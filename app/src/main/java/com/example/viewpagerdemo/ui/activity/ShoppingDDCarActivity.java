@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.example.viewpagerdemo.ui.MyApplication;
 import com.example.viewpagerdemo.ui.adapter.DDCarReclerViewAdpter;
 import com.example.viewpagerdemo.ui.bean.ShopInfoListBean;
-import com.example.viewpagerdemo.ui.jlfragmenwork.Contantor;
+import com.example.viewpagerdemo.ui.Contantor;
 import com.example.viewpagerdemo.ui.jlfragmenwork.baseactivitywork.JLBaseActivity;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.DD;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.TS;
@@ -25,6 +25,7 @@ import net.tsz.afinal.http.AjaxParams;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import butterknife.Bind;
@@ -58,13 +59,12 @@ public class ShoppingDDCarActivity extends JLBaseActivity implements DDCarRecler
 
     int fnum = 0;//总数量
     double nmoneys = 0;
-    int PEISONG = 0;
     @Bind(R.id.text_add)
     TextView textAdd;
     @Bind(R.id.text_beiz)
     TextView textBeiz;
 
-    String id,shopId, receiptAddressId;//商铺ID  地址ID
+    String id, shopId, receiptAddressId;//商铺ID  地址ID
 
     // ShoppingInfoBean info;
     ArrayList<ShopInfoListBean> carLiat;
@@ -85,8 +85,8 @@ public class ShoppingDDCarActivity extends JLBaseActivity implements DDCarRecler
         shopId = getIntent().getStringExtra("Sid");
         carLiat = (ArrayList<ShopInfoListBean>) getIntent().getSerializableExtra("car");
 
-        for(ShopInfoListBean ib:carLiat){
-            DD.v("订单中:"+id+"==="+ib.getCurrNum());
+        for (ShopInfoListBean ib : carLiat) {
+            DD.v("订单中:" + id + "===" + ib.getCurrNum());
         }
 
         LinearLayoutManager man = new LinearLayoutManager(ShoppingDDCarActivity.this);
@@ -119,10 +119,19 @@ public class ShoppingDDCarActivity extends JLBaseActivity implements DDCarRecler
         //数据
         for (int i = 0; i < carLiat.size(); i++) {
             ShopInfoListBean dd = carLiat.get(i);
-            DD.d("bianli===:" + i);
+            double zhe = Double.parseDouble(dd.getZheyou() + "");
+            DD.d("bianli===:" + i + "====" + zhe);
             fnum = fnum + dd.getCurrNum();//获取总数量
-            double tempMoney = dd.getCurrNum() * dd.getPrice();
-            nmoneys = nmoneys + tempMoney;
+            double tempMoney = dd.getCurrNum() * dd.getPrice();//商品重甲
+            if (zhe > 0) {
+                double zz = (zhe / 100.00);
+                double tem = nmoneys + tempMoney;
+                nmoneys = zz * tem;
+               // DD.v("折弯:" + zhe + "===" + zz + "===" + tem + "===" + nmoneys);
+            } else {
+               // DD.v("不折:" + zhe);
+                nmoneys = nmoneys + tempMoney;
+            }
             dd.setFnum(fnum);
             dd.setFmoney(nmoneys);
 
@@ -131,7 +140,10 @@ public class ShoppingDDCarActivity extends JLBaseActivity implements DDCarRecler
         ddList.setAdapter(ddv);
         dd_sc.smoothScrollBy(0, 0);
         num.setText(fnum + "");
-        money.setText(nmoneys + "");
+
+        BigDecimal b = new BigDecimal(nmoneys);
+        double f1 = b.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+        money.setText(f1 + "");
     }
 
 
@@ -157,7 +169,7 @@ public class ShoppingDDCarActivity extends JLBaseActivity implements DDCarRecler
                 } else {
 
 
-                    if (receiptAddressId==null) {
+                    if (receiptAddressId == null) {
                         TS.shortTime("请选择收货地址");
                         return;
                     }
@@ -191,13 +203,13 @@ public class ShoppingDDCarActivity extends JLBaseActivity implements DDCarRecler
                             super.onSuccess(s);
                             DD.v("下单介绍:" + s);
                             try {
-                                JSONObject js =new JSONObject(s);
-                                if(js.getBoolean("success")){
+                                JSONObject js = new JSONObject(s);
+                                if (js.getBoolean("success")) {
                                     DD.v("下单成功");
                                     //
-                                    Intent it =new Intent(ShoppingDDCarActivity.this,PlayMainActivity.class);
-                                    it.putExtra("id",js.getString("data"));
-                                    it.putExtra("mo",money.getText().toString());
+                                    Intent it = new Intent(ShoppingDDCarActivity.this, PlayMainActivity.class);
+                                    it.putExtra("id", js.getString("data"));
+                                    it.putExtra("mo", money.getText().toString());
                                     startActivity(it);
                                     finish();
                                 }

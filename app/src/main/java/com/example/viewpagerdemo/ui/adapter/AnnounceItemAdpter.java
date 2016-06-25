@@ -15,7 +15,7 @@ import android.widget.Toast;
 import com.example.viewpagerdemo.ui.activity.EatInfoActivity;
 import com.example.viewpagerdemo.ui.bean.ShoppingListBanerBean;
 import com.example.viewpagerdemo.ui.bean.ShoppingListBean;
-import com.example.viewpagerdemo.ui.jlfragmenwork.Contantor;
+import com.example.viewpagerdemo.ui.Contantor;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.CircleImageView;
 import com.squareup.picasso.Picasso;
 import com.xingkesi.foodapp.R;

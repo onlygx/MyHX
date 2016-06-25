@@ -37,8 +37,8 @@ import com.alibaba.mobileim.lib.presenter.conversation.CustomViewConversation;
 import com.alibaba.mobileim.utility.IMSmilyCache;
 import com.alibaba.mobileim.utility.IMUtil;
 import com.alibaba.mobileim.utility.ResourceLoader;
-import com.taobao.openimui.demo.FragmentTabs;
 import com.xingkesi.foodapp.R;
+import com.taobao.openimui.demo.FragmentTabs;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -82,7 +82,7 @@ public class ConversationListUICustomSample extends IMConversationListUI {
                 .inflate(R.layout.demo_custom_conversation_title_bar, new RelativeLayout(context),false);
         customView.setBackgroundColor(Color.parseColor("#00b4ff"));
         TextView title = (TextView) customView.findViewById(R.id.title_txt);
-        final YWIMKit mIMKit = LoginSampleHelper.getInstance().getIMKit();
+        YWIMKit mIMKit = LoginSampleHelper.getInstance().getIMKit();
 
         title.setText(mIMKit.getIMCore().getShowName());
         title.setTextColor(Color.WHITE);
@@ -112,14 +112,6 @@ public class ConversationListUICustomSample extends IMConversationListUI {
             }
         });
         backButton.setVisibility(View.GONE);
-
-        TextView rightButton = (TextView) customView.findViewById(R.id.right_button);
-        rightButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mIMKit.getConversationService().markAllReaded();
-            }
-        });
         return customView;
     }
 
@@ -276,16 +268,22 @@ public class ConversationListUICustomSample extends IMConversationListUI {
     }
 
     /*********** 以下是定制会话item view的示例代码 ***********/
-    //有几种自定义，数组元素就需要几个，数组元素值从0开始
-    //private final int[] viewTypeArray = {0,1,2,3}，这样就有4种自定义View
-    private final int[] viewTypeArray = {0};
+
+
+    //自定义item view 种类数
+    private final int typeCount = 2;
+
+    //自定义viewType，viewType必须从0开始，然后依次+1递增，且viewType的个数必须等于typeCount，切记切记！！！
+    private final int type_1 = 0;
+    private final int type_2 = 1;
+
     /**
      * 自定义item view的种类数
      * @return 种类数
      */
     @Override
     public int getCustomItemViewTypeCount() {
-        return viewTypeArray.length;
+        return typeCount;
     }
 
     /**
@@ -298,11 +296,10 @@ public class ConversationListUICustomSample extends IMConversationListUI {
         //todo 若修改 YWConversationType.Tribe为自己type，SDK认为您要在｛@link #getCustomItemView｝中完全自定义，针对群的自定义，如getTribeConversationHead会失效。
         //todo 该原则同样适用于 YWConversationType.P2P等其它内部类型，请知晓！
         if (conversation.getConversationType() == YWConversationType.Custom) {
-            return viewTypeArray[0];
+            return type_1;
+        } else if (conversation.getConversationType() == YWConversationType.Tribe){
+            return type_2;
         }
-//        else if (conversation.getConversationType() == YWConversationType.P2P){
-//            return viewTypeArray[1];
-//        }
         //这里必须调用基类方法返回！！
         return super.getCustomItemViewType(conversation);
     }
@@ -321,7 +318,8 @@ public class ConversationListUICustomSample extends IMConversationListUI {
      */
     @Override
     public View getCustomItemView(Fragment fragment, YWConversation conversation, View convertView, int viewType, YWContactHeadLoadHelper headLoadHelper, ViewGroup parent) {
-        if (viewType == viewTypeArray[0]){
+        YWLog.i(TAG, "getCustomItemView, type = " + viewType);
+        if (viewType == type_1){
             ViewHolder1 holder = null;
             if (convertView == null){
                 LayoutInflater inflater = LayoutInflater.from(fragment.getActivity());
@@ -331,8 +329,10 @@ public class ConversationListUICustomSample extends IMConversationListUI {
                 holder.name = (TextView) convertView.findViewById(R.id.name);
                 holder.unread = (TextView) convertView.findViewById(R.id.unread);
                 convertView.setTag(holder);
+                YWLog.i(TAG, "convertView == null");
             } else {
                 holder = (ViewHolder1) convertView.getTag();
+                YWLog.i(TAG, "convertView != null");
             }
 
             String name = "";
@@ -365,93 +365,71 @@ public class ConversationListUICustomSample extends IMConversationListUI {
             }
 
             return convertView;
+        } else if (viewType == type_2){
+            ViewHolder2 holder = null;
+            if (convertView == null){
+                LayoutInflater inflater = LayoutInflater.from(fragment.getActivity());
+                holder = new ViewHolder2();
+                convertView = inflater.inflate(R.layout.demo_custom_conversation_item_2, parent, false);
+                holder.head = (ImageView) convertView.findViewById(R.id.head);
+                holder.unread = (TextView) convertView.findViewById(R.id.unread);
+                holder.name = (TextView) convertView.findViewById(R.id.name);
+                holder.content = (TextView) convertView.findViewById(R.id.content);
+                holder.atMsgNotify = (TextView) convertView.findViewById(R.id.at_msg_notify);
+                holder.time = (TextView) convertView.findViewById(R.id.time);
+                convertView.setTag(holder);
+                YWLog.i(TAG, "convertView == null");
+            } else {
+                holder = (ViewHolder2)convertView.getTag();
+                YWLog.i(TAG, "convertView != null");
+            }
+
+            holder.unread.setVisibility(View.GONE);
+            int unreadCount = conversation.getUnreadCount();
+            if (unreadCount > 0) {
+                holder.unread.setVisibility(View.VISIBLE);
+                if (unreadCount > 99){
+                    holder.unread.setText("99+");
+                }else {
+                    holder.unread.setText(String.valueOf(unreadCount));
+                }
+            }
+
+            YWTribeConversationBody body = (YWTribeConversationBody) conversation.getConversationBody();
+            YWTribe tribe = body.getTribe();
+            String name = tribe.getTribeName();
+            holder.name.setText(name);
+
+            YWIMKit imKit = LoginSampleHelper.getInstance().getIMKit();
+            YWContactHeadLoadHelper helper = new YWContactHeadLoadHelper(fragment.getActivity(), null);
+            /**
+             * !!!注:这里是给群回话设置头像,这里直接设置的默认头像
+             * 如果想自由设置可以使用{@link YWContactHeadLoadHelper#setCustomHeadView(ImageView, int, String)},
+             * 该方法的第三个参数为加载头像的地址:可以是资源Id或者是sdcard上的file绝对路径以及网络url
+             */
+            if (tribe.getTribeType() == YWTribeType.CHATTING_TRIBE) {
+                helper.setTribeDefaultHeadView(holder.head);
+            } else {
+                helper.setRoomDefaultHeadView(holder.head);
+            }
+
+            //是否支持群@消息提醒
+            boolean isAtEnalbe = YWAPI.getYWSDKGlobalConfig().enableTheTribeAtRelatedCharacteristic();
+            if (isAtEnalbe){
+                if (conversation.hasUnreadAtMsg()) {
+                    holder.atMsgNotify.setVisibility(View.VISIBLE);
+                } else {
+                    holder.atMsgNotify.setVisibility(View.GONE);
+                }
+            } else {
+                holder.atMsgNotify.setVisibility(View.GONE);
+            }
+            String content = conversation.getLatestContent();
+            holder.content.setText(content);
+            setSmilyContent(fragment.getActivity(), content, holder);
+            holder.time.setText(IMUtil.getFormatTime(conversation.getLatestTimeInMillisecond(), imKit.getIMCore().getServerTime()));
+            return convertView;
         }
-//        else if (viewType == viewTypeArray[1]){
-//            return super.getCustomItemView(fragment, conversation, convertView, viewType, headLoadHelper, parent);
-//        }
-//        else if (viewType == viewTypeArray[1]){
-//            ViewHolder2 holder = null;
-//            if (convertView == null){
-//                LayoutInflater inflater = LayoutInflater.from(fragment.getActivity());
-//                holder = new ViewHolder2();
-//                convertView = inflater.inflate(R.layout.demo_custom_conversation_item_2, parent, false);
-//                holder.head = (ImageView) convertView.findViewById(R.id.head);
-//                holder.unread = (TextView) convertView.findViewById(R.id.unread);
-//                holder.name = (TextView) convertView.findViewById(R.id.name);
-//                holder.content = (TextView) convertView.findViewById(R.id.content);
-//                holder.atMsgNotify = (TextView) convertView.findViewById(R.id.at_msg_notify);
-//                holder.draftNotify = (TextView) convertView.findViewById(R.id.at_msg_notify);
-//                holder.time = (TextView) convertView.findViewById(R.id.time);
-//                convertView.setTag(holder);
-//                YWLog.i(TAG, "convertView == null");
-//            } else {
-//                holder = (ViewHolder2)convertView.getTag();
-//                YWLog.i(TAG, "convertView != null");
-//            }
-//
-//            holder.unread.setVisibility(View.GONE);
-//            int unreadCount = conversation.getUnreadCount();
-//            if (unreadCount > 0) {
-//                holder.unread.setVisibility(View.VISIBLE);
-//                if (unreadCount > 99){
-//                    holder.unread.setText("99+");
-//                }else {
-//                    holder.unread.setText(String.valueOf(unreadCount));
-//                }
-//            }
-//
-//            YWTribeConversationBody body = (YWTribeConversationBody) conversation.getConversationBody();
-//            YWTribe tribe = body.getTribe();
-//            String name = tribe.getTribeName();
-//            holder.name.setText(name);
-//
-//            YWIMKit imKit = LoginSampleHelper.getInstance().getIMKit();
-//            YWContactHeadLoadHelper helper = new YWContactHeadLoadHelper(fragment.getActivity(), null);
-//            /**
-//             * !!!注:这里是给群回话设置头像,这里直接设置的默认头像
-//             * 如果想自由设置可以使用{@link YWContactHeadLoadHelper#setCustomHeadView(ImageView, int, String)},
-//             * 该方法的第三个参数为加载头像的地址:可以是资源Id或者是sdcard上的file绝对路径以及网络url
-//             */
-//            if (tribe.getTribeType() == YWTribeType.CHATTING_TRIBE) {
-//                helper.setTribeDefaultHeadView(holder.head);
-//            } else {
-//                helper.setRoomDefaultHeadView(holder.head);
-//            }
-//
-//            //是否支持群@消息提醒
-//            boolean isAtEnalbe = YWAPI.getYWSDKGlobalConfig().enableTheTribeAtRelatedCharacteristic();
-//            if (isAtEnalbe){
-//                //文案修改为@消息提醒
-//                holder.atMsgNotify.setText(R.string.aliwx_at_msg_notify);
-//                if (conversation.hasUnreadAtMsg()) {
-//                    holder.atMsgNotify.setVisibility(View.VISIBLE);
-//                } else {
-//                    holder.atMsgNotify.setVisibility(View.GONE);
-//                }
-//            } else {
-//                holder.atMsgNotify.setVisibility(View.GONE);
-//            }
-//            String content = conversation.getLatestContent();
-//            boolean isDraftEnable = YWAPI.getYWSDKGlobalConfig().enableConversationDraft();
-//            //没有开启@消息开关或者@消息提醒不可见,说明此时没有@消息,检查是否有草稿
-//            if(isDraftEnable) {
-//                if (!isAtEnalbe || (holder.atMsgNotify != null && holder.atMsgNotify.getVisibility() != View.VISIBLE)) {
-//                    if (conversation.getConversationDraft() != null
-//                            && !TextUtils.isEmpty(conversation.getConversationDraft().getContent())) {
-//                        //文案修改为草稿提醒
-//                        holder.draftNotify.setText(R.string.aliwx_draft_notify);
-//                        content = conversation.getConversationDraft().getContent();
-//                        holder.draftNotify.setVisibility(View.VISIBLE);
-//                    } else {
-//                        holder.draftNotify.setVisibility(View.GONE);
-//                    }
-//                }
-//            }
-//            holder.content.setText(content);
-//            setSmilyContent(fragment.getActivity(), content, holder);
-//            holder.time.setText(IMUtil.getFormatTime(conversation.getLatestTimeInMillisecond(), imKit.getIMCore().getServerTime()));
-//            return convertView;
-//        }
         return super.getCustomItemView(fragment, conversation, convertView, viewType, headLoadHelper, parent);
     }
 
@@ -513,7 +491,6 @@ public class ConversationListUICustomSample extends IMConversationListUI {
         TextView name;
         TextView content;
         TextView atMsgNotify;
-        TextView draftNotify;
         TextView time;
     }
 

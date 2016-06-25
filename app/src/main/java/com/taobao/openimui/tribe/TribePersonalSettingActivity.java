@@ -5,8 +5,8 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import com.alibaba.mobileim.YWAccount;
-import com.taobao.openimui.sample.LoginSampleHelper;
 import com.xingkesi.foodapp.R;
+import com.taobao.openimui.sample.LoginSampleHelper;
 
 /**
  * Created by weiquanyun on 15/11/9.

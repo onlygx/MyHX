@@ -273,7 +273,7 @@ public class HomeFragment extends JLBaseFragment {
                     sb.append(p.getId() + " " + p.getName() + " " + p.getRank());
                 }
             }
-            DD.i("定位" + city);
+           // DD.i("定位" + city);
             tv_left_text.setText(city);
 
 

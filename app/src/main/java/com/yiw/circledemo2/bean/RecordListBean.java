@@ -10,12 +10,22 @@ public  class RecordListBean {
     private String id;
     private int type;
     private String content;
+    private String myName;
     private UserBean user;
     private long receiveId;
     private long setTime;
     private long userId;
     private long infoId;
     private List<ChildBean> child;
+
+
+    public String getMyName() {
+        return myName;
+    }
+
+    public void setMyName(String myName) {
+        this.myName = myName;
+    }
 
     public String getId() {
         return id;

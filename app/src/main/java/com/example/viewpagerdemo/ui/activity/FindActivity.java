@@ -16,7 +16,7 @@ import android.widget.Toast;
 
 import com.example.viewpagerdemo.ui.MyApplication;
 import com.example.viewpagerdemo.ui.bean.UserBeanLO;
-import com.example.viewpagerdemo.ui.jlfragmenwork.Contantor;
+import com.example.viewpagerdemo.ui.Contantor;
 import com.example.viewpagerdemo.ui.jlfragmenwork.baseactivitywork.JLBaseActivity;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.BitmapUtils;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.CircleImageView;

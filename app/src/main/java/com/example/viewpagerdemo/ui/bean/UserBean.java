@@ -21,6 +21,7 @@ public class UserBean extends BaseBean{
     private String seCode;
     private long id;
     private String name;
+    private String nickName;
     private String head;
     private String sex;
     private String intro;
@@ -28,6 +29,14 @@ public class UserBean extends BaseBean{
     String userName;
     String userPws;
 
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
 
     public String getUserName() {
         return userName;

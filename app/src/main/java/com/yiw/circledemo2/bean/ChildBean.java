@@ -8,12 +8,21 @@ public  class ChildBean {
     private long id;
     private int type;
     private String content;
+    private String myName;
     private UserBean user;
     private long receiveId;
     private ReceiveUserBean receiveUser;
     private long setTime;
     private long userId;
     private long infoId;
+
+    public String getMyName() {
+        return myName;
+    }
+
+    public void setMyName(String myName) {
+        this.myName = myName;
+    }
 
     public long getId() {
         return id;

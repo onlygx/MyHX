@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.example.viewpagerdemo.ui.activity.OrderInfoActivity;
 import com.example.viewpagerdemo.ui.bean.FindDDListShopBean;
-import com.example.viewpagerdemo.ui.jlfragmenwork.Contantor;
+import com.example.viewpagerdemo.ui.Contantor;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.DD;
 import com.squareup.picasso.Picasso;
 import com.xingkesi.foodapp.R;

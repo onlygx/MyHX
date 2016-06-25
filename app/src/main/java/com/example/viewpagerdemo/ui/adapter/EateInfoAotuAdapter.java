@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.example.viewpagerdemo.ui.bean.EatInfoOneBaen;
-import com.example.viewpagerdemo.ui.jlfragmenwork.Contantor;
+import com.example.viewpagerdemo.ui.Contantor;
 import com.squareup.picasso.Picasso;
 import com.xingkesi.foodapp.R;
 

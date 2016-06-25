@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/editTextBodyLl"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="70dp"
     android:padding="8dp"
     android:gravity="center_vertical"
     android:background="#f6f6f6"
     android:orientation="horizontal"
     android:visibility="gone"
+    tools:visibility="visible"
     >
     <EditText
         android:id="@+id/circleEt"

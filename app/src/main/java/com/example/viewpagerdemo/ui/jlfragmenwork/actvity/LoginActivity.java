@@ -38,10 +38,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.mobileim.IYWLoginService;
 import com.alibaba.mobileim.YWChannel;
 import com.alibaba.mobileim.YWIMKit;
-import com.alibaba.mobileim.YWLoginParam;
 import com.alibaba.mobileim.channel.event.IWxCallback;
 import com.alibaba.mobileim.channel.util.YWLog;
 import com.alibaba.mobileim.fundamental.widget.YWAlertDialog;
@@ -55,7 +53,7 @@ import com.alibaba.tcms.env.EnvManager;
 import com.alibaba.tcms.env.TcmsEnvType;
 import com.alibaba.tcms.env.YWEnvManager;
 import com.alibaba.tcms.env.YWEnvType;
-import com.example.viewpagerdemo.ui.jlfragmenwork.Contantor;
+import com.example.viewpagerdemo.ui.Contantor;
 import com.example.viewpagerdemo.ui.MyApplication;
 import com.example.viewpagerdemo.ui.activity.MainActivity;
 import com.example.viewpagerdemo.ui.bean.UserBeanL;
@@ -72,8 +70,6 @@ import com.xingkesi.foodapp.R;
 import net.tsz.afinal.FinalHttp;
 import net.tsz.afinal.http.AjaxCallBack;
 import net.tsz.afinal.http.AjaxParams;
-
-import java.util.Random;
 
 import butterknife.Bind;
 
@@ -296,7 +292,7 @@ public class LoginActivity extends JLBaseActivity implements View.OnClickListene
 //            ajaxParams.put("password", MD5Util.md5xs(paws));
             ajaxParams.put("password", paws);
             DD.d(Contantor.logdin + "?" + ajaxParams.toString());
-
+           // LogdindOpenIME();
             new FinalHttp().post(Contantor.logdin, ajaxParams, new AjaxCallBack<String>() {
                 @Override
                 public void onSuccess(String s) {
@@ -308,10 +304,10 @@ public class LoginActivity extends JLBaseActivity implements View.OnClickListene
                         DD.d("登录ID:" + user.getData().getId() + "===" + user.getData().getThinksId());
                         MyApplication.getInstan().setUser(user);
                         MyApplication.getInstan().setUserName(name);
-                        MyApplication.getInstan().setUserPwd(paws);
+                      //  MyApplication.getInstan().setUserPwd(paws);
                         finish();
                         //---------正式版请将下面的放开--------------------
-                        //LogdindOpenIME(user);
+                        LogdindOpenIME();
 
                     } else {
                         TS.shortTime("登录失败,请重新登录");
@@ -437,18 +433,7 @@ public class LoginActivity extends JLBaseActivity implements View.OnClickListene
         }
     }
 
-    /**
-     * 生成随机帐号
-     *
-     * @return
-     */
-    private String getRandAccount() {
-        final int max = 90;
-        final int min = 10;
-        Random random = new Random();
 
-        return "testpro" + (random.nextInt(max) % (max - min + 1) + min);
-    }
 
     private YWEnvType envType = YWEnvType.ONLINE;
     private AlertDialog dialog;
@@ -572,7 +557,7 @@ public class LoginActivity extends JLBaseActivity implements View.OnClickListene
         LocalBroadcastManager.getInstance(YWChannel.getApplication()).unregisterReceiver(mAutoLoginStateReceiver);
     }
 
-    void LogdindOpenIME(int i) {
+  /*  void LogdindOpenIME(int i) {
         //判断当前网络状态，若当前无网络则提示用户无网络
         if (YWChannel.getInstance().getNetWorkState().isNetWorkNull()) {
             Toast.makeText(LoginActivity.this, "网络已断开，请稍后再试哦~", Toast.LENGTH_SHORT).show();
@@ -606,8 +591,8 @@ public class LoginActivity extends JLBaseActivity implements View.OnClickListene
         });
 
     }
-
-    void LogdindOpenIME(UserBeanL user) {
+*/
+    void LogdindOpenIME() {
         //判断当前网络状态，若当前无网络则提示用户无网络
         if (YWChannel.getInstance().getNetWorkState().isNetWorkNull()) {
             Toast.makeText(LoginActivity.this, "网络已断开，请稍后再试哦~", Toast.LENGTH_SHORT).show();

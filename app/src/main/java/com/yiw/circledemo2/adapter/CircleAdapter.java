@@ -1,46 +1,45 @@
 package com.yiw.circledemo2.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.viewpagerdemo.ui.MyApplication;
+import com.example.viewpagerdemo.ui.activity.AbouFrendtMainActivity;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.DD;
-import com.example.viewpagerdemo.ui.jlfragmenwork.util.Tools;
 import com.squareup.picasso.Picasso;
 import com.xingkesi.foodapp.R;
 import com.yiw.circledemo2.ImagePagerActivity;
 import com.yiw.circledemo2.bean.ActionItem;
 import com.yiw.circledemo2.bean.BannerListBean;
 import com.yiw.circledemo2.bean.CommentConfig;
+import com.yiw.circledemo2.bean.ListBean;
+import com.yiw.circledemo2.bean.RecordListBean;
 import com.yiw.circledemo2.bean.ToolsHost;
+import com.yiw.circledemo2.bean.ZanListBean;
 import com.yiw.circledemo2.mvp.presenter.CirclePresenter;
 import com.yiw.circledemo2.spannable.ISpanClick;
-import com.yiw.circledemo2.utils.DatasUtil;
 import com.yiw.circledemo2.utils.GlideCircleTransform;
 import com.yiw.circledemo2.utils.UrlUtils;
 import com.yiw.circledemo2.widgets.CircleVideoView;
 import com.yiw.circledemo2.widgets.CommentListView;
 import com.yiw.circledemo2.widgets.FavortListView;
-import com.yiw.circledemo2.bean.ListBean;
 import com.yiw.circledemo2.widgets.MagicTextView;
 import com.yiw.circledemo2.widgets.MultiImageView;
-import com.yiw.circledemo2.bean.RecordListBean;
 import com.yiw.circledemo2.widgets.SnsPopupWindow;
 import com.yiw.circledemo2.widgets.dialog.CommentDialog;
-import com.yiw.circledemo2.bean.ZanListBean;
 import com.yiw.circledemo2.widgets.videolist.model.VideoLoadMvpView;
 import com.yiw.circledemo2.widgets.videolist.widget.TextureVideoView;
 
@@ -52,7 +51,7 @@ import java.util.List;
 /**
  * Created by yiwei on 16/5/17.
  */
-public class CircleAdapter extends BaseRecycleViewAdapter {
+public class CircleAdapter extends BaseRecycleViewAdapter      {
 
     public static int TYPE_HEAD = 7;
     public final static int TYPE_URL = 1;
@@ -62,8 +61,10 @@ public class CircleAdapter extends BaseRecycleViewAdapter {
 
     int curPlayIndex = -1;
 
-    private CirclePresenter presenter;
+    public CirclePresenter presenter;
     private Context context;
+    public CommentAdapter adapter;
+    public HeaderViewHolder adapters;
 
     public void setCirclePresenter(CirclePresenter presenter) {
         this.presenter = presenter;
@@ -92,11 +93,10 @@ public class CircleAdapter extends BaseRecycleViewAdapter {
         return itemType;
     }
 
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         RecyclerView.ViewHolder viewHolder;
-        // Log.d("LD",viewType+"----------固定值:"+TYPE_HEAD);
-
         if (viewType == TYPE_HEAD) {
             //TYPE_HEAD=100;
             View headView = LayoutInflater.from(parent.getContext()).inflate(R.layout.head_circle, parent, false);
@@ -114,6 +114,7 @@ public class CircleAdapter extends BaseRecycleViewAdapter {
         //  Log.d("LD","进入onBindViewHolder:"+getItemViewType(position)+"=========="+position);
         if (getItemViewType(position) == TYPE_HEAD) {
             HeaderViewHolder holder = (HeaderViewHolder) viewHolder;
+            adapters=holder;
             holder.MeName.setText(MyApplication.getInstan().getUser().getData().getNickName());
         } else {
             final int circlePosition = position - HEADVIEW_SIZE;
@@ -125,15 +126,16 @@ public class CircleAdapter extends BaseRecycleViewAdapter {
             String headImg = ToolsHost.HEDEUT + istBean.getUser().getHead();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:SS");
             String createTime = sdf.format(new Date(istBean.getSetTime()));
+
             final List<ZanListBean> favortDatas = istBean.getZanList();//赞列表
+            DD.v("me speack:" + favortDatas.size());
             final List<RecordListBean> commentsDatas = istBean.getRecordList();//内容列表
 
             boolean hasFavort = favortDatas.size() > 0 ? true : false;
             boolean hasComment = commentsDatas.size() > 0 ? true : false;
-            DD.d("位置："+position+"--赞表:"+favortDatas.size()+"===评论:"+commentsDatas.size());
-
             Glide.with(context).load(headImg).diskCacheStrategy(DiskCacheStrategy.ALL).placeholder(R.color.bg_no_photo).
                     transform(new GlideCircleTransform(context)).into(holder.headIv);
+
 
             holder.nameTv.setText(name);
             holder.timeTv.setText(createTime);
@@ -160,61 +162,67 @@ public class CircleAdapter extends BaseRecycleViewAdapter {
                     }
                 }
             });
-            // if (hasFavort || hasComment) {
-                DD.d("DV==========:"+hasFavort);
 
-              if (hasFavort) {//处理点赞列表
-                    holder.favortListTv.setSpanClickListener(new ISpanClick() {
-                        @Override
-                        public void onClick(int position) {
-                            String userName = favortDatas.get(position).getUser().getName();
-                            String userId = favortDatas.get(position).getUser().getId() + "";
-                            Toast.makeText(MyApplication.getContext(), userName + " &id = " + userId, Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                    holder.favortListAdapter.setDatas(favortDatas);
-                    holder.favortListAdapter.notifyDataSetChanged();
-                    holder.favortListTv.setVisibility(View.VISIBLE);
-                } else {
-                    holder.favortListTv.setVisibility(View.GONE);
-                }
 
-                if (hasComment) {//处理评论列表
-                    holder.commentList.setOnItemClick(new CommentListView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(int commentPosition) {
-                            RecordListBean commentItem = commentsDatas.get(commentPosition);
-                            if (String.valueOf(MyApplication.getInstan().getUser().getData().getId()).equals(commentItem.getUser().getId())) {//复制或者删除自己的评论
-                                CommentDialog dialog = new CommentDialog(context, presenter, commentItem, circlePosition);
-                                dialog.show();
-                            } else {//回复别人的评论
-                                if (presenter != null) {
-                                    CommentConfig config = new CommentConfig();
-                                    config.circlePosition = circlePosition;
-                                    config.commentPosition = commentPosition;
-                                    config.commentType = CommentConfig.Type.REPLY;
-                                    config.replyUser = commentItem.getUser();
-                                    presenter.showEditTextBody(config);
-                                }
-                            }
-                        }
-                    });
-                    holder.commentList.setOnItemLongClick(new CommentListView.OnItemLongClickListener() {
-                        @Override
-                        public void onItemLongClick(int commentPosition) {
-                            //长按进行复制或者删除
-                            RecordListBean commentItem = commentsDatas.get(commentPosition);
+            DD.d("不知道赞里面有数据吗==========:" + hasFavort);
+
+            if (hasFavort) {//处理点赞列表
+                holder.favortListTv.setSpanClickListener(new ISpanClick() {
+                    @Override
+                    public void onClick(int position) {
+                        String userName = favortDatas.get(position).getUser().getName();
+                        String userId = favortDatas.get(position).getUser().getId() + "";
+                        //Toast.makeText(MyApplication.getContext(), userName + " &id = " + userId, Toast.LENGTH_SHORT).show();
+                    }
+                });
+                holder.favortListAdapter.setDatas(favortDatas);
+                holder.favortListAdapter.notifyDataSetChanged();
+                holder.favortListTv.setVisibility(View.VISIBLE);
+            } else {
+                holder.favortListTv.setVisibility(View.GONE);
+            }
+
+            if (hasComment) {//处理评论列表
+                commentsDatas.get(0).setMyName(istBean.getUser().getNickName());
+                holder.commentList.setOnItemClick(new CommentListView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(int commentPosition) {
+                        RecordListBean commentItem = commentsDatas.get(commentPosition);
+                        if (String.valueOf(MyApplication.getInstan().getUser().
+                                getData().getId()).equals(commentItem.getUser().getId())) {//复制或者删除自己的评论
                             CommentDialog dialog = new CommentDialog(context, presenter, commentItem, circlePosition);
                             dialog.show();
+                        } else {//回复别人的评论
+                            if (presenter != null) {
+                                CommentConfig config = new CommentConfig();
+                                config.circlePosition = circlePosition;
+                                config.commentPosition = commentPosition;
+                                config.commentType = CommentConfig.Type.REPLY;
+                                config.replyUser = commentItem.getUser();
+                                presenter.showEditTextBody(config);
+                            }
                         }
-                    });
-                    holder.commentAdapter.setDatas(commentsDatas);
-                    holder.commentAdapter.notifyDataSetChanged();
-                    holder.commentList.setVisibility(View.VISIBLE);
+                    }
+                });
+                holder.commentList.setOnItemLongClick(new CommentListView.OnItemLongClickListener() {
+                    @Override
+                    public void onItemLongClick(int commentPosition) {
+                        //长按进行复制或者删除
+                        RecordListBean commentItem = commentsDatas.get(commentPosition);
+                        CommentDialog dialog = new CommentDialog(context, presenter, commentItem, circlePosition);
+                        dialog.show();
+                    }
+                });
+                adapter=holder.commentAdapter;
+                holder.commentAdapter.setCirclePresenter(presenter);
 
-                } else {
-                    holder.commentList.setVisibility(View.GONE);
-                }
+                holder.commentAdapter.setDatas(commentsDatas);
+                holder.commentAdapter.notifyDataSetChanged();
+                holder.commentList.setVisibility(View.VISIBLE);
+
+            } else {
+                holder.commentList.setVisibility(View.GONE);
+            }
 
             holder.digLine.setVisibility(hasFavort && hasComment ? View.VISIBLE : View.GONE);
 
@@ -232,7 +240,7 @@ public class CircleAdapter extends BaseRecycleViewAdapter {
                 @Override
                 public void onClick(View view) {
                     //弹出popupwindow
-                    snsPopupWindow.showPopupWindow(view,1);
+                    snsPopupWindow.showPopupWindow(view, 1);
                 }
             });
 
@@ -290,6 +298,7 @@ public class CircleAdapter extends BaseRecycleViewAdapter {
         }
     }
 
+
     @Override
     public int getItemCount() {
 
@@ -300,13 +309,30 @@ public class CircleAdapter extends BaseRecycleViewAdapter {
 
         TextView MeName;
         ImageView MeTx;
+        RelativeLayout abouts;
+        TextView aboutme;
 
 
+        public void setNum(int num){
+            if(aboutme!=null){
+                aboutme.setVisibility(View.VISIBLE);
+                aboutme.setText(""+num);
+            }
+        }
         public HeaderViewHolder(View itemView) {
             super(itemView);
+
             MeName = (TextView) itemView.findViewById(R.id.meName);
             MeTx = (ImageView) itemView.findViewById(R.id.meTx);
+            abouts = (RelativeLayout) itemView.findViewById(R.id.abouts);
+            aboutme = (TextView) itemView.findViewById(R.id.aboutme);
 
+            abouts.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                   context. startActivity(new Intent(context, AbouFrendtMainActivity.class));
+                }
+            });
             MeName.setText(com.example.viewpagerdemo.ui.MyApplication.getInstan().getUser().getData().getNickName());
             Picasso.with(context).load(ToolsHost.HEDEUT + com.example.viewpagerdemo.ui.MyApplication.getInstan().getUser().getData().getHead()).into(MeTx);
         }
@@ -471,7 +497,7 @@ public class CircleAdapter extends BaseRecycleViewAdapter {
                         }
                     }
                     break;
-                case 1://发布评论
+                case 1://评论
                     if (presenter != null) {
                         CommentConfig config = new CommentConfig();
                         config.circlePosition = mCirclePosition;

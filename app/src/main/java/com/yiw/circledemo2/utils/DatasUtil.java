@@ -1,5 +1,7 @@
 package com.yiw.circledemo2.utils;
 
+import com.example.viewpagerdemo.ui.bean.ReplyContentsBean;
+import com.example.viewpagerdemo.ui.bean.UserBeanL;
 import com.yiw.circledemo2.bean.ListBean;
 import com.yiw.circledemo2.bean.RecordListBean;
 import com.yiw.circledemo2.bean.ToolsHost;
@@ -125,20 +127,6 @@ public class DatasUtil {
 		return item;
 	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	/**
 	 * 创建回复评论
 	 * @return
@@ -151,6 +139,7 @@ public class DatasUtil {
 		item.setUser(replyUser);
 		return item;
 	}
+
 
 
 }

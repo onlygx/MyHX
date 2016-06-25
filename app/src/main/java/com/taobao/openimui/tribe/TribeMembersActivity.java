@@ -1,25 +1,20 @@
 package com.taobao.openimui.tribe;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.alibaba.mobileim.YWIMKit;
 import com.alibaba.mobileim.channel.WxThreadHandler;
 import com.alibaba.mobileim.channel.event.IWxCallback;
-import com.alibaba.mobileim.contact.IYWContact;
-import com.alibaba.mobileim.contact.YWContactFactory;
 import com.alibaba.mobileim.fundamental.widget.YWAlertDialog;
 import com.alibaba.mobileim.fundamental.widget.refreshlist.PullToRefreshListView;
 import com.alibaba.mobileim.fundamental.widget.refreshlist.YWPullToRefreshBase;
@@ -31,10 +26,10 @@ import com.alibaba.mobileim.gingko.presenter.contact.YWContactManagerImpl;
 import com.alibaba.mobileim.gingko.presenter.tribe.IYWTribeChangeListener;
 import com.alibaba.mobileim.tribe.IYWTribeService;
 import com.alibaba.mobileim.utility.IMConstants;
+import com.xingkesi.foodapp.R;
 import com.taobao.openimui.common.Notification;
 import com.taobao.openimui.demo.FragmentTabs;
 import com.taobao.openimui.sample.LoginSampleHelper;
-import com.xingkesi.foodapp.R;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -56,16 +51,12 @@ public class TribeMembersActivity extends Activity implements AdapterView.OnItem
     private YWTribeMember myself;
     private TribeMembersAdapterSample mAdapter;
     private TextView mAddTribeMembers;
-    private TextView mInviteToJoinTribe;
-    private EditText mUserId;
-    private EditText mAppKey;
     private Handler mHandler = new Handler(Looper.getMainLooper());
     /**
      * 用于筛选需要处理的ProfileUpdate通知
      */
     private Set<String> mContactUserIdSet = new HashSet<String>();
     private IContactProfileUpdateListener mContactProfileUpdateListener;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -113,14 +104,6 @@ public class TribeMembersActivity extends Activity implements AdapterView.OnItem
             }
         });
         mAddTribeMembers.setVisibility(View.GONE);
-
-        mInviteToJoinTribe = (TextView) findViewById(R.id.invite_tribe_members);
-        mInviteToJoinTribe.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ShowInviteToJoinTribeDialog();
-            }
-        });
 
         initTribeChangedListener();
         initContactProfileUpdateListener();
@@ -182,15 +165,16 @@ public class TribeMembersActivity extends Activity implements AdapterView.OnItem
     }
     private void doPreloadContactProfiles(final List<YWTribeMember> members) {
         int length = Math.min(members.size(), IMConstants.PRELOAD_PROFILE_NUM);
-        ArrayList<IYWContact> contacts = new ArrayList<IYWContact>();
-
-
+        ArrayList<String> userIds = new ArrayList<String>();
+        String appkey = null;
         for (int i = 0; i < length; i++) {
             YWTribeMember ywTribeMember = members.get(i);
-            contacts.add(ywTribeMember);
+            if (appkey == null)
+                appkey = ywTribeMember.getAppKey();
+            userIds.add(ywTribeMember.getUserId());
         }
         if (mIMKit!=null&&mIMKit.getContactService() != null)
-            mIMKit.getContactService().getCrossContactProfileInfos(contacts);
+            mIMKit.getContactService().getContactProfileInfos(userIds, appkey);
     }
     private Runnable reindexRunnable = new Runnable() {
         @Override
@@ -263,20 +247,21 @@ public class TribeMembersActivity extends Activity implements AdapterView.OnItem
         }, mTribeId);
     }
 
-    private void onSuccessGetMembers(final List<YWTribeMember> members){
+    private void onSuccessGetMembers(List<YWTribeMember> members){
         if (members == null || isFinishing()){
             return;
         }
+
+        mList.clear();
+        mList.addAll(members);
+        mContactUserIdSet.clear();
+        for (YWTribeMember member : members) {
+            mContactUserIdSet.add(member.getUserId());
+        }
+        refreshAdapter();
         mHandler.post(new Runnable() {
             @Override
             public void run() {
-                mList.clear();
-                mList.addAll(members);
-                mContactUserIdSet.clear();
-                for (YWTribeMember member : members) {
-                    mContactUserIdSet.add(member.getUserId());
-                }
-                refreshAdapter();
                 mPullToRefreshListView.onRefreshComplete(false, true);
             }
         });
@@ -317,11 +302,11 @@ public class TribeMembersActivity extends Activity implements AdapterView.OnItem
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         if (items[which].equals(TribeConstants.TRIBE_SET_MANAGER)){
-                            mTribeService.setTribeManager(mTribeId, member, null);
+                            mTribeService.setTribeManager(null, mTribeId, member.getUserId());
                         } else if (items[which].equals(TribeConstants.TRIBE_CANCEL_MANAGER)){
-                            mTribeService.cancelTribeManager(mTribeId, member, null);
+                            mTribeService.cancelTribeManager(null, mTribeId, member.getUserId());
                         } else if (items[which].equals(TribeConstants.TRIBE_EXPEL_MEMBER)){
-                            mTribeService.expelMember(mTribeId, member, new IWxCallback() {
+                            mTribeService.expelMember(new IWxCallback() {
                                 @Override
                                 public void onSuccess(Object... result) {
                                     Notification.showToastMsg(TribeMembersActivity.this, "踢人成功！");
@@ -338,7 +323,7 @@ public class TribeMembersActivity extends Activity implements AdapterView.OnItem
                                 public void onProgress(int progress) {
 
                                 }
-                            });
+                            }, mTribeId, member.getUserId());
                         }
                     }
                 })
@@ -454,67 +439,6 @@ public class TribeMembersActivity extends Activity implements AdapterView.OnItem
         intent.putExtra(TribeConstants.TRIBE_OP, TribeConstants.TRIBE_OP);
         startActivity(intent);
         finish();
-    }
-
-    private void ShowInviteToJoinTribeDialog(){
-        View view = View.inflate(this, R.layout.demo_dialog_invite_tribe_member, null);
-        mUserId = (EditText) view.findViewById(R.id.userid);
-        mAppKey = (EditText) view.findViewById(R.id.appkey);
-        AlertDialog dialog = new YWAlertDialog.Builder(this)
-                .setView(view)
-                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        String userId = mUserId.getText().toString();
-                        String appKey = mAppKey.getText().toString();
-                        if (TextUtils.isEmpty(userId) || TextUtils.isEmpty(appKey)){
-                            Notification.showToastMsg(TribeMembersActivity.this, "userId 和 appKey 均不能为空！");
-                            return;
-                        }
-                        IYWContact contact = YWContactFactory.createAPPContact(userId, appKey);
-                        List<IYWContact> list = new ArrayList<IYWContact>();
-                        list.add(contact);
-                        inviteTribeMembers(list);
-                    }
-                })
-                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                })
-                .create();
-        if (!dialog.isShowing()){
-            dialog.show();
-        }
-    }
-
-    private void inviteTribeMembers(List<IYWContact> contacts){
-        mTribeService.inviteMembers(mTribeId, contacts, new IWxCallback() {
-            @Override
-            public void onSuccess(Object... result) {
-                Integer retCode = (Integer) result[0];
-                if (retCode == 0){
-                    YWTribe tribe = mTribeService.getTribe(mTribeId);
-                    if (tribe.getTribeType() == YWTribeType.CHATTING_GROUP) {
-                        Notification.showToastMsg(TribeMembersActivity.this, "添加群成员成功！");
-                    } else {
-                        Notification.showToastMsg(TribeMembersActivity.this, "群邀请发送成功！");
-                    }
-                    finish();
-                }
-            }
-
-            @Override
-            public void onError(int code, String info) {
-                Notification.showToastMsg(TribeMembersActivity.this, "添加群成员失败，code = " + code + ", info = " + info);
-            }
-
-            @Override
-            public void onProgress(int progress) {
-
-            }
-        });
     }
 
 }

@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.example.viewpagerdemo.ui.activity.IndexMainActivity;
 import com.example.viewpagerdemo.ui.bean.MyOderListBean;
-import com.example.viewpagerdemo.ui.jlfragmenwork.Contantor;
+import com.example.viewpagerdemo.ui.Contantor;
 import com.squareup.picasso.Picasso;
 import com.xingkesi.foodapp.R;
 

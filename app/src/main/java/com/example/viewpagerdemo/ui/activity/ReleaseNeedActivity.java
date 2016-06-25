@@ -25,7 +25,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 import com.example.viewpagerdemo.ui.MyApplication;
 import com.example.viewpagerdemo.ui.adapter.ImageAdapter;
-import com.example.viewpagerdemo.ui.jlfragmenwork.Contantor;
+import com.example.viewpagerdemo.ui.Contantor;
 import com.example.viewpagerdemo.ui.jlfragmenwork.baseactivitywork.JLBaseActivity;
 import com.example.viewpagerdemo.ui.jlfragmenwork.city.widget.SelectPicPopupWindow;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.CommonUtils;
@@ -158,6 +158,18 @@ public class ReleaseNeedActivity extends JLBaseActivity {
                 String contents = content.getText().toString();
                 String prices = price.getText().toString();
                 String addresss = address.getText().toString();
+
+
+                if (pro == null || pro.equals("")) {
+                    pro = MyApplication.getInstan().getSheng();
+                }
+                if (city == null || city.equals("")) {
+                    city = MyApplication.getInstan().getCity();
+                }
+                if (dro == null || dro.equals("")) {
+                    dro = MyApplication.getInstan().getQu();
+                }
+
                 if (TextUtils.isEmpty(titles)) {
                     TS.shortTime("请填写标题");
                     return;
@@ -178,47 +190,53 @@ public class ReleaseNeedActivity extends JLBaseActivity {
                     TS.shortTime("请填写详细地址");
                     return;
                 }
+
+                if (ioncList.size() <= 0) {
+                    TS.shortTime("请填选择图片");
+                    return;
+                }
                 String url = Contantor.Ralesepay;
                 showWait();
-                if (ioncList.size() > 0) {
-                    List<File> f = new ArrayList<File>();
-                    for (String s : ioncList) {
-                        if (!s.equals("000000")) {
-                            f.add(new File(s));
-                        }
+                List<File> f = new ArrayList<File>();
+                for (String s : ioncList) {
+                    if (!s.equals("000000")) {
+                        f.add(new File(s));
                     }
-                    Map<String, String> ap = new HashMap<String, String>();
-                    ap.put("title", titles);
-                    ap.put("content", contents);
-                    ap.put("price", prices);
-                    ap.put("sendUserId", MyApplication.getInstan().getUser().getData().getId() + "");
-                    ap.put("province", pro);
-                    ap.put("city", city);
-                    ap.put("district", dro);
-                    ap.put("address", addresss);
+                }
+                Map<String, String> ap = new HashMap<String, String>();
+                ap.put("title", titles);
+                ap.put("content", contents);
+                ap.put("price", prices);
+                ap.put("sendUserId", MyApplication.getInstan().getUser().getData().getId() + "");
+                ap.put("province", pro);
+                ap.put("city", city);
+                ap.put("district", dro);
+                ap.put("address", addresss);
 
-                    MultipartRequest request = new MultipartRequest(url, new Response.Listener<String>() {
+                DD.v("Dddddd发布需求s:" + url + "?" + ap.toString());
 
-                        @Override
-                        public void onResponse(String response) {
-                            Toast.makeText(ReleaseNeedActivity.this, "uploadSuccess,response = " + response, Toast.LENGTH_SHORT).show();
-                            Log.i("YanZi", "success,response = " + response);
-                            closeWait();
-                            finish();
-                            //han.sendEmptyMessage(0);
-                        }
-                    }, new Response.ErrorListener() {
+                MultipartRequest request = new MultipartRequest(url, new Response.Listener<String>() {
 
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            //han.sendEmptyMessage(2);
-                            closeWait();
-                            Toast.makeText(ReleaseNeedActivity.this, "uploadError,response = " + error.getMessage(), Toast.LENGTH_SHORT).show();
-                            Log.i("YanZi", "error,response = " + error.getMessage());
-                        }
-                    }, "files", f, ap);
-                    mSingleQueue.add(request);
-                } else {
+                    @Override
+                    public void onResponse(String response) {
+                        closeWait();
+                        Log.i("LD", "success,response = " + response);
+                        Toast.makeText(ReleaseNeedActivity.this, "uploadSuccess,response = " + response, Toast.LENGTH_SHORT).show();
+                        finish();
+                        //han.sendEmptyMessage(0);
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //han.sendEmptyMessage(2);
+                        Log.i("LD", "error,response = " + error.getMessage());
+                        closeWait();
+                        Toast.makeText(ReleaseNeedActivity.this, "uploadError,response = " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }, "files", f, ap);
+                mSingleQueue.add(request);
+               /* } else {
                     AjaxParams ap = new AjaxParams();
                     ap.put("title", titles);
                     ap.put("content", contents);
@@ -228,8 +246,8 @@ public class ReleaseNeedActivity extends JLBaseActivity {
                     ap.put("city", city);
                     ap.put("district", dro);
                     ap.put("address", addresss);
-                    ap.put("files", "");
-
+//                    ap.put("files", "");
+                    DD.v("1111发布需求s:" + url + "?" + ap.toString());
                     new FinalHttp().post(url, ap, new AjaxCallBack<String>() {
                         @Override
                         public void onSuccess(String s) {
@@ -255,7 +273,7 @@ public class ReleaseNeedActivity extends JLBaseActivity {
                             closeWait();
                         }
                     });
-                }
+                }*/
 
 
             }

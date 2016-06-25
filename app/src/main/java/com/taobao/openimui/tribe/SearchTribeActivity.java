@@ -18,9 +18,9 @@ import com.alibaba.mobileim.YWIMKit;
 import com.alibaba.mobileim.channel.event.IWxCallback;
 import com.alibaba.mobileim.gingko.model.tribe.YWTribe;
 import com.alibaba.mobileim.tribe.IYWTribeService;
+import com.xingkesi.foodapp.R;
 import com.taobao.openimui.common.Notification;
 import com.taobao.openimui.sample.LoginSampleHelper;
-import com.xingkesi.foodapp.R;
 
 public class SearchTribeActivity extends Activity {
 
@@ -60,7 +60,7 @@ public class SearchTribeActivity extends Activity {
                     Notification.showToastMsg(SearchTribeActivity.this, "请输入群id");
                 }
                 mTribe = mTribeService.getTribe(mTribeId);
-                if (mTribe == null || mTribe.getTribeRole() == null) {
+                if (mTribe == null) {
                     searchButton.setClickable(false);
                     mProgressBar.setVisibility(View.VISIBLE);
                     mTribeService.getTribeFromServer(new IWxCallback() {

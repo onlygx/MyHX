@@ -8,16 +8,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.alibaba.mobileim.contact.IYWContact;
 import com.alibaba.mobileim.contact.IYWContactService;
 import com.alibaba.mobileim.conversation.YWMessage;
-import com.alibaba.mobileim.gingko.presenter.contact.IContact;
-import com.alibaba.mobileim.kit.common.IMUtility;
 import com.alibaba.mobileim.kit.common.YWAsyncBaseAdapter;
 import com.alibaba.mobileim.kit.contact.ContactHeadLoadHelper;
 import com.alibaba.mobileim.lib.model.message.YWSystemMessage;
-import com.taobao.openimui.sample.LoginSampleHelper;
 import com.xingkesi.foodapp.R;
+import com.taobao.openimui.sample.LoginSampleHelper;
 
 import java.util.List;
 
@@ -90,12 +87,8 @@ public class ContactSystemMessageAdapter extends YWAsyncBaseAdapter {
             final YWMessage msg = mMessageList.get(position);
             final YWSystemMessage message = (YWSystemMessage) msg;
             String authorUserId = message.getAuthorUserId();
-            IYWContact contact = IMUtility.getContactProfileInfo(message.getAuthorUserId(), message.getAuthorAppkey());
-            if(contact != null) {
-                holder.showName.setText(contact.getShowName() + " 申请加你为好友");
-            } else {
-                holder.showName.setText(authorUserId + " 申请加你为好友");
-            }
+            String showName=authorUserId;
+            holder.showName.setText(showName+" 申请加你为好友");
             holder.message.setText("备注: "+message.getMessageBody().getContent());
             holder.agreeButton.setText("接受");
             holder.agreeButton.setOnClickListener(new View.OnClickListener() {

@@ -7,7 +7,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -18,13 +17,10 @@ import com.alibaba.fastjson.JSONArray;
 import com.example.viewpagerdemo.ui.bean.EatOneBaen;
 import com.example.viewpagerdemo.ui.bean.ShopingBean;
 import com.example.viewpagerdemo.ui.bean.ShoppingListBean;
-import com.example.viewpagerdemo.ui.MyApplication;
 import com.example.viewpagerdemo.ui.adapter.AnnounceItemAdpter;
 import com.example.viewpagerdemo.ui.adapter.EateMainAotuAdapter;
-import com.example.viewpagerdemo.ui.jlfragmenwork.Contantor;
+import com.example.viewpagerdemo.ui.Contantor;
 import com.example.viewpagerdemo.ui.jlfragmenwork.basefregmetwork.JLBaseFragment;
-import com.example.viewpagerdemo.ui.jlfragmenwork.util.DD;
-import com.example.viewpagerdemo.ui.jlfragmenwork.util.TS;
 
 import com.xingkesi.foodapp.R;
 
@@ -32,14 +28,12 @@ import net.tsz.afinal.FinalHttp;
 import net.tsz.afinal.http.AjaxCallBack;
 import net.tsz.afinal.http.AjaxParams;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import butterknife.ButterKnife;
 import butterknife.Bind;
 
 /**
@@ -155,7 +149,6 @@ public class HomeeateListFragment extends JLBaseFragment implements SwipeRefresh
             @Override
             public void onSuccess(String s) {
                 super.onSuccess(s);
-                DD.v("轮播图:" + s);
                 if (s != null) {
                     adList = JSONArray.parseArray(s, EatOneBaen.class);
                     for (int i = 0; i < adList.size(); i++) {
@@ -207,13 +200,11 @@ public class HomeeateListFragment extends JLBaseFragment implements SwipeRefresh
         map.put("page", page + "");//页码，第几页
         map.put("size", num + "");//每页几条
         map.put("city", com.example.viewpagerdemo.ui.MyApplication.getInstan().getCity());//
-        DD.d("主页商品列表参数：" + map.toString());
         new FinalHttp().post(Contantor.main_eat, map, new AjaxCallBack<String>() {
             @Override
             public void onSuccess(String s) {
                 ShopingBean sb = JSON.parseObject(s, ShopingBean.class);
                 list = sb.getList();
-                DD.v("主页返回数据：" + s);
                 if (refreshlayout.isRefreshing()) {
                     refreshlayout.setRefreshing(false);
                 }

@@ -39,9 +39,9 @@ import com.alibaba.mobileim.lib.presenter.conversation.TribeConversation;
 import com.alibaba.mobileim.ui.atmessage.AtMsgListActivity;
 import com.alibaba.mobileim.utility.IMPrefsTools;
 import com.alibaba.mobileim.utility.YWIMImageUtils;
+import com.xingkesi.foodapp.R;
 import com.taobao.openimui.tribe.TribeConstants;
 import com.taobao.openimui.tribe.TribeInfoActivity;
-import com.xingkesi.foodapp.R;
 
 /**
  * 聊天界面自带提供两种主题的自定义供用户方便的使用，用户可以通过{@link CustomSampleHelper｝中 实现 AdviceBinder.bindAdvice(PointCutEnum.CHATTING_FRAGMENT_UI_POINTCUT, ChattingUICustomSample2.class);
@@ -112,7 +112,9 @@ public class ChattingUICustomSample2 extends IMChattingPageUI {
 
 
     /**
+     * 建议使用{@link processBitmapOfLeftImageMsg｝和{@link processBitmapOfRightImageMsg｝灵活修改Bitmap，达到对图像进行［圆角处理］,［裁减］等目的,这里建议return false
      * 设置是否需要将聊天界面的图片设置为圆角
+     * @return false: 不做圆角处理 true：做圆角处理（重要：返回true时不会做{@link processBitmapOfLeftImageMsg｝和{@link processBitmapOfRightImageMsg｝二次图片处理，两者互斥！）
      */
 
     @Override
@@ -140,6 +142,8 @@ public class ChattingUICustomSample2 extends IMChattingPageUI {
      *
      * 用于更灵活地加工［左边图片消息］的Bitmap用于显示，SDK内部会缓存之，后续直接使用缓存的Bitmap显示。例如：对图像进行［裁减］，［圆角处理］等等
      * 重要：使用该方法时：
+     * 1.请将 {@link needRoundChattingImage}设为return false(不裁剪圆角)，两者是互斥关系
+     * 2.建议将{@link getLeftImageMsgBackgroundResId}设为return－1（背景透明）
      * @param input 网络获取的聊天图片
      * @return  供显示的Bitmap
      */
@@ -187,6 +191,8 @@ public class ChattingUICustomSample2 extends IMChattingPageUI {
     /**
      *  用于更灵活地加工［右边图片消息］的Bitmap用于显示，SDK内部会缓存之，后续直接使用缓存的Bitmap显示。例如：对图像进行［裁减］，［圆角处理］等等
      * 重要：使用该方法时：
+     * 1.请将 {@link needRoundChattingImage}设为return false(不裁剪圆角)，两者是互斥关系
+     * 2.建议将{@link getRightImageMsgBackgroundResId}设为return－1（背景透明）
      * @param input 网络获取的聊天图片
      * @return  供显示的Bitmap
      */

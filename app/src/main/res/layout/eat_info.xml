@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/eat_layout"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clipToPadding="true"
     android:fitsSystemWindows="true"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <include
@@ -58,9 +58,9 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="20dp"
                     android:gravity="center"
-                    tools:text="冰糖柠檬 炖着 20小时"
                     android:textColor="@color/black"
-                    android:textSize="19sp" />
+                    android:textSize="19sp"
+                    tools:text="冰糖柠檬 炖着 20小时" />
 
                 <TextView
                     android:layout_width="300dp"
@@ -68,81 +68,53 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="10dp"
                     android:gravity="center"
-                    tools:text="排毒降火 止渴润喉 美白 加微信 4365544"
                     android:textColor="@color/gray_normal"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    tools:text="排毒降火 止渴润喉 美白 加微信 4365544" />
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
-                    android:gravity="center"
+                    android:layout_marginTop="10dp"
                     >
-
 
                     <TextView
                         android:id="@+id/money"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="30dp"
-                        android:layout_weight="1"
-                        android:gravity="center"
+                        android:layout_centerHorizontal="true"
                         android:text="122"
+
                         android:textColor="@color/logding_bg"
                         android:textSize="30sp" />
 
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:text="200"
-                        android:textStyle="italic"
-                        android:layout_marginLeft="5dp"
-                        android:textColor="@color/gray_normal"
-                        android:textSize="18sp"
-                        android:visibility="gone" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:text="克"
-                        android:textColor="@color/gray_normal"
-                        android:textSize="18sp"
-                        android:visibility="gone" />
-
                     <ImageView
+                        android:id="@+id/xsyh"
+                        android:layout_toRightOf="@+id/money"
                         android:layout_width="70dp"
                         android:layout_height="40dp"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="15dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_centerHorizontal="true"
                         android:src="@drawable/xs"
-                        android:visibility="gone" />
+                        android:visibility="gone"
+                        tools:visibility="visible" />
 
                     <ImageView
                         android:id="@+id/iv_kd"
                         android:layout_width="30dp"
                         android:layout_height="25dp"
-                        android:layout_gravity="right"
-                        android:layout_marginRight="30dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
                         android:src="@drawable/by" />
 
-                   <!-- <TextView
-                        android:id="@+id/tv_kd"
-                        android:layout_width="wrap_content"
-                        android:layout_height="30dp"
-                        android:layout_marginLeft="15dp"
-                        android:gravity="center"
-                        android:text="快递"
-                        android:visibility="gone" />-->
 
 
-                </LinearLayout>
+
+                </RelativeLayout>
 
 
             </LinearLayout>
@@ -162,9 +134,9 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:background="@drawable/shape_right_line"
-                    android:gravity="center"
-                    android:layout_weight="1">
+                    android:gravity="center">
 
                     <TextView
                         android:id="@+id/san_sc"
@@ -173,9 +145,9 @@
                         android:layout_gravity="center"
                         android:gravity="center"
                         android:text=""
-                        tools:text="1"
                         android:textColor="@color/gary"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        tools:text="1" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -190,9 +162,9 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="center"
+                    android:layout_weight="1"
                     android:background="@drawable/shape_right_line"
-                    android:layout_weight="1">
+                    android:gravity="center">
 
                     <TextView
                         android:id="@+id/san_gm"
@@ -201,9 +173,9 @@
                         android:layout_gravity="center"
                         android:gravity="center"
                         android:text=""
-                        tools:text="1"
                         android:textColor="@color/gary"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        tools:text="1" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -219,9 +191,9 @@
                     android:id="@+id/pllb"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="center"
+                    android:layout_weight="1"
                     android:background="@color/waiter"
-                    android:layout_weight="1">
+                    android:gravity="center">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -238,11 +210,11 @@
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:gravity="center"
-                        android:text="10.0"
                         android:maxLength="4"
-                        android:textStyle="italic"
+                        android:text="10.0"
                         android:textColor="@color/logding_bg"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        android:textStyle="italic" />
                 </LinearLayout>
 
 
@@ -272,91 +244,89 @@
                 </WebView>
 
 
+                <!-- <TextView
+                     android:layout_width="100dp"
+                     android:layout_height="wrap_content"
+                     android:layout_gravity="center_horizontal"
+                     android:layout_marginTop="30dp"
+                     android:gravity="center"
+                     android:text="100 次评价" />-->
 
 
-               <!-- <TextView
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="30dp"
-                    android:gravity="center"
-                    android:text="100 次评价" />-->
+                <!--  <com.example.viewpagerdemo.ui.jlfragmenwork.util.MyListView
+                      android:id="@+id/mylist"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginLeft="10dp"
+                      android:layout_marginRight="10dp">
 
 
-              <!--  <com.example.viewpagerdemo.ui.jlfragmenwork.util.MyListView
-                    android:id="@+id/mylist"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp">
+                  </com.example.viewpagerdemo.ui.jlfragmenwork.util.MyListView>-->
 
-
-                </com.example.viewpagerdemo.ui.jlfragmenwork.util.MyListView>-->
-
-              <!--  <TextView
-                    android:id="@+id/allcontent"
-                    android:layout_width="100dp"
-                    android:layout_height="30dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="30dp"
-                    android:background="@drawable/shape_bt_grenn_corners2"
-                    android:gravity="center"
-                    android:text="全部评价"
-                    android:textColor="@color/logding_bg" />-->
+                <!--  <TextView
+                      android:id="@+id/allcontent"
+                      android:layout_width="100dp"
+                      android:layout_height="30dp"
+                      android:layout_gravity="center_horizontal"
+                      android:layout_marginTop="30dp"
+                      android:background="@drawable/shape_bt_grenn_corners2"
+                      android:gravity="center"
+                      android:text="全部评价"
+                      android:textColor="@color/logding_bg" />-->
 
             </LinearLayout>
 
 
-           <!-- <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="20dp"
-                android:src="@drawable/pic" />
+            <!-- <ImageView
+                 android:layout_width="50dp"
+                 android:layout_height="50dp"
+                 android:layout_gravity="center_horizontal"
+                 android:layout_marginTop="20dp"
+                 android:src="@drawable/pic" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10dp"
-                android:gravity="center"
-                android:text="小妹私房菜"
-                android:textColor="@color/black" />
+             <TextView
+                 android:layout_width="wrap_content"
+                 android:layout_height="30dp"
+                 android:layout_gravity="center_horizontal"
+                 android:layout_marginTop="10dp"
+                 android:gravity="center"
+                 android:text="小妹私房菜"
+                 android:textColor="@color/black" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10dp"
-                android:gravity="center"
-                android:text="山东济南人"
-                android:textColor="@color/black" />-->
+             <TextView
+                 android:layout_width="wrap_content"
+                 android:layout_height="30dp"
+                 android:layout_gravity="center_horizontal"
+                 android:layout_marginTop="10dp"
+                 android:gravity="center"
+                 android:text="山东济南人"
+                 android:textColor="@color/black" />-->
 
-          <!--  <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/shape_gray_corners"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:padding="3dp">
+            <!--  <LinearLayout
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_gravity="center_horizontal"
+                  android:background="@drawable/shape_gray_corners"
+                  android:gravity="center"
+                  android:orientation="horizontal"
+                  android:padding="3dp">
 
-                <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:layout_marginLeft="10dp"
-                    android:src="@drawable/cp_dw" />
+                  <ImageView
+                      android:layout_width="15dp"
+                      android:layout_height="15dp"
+                      android:layout_marginLeft="10dp"
+                      android:src="@drawable/cp_dw" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginRight="10dp"
-                    android:gravity="center"
-                    android:text="济南 文化东路21号"
-                    android:textColor="@color/gray" />
+                  <TextView
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_gravity="center"
+                      android:layout_marginRight="10dp"
+                      android:gravity="center"
+                      android:text="济南 文化东路21号"
+                      android:textColor="@color/gray" />
 
-            </LinearLayout>-->
+              </LinearLayout>-->
 
             <!--<ImageView
                 android:layout_width="match_parent"
@@ -366,49 +336,49 @@
                 android:src="@drawable/eatone" />-->
 
 
-           <!-- <TextView
-                android:layout_width="100dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center"
-                android:background="@drawable/shape_bt_grenn_corners2"
-                android:gravity="center"
-                android:text="了解更多"
-                android:textColor="@color/logding_bg" />
+            <!-- <TextView
+                 android:layout_width="100dp"
+                 android:layout_height="30dp"
+                 android:layout_gravity="center"
+                 android:background="@drawable/shape_bt_grenn_corners2"
+                 android:gravity="center"
+                 android:text="了解更多"
+                 android:textColor="@color/logding_bg" />
 
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="0.5dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="30dp"
-                android:background="@color/gray"
-                android:gravity="center" />
+             <TextView
+                 android:layout_width="100dp"
+                 android:layout_height="0.5dp"
+                 android:layout_gravity="center"
+                 android:layout_marginTop="30dp"
+                 android:background="@color/gray"
+                 android:gravity="center" />
 
 
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="20dp"
-                android:gravity="center"
-                android:text="更多介绍"
-                android:textColor="@color/black" />
+             <TextView
+                 android:layout_width="100dp"
+                 android:layout_height="30dp"
+                 android:layout_gravity="center"
+                 android:layout_marginTop="20dp"
+                 android:gravity="center"
+                 android:text="更多介绍"
+                 android:textColor="@color/black" />
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_margin="10dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/eatone" />
+             <ImageView
+                 android:layout_width="match_parent"
+                 android:layout_height="200dp"
+                 android:layout_margin="10dp"
+                 android:scaleType="fitXY"
+                 android:src="@drawable/eatone" />
 
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/shape_bt_grenn_corners2"
-                android:gravity="center"
-                android:text="查看更多"
-                android:textColor="@color/logding_bg" />-->
+             <TextView
+                 android:layout_width="100dp"
+                 android:layout_height="30dp"
+                 android:layout_gravity="center"
+                 android:layout_marginBottom="10dp"
+                 android:background="@drawable/shape_bt_grenn_corners2"
+                 android:gravity="center"
+                 android:text="查看更多"
+                 android:textColor="@color/logding_bg" />-->
 
         </LinearLayout>
     </ScrollView>

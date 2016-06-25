@@ -1,41 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:background="@color/white"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="245dp">
+    android:layout_height="245dp"
+    android:background="@color/white"
+    android:orientation="vertical">
 
     <ImageView
         android:id="@+id/img_bg"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:src="@drawable/icon_head_bg"
-        android:scaleType="centerCrop"
-        />
+        android:background="@color/logding_bg" />
 
     <ImageView
         android:id="@+id/meTx"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:src="@drawable/icon_head"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_marginBottom="15dp"
         android:layout_marginRight="25dp"
         android:scaleType="fitXY"
-        />
+        android:src="@drawable/icon_head" />
 
     <TextView
         android:id="@+id/meName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginRight="105dp"
+        android:layout_alignParentRight="true"
         android:layout_marginBottom="55dp"
-        android:textSize="16sp"
-
+        android:layout_marginRight="105dp"
+        android:text="自己"
         android:textColor="@color/white"
-        android:text="自己"/>
+        android:textSize="16sp" />
+
+
+    <RelativeLayout
+        android:id="@+id/abouts"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/tv_left_text_num"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_toRightOf="@+id/aboutme"
+            android:background="@drawable/shape_round_oavls"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="10"
+            android:textColor="@color/white"
+            android:textSize="10sp"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+
+        <TextView
+            android:id="@+id/aboutme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="有新消息"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:visibility="visible"
+            tools:visibility="visible" />
+    </RelativeLayout>
+
+
+
 
 </RelativeLayout>

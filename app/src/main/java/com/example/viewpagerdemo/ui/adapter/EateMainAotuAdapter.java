@@ -11,7 +11,7 @@ import android.widget.ImageView;
 
 import com.example.viewpagerdemo.ui.activity.EatInfoActivity;
 import com.example.viewpagerdemo.ui.bean.EatOneBaen;
-import com.example.viewpagerdemo.ui.jlfragmenwork.Contantor;
+import com.example.viewpagerdemo.ui.Contantor;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.DD;
 import com.squareup.picasso.Picasso;
 import com.xingkesi.foodapp.R;

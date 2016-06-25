@@ -13,9 +13,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.TabHost;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.alibaba.mobileim.YWIMCore;
 import com.alibaba.mobileim.YWIMKit;
 import com.alibaba.mobileim.channel.util.WxLog;
 import com.alibaba.mobileim.channel.util.YWLog;
@@ -32,17 +30,12 @@ import com.alibaba.mobileim.conversation.YWPushInfo;
 import com.alibaba.mobileim.gingko.model.tribe.YWTribe;
 import com.alibaba.mobileim.gingko.model.tribe.YWTribeMember;
 import com.alibaba.mobileim.gingko.presenter.tribe.IYWTribeChangeListener;
-import com.alibaba.mobileim.login.IYWConnectionListener;
-import com.alibaba.mobileim.login.YWLoginCode;
-import com.alibaba.mobileim.login.YWLoginState;
 import com.alibaba.mobileim.tribe.IYWTribeService;
-import com.alibaba.openIMUIDemo.LoginActivity;
-import com.example.viewpagerdemo.ui.MyApplication;
+import com.xingkesi.foodapp.R;
 import com.taobao.openimui.common.Notification;
 import com.taobao.openimui.sample.CustomConversationHelper;
 import com.taobao.openimui.sample.LoginSampleHelper;
 import com.taobao.openimui.tribe.TribeConstants;
-import com.xingkesi.foodapp.R;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -85,7 +78,6 @@ public class FragmentTabs extends FragmentActivity {
 
     private IYWMessageLifeCycleListener mMessageLifeCycleListener;
     private IYWSendMessageToContactInBlackListListener mSendMessageToContactInBlackListListener;
-    private IYWConnectionListener mConnectionListener;
     private Context mContext;
 
     @Override
@@ -148,8 +140,6 @@ public class FragmentTabs extends FragmentActivity {
         setMessageLifeCycleListener();
         //设置发送消息给黑名单中的联系人监听
         setSendMessageToContactInBlackListListener();
-        //添加IM连接状态监听
-        addConnectionListener();
     }
 
     TabHost.OnTabChangeListener listener = new TabHost.OnTabChangeListener() {
@@ -237,8 +227,6 @@ public class FragmentTabs extends FragmentActivity {
                         mConversationService = imKit.getConversationService();
                         //获取当前登录用户的所有未读数
                         int unReadCount = mConversationService.getAllUnreadCount();
-                        //设置桌面角标的未读数
-                        mIMKit.setShortcutBadger(unReadCount);
                         if (unReadCount > 0) {
                             mUnread.setVisibility(View.VISIBLE);
                             if (unReadCount < 100) {
@@ -253,8 +241,12 @@ public class FragmentTabs extends FragmentActivity {
                 });
             }
         };
-        mConversationService.addTotalUnreadChangeListener(mConversationUnreadChangeListener);
     }
+
+
+
+
+
 
     private void addTribeChangeListener(){
         mTribeChangedListener = new IYWTribeChangeListener() {
@@ -363,40 +355,10 @@ public class FragmentTabs extends FragmentActivity {
              */
             @Override
             public void onMessageLifeFinishSend(YWMessage message, YWMessageType.SendState sendState) {
-//                Notification.showToastMsg(FragmentTabs.this, sendState.toString());
+                Notification.showToastMsg(FragmentTabs.this, sendState.toString());
             }
         };
         mConversationService.setMessageLifeCycleListener(mMessageLifeCycleListener);
-    }
-
-    //设置连接状态的监听
-    private void addConnectionListener() {
-        mConnectionListener = new IYWConnectionListener() {
-            @Override
-            public void onDisconnect(int code, String info) {
-                if (code == YWLoginCode.LOGON_FAIL_KICKOFF) {
-                    //在其它终端登录，当前用户被踢下线
-                    Toast.makeText(MyApplication.getContext(), "被踢下线", Toast.LENGTH_LONG).show();
-                    YWLog.i("LoginSampleHelper", "被踢下线");
-                    LoginSampleHelper.getInstance().setAutoLoginState(YWLoginState.idle);
-                    finish();
-                    Intent intent = new Intent(MyApplication.getContext(), LoginActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    MyApplication.getContext().startActivity(intent);
-                }
-            }
-
-            @Override
-            public void onReConnecting() {
-
-            }
-
-            @Override
-            public void onReConnected() {
-
-            }
-        };
-        mIMKit.getIMCore().addConnectionListener(mConnectionListener);
     }
 
     private void setSendMessageToContactInBlackListListener(){
@@ -527,21 +489,34 @@ public class FragmentTabs extends FragmentActivity {
     @Override
     protected void onPause() {
         super.onPause();
+        //在Tab栏删除会话未读消息变化的全局监听器
+        mConversationService.removeTotalUnreadChangeListener(mConversationUnreadChangeListener);
+        mIMKit.getTribeService().removeTribeListener(mTribeChangedListener);
+
         YWLog.i(TAG, "onPause");
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        LoginSampleHelper loginHelper = LoginSampleHelper.getInstance();
+        final YWIMKit imKit = loginHelper.getIMKit();
+        mConversationService = imKit.getConversationService();
 
         //resume时需要检查全局未读消息数并做处理，因为离开此界面时删除了全局消息监听器
         mConversationUnreadChangeListener.onUnreadChange();
 
+        //在Tab栏增加会话未读消息变化的全局监听器
+        mConversationService.addTotalUnreadChangeListener(mConversationUnreadChangeListener);
         Intent intent = getIntent();
         if (intent != null && intent.getStringExtra(LOGIN_SUCCESS) != null){
             listener.onTabChanged(TAB_MESSAGE);
             getIntent().removeExtra(LOGIN_SUCCESS);
         }
+
+        IYWTribeService tribeService = imKit.getTribeService();
+        tribeService.addTribeListener(mTribeChangedListener);
+
         YWLog.i(TAG, "onResume");
     }
 

@@ -7,8 +7,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.util.Log;
@@ -33,16 +31,14 @@ import com.alibaba.mobileim.conversation.IYWMessageListener;
 import com.alibaba.mobileim.conversation.YWMessage;
 import com.alibaba.mobileim.fundamental.widget.YWAlertDialog;
 import com.alibaba.mobileim.login.YWLoginState;
-import com.alibaba.mobileim.utils.IYWCacheService;
 import com.alibaba.openIMUIDemo.LoginActivity;
-import com.example.viewpagerdemo.ui.MyApplication;
+import com.xingkesi.foodapp.R;
 import com.taobao.openimui.common.Notification;
 import com.taobao.openimui.common.SimpleWebViewActivity;
 import com.taobao.openimui.sample.DemoSimpleKVStore;
 import com.taobao.openimui.sample.LoginSampleHelper;
 import com.taobao.openimui.sample.NotificationInitSampleHelper;
 import com.taobao.openimui.test.MultiAccountTestActivity;
-import com.xingkesi.foodapp.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -63,13 +59,10 @@ public class MoreFragment extends Fragment implements View.OnClickListener {
     private View logout, more1, more2, more3;
     private View mView;
     private YWIMKit mIMKit;
-    private IYWCacheService mCacheService;
     private CheckBox soundCheckBox;
     private CheckBox vibrationCheckBox;
     private CheckBox quietCheckBox;
-    private TextView cacheSizeView;
     private NotificationInitSampleHelper mNotificationSettings;
-    private Handler mUIHandler = new Handler(Looper.getMainLooper());
 
     public MoreFragment() {
         // Required empty public constructor
@@ -82,7 +75,6 @@ public class MoreFragment extends Fragment implements View.OnClickListener {
         if (mIMKit == null) {
             return;
         }
-        mCacheService = mIMKit.getCacheService();
         mUserId = mIMKit.getIMCore().getLoginUserId();
 
 
@@ -140,12 +132,6 @@ public class MoreFragment extends Fragment implements View.OnClickListener {
 
         View more4 = mView.findViewById(R.id.more4);
         more4.setOnClickListener(this);
-
-        View clearCacheView = mView.findViewById(R.id.clear_cache_layout);
-        clearCacheView.setOnClickListener(this);
-
-        cacheSizeView = (TextView) mView.findViewById(R.id.cache_size);
-        updateCacheSize();
 
         TextView getBlackList = (TextView) mView.findViewById(R.id.sync_black_list);
         getBlackList.setOnClickListener(new View.OnClickListener() {
@@ -211,41 +197,12 @@ public class MoreFragment extends Fragment implements View.OnClickListener {
         quietRelativeLayout.setOnClickListener(this);
 
         soundCheckBox = (CheckBox) mView.findViewById(R.id.setting_sound_check);
+        soundCheckBox.setChecked(DemoSimpleKVStore.getNeedSound() == 1);
         vibrationCheckBox = (CheckBox) mView.findViewById(R.id.setting_vibration_check);
+        vibrationCheckBox.setChecked(DemoSimpleKVStore.getNeedVibration() == 1);
         quietCheckBox = (CheckBox) mView.findViewById(R.id.setting_quiet_check);
     }
 
-    private void updateNotificationSettings(){
-        soundCheckBox.setChecked(DemoSimpleKVStore.getNeedSound() == 1);
-        vibrationCheckBox.setChecked(DemoSimpleKVStore.getNeedVibration() == 1);
-    }
-
-    private void updateCacheSize(){
-        mCacheService.getCacheSize(new IWxCallback() {
-            @Override
-            public void onSuccess(Object... result) {
-                if (result != null && result.length > 0){
-                    final double size = (double) result[0];
-                    mUIHandler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            cacheSizeView.setText((int)size/1024/1024 + "MB");
-                        }
-                    });
-                }
-            }
-
-            @Override
-            public void onError(int code, String info) {
-
-            }
-
-            @Override
-            public void onProgress(int progress) {
-
-            }
-        });
-    }
 
     private List<YWMessage> mMsgList;
 
@@ -308,23 +265,6 @@ public class MoreFragment extends Fragment implements View.OnClickListener {
                 vibrationCheckBox.setChecked(!oldCheck);
                 DemoSimpleKVStore.setNeedVibration(!oldCheck ? 1 : 0);
                 break;
-            case R.id.clear_cache_layout:
-                mCacheService.clearCache(new IWxCallback() {
-                    @Override
-                    public void onSuccess(Object... result) {
-                        updateCacheSize();
-                    }
-
-                    @Override
-                    public void onError(int code, String info) {
-
-                    }
-
-                    @Override
-                    public void onProgress(int progress) {
-
-                    }
-                });
             case R.id.setting_quiet_layout:
                 oldCheck = quietCheckBox.isChecked();
                 mNotificationSettings.setNeedQuiet(!oldCheck);
@@ -367,11 +307,11 @@ public class MoreFragment extends Fragment implements View.OnClickListener {
             //此时logout已关闭所有基于IMBaseActivity的OpenIM相关Actiivity，s
             @Override
             public void onSuccess(Object... arg0) {
-                Toast.makeText(MyApplication.getContext(), "退出成功", Toast.LENGTH_SHORT).show();
+                Toast.makeText(DemoApplication.getContext(), "退出成功", Toast.LENGTH_SHORT).show();
                 YWLog.i(TAG, "退出成功");
                 LoginSampleHelper.getInstance().setAutoLoginState(YWLoginState.idle);
                 getActivity().finish();
-                Intent intent = new Intent(MyApplication.getContext(), LoginActivity.class);
+                Intent intent = new Intent(DemoApplication.getContext(), LoginActivity.class);
                 startActivity(intent);
             }
 
@@ -382,7 +322,7 @@ public class MoreFragment extends Fragment implements View.OnClickListener {
 
             @Override
             public void onError(int arg0, String arg1) {
-                Toast.makeText(MyApplication.getContext(), "退出失败,请重新登录", Toast.LENGTH_SHORT).show();
+                Toast.makeText(DemoApplication.getContext(), "退出失败,请重新登录", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -403,7 +343,6 @@ public class MoreFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
-        updateNotificationSettings();
     }
 
 

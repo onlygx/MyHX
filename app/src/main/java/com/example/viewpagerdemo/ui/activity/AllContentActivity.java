@@ -12,7 +12,7 @@ import com.alibaba.fastjson.JSON;
 import com.example.viewpagerdemo.ui.bean.ContentBean;
 import com.example.viewpagerdemo.ui.bean.ContentListBean;
 import com.example.viewpagerdemo.ui.adapter.EatInfoContentReclerAdatper;
-import com.example.viewpagerdemo.ui.jlfragmenwork.Contantor;
+import com.example.viewpagerdemo.ui.Contantor;
 import com.example.viewpagerdemo.ui.jlfragmenwork.baseactivitywork.JLBaseActivity;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.DD;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.TS;
@@ -43,8 +43,8 @@ public class AllContentActivity extends JLBaseActivity implements SwipeRefreshLa
 
 
     ArrayList<ContentListBean> contentList;
-    LinearLayoutManager manager;
     EatInfoContentReclerAdatper ec;
+    LinearLayoutManager manager;
     int page=1;
     int scrollPostion = 0;
     int num=10;

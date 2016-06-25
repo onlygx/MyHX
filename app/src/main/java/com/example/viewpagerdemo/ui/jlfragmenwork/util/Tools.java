@@ -37,7 +37,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.viewpagerdemo.ui.MyApplication;
-import com.example.viewpagerdemo.ui.jlfragmenwork.Contantor;
+import com.example.viewpagerdemo.ui.Contantor;
 
 import net.tsz.afinal.FinalHttp;
 import net.tsz.afinal.http.AjaxCallBack;

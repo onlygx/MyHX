@@ -78,7 +78,7 @@ public class FavortListAdapter {
                 if(item != null){
                     String name =item.getUser().getNickName();
                     DD.d("赞遍历："+name);
-                    SpannableString ss=setClickableSpan(item.getUser().getNickName(), i);
+                    SpannableString ss=setClickableSpan(name, i);
                     DD.d("赞后遍历："+ss.toString());
                     builder.append(ss);
                     if(i != datas.size()-1){

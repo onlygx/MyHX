@@ -34,7 +34,6 @@ public class CustomConversationHelper {
         }
 
         if (conversationService.getCustomConversationByConversationId(conversationID) == null) {
-            //更新或者创建一个自定义会话,如果会话已存在则更新 。conversationId作为会话的标识必须传入.unreadCount 属性如果设置了会累加。
             conversationService.updateOrCreateCustomConversation(mCustomConversation);
         }
     }

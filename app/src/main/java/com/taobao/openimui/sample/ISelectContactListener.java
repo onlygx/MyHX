@@ -1,6 +1,5 @@
 package com.taobao.openimui.sample;
 
-import com.alibaba.mobileim.contact.IYWContact;
 import com.alibaba.mobileim.conversation.YWConversation;
 
 import java.util.List;
@@ -10,5 +9,5 @@ import java.util.List;
  */
 public interface ISelectContactListener {
 
-    public void onSelectCompleted(List<IYWContact> contacts);
+    public void onSelectCompleted(List<String> contacts);
 }

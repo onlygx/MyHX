@@ -37,7 +37,6 @@ import com.alibaba.mobileim.YWLoginParam;
 import com.alibaba.mobileim.channel.HttpChannel;
 import com.alibaba.mobileim.channel.IMChannel;
 import com.alibaba.mobileim.channel.event.IWxCallback;
-import com.alibaba.mobileim.channel.util.AccountUtils;
 import com.alibaba.mobileim.channel.util.DeviceInfoHelper;
 import com.alibaba.mobileim.channel.util.WxLog;
 import com.alibaba.mobileim.channel.util.YWLog;
@@ -57,8 +56,8 @@ import com.alibaba.tcms.env.EnvManager;
 import com.alibaba.tcms.env.TcmsEnvType;
 import com.alibaba.tcms.env.YWEnvManager;
 import com.alibaba.tcms.env.YWEnvType;
-import com.example.viewpagerdemo.ui.MyApplication;
 import com.taobao.openimui.common.Notification;
+import com.taobao.openimui.demo.DemoApplication;
 import com.taobao.openimui.demo.FragmentTabs;
 import com.taobao.openimui.sample.LoginSampleHelper;
 import com.taobao.openimui.sample.NotificationInitSampleHelper;
@@ -78,7 +77,6 @@ public class LoginActivity extends Activity {
 	private static final int GUEST = 1;
     private static final String USER_ID = "userId";
     private static final String PASSWORD = "password";
-    private static final String APPKEY = "appkey";
     private static final String TAG = LoginActivity.class.getSimpleName();
     private LoginSampleHelper loginHelper;
     private EditText userIdView;
@@ -88,6 +86,7 @@ public class LoginActivity extends Activity {
     private Button loginButton;
     private Handler handler = new Handler(Looper.getMainLooper());
     private ImageView lg;
+    public static String APPKEY;
     private Button annoyloginButton;
     private int mClickCount=0;
 
@@ -106,10 +105,6 @@ public class LoginActivity extends Activity {
         }
     };
 
-    private void startChattingActivity(String targetId){
-        startActivity(loginHelper.getIMKit().getChattingActivityIntent(targetId));
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -123,7 +118,52 @@ public class LoginActivity extends Activity {
         appKeyView.setVisibility(View.VISIBLE);
         progressBar = (ProgressBar) findViewById(R.id.login_progress);
 
-        initLoginInfo();
+
+        //读取登录成功后保存的用户名和密码
+        String localId = IMPrefsTools.getStringPrefs(LoginActivity.this, USER_ID, "");
+        if (!TextUtils.isEmpty(localId)) {
+            userIdView.setText(localId);
+            String localPassword = IMPrefsTools.getStringPrefs(LoginActivity.this, PASSWORD, "");
+            if (!TextUtils.isEmpty(localPassword)) {
+                passwordView.setText(localPassword);
+            }
+        }
+
+        if (LoginSampleHelper.sEnvType == YWEnvType.ONLINE){
+            if (TextUtils.isEmpty(userIdView.getText())){
+                userIdView.setText(getRandAccount());
+            }
+            if (TextUtils.isEmpty(passwordView.getText())){
+                passwordView.setText("taobao1234");
+            }
+            if (TextUtils.isEmpty(appKeyView.getText())){
+                appKeyView.setText(LoginSampleHelper.APP_KEY);
+            }
+        }else if(LoginSampleHelper.sEnvType == YWEnvType.TEST){
+            if (TextUtils.isEmpty(userIdView.getText())){
+                Random r=new Random();
+                int suffix=Math.abs(r.nextInt()%100);
+                userIdView.setText("fk"+suffix);
+            }
+            if (TextUtils.isEmpty(passwordView.getText())){
+                passwordView.setText("taobao1234");
+            }
+            if (TextUtils.isEmpty(appKeyView.getText())){
+                appKeyView.setText(LoginSampleHelper.APP_KEY_TEST);
+            }
+
+        }else if(LoginSampleHelper.sEnvType == YWEnvType.PRE){
+            if (TextUtils.isEmpty(userIdView.getText())){
+                userIdView.setText("testpro74");
+            }
+            if (TextUtils.isEmpty(passwordView.getText())){
+                passwordView.setText("taobao1234");
+            }
+            if (TextUtils.isEmpty(appKeyView.getText())){
+                appKeyView.setText(LoginSampleHelper.APP_KEY);
+            }
+        }
+
 
         init(userIdView.getText().toString(), appKeyView.getText().toString());
 
@@ -195,11 +235,12 @@ public class LoginActivity extends Activity {
                 progressBar.setVisibility(View.VISIBLE);
 
                 progressBar.setVisibility(View.VISIBLE);
+                APPKEY = appKey.toString();
                 loginHelper.login_Sample(userId.toString(), password.toString(), appKey.toString(), new IWxCallback() {
 
                     @Override
                     public void onSuccess(Object... arg0) {
-                        saveLoginInfoToLocal(userId.toString(), password.toString(), appKey.toString());
+                        saveIdPasswordToLocal(userId.toString(), password.toString());
 
                         loginButton.setClickable(true);
                         progressBar.setVisibility(View.GONE);
@@ -318,10 +359,10 @@ public class LoginActivity extends Activity {
      * @param userId
      * @param password
      */
-    private void saveLoginInfoToLocal(String userId, String password, String appkey) {
+    private void saveIdPasswordToLocal(String userId, String password) {
         IMPrefsTools.setStringPrefs(LoginActivity.this, USER_ID, userId);
         IMPrefsTools.setStringPrefs(LoginActivity.this, PASSWORD, password);
-        IMPrefsTools.setStringPrefs(LoginActivity.this, APPKEY, appkey);
+
     }
 
     @Override
@@ -365,12 +406,12 @@ public class LoginActivity extends Activity {
         final String guestId = new StringBuilder("visitor").append((new Random().nextInt(1000) + 1)).toString();
 //      String userid = new StringBuffer(("uid")).append((new Random().nextInt(10) + 1)).toString();
         YWLog.d(TAG, guestId);
-        LoginSampleHelper.getInstance().initIMKit(guestId, "23015524");
-        loginHelper.login_Sample(guestId, "taobao1234", "23015524", new IWxCallback() {
+        LoginSampleHelper.getInstance().initIMKit(guestId, LoginActivity.APPKEY);
+        loginHelper.login_Sample(guestId, "taobao1234", LoginActivity.APPKEY, new IWxCallback() {
 
             @Override
             public void onSuccess(Object... arg0) {
-                saveLoginInfoToLocal(guestId, "taobao1234", "23015524");
+                saveIdPasswordToLocal(guestId, "taobao1234");
                 loginButton.setClickable(true);
                 progressBar.setVisibility(View.GONE);
                 Toast.makeText(LoginActivity.this, "登录成功",
@@ -436,8 +477,7 @@ public class LoginActivity extends Activity {
     protected void onResume() {
         super.onResume();
         handleAutoLoginState(LoginSampleHelper.getInstance().getAutoLoginState().getValue());
-//        YWLog.i(TAG, "onResume, loginState = " + LoginSampleHelper.getInstance().getAutoLoginState().getValue());
-        YWLog.i(TAG, "onResume, loginState = " + LoginSampleHelper.getInstance().getIMKit().getIMCore().getLoginState());
+        YWLog.i(TAG, "onResume, loginState = " + LoginSampleHelper.getInstance().getAutoLoginState().getValue());
     }
 
     @Override
@@ -469,21 +509,20 @@ public class LoginActivity extends Activity {
             LoginActivity.this.startActivity(intent);
             LoginActivity.this.finish();
         } else {
-//            这里需要注释掉，否则无法实现多账号登陆
-//            YWIMKit ywimKit = LoginSampleHelper.getInstance().getIMKit();
-//            if (ywimKit != null) {
-//                if (ywimKit.getIMCore().getLoginState() == YWLoginState.success) {
-//                    loginButton.setClickable(true);
-//                    progressBar.setVisibility(View.GONE);
-//                    Intent intent = new Intent(LoginActivity.this, FragmentTabs.class);
-//                    LoginActivity.this.startActivity(intent);
-//                    LoginActivity.this.finish();
-//                    return;
-//                }
-//            }
-//            //当作失败处理
-//            progressBar.setVisibility(View.GONE);
-//            loginButton.setClickable(true);
+            YWIMKit ywimKit = LoginSampleHelper.getInstance().getIMKit();
+            if (ywimKit != null) {
+                if (ywimKit.getIMCore().getLoginState() == YWLoginState.success) {
+                    loginButton.setClickable(true);
+                    progressBar.setVisibility(View.GONE);
+                    Intent intent = new Intent(LoginActivity.this, FragmentTabs.class);
+                    LoginActivity.this.startActivity(intent);
+                    LoginActivity.this.finish();
+                    return;
+                }
+            }
+            //当作失败处理
+            progressBar.setVisibility(View.GONE);
+            loginButton.setClickable(true);
         }
     }
 
@@ -525,8 +564,8 @@ public class LoginActivity extends Activity {
                                         tcmsEnvType = TcmsEnvType.TEST;
                                     }
 
-                                    EnvManager.getInstance().resetEnvType(MyApplication.getContext(), tcmsEnvType);
-                                    YWEnvManager.prepare(MyApplication.getContext(), envType);
+                                    EnvManager.getInstance().resetEnvType(DemoApplication.getContext(), tcmsEnvType);
+                                    YWEnvManager.prepare(DemoApplication.getContext(), envType);
                                     IMNotificationUtils.showToast("切换环境，程序退出，请再次启动", LoginActivity.this);
                                     ServiceChooseHelper.exitService(LoginActivity.this);//xianzhen: service must restart too.
 
@@ -617,9 +656,14 @@ public class LoginActivity extends Activity {
 
 
     private void doAnnoyLogin(String mUid, String mPw) {
-        YWIMKit mIMKit = YWAPI.getIMKitInstance(AccountUtils.getShortUserID(mUid), FeedbackAPI.getFeedbackAppkey());
+        YWIMKit mIMKit = YWAPI.getIMKitInstance();
         IYWLoginService mLoginService = mIMKit.getLoginService();
-        YWLoginParam loginParam = YWLoginParam.createLoginParam(AccountUtils.getShortUserID(mUid),
+        String prefix = AccountInfoTools.getPrefix(YWAPI.getAppKey());
+
+        if (!TextUtils.isEmpty(prefix) && mUid!=null&&mUid.startsWith(prefix)) {
+            mUid = mUid.substring(8);
+        }
+        YWLoginParam loginParam = YWLoginParam.createLoginParam(mUid,
                 mPw);
         Map<String, String> deviceInfo = DeviceInfoHelper.getLoginDeviceInfo(IMChannel.getApplication());
         Iterator<Map.Entry<String, String>> iterator = deviceInfo.entrySet().iterator();
@@ -679,55 +723,4 @@ public class LoginActivity extends Activity {
 
         }
     };
-
-    private void initLoginInfo(){
-        //读取登录成功后保存的用户名、密码和appkey
-        String localId = IMPrefsTools.getStringPrefs(LoginActivity.this, USER_ID, "");
-        if (!TextUtils.isEmpty(localId)) {
-            userIdView.setText(localId);
-            String localPassword = IMPrefsTools.getStringPrefs(LoginActivity.this, PASSWORD, "");
-            if (!TextUtils.isEmpty(localPassword)) {
-                passwordView.setText(localPassword);
-            }
-            String localAppKey = IMPrefsTools.getStringPrefs(LoginActivity.this, APPKEY, "");
-            if (!TextUtils.isEmpty(localAppKey)){
-                appKeyView.setText(localAppKey);
-            }
-        }
-
-        if (LoginSampleHelper.sEnvType == YWEnvType.ONLINE){
-            if (TextUtils.isEmpty(userIdView.getText())){
-                userIdView.setText(getRandAccount());
-            }
-            if (TextUtils.isEmpty(passwordView.getText())){
-                passwordView.setText("taobao1234");
-            }
-            if (TextUtils.isEmpty(appKeyView.getText())){
-                appKeyView.setText(LoginSampleHelper.APP_KEY);
-            }
-        }else if(LoginSampleHelper.sEnvType == YWEnvType.TEST){
-            if (TextUtils.isEmpty(userIdView.getText())){
-                Random r=new Random();
-                int suffix=Math.abs(r.nextInt()%100);
-                userIdView.setText("fk"+suffix);
-            }
-            if (TextUtils.isEmpty(passwordView.getText())){
-                passwordView.setText("taobao1234");
-            }
-            if (TextUtils.isEmpty(appKeyView.getText())){
-                appKeyView.setText(LoginSampleHelper.APP_KEY_TEST);
-            }
-
-        }else if(LoginSampleHelper.sEnvType == YWEnvType.PRE){
-            if (TextUtils.isEmpty(userIdView.getText())){
-                userIdView.setText("testpro74");
-            }
-            if (TextUtils.isEmpty(passwordView.getText())){
-                passwordView.setText("taobao1234");
-            }
-            if (TextUtils.isEmpty(appKeyView.getText())){
-                appKeyView.setText(LoginSampleHelper.APP_KEY);
-            }
-        }
-    }
 }

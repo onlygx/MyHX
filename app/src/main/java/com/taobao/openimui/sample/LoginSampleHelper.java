@@ -2,8 +2,10 @@ package com.taobao.openimui.sample;
 
 import android.app.Application;
 import android.content.Intent;
+import android.os.Debug;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
+import android.widget.Toast;
 
 import com.alibaba.mobileim.IYWLoginService;
 import com.alibaba.mobileim.IYWP2PPushListener;
@@ -11,20 +13,22 @@ import com.alibaba.mobileim.IYWTribePushListener;
 import com.alibaba.mobileim.YWAPI;
 import com.alibaba.mobileim.YWChannel;
 import com.alibaba.mobileim.YWConstants;
+import com.alibaba.mobileim.YWIMCore;
 import com.alibaba.mobileim.YWIMKit;
 import com.alibaba.mobileim.YWLoginParam;
 import com.alibaba.mobileim.channel.LoginParam;
 import com.alibaba.mobileim.channel.event.IWxCallback;
+import com.alibaba.mobileim.channel.util.YWLog;
 import com.alibaba.mobileim.contact.IYWContact;
 import com.alibaba.mobileim.contact.IYWContactCacheUpdateListener;
 import com.alibaba.mobileim.contact.IYWContactOperateNotifyListener;
 import com.alibaba.mobileim.conversation.IYWConversationService;
-import com.alibaba.mobileim.conversation.YWConversation;
 import com.alibaba.mobileim.conversation.YWCustomMessageBody;
 import com.alibaba.mobileim.conversation.YWMessage;
-import com.alibaba.mobileim.fundamental.model.YWIMSmiley;
 import com.alibaba.mobileim.gingko.model.tribe.YWTribe;
 import com.alibaba.mobileim.gingko.model.tribe.YWTribeMember;
+import com.alibaba.mobileim.login.IYWConnectionListener;
+import com.alibaba.mobileim.login.YWLoginCode;
 import com.alibaba.mobileim.login.YWLoginState;
 import com.alibaba.mobileim.login.YWPwdType;
 import com.alibaba.mobileim.ui.chat.widget.YWSmilyMgr;
@@ -34,10 +38,10 @@ import com.alibaba.tcms.env.TcmsEnvType;
 import com.alibaba.openIMUIDemo.LoginActivity;
 import com.alibaba.tcms.env.YWEnvManager;
 import com.alibaba.tcms.env.YWEnvType;
-import com.example.viewpagerdemo.ui.MyApplication;
 import com.taobao.openimui.common.Notification;
 import com.taobao.openimui.contact.ContactCacheUpdateListenerImpl;
 import com.taobao.openimui.contact.ContactOperateNotifyListenerImpl;
+import com.taobao.openimui.demo.DemoApplication;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -60,7 +64,7 @@ public class LoginSampleHelper {
     }
 
     // 应用APPKEY，这个APPKEY是申请应用时获取的
-    public static  String APP_KEY = "23386286";
+    public static  String APP_KEY = "23015524";
 
     //以下两个内容是测试环境使用，开发无需关注
 //    public static final String APP_KEY_TEST = "4272";  //60026702
@@ -73,6 +77,7 @@ public class LoginSampleHelper {
     // openIM UI解决方案提供的相关API，创建成功后，保存为全局变量使用
     private YWIMKit mIMKit;
 
+    private YWConnectionListenerImpl mYWConnectionListenerImpl = new YWConnectionListenerImpl();
     private Application mApp;
 
     private List<Map<YWTribe, YWTribeMember>> mTribeInviteMessages = new ArrayList<Map<YWTribe, YWTribeMember>>();
@@ -87,6 +92,7 @@ public class LoginSampleHelper {
 
     public void initIMKit(String userId, String appKey) {
         mIMKit = YWAPI.getIMKitInstance(userId, appKey);
+        addConnectionListener();
         addPushMessageListener();
         //添加联系人通知和更新监听 todo 在初始化后、登录前添加监听，离线的联系人系统消息才能触发监听器
         addContactListeners();
@@ -113,21 +119,20 @@ public class LoginSampleHelper {
         sEnvType = YWEnvManager.getEnv(context);
         //初始化IMKit
 		final String userId = IMAutoLoginInfoStoreUtil.getLoginUserId();
-		final String appkey = MyApplication.APP_KEY;//IMAutoLoginInfoStoreUtil.getAppkey();
+		final String appkey = IMAutoLoginInfoStoreUtil.getAppkey();
+		if (!TextUtils.isEmpty(userId) && !TextUtils.isEmpty(appkey)){
+//		final String userId = IMAutoLoginInfoStoreUtil.getLoginUserId();
+			LoginSampleHelper.getInstance().initIMKit(userId, appkey);
+//		final String appkey = IMAutoLoginInfoStoreUtil.getAppkey();
+//			NotificationInitSampleHelper.init();//重复初始化了
+		}
+//		if (!TextUtils.isEmpty(userId) && !TextUtils.isEmpty(appkey)){
         TcmsEnvType type = EnvManager.getInstance().getCurrentEnvType(mApp);
         if(type==TcmsEnvType.ONLINE || type == TcmsEnvType.PRE){
-            if(TextUtils.isEmpty(appkey)) {
-                YWAPI.init(mApp, APP_KEY);
-            } else {
-                YWAPI.init(mApp, appkey);
-            }
+            YWAPI.init(mApp, APP_KEY);
         }
         else if(type==TcmsEnvType.TEST){
             YWAPI.init(mApp, APP_KEY_TEST);
-        }
-
-        if (!TextUtils.isEmpty(userId) && !TextUtils.isEmpty(appkey)){
-            LoginSampleHelper.getInstance().initIMKit(userId, appkey);
         }
 
         //通知栏相关的初始化
@@ -139,13 +144,9 @@ public class LoginSampleHelper {
         YWSmilyMgr.setSmilyInitNotify(new YWSmilyMgr.SmilyInitNotify() {
             @Override
             public void onDefaultSmilyInitOk() {
-                //隐藏默认表情，必须在添加前调用
-//                SmilyCustomSample.hideDefaultSmiley();
-//                SmilyCustomSample.addDefaultSmiley();
-                //如果开发者想修改顺序（把sdk默认的放在自己添加的表情后面），可以先hide默认的然后再最后添加默认的
                 SmilyCustomSample.addNewEmojiSmiley();
                 SmilyCustomSample.addNewImageSmiley();
-                SmilyCustomSample.setSmileySize(YWIMSmiley.SMILEY_TYPE_IMAGE, 60);
+
                 //最后要清空通知，防止memory leak
                 YWSmilyMgr.setSmilyInitNotify(null);
             }
@@ -187,6 +188,47 @@ public class LoginSampleHelper {
         IYWLoginService mLoginService = mIMKit.getLoginService();
 
         mLoginService.login(loginParam, callback);
+    }
+
+    //设置连接状态的监听
+    private void addConnectionListener() {
+        if (mIMKit == null) {
+            return;
+        }
+
+        YWIMCore imCore = mIMKit.getIMCore();
+        imCore.removeConnectionListener(mYWConnectionListenerImpl);
+        imCore.addConnectionListener(mYWConnectionListenerImpl);
+    }
+
+    private class YWConnectionListenerImpl implements IYWConnectionListener {
+
+        @Override
+        public void onReConnecting() {
+
+        }
+
+        @Override
+        public void onReConnected() {
+
+//				YWLog.i("LoginSampleHelper", "onReConnected");
+
+
+        }
+
+        @Override
+        public void onDisconnect(int arg0, String arg1) {
+            if (arg0 == YWLoginCode.LOGON_FAIL_KICKOFF) {
+                sendAutoLoginState(YWLoginState.disconnect);
+                //在其它终端登录，当前用户被踢下线
+                LoginSampleHelper.getInstance().setAutoLoginState(YWLoginState.disconnect);
+                Toast.makeText(DemoApplication.getContext(), "被踢下线", Toast.LENGTH_LONG).show();
+                YWLog.i("LoginSampleHelper", "被踢下线");
+                Intent intent = new Intent(DemoApplication.getContext(), LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                DemoApplication.getContext().startActivity(intent);
+            }
+        }
     }
 
     /**
@@ -252,16 +294,10 @@ public class LoginSampleHelper {
                             JSONObject object = new JSONObject(content);
                             if (object.has("text")){
                                 String text = object.getString("text");
-                                Notification.showToastMsgLong(MyApplication.getContext(), "透传消息，content = " + text);
-                            } else if (object.has("customizeMessageType")){
-                                String customType = object.getString("customizeMessageType");
-                                if (!TextUtils.isEmpty(customType) && customType.equals(ChattingOperationCustomSample.CustomMessageType.READ_STATUS)){
-                                    YWConversation conversation = mIMKit.getConversationService().getConversationByConversationId(message.getConversationId());
-                                    long msgId = Long.parseLong(object.getString("PrivateImageRecvReadMessageId"));
-                                    conversation.updateMessageReadStatus(conversation, msgId);
-                                }
+                                Notification.showToastMsgLong(DemoApplication.getContext(), "透传消息，content = " + text);
                             }
                         } catch (JSONException e){
+
                         }
                     }
                 }

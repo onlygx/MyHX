@@ -2,17 +2,20 @@ package com.taobao.openimui.sample;
 
 import android.content.Intent;
 import android.support.v4.app.Fragment;
+import android.widget.Toast;
 
 import com.alibaba.mobileim.aop.Pointcut;
 import com.alibaba.mobileim.aop.custom.IMConversationListOperation;
 import com.alibaba.mobileim.conversation.YWConversation;
 import com.alibaba.mobileim.conversation.YWConversationType;
 import com.alibaba.mobileim.conversation.YWCustomConversationBody;
-import com.example.viewpagerdemo.ui.MyApplication;
+import com.xingkesi.foodapp.R;
 import com.taobao.openimui.contact.ContactSystemMessageActivity;
+import com.taobao.openimui.demo.DemoApplication;
 import com.taobao.openimui.demo.FragmentTabs;
 import com.taobao.openimui.tribe.TribeSystemMessageActivity;
-import com.xingkesi.foodapp.R;
+
+import java.util.ArrayList;
 
 /**
  * 最近会话界面的定制点(根据需要实现相应的接口来达到自定义会话列表界面)，不设置则使用openIM默认的实现
@@ -36,7 +39,6 @@ public class ConversationListOperationCustomSample extends IMConversationListOpe
     /**
      * 返回自定义会话和群会话的头像 url
      * 该方法只适用设置自定义会话和群会话的头像，设置单聊会话头像请参考{@link com.taobao.openimui.sample.UserProfileSampleHelper}
-     *
      * @param fragment
      * @param conversation 会话 可以通过 conversation.getConversationId拿到用户设置的会话id以根据不同的逻辑显示不同的头像
      * @return
@@ -44,13 +46,15 @@ public class ConversationListOperationCustomSample extends IMConversationListOpe
     @Override
     public String getConversationHeadPath(Fragment fragment,
                                           YWConversation conversation) {
-        return "http://tp2.sinaimg.cn/1721410501/50/40033657718/0";
+        if (conversation.getConversationType() == YWConversationType.Custom) {
+//            return "http://tp2.sinaimg.cn/1721410501/50/40033657718/0";
+        }
+        return "";
     }
 
     /**
      * 返回自定义会话和群会话的默认头像 如返回本地的 R.drawable.test
      * 该方法只适用设置自定义会话和群会话的头像，设置单聊会话头像请参考{@link com.taobao.openimui.sample.UserProfileSampleHelper}
-     *
      * @param fragment
      * @param conversation
      * @return
@@ -61,11 +65,11 @@ public class ConversationListOperationCustomSample extends IMConversationListOpe
         if (conversation.getConversationType() == YWConversationType.Custom) {
             YWCustomConversationBody body = (YWCustomConversationBody) conversation.getConversationBody();
             String conversationId = body.getIdentity();
-            if (conversationId.equals(FragmentTabs.SYSTEM_TRIBE_CONVERSATION)) {
+            if(conversationId.equals(FragmentTabs.SYSTEM_TRIBE_CONVERSATION)){
                 return R.drawable.aliwx_tribe_head_default;
-            } else if (conversationId.equals(FragmentTabs.SYSTEM_FRIEND_REQ_CONVERSATION)) {
+            }else  if(conversationId.equals(FragmentTabs.SYSTEM_FRIEND_REQ_CONVERSATION)){
                 return R.drawable.aliwx_head_default;
-            } else {
+            }else{
                 return R.drawable.aliwx_head_default;
             }
         }
@@ -87,9 +91,9 @@ public class ConversationListOperationCustomSample extends IMConversationListOpe
             YWCustomConversationBody body = (YWCustomConversationBody) conversation.getConversationBody();
             if (body.getIdentity().equals(FragmentTabs.SYSTEM_TRIBE_CONVERSATION)) {
                 return "群系统消息";
-            } else if (body.getIdentity().equals(FragmentTabs.SYSTEM_FRIEND_REQ_CONVERSATION)) {
+            }else if (body.getIdentity().equals(FragmentTabs.SYSTEM_FRIEND_REQ_CONVERSATION)) {
                 return "联系人系统消息";
-            } else if (body.getIdentity().equals("custom_view_conversation")) {
+            } else if(body.getIdentity().equals("custom_view_conversation")) {
                 return "自定义View展示的会话";
             }
         }
@@ -98,8 +102,66 @@ public class ConversationListOperationCustomSample extends IMConversationListOpe
     }
 
     /**
-     * 定制会话点击事件，该方法可以定制所有的会话类型，包括单聊、群聊、自定义会话
+     * 自定义会话点击的回调
      *
+     * @param fragment
+     * @param conversation
+     */
+    @Override
+    public void onConversationItemClick(Fragment fragment,
+                                        YWConversation conversation) {
+//        Toast.makeText(fragment.getActivity(), "onConversationItemClick",
+//                Toast.LENGTH_SHORT).show();
+//        WXAPI.getInstance().getConversationManager().markReaded(conversation);
+        if (conversation.getConversationType() == YWConversationType.Custom) {
+            YWCustomConversationBody body = (YWCustomConversationBody) conversation.getConversationBody();
+            String conversationId = body.getIdentity();
+            if (conversationId.startsWith(FragmentTabs.SYSTEM_FRIEND_REQ_CONVERSATION)) {
+                Intent intent = new Intent(DemoApplication.getContext(), ContactSystemMessageActivity.class);
+                fragment.getActivity().startActivity(intent);
+            }else if(conversationId.startsWith(FragmentTabs.SYSTEM_TRIBE_CONVERSATION)){
+                Intent intent = new Intent(DemoApplication.getContext(), TribeSystemMessageActivity.class);
+                fragment.getActivity().startActivity(intent);
+            }
+        }
+
+
+    }
+
+    /**
+     * 返回会话长按弹出的对话框列表（默认有置顶和删除）
+     *
+     * @return
+     */
+    @Override
+    public ArrayList<String> getLongClickMenuList(Fragment fragment,
+                                                  YWConversation conversation) {
+        ArrayList<String> list = new ArrayList<String>();
+
+        //这里可以添加菜单项
+        //list.add("test1");
+        //list.add("test2");
+
+        return list;
+    }
+
+    /**
+     * 返回自定义会话的长按后弹出的dialog,用户点击的item 文本
+     *
+     * @param fragment
+     * @param conversation
+     * @param clickMenuItem
+     */
+    @Override
+    public void onConversationItemLongClick(Fragment fragment,
+                                            YWConversation conversation, String clickMenuItem) {
+        Toast.makeText(fragment.getActivity(), "onLongClick " + clickMenuItem,
+                Toast.LENGTH_LONG).show();
+
+    }
+
+    /**
+     * 定制会话点击事件，该方法可以定制所有的会话类型
      * @param fragment     会话列表fragment
      * @param conversation 当前点击的会话对象
      * @return true: 使用用户自定义的点击事件  false：使用SDK默认的点击事件
@@ -117,29 +179,14 @@ public class ConversationListOperationCustomSample extends IMConversationListOpe
 //            //TODO 自定义会话点击事件
 //            return true;
 //        }
-        if (conversation.getConversationType() == YWConversationType.Custom) {
-            YWCustomConversationBody body = (YWCustomConversationBody) conversation.getConversationBody();
-            String conversationId = body.getIdentity();
-            if (conversationId.startsWith(FragmentTabs.SYSTEM_FRIEND_REQ_CONVERSATION)) {
-                Intent intent = new Intent(MyApplication.getContext(), ContactSystemMessageActivity.class);
-                fragment.getActivity().startActivity(intent);
-                return true;
-            } else if (conversationId.startsWith(FragmentTabs.SYSTEM_TRIBE_CONVERSATION)) {
-                Intent intent = new Intent(MyApplication.getContext(), TribeSystemMessageActivity.class);
-                fragment.getActivity().startActivity(intent);
-                return true;
-            }
-        }
-
         return false;
     }
 
     /**
      * 定制会话长按事件，该方法可以定制所有的会话类型
-     *
      * @param fragment     会话列表fragment
      * @param conversation 当前点击的会话对象
-     * @return true: 使用用户自定义的长按事件  false：使用SDK默认的长按事件
+     * @return  true: 使用用户自定义的长按事件  false：使用SDK默认的长按事件
      */
     @Override
     public boolean onConversationItemLongClick(Fragment fragment, YWConversation conversation) {

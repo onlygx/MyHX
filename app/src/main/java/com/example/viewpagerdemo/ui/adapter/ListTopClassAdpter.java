@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 import com.example.viewpagerdemo.ui.activity.OhterListMainActivity;
 import com.example.viewpagerdemo.ui.bean.ListTopBean;
-import com.example.viewpagerdemo.ui.jlfragmenwork.Contantor;
+import com.example.viewpagerdemo.ui.Contantor;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.CircleImageView;
 import com.squareup.picasso.Picasso;
 import com.xingkesi.foodapp.R;

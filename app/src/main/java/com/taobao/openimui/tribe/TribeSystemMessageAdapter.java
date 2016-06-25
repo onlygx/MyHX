@@ -10,8 +10,8 @@ import com.alibaba.mobileim.conversation.YWMessage;
 import com.alibaba.mobileim.gingko.model.tribe.YWTribe;
 import com.alibaba.mobileim.kit.common.YWAsyncBaseAdapter;
 import com.alibaba.mobileim.lib.model.message.YWSystemMessage;
-import com.taobao.openimui.sample.LoginSampleHelper;
 import com.xingkesi.foodapp.R;
+import com.taobao.openimui.sample.LoginSampleHelper;
 
 import java.util.List;
 

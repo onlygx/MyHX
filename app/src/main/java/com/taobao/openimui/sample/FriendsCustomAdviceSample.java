@@ -32,6 +32,7 @@ public class FriendsCustomAdviceSample extends BaseAdvice implements CustomTitle
      *
      * @param fragment
      * @param context
+     * @param inflater
      * @return
      */
 

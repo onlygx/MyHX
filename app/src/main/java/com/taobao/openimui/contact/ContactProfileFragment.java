@@ -25,9 +25,9 @@ import com.alibaba.mobileim.contact.IYWDBContact;
 import com.alibaba.mobileim.conversation.EServiceContact;
 import com.alibaba.mobileim.kit.contact.YWContactHeadLoadHelper;
 import com.alibaba.mobileim.utility.ToastHelper;
+import com.xingkesi.foodapp.R;
 import com.taobao.openimui.common.Notification;
 import com.taobao.openimui.sample.LoginSampleHelper;
-import com.xingkesi.foodapp.R;
 
 import java.util.List;
 

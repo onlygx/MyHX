@@ -80,10 +80,10 @@ public class ContactListAdapter extends ArrayAdapter<ContactItemInterface>
 								   int position)
 	{
 		// default just draw the item only
-		//View infoView = parentView.findViewById(R.id.infoRowContainer);
-		//TextView nameView = (TextView) infoView.findViewById(R.id.cityName);
+		View infoView = parentView.findViewById(R.id.infoRowContainer);
+		TextView nameView = (TextView) infoView.findViewById(R.id.cityName);
 		//Log.v("LD", "--:" + item.getItemForIndex());
-		//nameView.setText(item.getDisplayInfo());   //名字
+		nameView.setText(item.getDisplayInfo());   //名字
 
 	}
 

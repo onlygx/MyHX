@@ -14,8 +14,8 @@ public class CommentConfig {
 
     }
 
-    public int circlePosition;
-    public int commentPosition;
+    public int circlePosition;//当前评论位置
+    public int commentPosition;//当前的评论列表中的位置
     public Type commentType;
     public UserBean replyUser;
 

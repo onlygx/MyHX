@@ -5,8 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import android.content.Context;
 import android.content.Intent;
-import android.support.v4.app.Fragment;
+import android.widget.Toast;
 
 import com.alibaba.mobileim.YWIMKit;
 import com.alibaba.mobileim.channel.cloud.contact.YWProfileInfo;
@@ -14,12 +15,10 @@ import com.alibaba.mobileim.channel.event.IWxCallback;
 import com.alibaba.mobileim.channel.util.YWLog;
 import com.alibaba.mobileim.contact.IYWContact;
 import com.alibaba.mobileim.contact.IYWContactHeadClickCallback;
-import com.alibaba.mobileim.contact.IYWContactHeadClickListener;
 import com.alibaba.mobileim.contact.IYWContactService;
 import com.alibaba.mobileim.contact.IYWCrossContactProfileCallback;
-import com.alibaba.mobileim.conversation.YWConversation;
 import com.alibaba.mobileim.lib.model.contact.Contact;
-import com.taobao.openimui.common.Notification;
+import com.taobao.openimui.demo.DemoApplication;
 
 /**
  * 用户自定义昵称和头像
@@ -45,20 +44,16 @@ public class UserProfileSampleHelper {
         final IYWContactService contactManager = imKit.getContactService();
 
         //头像点击的回调（开发者可以按需设置）
-        contactManager.setContactHeadClickListener(new IYWContactHeadClickListener() {
+        contactManager.setContactHeadClickCallback(new IYWContactHeadClickCallback() {
             @Override
-            public void onUserHeadClick(Fragment fragment, YWConversation conversation, String userId, String appKey, boolean isConversationListPage) {
-                Notification.showToastMsg(fragment.getActivity(), "你点击了用户 " + userId + " 的头像");
+            public Intent onShowProfileActivity(String userId, String appKey) {
+                Toast.makeText(DemoApplication.getContext(), String.format("你点击了 %s 的头像哦~", userId), Toast.LENGTH_SHORT).show();
+                return null;
             }
 
             @Override
-            public void onTribeHeadClick(Fragment fragment, YWConversation conversation, long tribeId) {
-                Notification.showToastMsg(fragment.getActivity(), "你点击了群 " + tribeId + " 的头像");
-            }
-
-            @Override
-            public void onCustomHeadClick(Fragment fragment, YWConversation conversation) {
-                Notification.showToastMsg(fragment.getActivity(), "你点击了自定义会话 " + conversation.getConversationId() + " 的头像");
+            public Intent onDisposeProfileHeadClick(Context context, String userId, String appKey) {
+                return null;
             }
         });
 
@@ -170,11 +165,20 @@ public class UserProfileSampleHelper {
         private String mUserId;    // 用户id
         private String mAppKey;    // 用户appKey
 
+        public UserInfo(String nickName, String avatarPath) {
+            this.mUserNick = nickName;
+            this.mAvatarPath = avatarPath;
+        }
         public UserInfo(String nickName, String avatarPath,String userId,String appKey) {
             this.mUserNick = nickName;
             this.mAvatarPath = avatarPath;
             this.mUserId = userId;
             this.mAppKey = appKey;
+        }
+
+        public UserInfo(String nickName, int resId) {
+            this.mUserNick = nickName;
+            this.mLocalResId = resId;
         }
 
         @Override

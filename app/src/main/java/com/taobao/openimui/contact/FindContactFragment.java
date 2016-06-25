@@ -32,8 +32,8 @@ import com.alibaba.mobileim.contact.IYWDBContact;
 import com.alibaba.mobileim.fundamental.widget.YWAlertDialog;
 import com.alibaba.mobileim.ui.contact.ContactsFragment;
 import com.alibaba.mobileim.utility.ToastHelper;
-import com.taobao.openimui.sample.LoginSampleHelper;
 import com.xingkesi.foodapp.R;
+import com.taobao.openimui.sample.LoginSampleHelper;
 
 import java.util.ArrayList;
 import java.util.List;

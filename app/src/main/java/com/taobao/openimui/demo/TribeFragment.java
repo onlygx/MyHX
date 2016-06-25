@@ -28,7 +28,7 @@ import com.alibaba.mobileim.gingko.model.tribe.YWTribe;
 import com.alibaba.mobileim.gingko.model.tribe.YWTribeType;
 import com.alibaba.mobileim.tribe.IYWTribeService;
 import com.alibaba.mobileim.utility.ResourceLoader;
-import com.example.viewpagerdemo.ui.MyApplication;
+import com.xingkesi.foodapp.R;
 import com.taobao.openimui.imcore.TribeSampleHelper;
 import com.taobao.openimui.sample.LoginSampleHelper;
 import com.taobao.openimui.sample.TribeAdapterSample;
@@ -36,7 +36,6 @@ import com.taobao.openimui.tribe.TribeAndRoomList;
 import com.taobao.openimui.tribe.EditTribeInfoActivity;
 import com.taobao.openimui.tribe.SearchTribeActivity;
 import com.taobao.openimui.tribe.TribeConstants;
-import com.xingkesi.foodapp.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,8 +50,11 @@ public class TribeFragment extends Fragment implements AdapterView.OnItemClickLi
     private final Handler handler = new Handler();
 
     public IYWTribeService getTribeService() {
-        mIMKit = LoginSampleHelper.getInstance().getIMKit();
-        mTribeService = mIMKit.getTribeService();
+        if (mTribeService == null) {
+            mIMKit = LoginSampleHelper.getInstance().getIMKit();
+            mTribeService = mIMKit.getTribeService();
+        }
+
         return mTribeService;
     }
 
@@ -115,13 +117,13 @@ public class TribeFragment extends Fragment implements AdapterView.OnItemClickLi
         }
         mTribeService = mIMKit.getTribeService();
         init();
+        initTribeListView();
         return mView;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        initTribeListView();
         Intent intent = getActivity().getIntent();
         if (intent != null) {
             if (!TextUtils.isEmpty(intent.getStringExtra(TribeConstants.TRIBE_OP))) {
@@ -233,11 +235,10 @@ public class TribeFragment extends Fragment implements AdapterView.OnItemClickLi
 
     /**
      * 弹出要创建的群类型选项
-     *
      * @param v
      */
     private void showPopupMenu(View v) {
-        final View bgView = View.inflate(MyApplication.getContext(), R.layout.demo_popup_window_bg, null);
+        final View bgView = View.inflate(DemoApplication.getContext(), R.layout.demo_popup_window_bg, null);
         bgView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -249,7 +250,7 @@ public class TribeFragment extends Fragment implements AdapterView.OnItemClickLi
         }
         mPopupBackground.showAtLocation(v, Gravity.BOTTOM, 0, 0);
 
-        View view = View.inflate(MyApplication.getContext(), R.layout.demo_popup_menu, null);
+        View view = View.inflate(DemoApplication.getContext(), R.layout.demo_popup_menu, null);
         //创建群组
         TextView tribe = (TextView) view.findViewById(R.id.create_tribe);
         tribe.setOnClickListener(new View.OnClickListener() {
@@ -338,7 +339,7 @@ public class TribeFragment extends Fragment implements AdapterView.OnItemClickLi
         });
     }
 
-    private void updateTribeList() {
+    private void updateTribeList(){
         mTribeList.clear();
         mRoomsList.clear();
         if (mList.size() > 0) {

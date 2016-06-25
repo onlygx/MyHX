@@ -10,11 +10,9 @@ import android.widget.TextView;
 
 import com.alibaba.mobileim.YWIMKit;
 import com.alibaba.mobileim.channel.util.YWLog;
-import com.alibaba.mobileim.contact.IYWContact;
 import com.alibaba.mobileim.ui.contact.ContactsFragment;
 import com.alibaba.mobileim.ui.contact.adapter.ContactsAdapter;
 import com.xingkesi.foodapp.R;
-
 import java.util.List;
 
 public class SelectContactToSendCardActivity extends FragmentActivity {
@@ -64,7 +62,7 @@ public class SelectContactToSendCardActivity extends FragmentActivity {
             @Override
             public void onClick(View v) {
                 ContactsAdapter adapter = mFragment.getContactsAdapter();
-                List<IYWContact> list = adapter.getSelectedList();
+                List<String> list = adapter.getSelectedList();
                 if (list != null && list.size() > 0){
                     ChattingOperationCustomSample.selectContactListener.onSelectCompleted(list);
                     finish();

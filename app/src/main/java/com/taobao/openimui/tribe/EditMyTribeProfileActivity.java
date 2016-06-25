@@ -16,8 +16,8 @@ import com.alibaba.mobileim.channel.event.IWxCallback;
 import com.alibaba.mobileim.gingko.model.tribe.YWTribeType;
 import com.alibaba.mobileim.tribe.IYWTribeService;
 import com.alibaba.mobileim.utility.IMNotificationUtils;
-import com.taobao.openimui.sample.LoginSampleHelper;
 import com.xingkesi.foodapp.R;
+import com.taobao.openimui.sample.LoginSampleHelper;
 
 /**
  * Created by weiquanyun on 15/11/2.

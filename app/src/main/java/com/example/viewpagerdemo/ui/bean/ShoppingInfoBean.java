@@ -33,6 +33,16 @@ public class ShoppingInfoBean implements Serializable {
 
     Collection collection;
 
+    ArrayList<EventList> eventList;
+
+
+    public ArrayList<EventList> getEventList() {
+        return eventList;
+    }
+
+    public void setEventList(ArrayList<EventList> eventList) {
+        this.eventList = eventList;
+    }
 
     public String getScore() {
         return score;

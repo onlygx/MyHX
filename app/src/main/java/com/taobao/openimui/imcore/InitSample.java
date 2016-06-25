@@ -2,6 +2,7 @@ package com.taobao.openimui.imcore;
 
 import com.alibaba.mobileim.YWAPI;
 import com.alibaba.mobileim.YWIMCore;
+import com.taobao.openimui.sample.InitHelper;
 
 /**
  * Created by mayongge on 15/12/17.

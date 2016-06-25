@@ -130,7 +130,8 @@ public class TribeSampleHelper {
 	/**
 	 * 获取指定群的成员列表
 	 * 
-	 * @param
+	 * @param cb
+	 *            回调接口, 其中 返回值为List<YWTribeMember>
 	 * @param tid
 	 *            群id
 	 */

@@ -13,22 +13,18 @@ public class DemoSimpleKVStore {
     private static String NEED_VIBRATION = "need_vibration";//是否震动
 
     public static int getNeedSound(){
-        return SimpleKVStore.getIntPrefs(getUserId() + NEED_SOUND, 1);
+        return SimpleKVStore.getIntPrefs(NEED_SOUND, 1);
     }
 
     public static void setNeedSound(int value){
-        SimpleKVStore.setIntPrefs(getUserId() + NEED_SOUND, value);
+        SimpleKVStore.setIntPrefs(NEED_SOUND, value);
     }
 
     public static int getNeedVibration(){
-        return SimpleKVStore.getIntPrefs(getUserId() + NEED_VIBRATION, 1);
+        return SimpleKVStore.getIntPrefs(NEED_VIBRATION, 1);
     }
 
     public static void setNeedVibration(int value){
-        SimpleKVStore.setIntPrefs(getUserId() + NEED_VIBRATION, value);
-    }
-
-    private static String getUserId(){
-        return LoginSampleHelper.getInstance().getIMKit().getIMCore().getLongLoginUserId();
+        SimpleKVStore.setIntPrefs(NEED_VIBRATION, value);
     }
 }

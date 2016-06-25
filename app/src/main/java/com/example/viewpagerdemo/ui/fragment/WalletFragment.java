@@ -14,7 +14,7 @@ import com.example.viewpagerdemo.ui.MyApplication;
 import com.example.viewpagerdemo.ui.activity.ErWMain2Activity;
 import com.example.viewpagerdemo.ui.activity.WakketZhuangZActivity;
 import com.example.viewpagerdemo.ui.bean.QbaoBean;
-import com.example.viewpagerdemo.ui.jlfragmenwork.Contantor;
+import com.example.viewpagerdemo.ui.Contantor;
 import com.example.viewpagerdemo.ui.jlfragmenwork.actvity.LoginActivity;
 import com.example.viewpagerdemo.ui.jlfragmenwork.basefregmetwork.JLBaseFragment;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.DD;

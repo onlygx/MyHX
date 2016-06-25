@@ -21,8 +21,8 @@ import com.alibaba.mobileim.channel.event.IWxCallback;
 import com.alibaba.mobileim.channel.util.YWLog;
 import com.alibaba.mobileim.contact.IYWContactService;
 import com.alibaba.mobileim.utility.ToastHelper;
-import com.taobao.openimui.sample.LoginSampleHelper;
 import com.xingkesi.foodapp.R;
+import com.taobao.openimui.sample.LoginSampleHelper;
 
 public  class AddContactFragment extends Fragment implements OnClickListener {
 

@@ -45,7 +45,9 @@
 
                 <TextView
                     android:id="@+id/shop_title"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
+                    android:maxLines="1"
+                    android:ellipsize="end"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:text="小妹私房菜 1234"
@@ -139,6 +141,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
+                android:layout_marginTop="20dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -164,6 +167,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:visibility="gone"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -188,11 +192,12 @@
                         android:id="@+id/shop_ymoney"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="8" />
+                        android:text="0" />
                 </LinearLayout>
 
                 <LinearLayout
 
+                    android:visibility="invisible"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"

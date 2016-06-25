@@ -10,14 +10,13 @@ import android.widget.TextView;
 import com.alibaba.mobileim.YWIMKit;
 import com.alibaba.mobileim.channel.event.IWxCallback;
 import com.alibaba.mobileim.channel.util.YWLog;
-import com.alibaba.mobileim.contact.IYWContact;
 import com.alibaba.mobileim.gingko.model.tribe.YWTribeType;
 import com.alibaba.mobileim.tribe.IYWTribeService;
 import com.alibaba.mobileim.ui.contact.ContactsFragment;
 import com.alibaba.mobileim.ui.contact.adapter.ContactsAdapter;
+import com.xingkesi.foodapp.R;
 import com.taobao.openimui.common.Notification;
 import com.taobao.openimui.sample.LoginSampleHelper;
-import com.xingkesi.foodapp.R;
 
 import java.util.List;
 
@@ -74,9 +73,9 @@ public class InviteTribeMemberActivity extends FragmentActivity {
             @Override
             public void onClick(View v) {
                 ContactsAdapter adapter = mFragment.getContactsAdapter();
-                List<IYWContact> list = adapter.getSelectedList();
+                List<String> list = adapter.getSelectedList();
                 if (list != null && list.size() > 0){
-                    mTribeService.inviteMembers(mTribeId, list, new IWxCallback() {
+                    mTribeService.inviteMembers(new IWxCallback() {
                         @Override
                         public void onSuccess(Object... result) {
                            Integer retCode = (Integer) result[0];
@@ -99,7 +98,7 @@ public class InviteTribeMemberActivity extends FragmentActivity {
                         public void onProgress(int progress) {
 
                         }
-                    });
+                    }, mTribeId, list);
                 }
             }
         });

@@ -13,7 +13,6 @@ import com.alibaba.mobileim.conversation.YWConversation;
 import com.alibaba.mobileim.fundamental.widget.refreshlist.YWPullToRefreshBase;
 import com.alibaba.mobileim.fundamental.widget.refreshlist.YWPullToRefreshListView;
 import com.xingkesi.foodapp.R;
-
 import java.util.List;
 
 

@@ -28,6 +28,9 @@ public  class ListBean {
     private String linkTitle;
     private List<String> photos;
     private String videoUrl;
+    private static List<ZanListBean> zanList;
+    private List<RecordListBean> recordList;
+    private List<BannerListBean> bannerList;
 
 
     public String getVideoUrl() {
@@ -68,9 +71,7 @@ public  class ListBean {
     public void setType(String type) {
         this.type = type;
     }
-    private static List<ZanListBean> zanList;
-    private List<RecordListBean> recordList;
-    private List<BannerListBean> bannerList;
+
     public String getAddress() {
         return address;
     }

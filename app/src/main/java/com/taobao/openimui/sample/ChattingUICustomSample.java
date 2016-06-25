@@ -30,9 +30,7 @@ import android.widget.Toast;
 
 import com.alibaba.mobileim.YWIMKit;
 import com.alibaba.mobileim.aop.Pointcut;
-import com.alibaba.mobileim.aop.custom.IMChattingBizService;
 import com.alibaba.mobileim.aop.custom.IMChattingPageUI;
-import com.alibaba.mobileim.aop.model.YWInputViewPlugin;
 import com.alibaba.mobileim.channel.IMChannel;
 import com.alibaba.mobileim.channel.constant.YWProfileSettingsConstants;
 import com.alibaba.mobileim.channel.event.IWxCallback;
@@ -41,23 +39,20 @@ import com.alibaba.mobileim.contact.IYWContact;
 import com.alibaba.mobileim.conversation.YWConversation;
 import com.alibaba.mobileim.conversation.YWConversationType;
 import com.alibaba.mobileim.conversation.YWMessage;
+import com.alibaba.mobileim.conversation.YWMessageType;
 import com.alibaba.mobileim.conversation.YWP2PConversationBody;
 import com.alibaba.mobileim.conversation.YWTribeConversationBody;
-import com.alibaba.mobileim.fundamental.widget.RecordButton;
 import com.alibaba.mobileim.fundamental.widget.WxAlertDialog;
 import com.alibaba.mobileim.gingko.model.tribe.YWTribe;
 import com.alibaba.mobileim.kit.chat.presenter.ChattingDetailPresenter;
+import com.alibaba.mobileim.kit.common.IMUtility;
 import com.alibaba.mobileim.lib.presenter.conversation.TribeConversation;
 import com.alibaba.mobileim.ui.atmessage.AtMsgListActivity;
 import com.alibaba.mobileim.utility.IMPrefsTools;
 import com.alibaba.mobileim.utility.YWIMImageUtils;
+import com.xingkesi.foodapp.R;
 import com.taobao.openimui.tribe.TribeConstants;
 import com.taobao.openimui.tribe.TribeInfoActivity;
-import com.alibaba.mobileim.aop.model.YWChattingPlugin;
-import com.xingkesi.foodapp.R;
-
-import java.lang.ref.WeakReference;
-import java.util.List;
 
 /**
  * 聊天界面自带提供两种主题的自定义供用户方便的使用，用户可以通过{@link CustomSampleHelper｝中 实现 AdviceBinder.bindAdvice(PointCutEnum.CHATTING_FRAGMENT_UI_POINTCUT, ChattingUICustomSample.class);
@@ -94,12 +89,6 @@ public class ChattingUICustomSample extends IMChattingPageUI {
             } else {
                 return R.drawable.demo_talk_pic_pop_l_bg;
             }
-        } else if (msgType == YWMessage.SUB_MSG_TYPE.IM_VIDEO){
-            if (self){
-                return R.drawable.demo_talk_pic_pop_r_bg;
-            } else {
-                return R.drawable.demo_talk_pic_pop_l_bg;
-            }
         } else if (msgType == YWMessage.SUB_MSG_TYPE.IM_GEO){
             if (self){
                 return R.drawable.aliwx_comment_r_bg;
@@ -115,6 +104,94 @@ public class ChattingUICustomSample extends IMChattingPageUI {
         }
         return super.getMsgBackgroundResId(conversation, message, self);
     }
+
+/*    *//**
+     * 设置左边图片消息汽泡背景图，需要.9图
+     *
+     * @return 0: 默认背景
+     * <br>
+     * －1:透明背景（无背景）
+     * <br>
+     * resId：使用resId对应图片做背景
+     * @deprecated 该方法已废弃，后续请使用{@link ChattingUICustomSample#getMsgBackgroundResId(YWConversation, YWMessage, boolean)}
+     *//*
+    @Override
+    public int getLeftImageMsgBackgroundResId() {
+        return R.drawable.demo_talk_pic_pop_l_bg;
+//		return 0;
+//		return -1;//-1是透明
+    }
+
+
+    *//**
+     * @deprecated 该方法已废弃，后续请使用{@link ChattingUICustomSample#getMsgBackgroundResId(YWConversation, YWMessage, boolean)}
+     *//*
+    @Override
+    public int getLeftTextMsgBackgroundResId() {
+        return R.drawable.demo_talk_pop_l_bg;
+//		return 0;
+    }
+
+    *//**
+     * @deprecated 该方法已废弃，后续请使用{@link ChattingUICustomSample#getMsgBackgroundResId(YWConversation, YWMessage, boolean)}
+     *//*
+    @Override
+    public int getLeftGeoMsgBackgroundResId(YWConversation conversation) {
+        return R.drawable.aliwx_comment_l_bg;
+    }
+
+    *//**
+     * @deprecated 该方法已废弃，后续请使用{@link ChattingUICustomSample#getMsgBackgroundResId(YWConversation, YWMessage, boolean)}
+     *//*
+    @Override
+    public int getLeftCustomMsgBackgroundResId(YWConversation conversation) {
+        //return R.drawable.aliwx_comment_l_bg;
+        return -1;//-1是透明
+    }
+
+    *//**
+     * 设置右边图片消息汽泡背景图，需要.9图
+     *
+     * @return 0: 默认背景
+     * <br>
+     * －1:透明背景（无背景）
+     * <br>
+     * resId：使用resId对应图片做背景
+     * @deprecated 该方法已废弃，后续请使用{@link ChattingUICustomSample#getMsgBackgroundResId(YWConversation, YWMessage, boolean)}
+     *//*
+    @Override
+    public int getRightImageMsgBackgroundResId() {
+        return R.drawable.demo_talk_pic_pop_r_bg;
+//		return 0;
+//		return -1;
+    }
+
+    *//**
+     * @deprecated 该方法已废弃，后续请使用{@link ChattingUICustomSample#getMsgBackgroundResId(YWConversation, YWMessage, boolean)}
+     *//*
+    @Override
+    public int getRightTextMsgBackgroundResId() {
+        return R.drawable.demo_talk_pop_r_bg;
+//		return 0;
+    }
+
+    *//**
+     * @deprecated 该方法已废弃，后续请使用{@link ChattingUICustomSample#getMsgBackgroundResId(YWConversation, YWMessage, boolean)}
+     *//*
+    @Override
+    public int getRightGeoMsgBackgroundResId(YWConversation conversation) {
+        return R.drawable.aliwx_comment_r_bg;
+    }
+
+    *//**
+     * @deprecated 该方法已废弃，后续请使用{@link ChattingUICustomSample#getMsgBackgroundResId(YWConversation, YWMessage, boolean)}
+     *//*
+    @Override
+    public int getRightCustomMsgBackgroundResId(YWConversation conversation) {
+        // return R.drawable.aliwx_comment_r_bg;
+        return -1;
+    }*/
+
 
     /**
      * 建议使用{@link #processBitmapOfLeftImageMsg｝和{@link #processBitmapOfRightImageMsg｝灵活修改Bitmap，达到对图像进行［圆角处理］,［裁减］等目的,这里建议return false
@@ -394,7 +471,7 @@ public class ChattingUICustomSample extends IMChattingPageUI {
      */
     @Override
     public boolean isNeedRoundRectHead() {
-        return true;
+        return false;
     }
 
     /**
@@ -404,7 +481,7 @@ public class ChattingUICustomSample extends IMChattingPageUI {
      */
     @Override
     public int getRoundRectRadius() {
-        return 10;
+        return 0;
     }
 
     /**
@@ -554,16 +631,6 @@ public class ChattingUICustomSample extends IMChattingPageUI {
     }
 
     /**
-     * 是否隐藏底部ChattingReplyBar
-     *
-     * @return
-     */
-    @Override
-    public boolean needHideChattingReplyBar(YWConversation conversation) {
-        return false;
-    }
-
-    /**
      * 是否隐藏表情发送入口
      *
      * @return true:隐藏表情按钮
@@ -602,6 +669,46 @@ public class ChattingUICustomSample extends IMChattingPageUI {
      */
     @Override
     public int getCustomChattingInputEditTextHeight() {
+        return 0;
+    }
+
+    /**
+     * 返回自定义发送消息的文字颜资源Id
+     *
+     * @return 颜色资源Id
+     */
+    @Override
+    public int getCustomRightTextColorId() {
+        return 0;
+    }
+
+    /**
+     * 返回自定义接收消息文字颜色资源Id
+     *
+     * @return 颜色资源Id
+     */
+    @Override
+    public int getCustomLeftTextColorId() {
+        return 0;
+    }
+
+    /**
+     * 返回自定义的发送消息的超链接文字颜色的资源Id
+     *
+     * @return 颜色资源Id
+     */
+    @Override
+    public int getCustomRightLinkTextColorId() {
+        return 0;
+    }
+
+    /**
+     * 返回自定义的接收消息超链接文字颜色的资源Id
+     *
+     * @return 颜色资源Id
+     */
+    @Override
+    public int getCustomLeftLinkTextColorId() {
         return 0;
     }
 
@@ -657,115 +764,5 @@ public class ChattingUICustomSample extends IMChattingPageUI {
     @Override
     public int getKeyboardViewBgResId() {
         return 0;
-    }
-
-    /**
-     * UI仅显示语音发送
-     * @return
-     */
-    @Override
-    public boolean onlySupportAudio(){
-        return false;
-    }
-
-    public void onCustomDrawRecordButton(Canvas canvas, RecordButton button){
-        //这里也可以进行自绘的一些操作
-//        if (button.isLongPress()){
-//            button.setText("松开");
-//        }else{
-//            button.setText("按住");
-//        }
-    }
-
-    /**
-     * 设置声音播放ImageView
-     * @param view
-     * @param index 0,1,2,3，分别表示动画第一帧，第二帧，第三帧,及静态的图片
-     * @param direction 0，自己，1，对方
-     */
-    @Override
-    public void onSetAudioContentImage(ImageView view, int index, int direction){
-
-    }
-
-    /**
-     * 修改ChattingReplyBar上的item，可以修改属性或者新增。如果开发者相同类型的会话plugin一样，则可以缓存pluginItems，
-     * 在该方法调用时直接用缓存pluginItems替换掉参数中的pluginItems，替换方式为先removeAll，再addAll
-     * <p>可以修改的属性包括：
-     *  <p>顺序</p>
-     *  <p>是否显示({@link YWInputViewPlugin#setNeedHide(boolean)}),</p>
-     *  <p>Item对应的View的基本操作,</p>
-     * </p>
-     * <p>
-     *     SDK默认按钮的id为：
-     *     <p>{@link YWChattingPlugin.ReplyBarPlugin#VOICE_VIEW}
-     *     <p>{@link YWChattingPlugin.ReplyBarPlugin#INPUT_EDIT_TEXT}
-     *     <p>{@link YWChattingPlugin.ReplyBarPlugin#FACE_VIEW}
-     *     <p>{@link YWChattingPlugin.ReplyBarPlugin#EXPAND_VIEW}
-     *
-     * <p/>
-     * 如果新增则创建一个{@link YWInputViewPlugin}并添加到replyBarItems。
-     * @param conversation ChattingReplyBar所在会话,如果开发者需要可以根据会话类型对ChattingReplyBar的item进行调整
-     * @param pluginItems item列表，初始是包含sdk默认提供的4个item：语音按钮、输入框、表情按钮、”+号“按钮，顺序索引为0,1,2,3
-     * @return 使用sdk默认顺序则无需任何操作
-     */
-    @Override
-    public List<YWInputViewPlugin> adjustCustomInputViewPlugins(final Fragment fragment, YWConversation conversation, List<YWInputViewPlugin> pluginItems) {
-//        if (pluginItems != null && pluginItems.size() > 0) {
-//            //对默认项进行操作，可以使用id判断具体是哪一个
-//            for (YWInputViewPlugin plugin : pluginItems) {
-//                if (plugin.getId() == YWChattingPlugin.ReplyBarPlugin.VOICE_VIEW) {
-//                    plugin.setNeedHide(true);//隐藏语音输入按钮
-//                }
-//            }
-//            //自定义新增的plugin只需要在布局中设置marginLeft即可
-//            final View plugin = LayoutInflater.from(fragment.getActivity()).inflate(R.layout.demo_extra_item_layout, null);
-//            //TODO 新增项id必须从4开始
-//            final YWInputViewPlugin pluginToAdd = new YWInputViewPlugin(plugin, 4);
-//            plugin.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    Toast.makeText(fragment.getActivity(), "你点击了Id为:" + pluginToAdd.getId() + "的新增item", Toast.LENGTH_LONG).show();
-//                }
-//            });
-//            pluginToAdd.setIndex(0);//在设置index时，如果新增项和默认pluginItem一样则开发者添加的显示在前
-//            pluginItems.add(pluginToAdd);
-//        }
-        return pluginItems;
-    }
-
-    @Override
-    public void onInitFinished(IMChattingBizService bizService){
-        if (bizService != null){
-            //建议使用WeakReference方式来保存,避免内存泄漏
-            WeakReference<IMChattingBizService> weakReference = new WeakReference<IMChattingBizService>(bizService);
-//            final String text = "test";
-//            bizService.getInputEditTextView().setText(text);
-//            bizService.getInputEditTextView().setSelection(text.length());
-//            YWConversation conversation = bizService.getConversation();
-//            if (conversation != null){
-//                conversation.getConversationId();
-//            }
-        }
-    }
-
-
-    /**
-     * 获取文本消息中的文字颜色，该接口可以设置文本、链接和数字的颜色
-     * @param conversation 当前会话
-     * @param isSelf       是否是自己发送的消息，true：自己发送的消息，false：别人发送的消息
-     * @param type         文本类型，1：普通文本，2：链接，3：数字
-     * @return 颜色资源Id
-     */
-    @Override
-    public int getCustomTextColor(YWConversation conversation, boolean isSelf, int type) {
-        if (type == 1){
-            //普通文字颜色
-        } else if (type == 2){
-            //超链接颜色
-        } else if (type == 3){
-            //数字颜色
-        }
-        return super.getCustomTextColor(conversation, isSelf, type);
     }
 }

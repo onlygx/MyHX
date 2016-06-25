@@ -45,6 +45,7 @@ public class ShopInfoListBean implements Serializable{
     private int baoYou;
     private int youPrice;
     private int sort;
+    private int zheyou;//打折
     private long shopId;
     private long setTime;
     private String content;
@@ -54,6 +55,14 @@ public class ShopInfoListBean implements Serializable{
     double fmoney;
     ArrayList<ShopInfoListBannerBean> bannerList;
 
+
+    public int getZheyou() {
+        return zheyou;
+    }
+
+    public void setZheyou(int zheyou) {
+        this.zheyou = zheyou;
+    }
 
     public int getFnum() {
         return fnum;

@@ -9,8 +9,8 @@ import android.text.TextUtils;
 import com.alibaba.mobileim.YWChannel;
 import com.alibaba.mobileim.channel.IMChannel;
 import com.alibaba.mobileim.channel.util.YWLog;
-import com.alibaba.wxlib.util.SysUtil;
 import com.xingkesi.foodapp.R;
+import com.alibaba.wxlib.util.SysUtil;
 
 /**
  * Created by zhaoxu on 2015/8/26.

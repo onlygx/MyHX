@@ -24,7 +24,7 @@ import com.example.viewpagerdemo.ui.adapter.EatShopInfoListAdatper2;
 import com.example.viewpagerdemo.ui.adapter.EatShopInfoListAdatperCar;
 import com.example.viewpagerdemo.ui.bean.ShopInfoBean;
 import com.example.viewpagerdemo.ui.bean.ShopInfoListBean;
-import com.example.viewpagerdemo.ui.jlfragmenwork.Contantor;
+import com.example.viewpagerdemo.ui.Contantor;
 import com.example.viewpagerdemo.ui.jlfragmenwork.baseactivitywork.JLBaseActivity;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.DD;
 import com.example.viewpagerdemo.ui.jlfragmenwork.view.BadgeView;
@@ -452,7 +452,7 @@ public class EatShopInfoActivity extends JLBaseActivity implements View.OnClickL
         buyNum--;//让购买数量加1
         buyNumView.setText(buyNum + "");//
         ShopInfoListBean sif = goodsList.get(sb);
-        DD.v(carLiat.size() + "循环jian移除前甲烷：" + sif.getCurrNum());
+       // DD.v(carLiat.size() + "循环jian移除前甲烷：" + sif.getCurrNum());
         if (carLiat.size() > 0 &&  sif.getCurrNum()==0) {
                 for (int i = 0; i < carLiat.size(); i++) {
                     ShopInfoListBean si = carLiat.get(i);
@@ -472,7 +472,7 @@ public class EatShopInfoActivity extends JLBaseActivity implements View.OnClickL
         }
         double num = txtMoney - money;
         money_num.setText(num + "");
-        DD.v(carLiat.size() + "循环jian移除--后甲烷：" + sif.getCurrNum());
+      //  DD.v(carLiat.size() + "循环jian移除--后甲烷：" + sif.getCurrNum());
     }
 
     @Override

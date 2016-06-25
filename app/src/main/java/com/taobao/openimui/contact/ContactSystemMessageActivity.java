@@ -19,11 +19,10 @@ import com.alibaba.mobileim.contact.IYWContactService;
 import com.alibaba.mobileim.conversation.IYWMessageListener;
 import com.alibaba.mobileim.conversation.YWConversation;
 import com.alibaba.mobileim.conversation.YWMessage;
-import com.alibaba.mobileim.gingko.presenter.contact.IContactProfileUpdateListener;
 import com.alibaba.mobileim.lib.model.message.YWSystemMessage;
+import com.xingkesi.foodapp.R;
 import com.taobao.openimui.demo.FragmentTabs;
 import com.taobao.openimui.sample.LoginSampleHelper;
-import com.xingkesi.foodapp.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +35,6 @@ public class ContactSystemMessageActivity extends Activity {
     private Handler mHandler = new Handler(Looper.getMainLooper());
     private YWIMKit imKit;
     private YWConversation mConversation;
-    private IContactProfileUpdateListener iContactProfileUpdateListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,20 +55,6 @@ public class ContactSystemMessageActivity extends Activity {
 
         //添加新消息到达监听,监听到有新消息到达的时候或者消息类别有变更的时候应该更新adapter
         mConversation.getMessageLoader().addMessageListener(mMessageListener);
-
-        iContactProfileUpdateListener = new IContactProfileUpdateListener() {
-            @Override
-            public void onProfileUpdate() {
-
-            }
-
-            @Override
-            public void onProfileUpdate(String userid, String appkey) {
-                refreshAdapter();
-            }
-        };
-        LoginSampleHelper.getInstance().getIMKit().getContactService().addProfileUpdateListener(iContactProfileUpdateListener);
-
     }
 
 

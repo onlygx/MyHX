@@ -1,6 +1,6 @@
 package com.yiw.circledemo2.bean;
 
-import com.example.viewpagerdemo.ui.jlfragmenwork.Contantor;
+import com.example.viewpagerdemo.ui.Contantor;
 
 /**
  * Created by huaping on 2016/6/20.

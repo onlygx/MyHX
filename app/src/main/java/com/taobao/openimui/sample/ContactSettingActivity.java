@@ -54,7 +54,7 @@ public class ContactSettingActivity extends Activity {
         uiHandler = new Handler(Looper.getMainLooper());
         account = LoginSampleHelper.getInstance().getIMKit().getIMCore();
         contactManager = (YWContactManager) LoginSampleHelper.getInstance().getIMKit().getContactService();
-        contact = contactManager.getContactProfileInfo(userId, appKey);
+        contact = contactManager.getWXIMContact(appKey, userId);
         conversationService = LoginSampleHelper.getInstance().getIMKit().getConversationService();
         conversation = conversationService.getConversationByUserId(userId);
         if(contactManager != null) {
@@ -74,12 +74,7 @@ public class ContactSettingActivity extends Activity {
     private void initViews() {
         contactHead = (ImageView) findViewById(R.id.head);
         contactShowName = (TextView) findViewById(R.id.contact_show_name);
-        if (contact != null){
-            contactShowName.setText(contact.getShowName());
-        }else{
-            contactShowName.setText(userId);
-        }
-
+        contactShowName.setText(contact.getShowName());
         msgRemindSwitch = (ImageView) findViewById(R.id.receive_msg_remind_switch);
         clearMsgRecordLayout = (RelativeLayout) findViewById(R.id.clear_msg_record);
         if(msgRecFlag != YWProfileSettingsConstants.RECEIVE_PEER_MSG_NOT_REMIND) {
@@ -124,9 +119,6 @@ public class ContactSettingActivity extends Activity {
     }
 
     private void setMsgRecType() {
-        if (contact == null){
-            return;
-        }
         if(msgRecFlag != YWProfileSettingsConstants.RECEIVE_PEER_MSG_NOT_REMIND) {
             contactManager.setContactMsgRecType(contact, YWProfileSettingsConstants.RECEIVE_PEER_MSG_NOT_REMIND, 10, new SettingsCallback());
         } else {

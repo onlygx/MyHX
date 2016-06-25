@@ -3,6 +3,8 @@ package com.yiw.circledemo2;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Rect;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -22,11 +24,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.viewpagerdemo.ui.Contantor;
 import com.example.viewpagerdemo.ui.MyApplication;
+import com.example.viewpagerdemo.ui.activity.AbouFrendtMainActivity;
 import com.example.viewpagerdemo.ui.jlfragmenwork.baseactivitywork.JLBaseActivity;
+import com.example.viewpagerdemo.ui.jlfragmenwork.city.CityAdapter;
+import com.example.viewpagerdemo.ui.jlfragmenwork.util.DD;
 import com.malinskiy.superrecyclerview.SuperRecyclerView;
 import com.xingkesi.foodapp.R;
 import com.yiw.circledemo2.adapter.CircleAdapter;
+import com.yiw.circledemo2.adapter.CommentAdapter;
+import com.yiw.circledemo2.bean.ChildBean;
 import com.yiw.circledemo2.bean.CommentConfig;
 import com.yiw.circledemo2.bean.ListBean;
 import com.yiw.circledemo2.bean.RecordListBean;
@@ -37,6 +45,13 @@ import com.yiw.circledemo2.utils.CommonUtils;
 import com.yiw.circledemo2.widgets.CommentListView;
 import com.yiw.circledemo2.widgets.DivItemDecoration;
 import com.yiw.circledemo2.widgets.TitleBar;
+
+import net.tsz.afinal.FinalHttp;
+import net.tsz.afinal.http.AjaxCallBack;
+import net.tsz.afinal.http.AjaxParams;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -66,6 +81,8 @@ public class CircleFriendsActivity extends JLBaseActivity implements ICircleView
     private LinearLayoutManager layoutManager;
     private TitleBar titleBar;
 
+
+
     private final static int TYPE_PULLREFRESH = 1;
     private final static int TYPE_UPLOADREFRESH = 2;
 
@@ -77,13 +94,17 @@ public class CircleFriendsActivity extends JLBaseActivity implements ICircleView
         mPresenter.attachView(this);
         initView();
 
+
     }
+
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (MyApplication.getInstan().getUser() != null && MyApplication.getInstan().getUser().getData().getId() != -1) {
+        if (MyApplication.getInstan().getUser() != null &&
+                MyApplication.getInstan().getUser().getData().getId() != -1) {
             mPresenter.loadData(TYPE_PULLREFRESH);
+            aboutME();
         }
     }
 
@@ -142,6 +163,7 @@ public class CircleFriendsActivity extends JLBaseActivity implements ICircleView
         mAdapter.setCirclePresenter(mPresenter);
         recyclerView.setAdapter(mAdapter);
 
+        //回复---布局
         mEditTextBody = (LinearLayout) findViewById(R.id.editTextBodyLl);
         mEditText = (EditText) findViewById(R.id.circleEt);
         sendIv = (ImageView) findViewById(R.id.sendIv);
@@ -149,21 +171,68 @@ public class CircleFriendsActivity extends JLBaseActivity implements ICircleView
             @Override
             public void onClick(View v) {
                 if (mPresenter != null) {
-                    //发评论
+                    //评论
                     String content = mEditText.getText().toString().trim();
                     if (TextUtils.isEmpty(content)) {
                         Toast.makeText(CircleFriendsActivity.this, "内容不能为空...", Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    mPresenter.addComment(content, mCommentConfig);
-                    mEditText.setText("");
+                    mPresenter.addComment(content, mCommentConfig, han);
                 }
-                updateEditTextBodyVisible(View.GONE, null);
+
             }
         });
 
         setViewTreeObserver();
     }
+
+    void aboutME() {
+
+        String url = Contantor.listByUnRead;
+        AjaxParams map1 = new AjaxParams();
+        map1.put("userId", MyApplication.getInstan().getUser().getData().getId() + "");
+        new FinalHttp().post(url, map1, new AjaxCallBack<String>() {
+            @Override
+            public void onSuccess(String s) {
+                super.onSuccess(s);
+
+                if (s != null && !s.equals("")) {
+                    int num = Integer.parseInt(s);
+                    if (num > 0) {
+                        if(mAdapter!=null && mAdapter.adapters!=null)
+                        mAdapter.adapters.setNum(num);
+                    }
+
+                }
+                //  DD.v("数量：" + s);
+
+
+            }
+
+            @Override
+            public void onFailure(Throwable t, int errorNo, String strMsg) {
+                super.onFailure(t, errorNo, strMsg);
+            }
+        });
+
+
+    }
+
+    Handler han = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            int tag = msg.what;
+            switch (tag) {
+                case 0://隐藏
+                    updateEditTextBodyVisible(View.GONE, null);
+                    break;
+                case 1:
+
+                    break;
+            }
+        }
+    };
 
     private void initTitle() {
 
@@ -278,14 +347,24 @@ public class CircleFriendsActivity extends JLBaseActivity implements ICircleView
     }
 
     @Override
-    public void update2AddComment(int circlePosition, RecordListBean addItem) {
-        if (addItem != null) {
+    public void update2AddComment(int circlePosition, int cpos, RecordListBean addItem, ChildBean childBean) {
+//         DD.d("评论:"+addItem.getContent()+"==="+addItem.getId());
+        if (addItem.getType() == 1) {
             ListBean item = (ListBean) mAdapter.getDatas().get(circlePosition);
             item.getRecordList().add(addItem);
             mAdapter.notifyDataSetChanged();
+        } else {
+            ListBean item = (ListBean) mAdapter.getDatas().get(circlePosition);
+            item.getRecordList().get(cpos).getChild().add(childBean);
+            for (ChildBean cb : item.getRecordList().get(cpos).getChild()) {
+                DD.v("jsdlkgjd=============:" + cb.getContent() + "===" + cb.getType());
+            }
+            mAdapter.notifyDataSetChanged();
+            mAdapter.adapter.RefC(childBean);
         }
         //清空评论文本
         mEditText.setText("");
+        han.sendEmptyMessage(0);
     }
 
     @Override
@@ -407,4 +486,6 @@ public class CircleFriendsActivity extends JLBaseActivity implements ICircleView
     public void showError(String errorMsg) {
 
     }
+
+
 }

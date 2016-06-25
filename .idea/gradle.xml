@@ -9,8 +9,6 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/OneSDK" />
-            <option value="$PROJECT_DIR$/YunWangVideoSDK" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/photopicker" />
           </set>
@@ -18,8 +16,6 @@
         <option name="myModules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/OneSDK" />
-            <option value="$PROJECT_DIR$/YunWangVideoSDK" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/photopicker" />
           </set>

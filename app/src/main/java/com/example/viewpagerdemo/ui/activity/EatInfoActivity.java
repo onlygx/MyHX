@@ -25,7 +25,7 @@ import com.example.viewpagerdemo.ui.bean.Collection;
 import com.example.viewpagerdemo.ui.bean.EatInfoOneBaen;
 import com.example.viewpagerdemo.ui.bean.ShopInfoListBean;
 import com.example.viewpagerdemo.ui.bean.ShoppingInfoBean;
-import com.example.viewpagerdemo.ui.jlfragmenwork.Contantor;
+import com.example.viewpagerdemo.ui.Contantor;
 import com.example.viewpagerdemo.ui.jlfragmenwork.actvity.LoginActivity;
 import com.example.viewpagerdemo.ui.jlfragmenwork.baseactivitywork.JLBaseActivity;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.DD;
@@ -67,6 +67,9 @@ public class EatInfoActivity extends JLBaseActivity implements View.OnClickListe
 
     @Bind(R.id.iv_right_text)
     ImageView iv_right_text;
+
+    @Bind(R.id.xsyh)
+    ImageView xsyh;
     //--------------轮班---------------
     @Bind(R.id.eat_vpone)
     ViewPager eatVpone;
@@ -270,12 +273,11 @@ public class EatInfoActivity extends JLBaseActivity implements View.OnClickListe
                 }else{
                     san_pf.setText(info.getScore());
                 }
-//                http://119.188.182.131:8080/app/goods/findById?userId=7227619999906416263&id=6403945117280157140
-               /* if (info.getBaoYou() != 1) {
-                    iv_kd.setVisibility(View.GONE);
-                    tv_kd.setVisibility(View.VISIBLE);
-                    tv_kd.setText("快递费:" + info.getYouPrice());
-                }*/
+
+                if(info.getEventList().size()>0){
+                    xsyh.setVisibility(View.VISIBLE);
+                }
+
 
                 if (info.getCollection() != null && MyApplication.getInstan().getUser() != null) {
                     Collection cl = info.getCollection();
@@ -288,6 +290,7 @@ public class EatInfoActivity extends JLBaseActivity implements View.OnClickListe
                         isColl=0;
                     }
                 }
+
 
                 String url = info.getContent();
                 //DD.d("有网页:"+Contantor.Imagepost+url);
@@ -444,7 +447,6 @@ public class EatInfoActivity extends JLBaseActivity implements View.OnClickListe
                     startActivity(intent);
                 } else {
                     intent.setClass(EatInfoActivity.this, EatShopInfoActivity.class);
-
                     intent.putExtra("id", shopID);
                     intent.putExtra("name", name);
                     startActivity(intent);
@@ -460,8 +462,11 @@ public class EatInfoActivity extends JLBaseActivity implements View.OnClickListe
                 } else {
                     ArrayList<ShopInfoListBean> carLiat = new ArrayList<>();
                     ShopInfoListBean cb = new ShopInfoListBean();
+
+                    cb.setZheyou(info.getEventList().get(0).getZheValue());
                     cb.setId(Integer.parseInt(id));
                     cb.setShopId(Long.valueOf(shopID));
+
                     cb.setName(shoppingName.getText().toString());
                     cb.setCurrNum(1);
                     cb.setPrice(Qpic);

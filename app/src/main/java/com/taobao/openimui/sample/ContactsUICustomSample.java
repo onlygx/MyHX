@@ -14,8 +14,8 @@ import android.widget.Toast;
 
 import com.alibaba.mobileim.aop.Pointcut;
 import com.alibaba.mobileim.aop.custom.IMContactsUI;
-import com.taobao.openimui.contact.FindContactActivity;
 import com.xingkesi.foodapp.R;
+import com.taobao.openimui.contact.FindContactActivity;
 
 /**
  * 联系人界面UI的定制点(根据需要实现相应的接口来达到联系人界面)，不设置则使用云旺默认的实现

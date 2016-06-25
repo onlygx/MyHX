@@ -7,8 +7,9 @@ import com.alibaba.mobileim.aop.Pointcut;
 import com.alibaba.mobileim.aop.custom.IMNotification;
 import com.alibaba.mobileim.conversation.YWConversation;
 import com.alibaba.mobileim.conversation.YWMessage;
-import com.alibaba.mobileim.utility.IMSmilyCache;
 import com.xingkesi.foodapp.R;
+import com.taobao.openimui.demo.DemoApplication;
+import com.taobao.openimui.demo.FragmentTabs;
 
 /**
  * 通知栏的一些自定义设置
@@ -107,12 +108,9 @@ public class NotificationInitSampleHelper extends IMNotification{
      * @return，如果返回空，则使SDK默认的文案格式
      */
     @Override
-    public CharSequence getNotificationTips(YWConversation conversation, YWMessage message, int totalUnReadCount, IMSmilyCache smilyCache) {
-//        int bound = (int) MyApplication.getContext().getResources().getDimension(
-//                com.alibaba.sdk.android.R.dimen.aliwx_smily_column_width);
-//        CharSequence charSequence= smilyCache.getSmilySpan(MyApplication.getContext(), message.getContent(), bound, false);
-//        return charSequence.toString();
+    public String getNotificationTips(YWConversation conversation, YWMessage message, int totalUnReadCount) {
         return null;
+        //return "自定义文案，未读消息数为:" + totalUnReadCount;
     }
 
     /**
@@ -130,7 +128,7 @@ public class NotificationInitSampleHelper extends IMNotification{
         //以下仅为示例代码，需要Intent开发者根据不同目的自己实现
 //        Intent intent = new Intent(Intent.ACTION_MAIN);
 //        intent.addCategory(Intent.CATEGORY_LAUNCHER);
-//        intent.setClass(MyApplication.getContext(), FragmentTabs.class);
+//        intent.setClass(DemoApplication.getContext(), FragmentTabs.class);
 //        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 //        return intent;
 
@@ -164,21 +162,4 @@ public class NotificationInitSampleHelper extends IMNotification{
         return 0;
     }
 
-
-    /**
-     * 自定义通知栏ticker
-     * @param conversation
-     *          收到消息的会话
-     * @param message
-     *          收到的消息
-     * @param totalUnReadCount
-     *          会话中消息未读数
-     * @return
-     *          如果返回null，则使用SDK默认的ticker
-     */
-    @Override
-    public String getTicker(YWConversation conversation, YWMessage message, int totalUnReadCount) {
-//        return "123456";
-        return null;
-    }
 }

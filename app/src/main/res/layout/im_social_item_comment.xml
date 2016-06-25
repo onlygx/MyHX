@@ -1,19 +1,30 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:descendantFocusability="blocksDescendants"
-    android:orientation="horizontal" >
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/commentTv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="2dp"
+        android:lineSpacingMultiplier="1.1"
         android:paddingBottom="2dp"
         android:paddingLeft="3dp"
         android:paddingRight="3dp"
-        android:lineSpacingMultiplier="1.1"
+        android:paddingTop="2dp"
         android:textColor="#232323"
         android:textSize="14sp" />
+
+    <com.yiw.circledemo2.widgets.ChildCommentListView
+        android:id="@+id/commentList"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" />
 
 </LinearLayout>

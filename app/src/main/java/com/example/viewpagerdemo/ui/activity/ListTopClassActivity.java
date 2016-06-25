@@ -7,7 +7,7 @@ import android.view.View;
 import com.alibaba.fastjson.JSON;
 import com.example.viewpagerdemo.ui.adapter.ListTopClassAdpter;
 import com.example.viewpagerdemo.ui.bean.ListTopBean;
-import com.example.viewpagerdemo.ui.jlfragmenwork.Contantor;
+import com.example.viewpagerdemo.ui.Contantor;
 import com.example.viewpagerdemo.ui.jlfragmenwork.baseactivitywork.JLBaseActivity;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.DD;
 import com.xingkesi.foodapp.R;

@@ -42,7 +42,7 @@ public class YWSDKGlobalConfigSample extends YWSDKGlobalConfig {
         return true;
     }
     /**
-     *  ［自动登录的开关］
+     *  ［自动登录的开关］备注：若配置了YWAPI.enableSDKLogOutput(),将以YWAPI.enableSDKLogOutput（）的配置为准
      *  默认：开启
      * @return 1： 开启 0： 关闭
      */
@@ -92,25 +92,4 @@ public class YWSDKGlobalConfigSample extends YWSDKGlobalConfig {
     public boolean enableMsgReadStatus(){
         return true;
     }
-
-    /**
-     * 是否开启会话草稿展示功能
-     * 默认开启
-     * @return
-     * true:开启
-     * false:关闭
-     */
-    public boolean enableConversationDraft() {
-        return true;
-    }
-
-    /**
-     * 设置重新拉取profile的时间间隔
-     * @return 重新拉取profile的时间间隔，单位：秒
-     */
-    @Override
-
-    public long getReadyProfileReUpdateTimeGap(){
-        return 24*60*60;
-    };
 }
