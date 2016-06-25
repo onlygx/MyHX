@@ -1,6 +1,6 @@
 [
     {
-        "outputFile": "G:\\work_space\\money_worke\\2\\MyHX\\OneSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\values-w820dp-v13\\values-w820dp-v13.xml",
+        "outputFile": "D:\\work\\androidStudioProject\\MyHX\\OneSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\values-w820dp-v13\\values-w820dp-v13.xml",
         "map": [
             {
                 "to": {
@@ -11,7 +11,7 @@
                     "endOffset": 108
                 },
                 "from": {
-                    "file": "G:\\work_space\\money_worke\\2\\MyHX\\OneSDK\\build\\intermediates\\bundles\\debug\\res\\values-w820dp-v13\\values-w820dp-v13.xml",
+                    "file": "D:\\work\\androidStudioProject\\MyHX\\OneSDK\\build\\intermediates\\bundles\\debug\\res\\values-w820dp-v13\\values-w820dp-v13.xml",
                     "position": {
                         "startLine": 2,
                         "startColumn": 4,
