@@ -12,9 +12,11 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSONObject;
 import com.example.viewpagerdemo.ui.MyApplication;
 import com.example.viewpagerdemo.ui.adapter.MyOderItemAdpter;
+import com.example.viewpagerdemo.ui.bean.IndexRaleaseBean;
 import com.example.viewpagerdemo.ui.bean.MyOderListBean;
 import com.example.viewpagerdemo.ui.bean.MyOderOBean;
 import com.example.viewpagerdemo.ui.Contantor;
+import com.example.viewpagerdemo.ui.bean.SearchBean;
 import com.example.viewpagerdemo.ui.jlfragmenwork.baseactivitywork.JLBaseActivity;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.DD;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.TS;
@@ -65,6 +67,7 @@ public class MyOderListActivity extends JLBaseActivity implements SwipeRefreshLa
     @Override
     public void initObject() {
         super.initObject();
+        eatReclerViewAdpter = new MyOderItemAdpter(MyOderListActivity.this,list);
         eatRecycler.setAdapter(eatReclerViewAdpter);
         eatRecycler.setHasFixedSize(true);
         manager = new LinearLayoutManager(this);
@@ -73,6 +76,21 @@ public class MyOderListActivity extends JLBaseActivity implements SwipeRefreshLa
         refreshlayout.setColorSchemeColors(Color.BLUE);
         refreshlayout.setSize(SwipeRefreshLayout.DEFAULT);
         refreshlayout.setOnRefreshListener(this);
+
+        eatReclerViewAdpter.setOnOrderItemClickListener(new MyOderItemAdpter.OnOrderItemClickListener() {
+            @Override
+            public void onCLick(int position, int type) {
+                switch (type){
+                    case 1:
+                        pay(position,list.get(position).getId()+"");
+                        break;
+                    case 2:
+                    case 3:
+                        OKOder(position,list.get(position).getId()+"");
+                        break;
+                }
+            }
+        });
 
         RequsetDatas();
 
@@ -110,30 +128,30 @@ public class MyOderListActivity extends JLBaseActivity implements SwipeRefreshLa
         ap.put("page", page + "");
         ap.put("size", num + "");
         String url = Contantor.Cjcommentreceive;
-        DD.d("我的承接列表request:" + url + ap.toString());
         new FinalHttp().post(url, ap, new AjaxCallBack<String>() {
             @Override
             public void onSuccess(String s) {
                 super.onSuccess(s);
-                DD.d("我的承接列表s:" + s);
                 MyOderOBean cb = JSONObject.parseObject(s, MyOderOBean.class);
-                if (cb.getList().size() > 0) {
-                    list = cb.getList();
-                    eatReclerViewAdpter = new MyOderItemAdpter(MyOderListActivity.this, MyOderListActivity.this);
-                    eatRecycler.setAdapter(eatReclerViewAdpter);
-                    eatReclerViewAdpter.notifyDataSetChanged();
-                    eatReclerViewAdpter.getArrayLists().addAll(list);
 
-                } else {
-                    if (num == 0) {
-                        ll_sc.setVisibility(View.VISIBLE);
-                    } else {
-                        page = page - 1;
-                        num = num - 10;
-                        TS.shortTime("没有数据");
-                    }
+                if (refreshlayout.isRefreshing()) {
+                    refreshlayout.setRefreshing(false);
                 }
-                refreshlayout.setRefreshing(false);
+                //刷新操作
+                if (page == 1) {
+                    list.clear();
+                }
+                for (MyOderListBean sp : cb.getList()) {
+                    list.add(sp);
+                }
+                eatReclerViewAdpter.notifyDataSetChanged();
+
+                if (cb.getList().size() < 10) {
+                    TS.shortTime("没有更多了~");
+                } else {
+                    page++;
+                }
+
             }
 
             @Override
@@ -143,12 +161,17 @@ public class MyOderListActivity extends JLBaseActivity implements SwipeRefreshLa
             }
         });
 
-
     }
 
     @Override
     public int setViewLayout() {
         return R.layout.activity_my_oder_list;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        RequsetDatas();
     }
 
     @Override
@@ -158,6 +181,80 @@ public class MyOderListActivity extends JLBaseActivity implements SwipeRefreshLa
         refreshlayout.setRefreshing(true);
         RequsetDatas();
     }
+
+    void pay(final int position, String orderid) {
+        showWait();
+        AjaxParams map = new AjaxParams();
+        map.put("id", orderid + "");
+        map.put("thinksId", MyApplication.getInstan().getUser().getData().getThinksId());
+        String url = Contantor.pay;
+        DD.v("付款：" + url + "?" + map.toString());
+        new FinalHttp().post(url, map, new AjaxCallBack<String>() {
+            @Override
+            public void onSuccess(String s) {
+                super.onSuccess(s);
+                DD.v("付款s：" + s);
+                try {
+                    org.json.JSONObject js = new org.json.JSONObject(s);
+                    if (js.getBoolean("success")) {
+                        TS.shortTime("付款成功");
+                        //更新状态
+                        list.get(position).setStatus(2);
+                        eatReclerViewAdpter.notifyDataSetChanged();
+                    } else {
+                        if (js.getInt("code") == 3) {
+                            TS.shortTime("余额不足");
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                closeWait();
+            }
+
+            @Override
+            public void onFailure(Throwable t, int errorNo, String strMsg) {
+                closeWait();
+            }
+        });
+    }
+
+    //确认收货
+    void OKOder(final int position, String id){
+        showWait();
+        String url = Contantor.Orderfinish;
+        AjaxParams ap = new AjaxParams();
+        ap.put("id", id);
+        DD.v("确认收货：" + url + ap.toString());
+        new FinalHttp().post(url, ap, new AjaxCallBack<String>() {
+
+            @Override
+            public void onSuccess(String s) {
+                super.onSuccess(s);
+                try {
+                    org.json.JSONObject js = new org.json.JSONObject(s);
+                    if (js.getBoolean("success")) {
+                        list.get(position).setStatus(4);
+                        eatReclerViewAdpter.notifyDataSetChanged();
+                    }
+                    closeWait();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t, int errorNo, String strMsg) {
+                super.onFailure(t, errorNo, strMsg);
+                closeWait();
+            }
+        });
+
+
+    }
+
+
+
 
     @Override
     public void del(final int postion) {

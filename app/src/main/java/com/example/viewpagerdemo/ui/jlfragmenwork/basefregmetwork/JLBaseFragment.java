@@ -8,12 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.ImageView;
 
-import com.example.viewpagerdemo.ui.jlfragmenwork.util.MyDialog;
-import com.example.viewpagerdemo.ui.jlfragmenwork.view.BoilingDialog;
-import com.example.viewpagerdemo.ui.jlfragmenwork.view.CollisionLoadingRenderer;
-import com.example.viewpagerdemo.ui.jlfragmenwork.view.LoadingDrawable;
+import com.example.viewpagerdemo.ui.jlfragmenwork.actvity.LoadingDialog;
 import com.xingkesi.foodapp.R;
 
 import butterknife.ButterKnife;
@@ -22,12 +18,9 @@ import butterknife.ButterKnife;
  * Created by huaping on 2016/5/18.
  */
 public class JLBaseFragment extends Fragment {
-    BoilingDialog.Builder builder;
-    BoilingDialog dialog;
     InputMethodManager manager;
+    LoadingDialog dialog;
 
-    MyDialog md;
-    LoadingDrawable mBalloonDrawable;
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -38,37 +31,24 @@ public class JLBaseFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(setViewLayout(), container, false);
         ButterKnife.bind(this, v);
-        builder= new BoilingDialog.Builder(getActivity());
-        dialog = builder.build();
         manager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         testDialog();
         return v;
     }
 
     public 	void testDialog() {
-        md = new MyDialog(getActivity(), R.style.dialog);
-        md.setContentView(R.layout.jlloadinglayout);
-        ImageView iv_image = (ImageView) md.getWindow().findViewById(R.id.iv_image);//图片
-        mBalloonDrawable=new LoadingDrawable(new CollisionLoadingRenderer(getActivity()));
-        iv_image.setImageDrawable(mBalloonDrawable);
-        md.setCanceledOnTouchOutside(false);
 
     }
     protected void showWait(){
-        if(md==null){
-            md = new MyDialog(getActivity(), R.style.dialog);
+        if(dialog==null){
+            dialog  = new LoadingDialog(getActivity(), R.style.LoadingDialog_style);
         }
-        md.show();
-        if(mBalloonDrawable!=null)
-        mBalloonDrawable.start();
+        dialog.show();
     }
 
     protected void closeWait(){
-        if(md==null){
-            md = new MyDialog(getActivity(), R.style.dialog);
-        }
-        mBalloonDrawable.stop();
-        md.dismiss();
+        if(dialog!=null)
+            dialog.dismiss();
     }
 
     @Override

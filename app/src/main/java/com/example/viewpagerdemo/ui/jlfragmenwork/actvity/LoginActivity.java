@@ -109,6 +109,7 @@ public class LoginActivity extends JLBaseActivity implements View.OnClickListene
     private static final int GUEST = 1;
     private static final String USER_ID = "userId";
     private static final String PASSWORD = "password";
+    private static final String ISLOGIN="login";
     private static final String TAG = LoginActivity.class.getSimpleName();
 
     private LoginSampleHelper loginHelper;
@@ -181,8 +182,6 @@ public class LoginActivity extends JLBaseActivity implements View.OnClickListene
         iv_show.setOnClickListener(this);
         bt_logoButton.setOnClickListener(this);
         mc = new MyCount(60000, 1000);
-        usernameEditText.setText("13306400282");
-        passwordEditText.setText("1");
     }
 
     @Override
@@ -252,7 +251,6 @@ public class LoginActivity extends JLBaseActivity implements View.OnClickListene
                         MyApplication.getInstan().setUserName(name);
                         //---------正式版请将下面的放开--------------------
                         LogdindOpenIME();
-
                     } else {
                         TS.shortTime("登录失败,请重新登录");
                     }
@@ -429,7 +427,6 @@ public class LoginActivity extends JLBaseActivity implements View.OnClickListene
         IMPrefsTools.setStringPrefs(LoginActivity.this, USER_ID, userId);
         IMPrefsTools.setStringPrefs(LoginActivity.this, PASSWORD, password);
         IMPrefsTools.setStringPrefs(LoginActivity.this, "thinkPwd", thinkPwd);
-
     }
 
     private void myRegisterReceiver() {
@@ -468,7 +465,8 @@ public class LoginActivity extends JLBaseActivity implements View.OnClickListene
         init(wanName, MyApplication.APP_KEY);
         APPKEY = MyApplication.APP_KEY;
         DD.i("login 开始 旺旺 登录!账号:" + wanName);
-        loginHelper.login_Sample(wanName, "123456", MyApplication.APP_KEY, new IWxCallback() {
+
+        loginHelper.login_Sample("18363088168", "123456", MyApplication.APP_KEY, new IWxCallback() {
 
             @Override
             public void onSuccess(Object... arg0) {

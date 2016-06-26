@@ -11,7 +11,7 @@ public interface ContactItemInterface
 	public String getTypes();
 
 	public String getIcons();
-	public String getThinkeSId();
+	public String getThinkesId();
 
 	public int getStute();
 	public long getFrendID();

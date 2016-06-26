@@ -37,6 +37,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:text="就餐方式"
+
                     android:textSize="15sp" />
 
 
@@ -48,6 +49,7 @@
                     android:background="@drawable/shape_witer_cornersed"
                     android:gravity="center"
                     android:text="配送"
+                    android:visibility="gone"
                     android:textColor="@drawable/selector_fong_color"
                     android:textSize="15sp" />
 

@@ -34,13 +34,11 @@ public class ColltentItemAdpter extends RecyclerView.Adapter<ColltentItemAdpter.
 
 
     Context c;
-    delData del;
     private List<ColltentBean.ListBean> adList;
 
-    public ColltentItemAdpter(Context c, delData del) {
+    public ColltentItemAdpter(Context c, List<ColltentBean.ListBean> list) {
         this.c = c;
-        this.del = del;
-        adList = new ArrayList<>();
+        this.adList = list;
     }
 
     public List<ColltentBean.ListBean> getArrayLists() {

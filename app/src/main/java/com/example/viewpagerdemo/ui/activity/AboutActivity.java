@@ -18,7 +18,6 @@ import butterknife.OnClick;
  */
 public class AboutActivity extends JLBaseActivity {
 
-
     @Bind(R.id.iv_back)
     ImageView iv_back;
     @Bind(R.id.tv_title)

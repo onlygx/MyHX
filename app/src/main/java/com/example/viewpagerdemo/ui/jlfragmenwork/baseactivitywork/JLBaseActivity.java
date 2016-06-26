@@ -2,7 +2,6 @@ package com.example.viewpagerdemo.ui.jlfragmenwork.baseactivitywork;
 
 import android.app.Activity;
 import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -10,15 +9,10 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.ImageView;
 
-import com.example.viewpagerdemo.ui.jlfragmenwork.util.MyDialog;
-import com.example.viewpagerdemo.ui.jlfragmenwork.util.SystemBarTintManager;
+import com.example.viewpagerdemo.ui.jlfragmenwork.actvity.LoadingDialog;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.TS;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.Tools;
-import com.example.viewpagerdemo.ui.jlfragmenwork.view.BoilingDialog;
-import com.example.viewpagerdemo.ui.jlfragmenwork.view.CollisionLoadingRenderer;
-import com.example.viewpagerdemo.ui.jlfragmenwork.view.LoadingDrawable;
 import com.xingkesi.foodapp.R;
 
 import butterknife.ButterKnife;
@@ -29,12 +23,7 @@ public class JLBaseActivity extends Activity {
     private InputMethodManager manager;
     protected static int windowWidth;// 屏幕宽度
     protected static int windowHeight;// 屏幕高度
-    BoilingDialog.Builder builder;
-    BoilingDialog dialog;
-
-    LoadingDrawable mBalloonDrawable;
-
-    MyDialog md;
+    LoadingDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +44,6 @@ public class JLBaseActivity extends Activity {
         }*/
         setContentView(setViewLayout());
         ButterKnife.bind(this);
-        testDialog();
         initID();
         initObject();
     }
@@ -68,14 +56,12 @@ public class JLBaseActivity extends Activity {
         return  R.color.waiter;
     }
 
-
-
     public void initID() {
     }
 
     public void initObject() {
-        builder= new BoilingDialog.Builder(this);
-        dialog = builder.build();
+       /* builder= new BoilingDialog.Builder(this);
+        dialog = builder.build();*/
         manager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         windowWidth = Tools.decodeDisplayMetrics(this)[0];
         windowHeight = Tools.decodeDisplayMetrics(this)[1];
@@ -162,28 +148,15 @@ public class JLBaseActivity extends Activity {
         }
         return false;
     }
-    public 	void testDialog() {
-         md = new MyDialog(this, R.style.dialog);
-        md.setContentView(R.layout.jlloadinglayout);
-        ImageView iv_image = (ImageView) md.getWindow().findViewById(R.id.iv_image);//图片
-        mBalloonDrawable=new LoadingDrawable(new CollisionLoadingRenderer(this));
-        iv_image.setImageDrawable(mBalloonDrawable);
-        md.setCanceledOnTouchOutside(false);
-
-    }
     protected void showWait(){
-        if(md==null){
-            md = new MyDialog(this, R.style.dialog);
+        if(dialog==null){
+            dialog  = new LoadingDialog(this, R.style.LoadingDialog_style);
         }
-        md.show();
-        mBalloonDrawable.start();
+        dialog.show();
     }
 
     protected void closeWait(){
-        if(md==null){
-            md = new MyDialog(this, R.style.dialog);
-        }
-        mBalloonDrawable.stop();
-        md.dismiss();
+        if(dialog!=null)
+            dialog.dismiss();
     }
 }

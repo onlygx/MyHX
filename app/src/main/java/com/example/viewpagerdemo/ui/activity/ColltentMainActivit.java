@@ -68,8 +68,7 @@ public class ColltentMainActivit extends JLBaseActivity implements SwipeRefreshL
     protected void onResume() {
         super.onResume();
         if(MyApplication.getInstan().getUser()!=null &&
-                MyApplication.getInstan().
-                        getUser().getData().getId()!=0) {
+                MyApplication.getInstan().getUser().getData().getId()!=0) {
             RequsetDatas();
         }
     }
@@ -121,6 +120,9 @@ public class ColltentMainActivit extends JLBaseActivity implements SwipeRefreshL
     }
 
     private void RequsetDatas() {
+//        userId:long // 用户id
+//        page:int //第几页
+//        size:int //每页大小
         AjaxParams ap = new AjaxParams();
         ap.put("userId", MyApplication.getInstan().getUser().getData().getId() + "");
         ap.put("page", page + "");
@@ -137,7 +139,6 @@ public class ColltentMainActivit extends JLBaseActivity implements SwipeRefreshL
                     eatReclerViewAdpter = new ColltentItemAdpter(ColltentMainActivit.this, ColltentMainActivit.this);
                     eatRecycler.setAdapter(eatReclerViewAdpter);
                     eatReclerViewAdpter.notifyDataSetChanged();
-
                     eatReclerViewAdpter.getArrayLists().addAll(list);
 
                 } else {
