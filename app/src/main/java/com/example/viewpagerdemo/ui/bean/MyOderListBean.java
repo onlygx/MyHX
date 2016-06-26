@@ -10,7 +10,8 @@ public class MyOderListBean {
         private String address;
         private long id;
         private String content;
-        private int status;
+        private int status;//订单状态，0、已取消
+
         private String title;
         private long setTime;
         private double price;

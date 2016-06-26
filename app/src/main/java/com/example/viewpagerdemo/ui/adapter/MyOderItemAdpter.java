@@ -10,18 +10,15 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.example.viewpagerdemo.ui.activity.IndexMainActivity;
 import com.example.viewpagerdemo.ui.bean.MyOderListBean;
 import com.example.viewpagerdemo.ui.Contantor;
 import com.squareup.picasso.Picasso;
 import com.xingkesi.foodapp.R;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -33,13 +30,17 @@ public class MyOderItemAdpter extends RecyclerView.Adapter<MyOderItemAdpter.View
 
 
     Context c;
-    delData del;
     private List<MyOderListBean> adList;
 
-    public MyOderItemAdpter(Context c, delData del) {
+    private OnOrderItemClickListener onOrderItemClickListener;
+
+    public interface OnOrderItemClickListener{
+        void onCLick(int position,int type);
+    }
+
+    public MyOderItemAdpter(Context c, List<MyOderListBean> list) {
         this.c = c;
-        this.del = del;
-        adList = new ArrayList<>();
+        adList = list;
     }
 
     public List<MyOderListBean> getArrayLists() {
@@ -77,20 +78,48 @@ public class MyOderItemAdpter extends RecyclerView.Adapter<MyOderItemAdpter.View
         String url = data.getBannerList().get(0).getUrl();
         Picasso.with(c).load(Contantor.Imagepost + url).placeholder(R.drawable.aliwx_default_photo_right)
                 .error(R.drawable.aliwx_fail_photo_right).into(vh.shopIocn);
-
-
-        if(data.getStatus()==2){
-            vh.findshopDel.setVisibility(View.INVISIBLE);
+        /**
+         *  1、待付款
+         2、已支付
+         3、已发货
+         4、待评价
+         5、已完成
+         */
+        vh.findshopDel.setVisibility(View.VISIBLE);
+        switch (data.getStatus()){
+            case 1:
+                vh.findshopDel.setText("付款");
+                break;
+            case 2:
+            case 3:
+                vh.findshopDel.setText("确认收货");
+                break;
+            case 4:
+                vh.findshopDel.setText("评价");
+                break;
+            default:
+                vh.findshopDel.setVisibility(View.INVISIBLE);
+                break;
         }
+
         vh.findshopDel.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                del.del(position);
+            public void onClick(View view) {
+                onOrderItemClickListener.onCLick(position,data.getStatus());
             }
         });
 
+        vh.findshopTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent it =new Intent(c, IndexMainActivity.class);
+                it.putExtra("tag",1);
+                it.putExtra("id",data.getId()+"");
+                c.startActivity(it);
+            }
+        });
         //详情
-        vh.info.setOnClickListener(new View.OnClickListener() {
+        vh.shopIocn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent it =new Intent(c, IndexMainActivity.class);
@@ -99,9 +128,6 @@ public class MyOderItemAdpter extends RecyclerView.Adapter<MyOderItemAdpter.View
                 c.startActivity(it);
             }
         });
-
-
-        //--------------------------------------
 
     }
 
@@ -124,6 +150,7 @@ public class MyOderItemAdpter extends RecyclerView.Adapter<MyOderItemAdpter.View
     static class ViewHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.shop_iocn)
         ImageView shopIocn;
+
         @Bind(R.id.baoyou)
         ImageView baoyou;
 
@@ -148,5 +175,10 @@ public class MyOderItemAdpter extends RecyclerView.Adapter<MyOderItemAdpter.View
             super(view);
             ButterKnife.bind(this, view);
         }
+    }
+
+
+    public void setOnOrderItemClickListener(OnOrderItemClickListener onOrderItemClickListener) {
+        this.onOrderItemClickListener = onOrderItemClickListener;
     }
 }

@@ -9,11 +9,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.example.viewpagerdemo.ui.MyApplication;
 import com.example.viewpagerdemo.ui.adapter.ColltentItemAdpter;
 import com.example.viewpagerdemo.ui.bean.ColltentBean;
 import com.example.viewpagerdemo.ui.Contantor;
+import com.example.viewpagerdemo.ui.bean.SearchBean;
+import com.example.viewpagerdemo.ui.bean.ShopingBean;
+import com.example.viewpagerdemo.ui.bean.ShoppingListBean;
 import com.example.viewpagerdemo.ui.jlfragmenwork.baseactivitywork.JLBaseActivity;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.DD;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.TS;
@@ -34,9 +38,8 @@ import butterknife.Bind;
 /**
  * 收藏列表
  */
-public class ColltentMainActivit extends JLBaseActivity implements SwipeRefreshLayout.OnRefreshListener, ColltentItemAdpter.delData {
+public class ColltentMainActivit extends JLBaseActivity implements SwipeRefreshLayout.OnRefreshListener {
 
-    //
     @Bind(R.id.iv_back)
     ImageView iv_back;
     @Bind(R.id.tv_title)
@@ -67,8 +70,8 @@ public class ColltentMainActivit extends JLBaseActivity implements SwipeRefreshL
     @Override
     protected void onResume() {
         super.onResume();
-        if(MyApplication.getInstan().getUser()!=null &&
-                MyApplication.getInstan().getUser().getData().getId()!=0) {
+        if(MyApplication.getInstan().getUser()!=null && MyApplication.getInstan().getUser().getData().getId()!=0) {
+            page=1;
             RequsetDatas();
         }
     }
@@ -76,6 +79,8 @@ public class ColltentMainActivit extends JLBaseActivity implements SwipeRefreshL
     @Override
     public void initObject() {
         super.initObject();
+        eatReclerViewAdpter = new ColltentItemAdpter(ColltentMainActivit.this,list);
+        eatRecycler.setAdapter(eatReclerViewAdpter);
         eatRecycler.setAdapter(eatReclerViewAdpter);
         eatRecycler.setHasFixedSize(true);
         manager = new LinearLayoutManager(this);
@@ -128,30 +133,28 @@ public class ColltentMainActivit extends JLBaseActivity implements SwipeRefreshL
         ap.put("page", page + "");
         ap.put("size", num + "");
         String url = Contantor.ByUserId;
-        DD.d("request:" + url + ap.toString());
         new FinalHttp().post(url, ap, new AjaxCallBack<String>() {
             @Override
             public void onSuccess(String s) {
                 super.onSuccess(s);
-                ColltentBean cb = JSONObject.parseObject(s, ColltentBean.class);
-                if (cb.getList().size() > 0) {
-                    list = cb.getList();
-                    eatReclerViewAdpter = new ColltentItemAdpter(ColltentMainActivit.this, ColltentMainActivit.this);
-                    eatRecycler.setAdapter(eatReclerViewAdpter);
-                    eatReclerViewAdpter.notifyDataSetChanged();
-                    eatReclerViewAdpter.getArrayLists().addAll(list);
+                ColltentBean sb = JSONObject.parseObject(s, ColltentBean.class);
 
-                } else {
-                    if (num == 0) {
-                        ll_sc.setVisibility(View.VISIBLE);
-                    } else {
-                        page = page - 1;
-                        num = num - 10;
-                        TS.shortTime("没有数据");
-                    }
+                if (refreshlayout.isRefreshing()) {
+                    refreshlayout.setRefreshing(false);
                 }
-                refreshlayout.setRefreshing(false);
-                DD.d("s" + s);
+                //刷新操作
+                if(sb.getPageNum()==1){
+                    list.clear();
+                }
+                for(ColltentBean.ListBean sp:sb.getList()){
+                    list.add(sp);
+                }
+                eatReclerViewAdpter.notifyDataSetChanged();
+                if (sb.getList().size() < 10) {
+                    TS.shortTime("没有更多了~");
+                } else {
+                    page++;
+                }
             }
 
             @Override
@@ -163,7 +166,6 @@ public class ColltentMainActivit extends JLBaseActivity implements SwipeRefreshL
 
 
     }
-
 
     @Override
     public int setViewLayout() {
@@ -179,48 +181,4 @@ public class ColltentMainActivit extends JLBaseActivity implements SwipeRefreshL
         RequsetDatas();
     }
 
-    @Override
-    public void del(final int postion) {
-        showWait();
-        ColltentBean.ListBean cbb = list.get(postion);
-        long id = cbb.getId();
-
-        AjaxParams ap = new AjaxParams();
-        ap.put("Id", id + "");
-        String url = Contantor.delete;
-
-
-        DD.d("删除收藏:" + url + "?" + ap.toString());
-        new FinalHttp().post(url, ap, new AjaxCallBack<String>() {
-            @Override
-            public void onSuccess(String s) {
-                super.onSuccess(s);
-                DD.d("删除收藏s:" + s);
-                try {
-                    org.json.JSONObject js =new org.json.JSONObject(s);
-                    if(js.getBoolean("success")){
-                        eatReclerViewAdpter = new ColltentItemAdpter(ColltentMainActivit.this, ColltentMainActivit.this);
-                        list.remove(postion);
-                        eatRecycler.setAdapter(eatReclerViewAdpter);
-                        eatReclerViewAdpter.getArrayLists().clear();
-                        eatReclerViewAdpter.getArrayLists().addAll(list);
-                        eatReclerViewAdpter.notifyDataSetChanged();
-                    }else{
-
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                closeWait();
-            }
-
-            @Override
-            public void onFailure(Throwable t, int errorNo, String strMsg) {
-                super.onFailure(t, errorNo, strMsg);
-                closeWait();
-            }
-        });
-
-
-    }
 }

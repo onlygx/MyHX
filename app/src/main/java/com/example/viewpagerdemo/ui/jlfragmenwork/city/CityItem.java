@@ -48,7 +48,7 @@ public class CityItem implements ContactItemInterface
 	}
 
 	@Override
-	public String getThinkeSId() {
+	public String getThinkesId() {
 		return thinksId;
 	}
 

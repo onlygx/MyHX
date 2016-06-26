@@ -1,12 +1,14 @@
 package com.example.viewpagerdemo.ui.jlfragmenwork.city;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.CircleImageView;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.DD;
+import com.example.viewpagerdemo.ui.units.StringUtils;
 import com.squareup.picasso.Picasso;
 import com.xingkesi.foodapp.R;
 
@@ -51,7 +53,12 @@ public class CityAdapter extends ContactListAdapter {
             city_tag.setBackgroundResource(R.drawable.shape_bt_grenn_corners);
             city_tag.setText("邀请好友");
         }
-        nicknameView.setText(item.getDisplayInfo());
+        Log.e("x","---------Item:"+item.getDisplayInfo() + item.getThinkesId());
+        if(StringUtils.isEmpty(item.getDisplayInfo())){
+            nicknameView.setText(item.getThinkesId());
+        }else {
+            nicknameView.setText(item.getDisplayInfo());
+        }
         if (!item.getIcons().equals("")) {
             Picasso.with(_context).load(item.getIcons()).placeholder(R.drawable.aliwx_default_photo_right)
                     .error(R.drawable.aliwx_fail_photo_right).into(infoRowContainer);

@@ -297,11 +297,15 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" />
 
-        <service
+       <service
             android:name="com.alibaba.tcms.service.TCMSService"
             android:exported="true"
             android:process=":TcmsService" />
-
+        <activity android:process=":TcmsService"
+            android:name="com.alibaba.tcms.service.MonitorActivity"
+            android:exported="true"
+            android:theme="@android:style/Theme.Translucent"
+            android:launchMode="singleInstance"/>
         <activity
             android:name="com.taobao.openimui.test.MultiAccountTestActivity"
             android:configChanges="keyboardHidden|orientation"
@@ -363,6 +367,12 @@
             android:theme="@style/Aliwx_ContentOverlay_default" />
 
         <activity android:name="com.example.viewpagerdemo.ui.activity.AbouFrendtMainActivity"></activity>
+
+        <activity android:name="com.example.viewpagerdemo.ui.activity.SearchActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            />
+
     </application>
 
 </manifest>

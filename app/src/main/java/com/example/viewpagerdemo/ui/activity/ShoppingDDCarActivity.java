@@ -16,6 +16,7 @@ import com.example.viewpagerdemo.ui.Contantor;
 import com.example.viewpagerdemo.ui.jlfragmenwork.baseactivitywork.JLBaseActivity;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.DD;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.TS;
+import com.example.viewpagerdemo.ui.units.StringUtils;
 import com.xingkesi.foodapp.R;
 
 import net.tsz.afinal.FinalHttp;
@@ -120,16 +121,13 @@ public class ShoppingDDCarActivity extends JLBaseActivity implements DDCarRecler
         for (int i = 0; i < carLiat.size(); i++) {
             ShopInfoListBean dd = carLiat.get(i);
             double zhe = Double.parseDouble(dd.getZheyou() + "");
-            DD.d("bianli===:" + i + "====" + zhe);
             fnum = fnum + dd.getCurrNum();//获取总数量
             double tempMoney = dd.getCurrNum() * dd.getPrice();//商品重甲
             if (zhe > 0) {
                 double zz = (zhe / 100.00);
                 double tem = nmoneys + tempMoney;
                 nmoneys = zz * tem;
-               // DD.v("折弯:" + zhe + "===" + zz + "===" + tem + "===" + nmoneys);
             } else {
-               // DD.v("不折:" + zhe);
                 nmoneys = nmoneys + tempMoney;
             }
             dd.setFnum(fnum);
@@ -143,7 +141,7 @@ public class ShoppingDDCarActivity extends JLBaseActivity implements DDCarRecler
 
         BigDecimal b = new BigDecimal(nmoneys);
         double f1 = b.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
-        money.setText(f1 + "");
+        money.setText(StringUtils.toTwoDouble(f1)  + "");
     }
 
 
@@ -196,21 +194,15 @@ public class ShoppingDDCarActivity extends JLBaseActivity implements DDCarRecler
                     ap.put("goodsList", sb.toString());
                     String url = Contantor.submitAddr;
 
-                    DD.v("下单:" + url + "?" + ap.toString());
                     new FinalHttp().post(url, ap, new AjaxCallBack<String>() {
                         @Override
                         public void onSuccess(String s) {
                             super.onSuccess(s);
-                            DD.v("下单介绍:" + s);
                             try {
                                 JSONObject js = new JSONObject(s);
                                 if (js.getBoolean("success")) {
                                     DD.v("下单成功");
-                                    //
-                                    Intent it = new Intent(ShoppingDDCarActivity.this, PlayMainActivity.class);
-                                    it.putExtra("id", js.getString("data"));
-                                    it.putExtra("mo", money.getText().toString());
-                                    startActivity(it);
+                                    startActivity(new Intent(ShoppingDDCarActivity.this,FindDDListActivity.class));
                                     finish();
                                 }
                                 closeWait();
@@ -274,7 +266,7 @@ public class ShoppingDDCarActivity extends JLBaseActivity implements DDCarRecler
         int xnum = fnume - 1;
         num.setText(xnum + "");
         double xmoney = fmoneye - moneye;
-        money.setText(xmoney + "");
+        money.setText(StringUtils.toTwoDouble(xmoney) + "");
         last.setFnum(xnum);
         last.setFmoney(xmoney);
         DD.w("jian后:" + xnum + "--" + xmoney);
@@ -302,7 +294,7 @@ public class ShoppingDDCarActivity extends JLBaseActivity implements DDCarRecler
         int xnum = fnume + 1;
         num.setText(xnum + "");
         double xmoney = fmoneye + moneye;
-        money.setText(xmoney + "");
+        money.setText(StringUtils.toTwoDouble(xmoney) + "");
         last.setFnum(xnum);
         last.setFmoney(xmoney);
         DD.w("加后:" + xnum + "--" + xmoney);

@@ -11,9 +11,7 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
-import com.example.viewpagerdemo.ui.jlfragmenwork.util.SystemBarTintManager;
-import com.example.viewpagerdemo.ui.jlfragmenwork.util.Tools;
-import com.example.viewpagerdemo.ui.jlfragmenwork.view.BoilingDialog;
+import com.example.viewpagerdemo.ui.jlfragmenwork.actvity.LoadingDialog;
 import com.xingkesi.foodapp.R;
 
 import butterknife.ButterKnife;
@@ -21,8 +19,7 @@ import butterknife.ButterKnife;
 public class JLBaseFragmentActivity extends FragmentActivity {
 
     private InputMethodManager manager;
-    BoilingDialog.Builder builder;
-    BoilingDialog dialog;
+    LoadingDialog dialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,8 +59,6 @@ public class JLBaseFragmentActivity extends FragmentActivity {
     }
 
     public void initObject() {
-        builder = new BoilingDialog.Builder(this);
-        dialog = builder.build();
         manager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
     }
 
@@ -157,25 +152,16 @@ public class JLBaseFragmentActivity extends FragmentActivity {
 
 
     protected void showWait(){
-        if(builder==null){
-        builder = new BoilingDialog.Builder(this);
-        }
         if(dialog==null){
-        dialog = builder.build();
+            dialog  = new LoadingDialog(this, R.style.LoadingDialog_style);
         }
         dialog.show();
     }
 
     protected void closeWait(){
-        if(builder==null){
-            builder = new BoilingDialog.Builder(this);
-        }
-        if(dialog==null){
-            dialog = builder.build();
-        }
+        if(dialog!=null)
         dialog.dismiss();
     }
-
 
     /*void editLoging(){
         final MyDialog md = new MyDialog(IdentityAuthActivity.this, R.style.WinDialog);

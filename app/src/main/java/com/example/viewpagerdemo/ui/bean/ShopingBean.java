@@ -7,15 +7,6 @@ import java.util.ArrayList;
  */
 public class ShopingBean {
 
-
-    /**
-     * page : 1
-     * size : 10
-     * province : 山东省
-     * city : 济南市
-     * district : 天桥区
-     */
-
     private String page;
     private String size;
     private String province;

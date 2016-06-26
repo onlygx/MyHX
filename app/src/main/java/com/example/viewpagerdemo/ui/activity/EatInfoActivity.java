@@ -23,6 +23,7 @@ import com.example.viewpagerdemo.ui.MyApplication;
 import com.example.viewpagerdemo.ui.adapter.EateInfoAotuAdapter;
 import com.example.viewpagerdemo.ui.bean.Collection;
 import com.example.viewpagerdemo.ui.bean.EatInfoOneBaen;
+import com.example.viewpagerdemo.ui.bean.SetCollectBean;
 import com.example.viewpagerdemo.ui.bean.ShopInfoListBean;
 import com.example.viewpagerdemo.ui.bean.ShoppingInfoBean;
 import com.example.viewpagerdemo.ui.Contantor;
@@ -58,7 +59,7 @@ public class EatInfoActivity extends JLBaseActivity implements View.OnClickListe
     @Bind(R.id.iv_back)
     ImageView iv_back;
     @Bind(R.id.tv_sc)
-    TextView sc;
+    TextView btn_collect;
     @Bind(R.id.tv_title)
     TextView tv_title;
     //----------------------------------
@@ -288,9 +289,12 @@ public class EatInfoActivity extends JLBaseActivity implements View.OnClickListe
                         isColl = 1;
                         Drawable drawable = getApplicationContext().getResources().getDrawable(R.drawable.scl);
                         drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());//必须设置图片大小，否则不显示
-                        sc.setCompoundDrawables(null, drawable, null, null);
+                        btn_collect.setCompoundDrawables(null, drawable, null, null);
                     }else{
                         isColl=0;
+                        Drawable drawable = getApplicationContext().getResources().getDrawable(R.drawable.shoucangs);
+                        drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());//必须设置图片大小，否则不显示
+                        btn_collect.setCompoundDrawables(null, drawable, null, null);
                     }
                 }
 
@@ -512,21 +516,15 @@ public class EatInfoActivity extends JLBaseActivity implements View.OnClickListe
             @Override
             public void onSuccess(String s) {
                 super.onSuccess(s);
-                try {
-                    JSONObject js = new JSONObject(s);
-                    DD.v("收藏商品:" + s);
-                    if (js.getBoolean("success")) {
+                    SetCollectBean collectBean = JSON.parseObject(s, SetCollectBean.class);
+                    if (collectBean.isSuccess()) {
                         //  TS.shortTime("收藏成功");
-
                         isColl=1;
                         Drawable drawable = getApplicationContext().getResources().getDrawable(R.drawable.scl);
                         drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());//必须设置图片大小，否则不显示
-                        sc.setCompoundDrawables(null, drawable, null, null);
-
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                        btn_collect.setCompoundDrawables(null, drawable, null, null);
+                        info.setCollection(collectBean.getData());
+                    }else{}
             }
 
             @Override
@@ -535,23 +533,21 @@ public class EatInfoActivity extends JLBaseActivity implements View.OnClickListe
             }
         });
     }private void ChanSchouchang() {
+        if(info==null || info.getCollection()==null) return;
         AjaxParams map = new AjaxParams();
-        map.put("Id", id);
-        DD.v("shan收藏商品:" + Contantor.delete+"?"+map.toString());
-       // map.put("userId", MyApplication.getInstan().getUser().getData().getId() + "");
+        map.put("Id", info.getCollection().getId());
         new FinalHttp().post(Contantor.delete, map, new AjaxCallBack<String>() {
             @Override
             public void onSuccess(String s) {
                 super.onSuccess(s);
                 try {
                     JSONObject js = new JSONObject(s);
-                    DD.v("取消收藏商品:" + s);
                     if (js.getBoolean("success")) {
-                        //  TS.shortTime("收藏成功");
                         isColl=0;
                         Drawable drawable = getApplicationContext().getResources().getDrawable(R.drawable.shoucangs);
                         drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());//必须设置图片大小，否则不显示
-                        sc.setCompoundDrawables(null, drawable, null, null);
+                        btn_collect.setCompoundDrawables(null, drawable, null, null);
+                        info.setCollection(null);
 
                     }
                 } catch (JSONException e) {

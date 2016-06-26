@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context="com.example.viewpagerdemo.ui.activity.ColltentMainActivit">
+
+   <RelativeLayout
+       android:id="@+id/header"
+       android:layout_width="match_parent"
+       android:layout_height="50dp">
+
+       <ImageView
+           android:id="@+id/iv_back"
+           android:layout_width="wrap_content"
+           android:layout_height="match_parent"
+           android:layout_alignParentLeft="true"
+           android:layout_centerVertical="true"
+           android:clickable="true"
+           android:gravity="center"
+           android:onClick="goBack"
+           android:paddingLeft="10dp"
+           android:paddingRight="10dp"
+           android:src="@drawable/nav_btn_back" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_green_round"
+                android:orientation="horizontal"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+
+                >
+                <TextView
+                    android:id="@+id/btn_commodity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="5dp"
+                    android:layout_margin="1px"
+                    android:text="商品"
+                    android:background="@color/green"
+                    android:textColor="@color/waiter"
+                    />
+                <TextView
+                    android:id="@+id/btn_need"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="5dp"
+                    android:layout_margin="1px"
+                    android:text="需求"
+                    android:background="@color/waiter"
+                    android:textColor="@color/green"
+                    />
+            </LinearLayout>
+
+   </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/top"
+        android:background="@color/gray"
+        android:orientation="vertical">
+        <EditText
+            android:id="@+id/et_search"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_margin="10dp"
+            android:drawableLeft="@mipmap/sou"
+            android:paddingLeft="10dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:background="@drawable/shape_white_c_bg"
+            android:layout_toLeftOf="@+id/btn_search"
+            />
+
+        <TextView
+            android:id="@+id/btn_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="搜索"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:padding="10dp"
+            android:textSize="16sp"
+            android:textColor="@color/green"
+            />
+    </RelativeLayout>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/refreshlayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/top"
+        >
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"></android.support.v7.widget.RecyclerView>
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+</LinearLayout>

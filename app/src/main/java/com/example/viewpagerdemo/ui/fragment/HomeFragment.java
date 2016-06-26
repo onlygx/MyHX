@@ -17,6 +17,7 @@ import com.baidu.location.Poi;
 import com.example.viewpagerdemo.ui.MyApplication;
 import com.example.viewpagerdemo.ui.activity.ListTopClassActivity;
 import com.example.viewpagerdemo.ui.activity.OhterListMainActivity;
+import com.example.viewpagerdemo.ui.activity.SearchActivity;
 import com.example.viewpagerdemo.ui.jlfragmenwork.adpter.FragmentArrayPageAdapter;
 import com.example.viewpagerdemo.ui.jlfragmenwork.basefregmetwork.JLBaseFragment;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.DD;
@@ -81,7 +82,7 @@ public class HomeFragment extends JLBaseFragment {
         iv_right_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            startActivity(new Intent(getActivity(), CityListActivity.class));
+            startActivity(new Intent(getActivity(), SearchActivity.class));
             }
         });
 

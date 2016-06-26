@@ -167,6 +167,9 @@
     <style name="m_loading">
         <item name="android:indeterminateDrawable">@drawable/loading</item>
     </style>
-
-
+    <style name="LoadingDialog_style">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
 </resources>

@@ -95,7 +95,6 @@ public class AddressBookFragment extends JLBaseFragment implements TextWatcher, 
     @Override
     public void onResume() {
         super.onResume();
-        DD.v("同学录-------------onResume--------------");
         //登录状态
         if (MyApplication.getInstan().getUser() != null &&
                 MyApplication.getInstan().getUser().getData().getThinksId() != null) {
@@ -189,7 +188,7 @@ public class AddressBookFragment extends JLBaseFragment implements TextWatcher, 
                     String name = searchList.get(pos).getDisplayInfo();
                     String ids = searchList.get(pos).getID();
                     String type = searchList.get(pos).getTypes();
-                    String thinksId = searchList.get(pos).getThinkeSId();
+                    String thinksId = searchList.get(pos).getThinkesId();
                     Toast.makeText(getActivity(), "选择：" + name + "=" + ids + "=" + type +
                             "==thinksId:" + thinksId, Toast.LENGTH_SHORT).show();
                     //---------------------------------------------------------------------
@@ -337,7 +336,7 @@ public class AddressBookFragment extends JLBaseFragment implements TextWatcher, 
             String name = searchList.get(pos).getDisplayInfo();
             String ids = searchList.get(pos).getID();
             String type = searchList.get(pos).getTypes();
-            String thinksId = searchList.get(pos).getThinkeSId();
+            String thinksId = searchList.get(pos).getThinkesId();
             Toast.makeText(getActivity(), "选择：" + name + "=" + ids + "=" + type +
                     "==thinksId:" + thinksId, Toast.LENGTH_SHORT).show();
             //---------------------------------------------------------------------
