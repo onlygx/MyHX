@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.example.viewpagerdemo.ui.bean.FindDDListShopBean;
 import com.example.viewpagerdemo.ui.bean.TalkingBean;
+import com.example.viewpagerdemo.ui.jlfragmenwork.util.DD;
 import com.xingkesi.foodapp.R;
 
 import java.util.ArrayList;
@@ -46,18 +47,19 @@ public class TalkViewAdpter extends RecyclerView.Adapter<TalkViewAdpter.ViewHold
 
     @Override
     public void onBindViewHolder(final ViewHolder vh, int position) {
+        DD.v("位置position:"+position);
         final TalkingBean data = list.get(position);
         // 一个是说说，
         TalkingBean.TalkBean tb = data.getTalk();
         // 一个是评论
         TalkingBean.RecordBean trb = data.getRecord();
 
-            vh.talkName.setText(data.getSendUser().getNickName());
+        vh.talkName.setText(data.getSendUser().getNickName());
         //
-        if(data.getType()==1){
+        if (data.getType() == 1) {
             vh.talkContent.setText(tb.getContent());
             vh.talkContentHF.setText(data.getContent());
-        }else{
+        } else {
             vh.talkContent.setText(data.getContent());
             vh.talkContentHF.setText(trb.getContent());
         }

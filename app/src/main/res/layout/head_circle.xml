@@ -38,20 +38,23 @@
 
     <RelativeLayout
         android:id="@+id/abouts"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
+        android:background="@drawable/shape_write_corners"
         android:layout_marginTop="80dp"
         android:gravity="center">
 
         <TextView
             android:id="@+id/tv_left_text_num"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:gravity="center"
             android:layout_toRightOf="@+id/aboutme"
             android:background="@drawable/shape_round_oavls"
             android:ellipsize="end"
             android:maxLines="1"
+            android:layout_marginLeft="10dp"
             android:text="10"
             android:textColor="@color/white"
             android:textSize="10sp"
@@ -61,8 +64,9 @@
 
         <TextView
             android:id="@+id/aboutme"
+            android:gravity="center"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="20dp"
             android:text="有新消息"
             android:textColor="@color/white"
             android:textSize="16sp"

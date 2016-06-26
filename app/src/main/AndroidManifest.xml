@@ -63,6 +63,7 @@
     <application
         android:name="com.example.viewpagerdemo.ui.MyApplication"
         android:allowBackup="true"
+        android:hardwareAccelerated="false"
         android:icon="@mipmap/icon"
         android:label="@string/app_name"
         android:theme="@style/AppTheme"
@@ -71,8 +72,8 @@
         <activity
             android:name="com.example.viewpagerdemo.ui.jlfragmenwork.actvity.SplashActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -82,38 +83,39 @@
         <activity
             android:name="com.example.viewpagerdemo.ui.jlfragmenwork.baseactivitywork.JLBaseActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-            />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.example.viewpagerdemo.ui.activity.MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.example.viewpagerdemo.ui.jlfragmenwork.actvity.RegisterActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.example.viewpagerdemo.ui.jlfragmenwork.actvity.NavigationActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.example.viewpagerdemo.ui.jlfragmenwork.actvity.LoginActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.example.viewpagerdemo.ui.activity.EatInfoActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.example.viewpagerdemo.ui.activity.CommentsActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name="com.example.viewpagerdemo.ui.activity.ShoppingDDActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.example.viewpagerdemo.ui.activity.ShoppingDDActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name="com.example.viewpagerdemo.ui.activity.ShoppingDDCarActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.example.viewpagerdemo.ui.activity.ShoppingDDCarActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <service
             android:name="com.baidu.location.f"
@@ -124,45 +126,58 @@
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="6hcA4CZQyK3B6CL5RkqRuo277ZhOiZQb" />
 
-        <activity android:name="com.example.viewpagerdemo.ui.activity.AllContentActivity"
+        <activity
+            android:name="com.example.viewpagerdemo.ui.activity.AllContentActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name="com.example.viewpagerdemo.ui.activity.EatShopInfoActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.example.viewpagerdemo.ui.activity.EatShopInfoActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name="com.example.viewpagerdemo.ui.activity.AddressActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.example.viewpagerdemo.ui.activity.AddressActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name="com.example.viewpagerdemo.ui.activity.FindActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.example.viewpagerdemo.ui.activity.FindActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name="com.example.viewpagerdemo.ui.activity.FindSetNameActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.example.viewpagerdemo.ui.activity.FindSetNameActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name="com.example.viewpagerdemo.ui.activity.FindAddreesActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.example.viewpagerdemo.ui.activity.FindAddreesActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name="com.example.viewpagerdemo.ui.activity.SettingPasswordActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.example.viewpagerdemo.ui.activity.SettingPasswordActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name="com.example.viewpagerdemo.ui.activity.NoteMainActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.example.viewpagerdemo.ui.activity.NoteMainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name="com.example.viewpagerdemo.ui.activity.AboutActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.example.viewpagerdemo.ui.activity.AboutActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name="com.example.viewpagerdemo.ui.activity.AdviceMainActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.example.viewpagerdemo.ui.activity.AdviceMainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name="com.yiw.circledemo2.CircleFriendsActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.yiw.circledemo2.CircleFriendsActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name="com.yiw.circledemo2.ReleaseFrendActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.yiw.circledemo2.ReleaseFrendActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name="com.yiw.circledemo2.ImagePagerActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.yiw.circledemo2.ImagePagerActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.lidong.photopicker.PhotoPreviewActivity"
             android:theme="@style/PhotoPickerTheme" />
@@ -174,39 +189,50 @@
             android:name="com.yiw.circledemo2.MyGlideModule"
             android:value="GlideModule" />
 
-        <activity android:name="com.example.viewpagerdemo.ui.activity.FindDDListActivity"
+        <activity
+            android:name="com.example.viewpagerdemo.ui.activity.FindDDListActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name="com.example.viewpagerdemo.ui.activity.WakketZhuangZActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.example.viewpagerdemo.ui.activity.WakketZhuangZActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name="com.example.viewpagerdemo.ui.activity.ABooksZActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.example.viewpagerdemo.ui.activity.ABooksZActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name="com.example.viewpagerdemo.ui.activity.ColltentMainActivit"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.example.viewpagerdemo.ui.activity.ColltentMainActivit"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name="com.example.viewpagerdemo.ui.activity.PlayMainActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.example.viewpagerdemo.ui.activity.PlayMainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name="com.example.viewpagerdemo.ui.activity.ReleaseNeedActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.example.viewpagerdemo.ui.activity.ReleaseNeedActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name="com.example.viewpagerdemo.ui.activity.MyReleaseListActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.example.viewpagerdemo.ui.activity.MyReleaseListActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name="com.example.viewpagerdemo.ui.activity.OrderInfoActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.example.viewpagerdemo.ui.activity.OrderInfoActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name="com.example.viewpagerdemo.ui.activity.PingJiaMainActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.example.viewpagerdemo.ui.activity.PingJiaMainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name="com.example.viewpagerdemo.ui.activity.IndexMainActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.example.viewpagerdemo.ui.activity.IndexMainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name="com.example.viewpagerdemo.ui.activity.MyOderListActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="com.example.viewpagerdemo.ui.activity.MyOderListActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.example.viewpagerdemo.ui.activity.AboutWebActivity"
             android:label="@string/title_activity_about_web" />
@@ -222,7 +248,6 @@
         <activity android:name="com.yiw.circledemo2.widgets.MyCircleFriendsActivity" />
         <activity android:name="com.example.viewpagerdemo.ui.searchfrend.CityListActivity" />
         <activity android:name="com.example.viewpagerdemo.ui.activity.ListTopClassActivity" />
-
 
 
         <activity
@@ -255,7 +280,6 @@
             android:value="561f5cc8e0f55a08ea006bc7" />
 
 
-
         <activity
             android:name="com.taobao.openimui.demo.FragmentTabs"
             android:configChanges="keyboardHidden|orientation"
@@ -272,10 +296,12 @@
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" />
+
         <service
             android:name="com.alibaba.tcms.service.TCMSService"
             android:exported="true"
             android:process=":TcmsService" />
+
         <activity
             android:name="com.taobao.openimui.test.MultiAccountTestActivity"
             android:configChanges="keyboardHidden|orientation"

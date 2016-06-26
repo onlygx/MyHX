@@ -48,7 +48,7 @@ public class AboutWebActivity extends JLBaseActivity {
         super.initObject();
 
         //覆盖WebView默认使用第三方或系统默认浏览器打开网页的行为，使网页用WebView打开
-        webView.setWebViewClient(new WebViewClient(){
+        webView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 // TODO Auto-generated method stub
@@ -59,20 +59,13 @@ public class AboutWebActivity extends JLBaseActivity {
         });
 
 
-        DD.v("gyuanyu:"+ToolsHost.HEDEUT+"/app/system/about");
-        new FinalHttp().post(ToolsHost.HEDEUT+"/system/about", new AjaxCallBack<String>() {
+        DD.v("gyuanyu:" + ToolsHost.HEDEUT + "/app/system/about");
+        new FinalHttp().post(ToolsHost.HEDEUT + "/app/system/about", new AjaxCallBack<String>() {
             @Override
             public void onSuccess(String s) {
                 super.onSuccess(s);
-                try {
-                    JSONObject js = new JSONObject(s);
-                    DD.v("333收货地址:" + s);
-                    webView.loadUrl(s);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-
+                DD.v("333收货地址:" + s);
+                webView.loadUrl(s);
             }
 
             @Override

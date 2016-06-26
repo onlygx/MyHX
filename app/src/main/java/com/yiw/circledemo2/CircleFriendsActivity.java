@@ -85,7 +85,9 @@ public class CircleFriendsActivity extends JLBaseActivity implements ICircleView
 
     private final static int TYPE_PULLREFRESH = 1;
     private final static int TYPE_UPLOADREFRESH = 2;
-
+    int page=1;
+    int num=10;
+    int scrollPostion = 0;
 
     @Override
     public void initID() {
@@ -103,7 +105,7 @@ public class CircleFriendsActivity extends JLBaseActivity implements ICircleView
         super.onResume();
         if (MyApplication.getInstan().getUser() != null &&
                 MyApplication.getInstan().getUser().getData().getId() != -1) {
-            mPresenter.loadData(TYPE_PULLREFRESH);
+            mPresenter.loadData(TYPE_PULLREFRESH,page,num);
             aboutME();
         }
     }
@@ -137,7 +139,7 @@ public class CircleFriendsActivity extends JLBaseActivity implements ICircleView
         recyclerView.setRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mPresenter.loadData(TYPE_PULLREFRESH);
+                mPresenter.loadData(TYPE_PULLREFRESH,page,num);
             }
         });
 
@@ -146,6 +148,16 @@ public class CircleFriendsActivity extends JLBaseActivity implements ICircleView
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 Glide.with(CircleFriendsActivity.this).resumeRequests();
+
+
+                if ( recyclerView.getScrollState() == RecyclerView.SCROLL_STATE_IDLE && scrollPostion + 1
+                        == mAdapter.getItemCount()) {
+                    page = page + 1;
+                    num = num + 10;
+                    DD.v("加载-------------------");
+                   // getContent();
+                   // refreshlayout.setRefreshing(true);
+                }
             }
 
             @Override
@@ -326,6 +338,7 @@ public class CircleFriendsActivity extends JLBaseActivity implements ICircleView
 
     @Override
     public void update2AddFavorite(int circlePosition, ZanListBean addItem) {
+        DD.d("============update2AddFavoriteupdate2AddFavoriteupdate2AddFavorite================");
         if (addItem != null) {
             ListBean item = (ListBean) mAdapter.getDatas().get(circlePosition);
             item.getZanList().add(addItem);

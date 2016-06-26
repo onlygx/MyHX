@@ -45,8 +45,8 @@ public class AllContentActivity extends JLBaseActivity implements SwipeRefreshLa
     ArrayList<ContentListBean> contentList;
     EatInfoContentReclerAdatper ec;
     LinearLayoutManager manager;
-    int page=1;
     int scrollPostion = 0;
+    int page=1;
     int num=10;
 
     String id;

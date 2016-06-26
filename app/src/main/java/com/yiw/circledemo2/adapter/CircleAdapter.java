@@ -38,6 +38,7 @@ import com.yiw.circledemo2.widgets.CommentListView;
 import com.yiw.circledemo2.widgets.FavortListView;
 import com.yiw.circledemo2.widgets.MagicTextView;
 import com.yiw.circledemo2.widgets.MultiImageView;
+import com.yiw.circledemo2.widgets.MyCircleFriendsActivity;
 import com.yiw.circledemo2.widgets.SnsPopupWindow;
 import com.yiw.circledemo2.widgets.dialog.CommentDialog;
 import com.yiw.circledemo2.widgets.videolist.model.VideoLoadMvpView;
@@ -133,6 +134,8 @@ public class CircleAdapter extends BaseRecycleViewAdapter      {
 
             boolean hasFavort = favortDatas.size() > 0 ? true : false;
             boolean hasComment = commentsDatas.size() > 0 ? true : false;
+
+
             Glide.with(context).load(headImg).diskCacheStrategy(DiskCacheStrategy.ALL).placeholder(R.color.bg_no_photo).
                     transform(new GlideCircleTransform(context)).into(holder.headIv);
 
@@ -334,7 +337,16 @@ public class CircleAdapter extends BaseRecycleViewAdapter      {
                 }
             });
             MeName.setText(com.example.viewpagerdemo.ui.MyApplication.getInstan().getUser().getData().getNickName());
-            Picasso.with(context).load(ToolsHost.HEDEUT + com.example.viewpagerdemo.ui.MyApplication.getInstan().getUser().getData().getHead()).into(MeTx);
+            Picasso.with(context).load(ToolsHost.HEDEUT + com.example.viewpagerdemo.ui.MyApplication.getInstan().getUser().
+                    getData().getHead()).into(MeTx);
+
+
+            MeTx.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    context.startActivity(new Intent(context,MyCircleFriendsActivity.class));
+                }
+            });
         }
     }
 

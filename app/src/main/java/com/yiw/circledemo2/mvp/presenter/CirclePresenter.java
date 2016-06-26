@@ -50,15 +50,11 @@ public class CirclePresenter extends BasePresenter<ICircleView> {
         mCircleModel = new CircleModel();
     }
 
-    public void loadData(final int loadType) {
+    public void loadData(final int loadType,int page,int num) {
         this.loadType = loadType;
-        getPY();
+        getPY( page, num);
     }
 
-    public void MyloadData(final int loadType) {
-        this.loadType = loadType;
-        getMyPY();
-    }
 
     Handler han = new Handler() {
         @Override
@@ -68,14 +64,14 @@ public class CirclePresenter extends BasePresenter<ICircleView> {
         }
     };
 
-    public void getPY() {
+    public void getPY(int page,int num) {
         /*if(datas!=null && datas.size()>0){
             datas.clear();
         }*/
         AjaxParams ap = new AjaxParams();
         ap.put("userId", MyApplication.getInstan().getUser().getData().getId() + "");
-        ap.put("page", "1");
-        ap.put("size", "10");
+        ap.put("page", page+"");
+        ap.put("size",num+"");
         DD.v("LD 朋友圈:" + DatasUtil.userPY + "?" + ap.toString());
         new FinalHttp().post(DatasUtil.userPY, ap, new AjaxCallBack<String>() {
             @Override
@@ -336,7 +332,7 @@ public class CirclePresenter extends BasePresenter<ICircleView> {
                         getView().update2AddComment(config.circlePosition, config.commentPosition, replys, null);
                     } else {
                         ReplyChildContentsBean reply = JSON.parseObject(s, ReplyChildContentsBean.class);
-                        RecordListBean replysd =new RecordListBean();
+                        RecordListBean replysd = new RecordListBean();
                         replysd.setType(2);
                         ChildBean replys = reply.getData();
                         UserBean user = new UserBean();
@@ -344,7 +340,7 @@ public class CirclePresenter extends BasePresenter<ICircleView> {
                         user.setId(userb.getData().getId() + "");
                         user.setHead(userb.getData().getHead());
                         user.setNickName(userb.getData().getNickName() != null ? userb.getData().getNickName() : "匿名");
-                        ReceiveUserBean ub =new ReceiveUserBean();//
+                        ReceiveUserBean ub = new ReceiveUserBean();//
                         ub.setNickName(bean.getRecordList().get(config.commentPosition).getUser().getNickName());
                         replys.setReceiveUser(ub);
                         replys.setUser(user);
