@@ -121,7 +121,7 @@ public class FindActivity extends JLBaseActivity {
     };
 
     @OnClick({R.id.rl_tx, R.id.rl_name, R.id.rl_addr, R.id.rl_pwd,
-            R.id.rl_sex, R.id.rl_wx, R.id.rl_qq, R.id.rl_qm})
+            R.id.rl_sex, R.id.rl_wx, R.id.rl_qq, R.id.rl_qm,R.id.exit})
     public void onClick(View view) {
         Intent intent = new Intent();
         switch (view.getId()) {
@@ -163,6 +163,17 @@ public class FindActivity extends JLBaseActivity {
             case R.id.rl_qm://签名
                 intent.setClass(FindActivity.this, UpdataQMActivity.class);
                 startActivityForResult(intent, 107);
+                break;
+
+            case R.id.exit://推出
+
+                MyApplication.getInstan().setUser(null);
+                MyApplication.getInstan().setUserName("");
+                MyApplication.getInstan().setUserPwd("");
+                MyApplication.exit=0;
+                finish();
+
+                // startActivity(new Intent(getActivity(), ColltentMainActivit.class));
 
                 break;
         }

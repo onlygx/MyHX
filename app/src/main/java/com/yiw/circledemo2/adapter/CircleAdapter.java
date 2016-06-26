@@ -312,6 +312,7 @@ public class CircleAdapter extends BaseRecycleViewAdapter      {
 
         TextView MeName;
         ImageView MeTx;
+        TextView tv_left_text_num;
         RelativeLayout abouts;
         TextView aboutme;
 
@@ -319,13 +320,15 @@ public class CircleAdapter extends BaseRecycleViewAdapter      {
         public void setNum(int num){
             if(aboutme!=null){
                 aboutme.setVisibility(View.VISIBLE);
-                aboutme.setText(""+num);
+                tv_left_text_num.setVisibility(View.VISIBLE);
+                tv_left_text_num.setText(""+num);
             }
         }
         public HeaderViewHolder(View itemView) {
             super(itemView);
 
             MeName = (TextView) itemView.findViewById(R.id.meName);
+            tv_left_text_num = (TextView) itemView.findViewById(R.id.tv_left_text_num);
             MeTx = (ImageView) itemView.findViewById(R.id.meTx);
             abouts = (RelativeLayout) itemView.findViewById(R.id.abouts);
             aboutme = (TextView) itemView.findViewById(R.id.aboutme);

@@ -18,7 +18,7 @@ import com.xingkesi.foodapp.R;
  * 引导页
  */
 public class NavigationActivity extends JLBaseActivity {
-    private static final int[] imgs = new int[]{R.drawable.startup, R.drawable.startup};
+    private static final int[] imgs = new int[]{R.drawable.yindaoye1, R.drawable.yindaoye2,R.drawable.yindaoye3};
     private ViewPager viewPager ;
     private TextView goTextView;
 

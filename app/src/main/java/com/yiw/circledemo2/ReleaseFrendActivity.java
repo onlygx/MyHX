@@ -3,6 +3,8 @@ package com.yiw.circledemo2;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
@@ -46,6 +49,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import butterknife.Bind;
+
 /**
  * @author lidong
  * @
@@ -69,6 +74,13 @@ public class ReleaseFrendActivity extends JLBaseActivity {
 
     String rul = ToolsHost.HEDEUT + "/app/talk/submit";
 
+    int MAX_LENGTH = 100;                   //最大输入字符数500
+    int Rest_Length = MAX_LENGTH;
+    @Bind(R.id.content)
+    EditText content;
+
+    @Bind(R.id.numz)
+    TextView numz;
     @Override
     public int setViewLayout() {
         return R.layout.releasefrendactivitylayout;
@@ -86,7 +98,33 @@ public class ReleaseFrendActivity extends JLBaseActivity {
         mButton = (Button) findViewById(R.id.button);
         textView = (EditText) findViewById(R.id.et_context);
         mSingleQueue = Volley.newRequestQueue(ReleaseFrendActivity.this);
+        content.addTextChangedListener(new TextWatcher() {
 
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // TODO Auto-generated method stub
+                if (content.length() >= MAX_LENGTH) {
+                    TS.shortTime("字数过多");
+                    return;
+                }
+                if (Rest_Length > 0) {
+                    Rest_Length = MAX_LENGTH - content.getText().length();
+                }
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+                // TODO Auto-generated method stub
+                numz.setText(Rest_Length + "");
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                // TODO Auto-generated method stub
+                numz.setText(Rest_Length + "");
+            }
+        });
         int cols = getResources().getDisplayMetrics().widthPixels / getResources().getDisplayMetrics().densityDpi;
         cols = cols < 3 ? 3 : cols;
         gridView.setNumColumns(cols);
@@ -332,7 +370,7 @@ public class ReleaseFrendActivity extends JLBaseActivity {
 
             final String path = listUrls.get(position);
             if (path.equals("000000")) {
-                holder.image.setImageResource(R.drawable.camera);
+                holder.image.setImageResource(R.drawable.addicon);
             } else {
                 Glide.with(ReleaseFrendActivity.this)
                         .load(path)

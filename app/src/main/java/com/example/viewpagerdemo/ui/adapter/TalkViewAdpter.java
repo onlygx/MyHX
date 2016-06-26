@@ -47,7 +47,7 @@ public class TalkViewAdpter extends RecyclerView.Adapter<TalkViewAdpter.ViewHold
 
     @Override
     public void onBindViewHolder(final ViewHolder vh, int position) {
-        DD.v("位置position:"+position);
+        DD.v("位置position:" + position);
         final TalkingBean data = list.get(position);
         // 一个是说说，
         TalkingBean.TalkBean tb = data.getTalk();
@@ -59,9 +59,16 @@ public class TalkViewAdpter extends RecyclerView.Adapter<TalkViewAdpter.ViewHold
         if (data.getType() == 1) {
             vh.talkContent.setText(tb.getContent());
             vh.talkContentHF.setText(data.getContent());
-        } else {
+        } else if (data.getType() == 2) {
             vh.talkContent.setText(data.getContent());
             vh.talkContentHF.setText(trb.getContent());
+        } else {
+            vh.talkContent.setText(tb.getContent());
+            vh.talk_contentIM.setVisibility(View.VISIBLE);
+            if (data.getContent() == null) {
+                vh.talkContentHF.setVisibility(View.GONE);
+                vh.talkContentHF.setText(data.getContent());
+            }
         }
 
 
@@ -81,6 +88,8 @@ public class TalkViewAdpter extends RecyclerView.Adapter<TalkViewAdpter.ViewHold
     static class ViewHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.shop_iocn)
         ImageView shopIocn;
+        @Bind(R.id.talk_contentIM)
+        ImageView talk_contentIM;
         @Bind(R.id.talk_name)
         TextView talkName;
         @Bind(R.id.talk_contentHF)

@@ -2,7 +2,6 @@ package com.example.viewpagerdemo.ui.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +12,8 @@ import com.xingkesi.foodapp.R;
 
 import java.util.ArrayList;
 
-import butterknife.ButterKnife;
 import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
  * Created by Administrator on 2016/5/20.
@@ -39,11 +38,9 @@ public class WalletIncomeReclerViewAdpter extends RecyclerView.Adapter<WalletInc
 
     @Override
     public void onBindViewHolder(ViewHolder vh, int position) {
-        Log.d("LD","333postion:"+position);
-        Wallet_IncomeBean data =list.get(position);
-        vh.walletIn_name.setText(data.getComeName());
-        vh.walletIn_money.setText(data.getComeMoney());
+        Wallet_IncomeBean data = list.get(position);
     }
+
     @Override
     public long getItemId(int position) {
         return position;
@@ -55,18 +52,20 @@ public class WalletIncomeReclerViewAdpter extends RecyclerView.Adapter<WalletInc
         return list.size();
     }
 
-    /**
-     * This class contains all butterknife-injected Views & Layouts from layout file 'item_eatreclerviewadpter.xml'
-     * for easy to all layout elements.
-     *
-     * @author ButterKnifeZelezny, plugin for Android Studio by Avast Developers (http://github.com/avast)
-     */
-    static  class ViewHolder extends RecyclerView.ViewHolder{
-        @Bind(R.id.walletIn_name)
-        TextView walletIn_name;
-        @Bind(R.id.walletIn_money)
-        TextView walletIn_money;
 
+    static class ViewHolder extends RecyclerView.ViewHolder {
+        @Bind(R.id.walletIn_bhao)
+        TextView walletInBhao;
+        @Bind(R.id.walletIn_type)
+        TextView walletInType;
+        @Bind(R.id.walletIn_laiyuan)
+        TextView walletInLaiyuan;
+        @Bind(R.id.walletIn_money)
+        TextView walletInMoney;
+        @Bind(R.id.walletIn_date)
+        TextView walletInDate;
+        @Bind(R.id.walletIn_note)
+        TextView walletInNote;
 
         ViewHolder(View view) {
             super(view);

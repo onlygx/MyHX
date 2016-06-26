@@ -471,7 +471,9 @@ public class EatInfoActivity extends JLBaseActivity implements View.OnClickListe
                     ArrayList<ShopInfoListBean> carLiat = new ArrayList<>();
                     ShopInfoListBean cb = new ShopInfoListBean();
 
-                    cb.setZheyou(info.getEventList().get(0).getZheValue());
+                    if(info.getEventList()!=null  && info.getEventList().size()>0) {
+                        cb.setZheyou(info.getEventList().get(0).getZheValue());
+                    }
                     cb.setId(Integer.parseInt(id));
                     cb.setShopId(Long.valueOf(shopID));
 

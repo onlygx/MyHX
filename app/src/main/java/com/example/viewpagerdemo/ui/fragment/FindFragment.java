@@ -14,6 +14,7 @@ import com.example.viewpagerdemo.ui.MyApplication;
 import com.example.viewpagerdemo.ui.activity.AboutWebActivity;
 import com.example.viewpagerdemo.ui.activity.AdviceMainActivity;
 import com.example.viewpagerdemo.ui.activity.ColltentMainActivit;
+import com.example.viewpagerdemo.ui.activity.ErWMain2Activity;
 import com.example.viewpagerdemo.ui.activity.FindActivity;
 import com.example.viewpagerdemo.ui.activity.FindDDListActivity;
 import com.example.viewpagerdemo.ui.activity.MyOderListActivity;
@@ -81,20 +82,25 @@ public class FindFragment extends JLBaseFragment {
                 cache.setText(size);
             }catch (Exception e){}
         }
-
-
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        //DD.v("个人onStart:");
-    }
+   /* @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            //可见时加载数据相当于Fragment的onResume
+            if (MyApplication.getInstan().getUser() == null &&
+                    MyApplication.getInstan().getUser().getData().getThinksId() == null) {
+
+            }
+        }
+    }*/
 
     @Override
     public void onResume() {
         super.onResume();
        // DD.v("个人onResume:");
+
 
         if (MyApplication.getInstan().getUser() != null) {
             user = MyApplication.getInstan().getUser().getData();
@@ -104,6 +110,17 @@ public class FindFragment extends JLBaseFragment {
                 Picasso.with(getContext()).load(Contantor.Imagepost + user.getHead()).into(icon);
 
             }
+        }else{
+            if (!cache.equals("")) {
+                Tools.clearAllCache(MyApplication.getContext());
+                try {
+                    String size = Tools.getTotalCacheSize(MyApplication.getContext());
+                    cache.setText(size);
+                }catch (Exception e){}
+            }
+            nikc.setText("");
+            icon.setImageResource(R.drawable.touxiang03);
+            find_layout.postInvalidate();
         }
     }
 
@@ -122,7 +139,7 @@ public class FindFragment extends JLBaseFragment {
     @OnClick({R.id.ll_find, R.id.ll_frend, R.id.ll_dd, R.id.ll_about,
             R.id.ll_jianyi, R.id.ll_prosion, R.id.ll_tel, R.id.ll_cache,
             R.id.find_new_fbxq, R.id.find_new_xq, R.id.find_new_rw,
-            R.id.find_new_sc,R.id.exit})
+            R.id.find_new_sc})
     public void onClick(View view) {
         Intent intent = new Intent();
         // DD.d();
@@ -155,14 +172,8 @@ public class FindFragment extends JLBaseFragment {
                 intent.setClass(getActivity(), AdviceMainActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.ll_prosion://客服
-                //userid是客服帐号，第一个参数是客服帐号，第二个是组ID，如果没有，传0
-                //  EServiceContact contact = new EServiceContact("userid", 0);
-                //如果需要发给指定的客服帐号，不需要Server进行分流(默认Server会分流)，请调用EServiceContact对象
-                //的setNeedByPass方法，参数为false。
-                //contact.setNeedByPass(false);
-                // Intent intents = mIMKit.getChattingActivityIntent(contact);
-                //   startActivity(intents);
+            case R.id.ll_prosion://我的二维码
+                startActivity(new Intent(getActivity(), ErWMain2Activity.class));
                 break;
             case R.id.ll_tel://客服电话
                 final MyDialog md = new MyDialog(getActivity(), R.style.WinDialog);
@@ -217,25 +228,7 @@ public class FindFragment extends JLBaseFragment {
                 startActivity(new Intent(getActivity(), ColltentMainActivit.class));
                 break;
 
-            case R.id.exit://推出
 
-                MyApplication.getInstan().setUser(null);
-                MyApplication.getInstan().setUserName("");
-                MyApplication.getInstan().setUserPwd("");
-                if (!cache.equals("")) {
-                    Tools.clearAllCache(MyApplication.getContext());
-                    try {
-                        String size = Tools.getTotalCacheSize(MyApplication.getContext());
-                        cache.setText(size);
-                    }catch (Exception e){}
-                }
-                nikc.setText("");
-                icon.setImageResource(R.drawable.touxiang03);
-                find_layout.postInvalidate();
-
-               // startActivity(new Intent(getActivity(), ColltentMainActivit.class));
-
-                break;
 
         }
     }

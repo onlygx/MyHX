@@ -65,6 +65,14 @@ public class ColltentMainActivit extends JLBaseActivity implements SwipeRefreshL
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        if(MyApplication.getInstan().getUser()!=null && MyApplication.getInstan().getUser().getData().getId()!=0) {
+            RequsetDatas();
+        }
+    }
+
+    @Override
     public void initObject() {
         super.initObject();
         eatRecycler.setAdapter(eatReclerViewAdpter);
@@ -76,7 +84,7 @@ public class ColltentMainActivit extends JLBaseActivity implements SwipeRefreshL
         refreshlayout.setSize(SwipeRefreshLayout.DEFAULT);
         refreshlayout.setOnRefreshListener(this);
 
-        RequsetDatas();
+
 
 
         eatRecycler.setOnScrollListener(new RecyclerView.OnScrollListener() {

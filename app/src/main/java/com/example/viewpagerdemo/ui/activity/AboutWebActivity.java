@@ -59,19 +59,20 @@ public class AboutWebActivity extends JLBaseActivity {
         });
 
 
-        DD.v("gyuanyu:" + ToolsHost.HEDEUT + "/app/system/about");
-        new FinalHttp().post(ToolsHost.HEDEUT + "/app/system/about", new AjaxCallBack<String>() {
+       // DD.v("gyuanyu:" + ToolsHost.HEDEUT + "/app/system/about");
+        webView.loadUrl(ToolsHost.HEDEUT + "/app/system/about");
+        /*new FinalHttp().get(ToolsHost.HEDEUT + "/app/system/about", new AjaxCallBack<String>() {
             @Override
             public void onSuccess(String s) {
                 super.onSuccess(s);
                 DD.v("333收货地址:" + s);
-                webView.loadUrl(s);
+
             }
 
             @Override
             public void onFailure(Throwable t, int errorNo, String strMsg) {
                 super.onFailure(t, errorNo, strMsg);
             }
-        });
+        });*/
     }
 }

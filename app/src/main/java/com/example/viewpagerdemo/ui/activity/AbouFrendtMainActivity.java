@@ -166,7 +166,6 @@ public class AbouFrendtMainActivity extends JLBaseActivity implements SwipeRefre
                 TalkingListBean list = JSON.parseObject(s, TalkingListBean.class);
                 find=list.getList();
                 if (find.size() > 0) {
-                    //显示商铺
                     ddv = new TalkViewAdpter(AbouFrendtMainActivity.this);
                     ddv.getArrayList().addAll(find);
                     eatRecycler.setAdapter(ddv);

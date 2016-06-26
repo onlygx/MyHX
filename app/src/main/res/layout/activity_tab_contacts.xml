@@ -387,7 +387,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:textSize="15sp"
-                        android:text="给身边建议" />
+                        android:text="给分乐建议" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -429,7 +429,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:textSize="15sp"
-                        android:text="在线人工客服" />
+                        android:text="我的二维码" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -521,7 +521,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:textSize="15sp"
-                        android:text="清楚缓存" />
+                        android:text="清除缓存" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -544,18 +544,7 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/exit"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginLeft="60dp"
-                android:layout_marginRight="60dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"
-                android:background="@drawable/shape_bt_grenn_corners"
-                android:gravity="center"
-                android:text="退出登录"
-                android:textColor="@color/white" />
+
 
         </LinearLayout>
     </ScrollView>

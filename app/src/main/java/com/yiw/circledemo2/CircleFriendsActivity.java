@@ -150,14 +150,14 @@ public class CircleFriendsActivity extends JLBaseActivity implements ICircleView
                 Glide.with(CircleFriendsActivity.this).resumeRequests();
 
 
-                if ( recyclerView.getScrollState() == RecyclerView.SCROLL_STATE_IDLE && scrollPostion + 1
+             /*   if ( recyclerView.getScrollState() == RecyclerView.SCROLL_STATE_IDLE && scrollPostion + 1
                         == mAdapter.getItemCount()) {
                     page = page + 1;
                     num = num + 10;
                     DD.v("加载-------------------");
                    // getContent();
                    // refreshlayout.setRefreshing(true);
-                }
+                }*/
             }
 
             @Override
@@ -250,8 +250,8 @@ public class CircleFriendsActivity extends JLBaseActivity implements ICircleView
 
         titleBar = (TitleBar) findViewById(R.id.main_title_bar);
         titleBar.setTitle("朋友圈");
-        titleBar.setTitleColor(getResources().getColor(R.color.white));
-        titleBar.setBackgroundColor(getResources().getColor(R.color.title_bg));
+        titleBar.setTitleColor(getResources().getColor(R.color.logding_bg));
+        titleBar.setBackgroundColor(getResources().getColor(R.color.white));
 
         TextView textView = (TextView) titleBar.addAction(new TitleBar.TextAction("发布说说") {
             @Override
@@ -260,7 +260,7 @@ public class CircleFriendsActivity extends JLBaseActivity implements ICircleView
                 startActivity(new Intent(CircleFriendsActivity.this, ReleaseFrendActivity.class));
             }
         });
-        textView.setTextColor(getResources().getColor(R.color.white));
+        textView.setTextColor(getResources().getColor(R.color.logding_bg));
     }
 
 

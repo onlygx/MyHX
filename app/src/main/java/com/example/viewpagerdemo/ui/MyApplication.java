@@ -47,6 +47,8 @@ public class MyApplication  extends MultiDexApplication {
 
     public static String userPYId;
 
+    public static int exit=0;
+
 
     @Override
     public void onCreate() {

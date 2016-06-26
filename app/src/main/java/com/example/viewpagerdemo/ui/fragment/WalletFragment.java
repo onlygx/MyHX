@@ -1,6 +1,8 @@
 package com.example.viewpagerdemo.ui.fragment;
 
 import android.content.Intent;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -14,8 +16,10 @@ import com.alibaba.fastjson.JSONObject;
 import com.example.viewpagerdemo.ui.MyApplication;
 import com.example.viewpagerdemo.ui.activity.ErWMain2Activity;
 import com.example.viewpagerdemo.ui.activity.WakketZhuangZActivity;
+import com.example.viewpagerdemo.ui.adapter.WalletIncomeReclerViewAdpter;
 import com.example.viewpagerdemo.ui.bean.QbaoBean;
 import com.example.viewpagerdemo.ui.Contantor;
+import com.example.viewpagerdemo.ui.bean.Wallet_IncomeBean;
 import com.example.viewpagerdemo.ui.jlfragmenwork.actvity.LoginActivity;
 import com.example.viewpagerdemo.ui.jlfragmenwork.basefregmetwork.JLBaseFragment;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.DD;
@@ -26,6 +30,9 @@ import com.xingkesi.foodapp.R;
 import net.tsz.afinal.FinalHttp;
 import net.tsz.afinal.http.AjaxCallBack;
 import net.tsz.afinal.http.AjaxParams;
+
+import java.util.ArrayList;
+import java.util.Random;
 
 import butterknife.Bind;
 
@@ -68,18 +75,51 @@ public class WalletFragment extends JLBaseFragment {
     @Bind(R.id.iv_back)
     ImageView iv_back;
 
+    @Bind(R.id.wallet_incomerv)
+    RecyclerView wallet_incomerv;
+
+    ArrayList<Wallet_IncomeBean> list;
+    WalletIncomeReclerViewAdpter adpter;
 
     @Override
     public int setViewLayout() {
         return R.layout.activity_tab_friend;
     }
 
+    //----------测试数据-----------
+    ArrayList<Wallet_IncomeBean> TestData() {
+        ArrayList<Wallet_IncomeBean> list = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            Wallet_IncomeBean wb = new Wallet_IncomeBean();
+            wb.setComeId(i + "");
+            wb.setComeName("新疆苹果");
+            Random tan = new Random();
+            int ran = tan.nextInt(15);
+            int money = ran + 50 + i;
+            wb.setComeMoney(money + "");
+            list.add(wb);
+        }
+
+        return list;
+
+
+    }
 
     @Override
     public void InitObject() {
         iv_back.setVisibility(View.GONE);
         iv_right_image.setVisibility(View.GONE);
         tv_title.setText("钱包");
+
+        list = TestData();
+        wallet_incomerv.setHasFixedSize(true);
+        LinearLayoutManager manager = new LinearLayoutManager(getActivity());
+        manager.setOrientation(LinearLayoutManager.VERTICAL);
+        wallet_incomerv.setLayoutManager(manager);
+        adpter = new WalletIncomeReclerViewAdpter(getActivity(), list);
+        wallet_incomerv.setAdapter(adpter);
+
+
         //登录状态
         if (MyApplication.getInstan().getUser() != null && MyApplication.getInstan().getUser().getData().getThinksId() != null) {
             noLoa.setVisibility(View.GONE);
@@ -87,37 +127,6 @@ public class WalletFragment extends JLBaseFragment {
             noLoa.setVisibility(View.VISIBLE);
         }
 
-
-       /* OrderChildPage[] softwareChildPages = OrderChildPage.values();
-        String[] tabNames = new String[softwareChildPages.length];
-        Fragment[] fragments = new Fragment[softwareChildPages.length];
-        int w = 0;
-        for (OrderChildPage softwareChildPage : softwareChildPages) {
-            tabNames[w] = softwareChildPage.getTabName();
-            fragments[w] = softwareChildPage.buildFragment();
-            w++;
-        }*/
-        //  tabViewFactory = new WhiteTabViewFactory(getActivity(), tabNames);
-        //  pageAdapter = new FragmentArrayPageAdapter(getChildFragmentManager(), fragments);
-//        tabStripController = new WhiteTabStripController(getActivity(), pagerSlidingTabStrip);
-//        pagerSlidingTabStrip.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-//            @Override
-//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-//            }
-//
-//            @Override
-//            public void onPageScrollStateChanged(int state) {
-//            }
-//
-//            @Override
-//            public void onPageSelected(int position) {
-//                defaultChildPage = OrderChildPage.values()[position];
-//            }
-//        });
-
-        /*viewPager.setAdapter(pageAdapter);
-        viewPager.setCurrentItem(defaultChildPage.getPageIndex());
-        viewPager.setOffscreenPageLimit(viewPager.getAdapter().getCount());*/
         _add_log.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -262,7 +271,7 @@ public class WalletFragment extends JLBaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        Log.e("x","--------------------Onresume");
+        Log.e("x", "--------------------Onresume");
         //登录状态
         if (MyApplication.getInstan().getUser() != null && MyApplication.getInstan().getUser().getData().getThinksId() != null) {
             noLoa.setVisibility(View.GONE);
