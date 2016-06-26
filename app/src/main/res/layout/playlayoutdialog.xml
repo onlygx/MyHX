@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:layout_width="300dp"
+        android:layout_height="150dp"
+        android:background="@drawable/shape_grayline_writebody"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/content_tel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:textSize="17sp"
+            android:textColor="@color/black"
+            android:gravity="center_horizontal"
+            android:text="@string/telhit" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="30dp"
+            android:background="@color/gray"
+            />
+
+
+
+
+
+            <TextView
+                android:id="@+id/oktel"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:text="确定"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/btn_blue_normal"
+                android:textSize="17sp" />
+
+
+    </LinearLayout>
+
+</LinearLayout>

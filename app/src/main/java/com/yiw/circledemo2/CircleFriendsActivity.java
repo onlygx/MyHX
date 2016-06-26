@@ -80,14 +80,10 @@ public class CircleFriendsActivity extends JLBaseActivity implements ICircleView
     private RelativeLayout bodyLayout;
     private LinearLayoutManager layoutManager;
     private TitleBar titleBar;
-
-
-
     private final static int TYPE_PULLREFRESH = 1;
     private final static int TYPE_UPLOADREFRESH = 2;
     int page=1;
     int num=10;
-    int scrollPostion = 0;
 
     @Override
     public void initID() {
@@ -95,10 +91,7 @@ public class CircleFriendsActivity extends JLBaseActivity implements ICircleView
         mPresenter = new CirclePresenter();
         mPresenter.attachView(this);
         initView();
-
-
     }
-
 
     @Override
     protected void onResume() {
@@ -109,7 +102,6 @@ public class CircleFriendsActivity extends JLBaseActivity implements ICircleView
             aboutME();
         }
     }
-
 
     @Override
     public int setViewLayout() {
@@ -216,9 +208,6 @@ public class CircleFriendsActivity extends JLBaseActivity implements ICircleView
                     }
 
                 }
-                //  DD.v("数量：" + s);
-
-
             }
 
             @Override
@@ -369,9 +358,9 @@ public class CircleFriendsActivity extends JLBaseActivity implements ICircleView
         } else {
             ListBean item = (ListBean) mAdapter.getDatas().get(circlePosition);
             item.getRecordList().get(cpos).getChild().add(childBean);
-            for (ChildBean cb : item.getRecordList().get(cpos).getChild()) {
+            /*for (ChildBean cb : item.getRecordList().get(cpos).getChild()) {
                 DD.v("jsdlkgjd=============:" + cb.getContent() + "===" + cb.getType());
-            }
+            }*/
             mAdapter.notifyDataSetChanged();
             mAdapter.adapter.RefC(childBean);
         }

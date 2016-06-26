@@ -221,7 +221,7 @@ public class ReleaseNeedActivity extends JLBaseActivity {
                     public void onResponse(String response) {
                         closeWait();
                         Log.i("LD", "success,response = " + response);
-                        Toast.makeText(ReleaseNeedActivity.this, "uploadSuccess,response = " + response, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ReleaseNeedActivity.this, "发布成功" , Toast.LENGTH_SHORT).show();
                         finish();
                         //han.sendEmptyMessage(0);
                     }
@@ -232,7 +232,7 @@ public class ReleaseNeedActivity extends JLBaseActivity {
                         //han.sendEmptyMessage(2);
                         Log.i("LD", "error,response = " + error.getMessage());
                         closeWait();
-                        Toast.makeText(ReleaseNeedActivity.this, "uploadError,response = " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                      //  Toast.makeText(ReleaseNeedActivity.this, "uploadError,response = " + error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }, "files", f, ap);
                 mSingleQueue.add(request);

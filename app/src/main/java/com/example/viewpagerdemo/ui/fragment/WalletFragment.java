@@ -303,6 +303,7 @@ public class WalletFragment extends JLBaseFragment {
         //登录状态
         if (MyApplication.getInstan().getUser() != null && MyApplication.getInstan().getUser().getData().getThinksId() != null) {
             noLoa.setVisibility(View.GONE);
+            getQBInfo();
         } else {
             noLoa.setVisibility(View.VISIBLE);
         }

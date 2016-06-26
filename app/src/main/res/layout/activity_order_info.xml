@@ -37,12 +37,13 @@
                 android:text="" />
 
             <TextView
+                android:id="@+id/ddstate"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:gravity="center_vertical"
+                android:layout_height="40dp"
+                android:gravity="center"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
-                android:text="订单详情" />
+                android:text="" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/order_listview"

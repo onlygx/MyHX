@@ -248,6 +248,9 @@
         <activity android:name="com.yiw.circledemo2.widgets.MyCircleFriendsActivity" />
         <activity android:name="com.example.viewpagerdemo.ui.sarchcity.CityListActivity" />
         <activity android:name="com.example.viewpagerdemo.ui.activity.ListTopClassActivity" />
+        <activity android:name="com.example.viewpagerdemo.ui.activity.ShopWebActivity" />
+        <activity android:name="com.example.viewpagerdemo.ui.activity.IndexJieMainActivity" />
+        <activity android:name="com.example.viewpagerdemo.ui.activity.PingJiaMainChengActivity" />
 
 
         <activity

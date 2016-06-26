@@ -41,34 +41,20 @@
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/shape_write_corners"
+        android:padding="5dp"
+        android:visibility="gone"
+        android:background="@drawable/shape_write_corners2"
         android:layout_marginTop="80dp"
         android:gravity="center">
-
-        <TextView
-            android:id="@+id/tv_left_text_num"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:gravity="center"
-            android:layout_toRightOf="@+id/aboutme"
-            android:background="@drawable/shape_round_oavls"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:layout_marginLeft="10dp"
-            android:text="10"
-            android:textColor="@color/white"
-            android:textSize="10sp"
-            android:visibility="gone"
-            tools:visibility="visible" />
-
 
         <TextView
             android:id="@+id/aboutme"
             android:gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="20dp"
-            android:text="有新消息"
+            android:text="您有1条新消息"
             android:textColor="@color/white"
+
             android:textSize="16sp"
             android:visibility="visible"
             tools:visibility="visible"

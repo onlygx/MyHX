@@ -96,7 +96,7 @@ public class HomeeateListFragment extends JLBaseFragment implements SwipeRefresh
             //读取登录成功后保存的用户名和密码
             String localId = IMPrefsTools.getStringPrefs(getActivity(), USER_ID, "");
             String localPassword = IMPrefsTools.getStringPrefs(getActivity(), "thinkPwd", "");
-            init(localId, MyApplication.APP_KEY);
+           // init(localId, MyApplication.APP_KEY);
             DD.v("没有登录：" + localId + "===" + localPassword);
             if (!TextUtils.isEmpty(localId) && !TextUtils.isEmpty(localPassword)) {
                 login(localId, localPassword);
@@ -280,10 +280,8 @@ public class HomeeateListFragment extends JLBaseFragment implements SwipeRefresh
                     MyApplication.getInstan().setUser(user);
                     MyApplication.getInstan().setUserName(name);
                     //---------正式版请将下面的放开--------------------
-                    LogdindOpenIME(name);
+                //    LogdindOpenIME(name);
 
-                } else {
-                    TS.shortTime("登录失败,请重新登录");
                 }
             }
 

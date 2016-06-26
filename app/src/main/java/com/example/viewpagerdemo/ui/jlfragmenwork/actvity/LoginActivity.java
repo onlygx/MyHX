@@ -94,8 +94,6 @@ public class LoginActivity extends JLBaseActivity implements View.OnClickListene
     @Bind(R.id.rlayout)
     RelativeLayout rlayout;
 
-    //@Bind(R.id.appkey)
-    // EditText appKeyView;
 
     private boolean autoLogin = true;
 
@@ -136,7 +134,7 @@ public class LoginActivity extends JLBaseActivity implements View.OnClickListene
         super.initID();
         tag = getIntent().getStringExtra("tag");
 
-        loginHelper = LoginSampleHelper.getInstance();
+       /* loginHelper = LoginSampleHelper.getInstance();
         sdk = YWSDKGlobalConfigSample.getInstance();
         sdk.enableAutoLogin();
         //读取登录成功后保存的用户名和密码
@@ -149,7 +147,7 @@ public class LoginActivity extends JLBaseActivity implements View.OnClickListene
             }
         }
         init(usernameEditText.getText().toString(), MyApplication.APP_KEY);
-        myRegisterReceiver();
+        myRegisterReceiver();*/
 
 
         usernameEditText.addTextChangedListener(new TextWatcher() {
@@ -237,7 +235,7 @@ public class LoginActivity extends JLBaseActivity implements View.OnClickListene
             AjaxParams ajaxParams = new AjaxParams();
             ajaxParams.put("thinksId", name);
             ajaxParams.put("password", paws);
-            DD.d(Contantor.logdin + "?" + ajaxParams.toString());
+          //  DD.d(Contantor.logdin + "?" + ajaxParams.toString());
             new FinalHttp().post(Contantor.logdin, ajaxParams, new AjaxCallBack<String>() {
                 @Override
                 public void onSuccess(String s) {
@@ -249,8 +247,14 @@ public class LoginActivity extends JLBaseActivity implements View.OnClickListene
                         DD.d("登录ID:" + user.getData().getId() + "===" + user.getData().getThinksId());
                         MyApplication.getInstan().setUser(user);
                         MyApplication.getInstan().setUserName(name);
+                        //---------测试版请将下面的放开--------------------
+                        saveIdPasswordToLocal(name, paws,paws);
+                        if (tag.equals("logding")) {
+                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                        }
+                        finish();
                         //---------正式版请将下面的放开--------------------
-                        LogdindOpenIME();
+                        // LogdindOpenIME();
                     } else {
                         TS.shortTime("登录失败,请重新登录");
                     }
@@ -442,7 +446,7 @@ public class LoginActivity extends JLBaseActivity implements View.OnClickListene
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        myUnregisterReceiver();
+       // myUnregisterReceiver();
     }
 
     void LogdindOpenIME() {
@@ -464,8 +468,6 @@ public class LoginActivity extends JLBaseActivity implements View.OnClickListene
 
         init(wanName, MyApplication.APP_KEY);
         APPKEY = MyApplication.APP_KEY;
-        DD.i("login 开始 旺旺 登录!账号:" + wanName);
-
         loginHelper.login_Sample("18363088168", "123456", MyApplication.APP_KEY, new IWxCallback() {
 
             @Override

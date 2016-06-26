@@ -20,6 +20,7 @@ import com.example.viewpagerdemo.ui.activity.FindDDListActivity;
 import com.example.viewpagerdemo.ui.activity.MyOderListActivity;
 import com.example.viewpagerdemo.ui.activity.MyReleaseListActivity;
 import com.example.viewpagerdemo.ui.activity.ReleaseNeedActivity;
+import com.example.viewpagerdemo.ui.activity.ShopWebActivity;
 import com.example.viewpagerdemo.ui.bean.UserBeanLO;
 import com.example.viewpagerdemo.ui.Contantor;
 import com.example.viewpagerdemo.ui.jlfragmenwork.actvity.LoginActivity;
@@ -172,8 +173,9 @@ public class FindFragment extends JLBaseFragment {
                 intent.setClass(getActivity(), AdviceMainActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.ll_prosion://我的二维码
-                startActivity(new Intent(getActivity(), ErWMain2Activity.class));
+            case R.id.ll_prosion://我开店
+
+                startActivity(new Intent(getActivity(), ShopWebActivity.class));
                 break;
             case R.id.ll_tel://客服电话
                 final MyDialog md = new MyDialog(getActivity(), R.style.WinDialog);

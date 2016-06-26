@@ -49,7 +49,7 @@ public class DDCarReclerViewAdpter extends RecyclerView.Adapter<DDCarReclerViewA
     public void onBindViewHolder(final ViewHolder vh, int position) {
         final ShopInfoListBean data = list.get(position);
         final int pos = position;
-        vh.shopName.setText(data.getName());
+        vh.shopName.setText(data.getShopName());
         vh.shopTitle.setText(data.getName());
 
         final int num = data.getCurrNum();//数量
@@ -125,32 +125,44 @@ public class DDCarReclerViewAdpter extends RecyclerView.Adapter<DDCarReclerViewA
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.shop_name)
+      //  @Bind(R.id.shop_name)
         TextView shopName;
-        @Bind(R.id.shop_title)
+       // @Bind(R.id.shop_title)
         TextView shopTitle;
-        @Bind(R.id.shop_moneny)
+       // @Bind(R.id.shop_moneny)
         TextView shopMoneny;
-        @Bind(R.id.shop_isyh)
+       // @Bind(R.id.shop_isyh)
         ImageView shopIsyh;
-        @Bind(R.id.shop_icon)
+       // @Bind(R.id.shop_icon)
         ImageView shop_icon;
-        @Bind(R.id.shop_num)
+       // @Bind(R.id.shop_num)
         TextView shopNum;
-        @Bind(R.id.shop_znum)
+      //  @Bind(R.id.shop_znum)
         TextView shopZnum;
-        @Bind(R.id.shop_ymoney)
+       // @Bind(R.id.shop_ymoney)
         TextView shopYmoney;
-        @Bind(R.id.shop_zmongy)
+        //@Bind(R.id.shop_zmongy)
         TextView shop_zmongy;
-        @Bind(R.id.shop_jec)
+       // @Bind(R.id.shop_jec)
         ImageView shop_jec;
-        @Bind(R.id.shop_add)
+       // @Bind(R.id.shop_add)
         ImageView shop_add;
+
 
         ViewHolder(View view) {
             super(view);
-            ButterKnife.bind(this, view);
+            shopName= (TextView) view.findViewById(R.id.shop_name);
+            shopTitle= (TextView) view.findViewById(R.id.shop_title);
+            shopMoneny= (TextView) view.findViewById(R.id.shop_moneny);
+            shopIsyh= (ImageView) view.findViewById(R.id.shop_isyh);
+            shop_icon= (ImageView) view.findViewById(R.id.shop_icon);
+            shopNum= (TextView) view.findViewById(R.id.shop_num);
+            shopZnum= (TextView) view.findViewById(R.id.shop_znum);
+            shopYmoney= (TextView) view.findViewById(R.id.shop_ymoney);
+            shop_zmongy= (TextView) view.findViewById(R.id.shop_zmongy);
+            shop_jec= (ImageView) view.findViewById(R.id.shop_jec);
+            shop_add= (ImageView) view.findViewById(R.id.shop_add);
+            //ButterKnife.bind(this, view);
         }
     }
 

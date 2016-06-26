@@ -71,54 +71,16 @@ public class DatasUtil {
 	public static ZanListBean createCurUserFavortItem(String id) {
 		ZanListBean item = new ZanListBean();
 		item.setId(id);
-		item.setUser(curUser);
+		//item.setUser(curUser);
 		return item;
 	}
 
-	/*public static List<RecordListBean> createCommentItemList() {
-		List<RecordListBean> items = new ArrayList<RecordListBean>();
-		int size = getRandomNum(10);
-		if (size > 0) {
-			for (int i = 0; i < size; i++) {
-				items.add(createComment());
-			}
-		}
-		return items;
-	}*/
 
-	/*public static RecordListBean createComment() {
-		RecordListBean item = new RecordListBean();
-		item.setId(String.valueOf(commentId++));
-		item.setContent("哈哈");
-		UserBean user = getUser();
-		item.setUser(user);
-		if (getRandomNum(10) % 2 == 0) {
-			while (true) {
-				UserBean replyUser = getUser();
-				if (!user.getId().equals(replyUser.getId()+"")) {
-					item.setUser(replyUser);
-					break;
-				}
-			}
-		}
-		return item;
-	}*/
 	
 	/**
 	 * 创建发布评论
 	 * @return
 	 */
-
-
-
-
-
-
-
-
-
-
-
 	public static RecordListBean createPublicComment(String id,String content){
 		RecordListBean item = new RecordListBean();
 		item.setId(id);

@@ -207,7 +207,7 @@ public class ReleaseFrendActivity extends JLBaseActivity {
 
                     @Override
                     public void onResponse(String response) {
-                        Toast.makeText(ReleaseFrendActivity.this, "uploadSuccess,response = " + response, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ReleaseFrendActivity.this, "发布成功", Toast.LENGTH_SHORT).show();
                         Log.i("YanZi", "success,response = " + response);
                         han.sendEmptyMessage(0);
                     }

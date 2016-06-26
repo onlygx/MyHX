@@ -137,9 +137,10 @@ public class ColltentMainActivit extends JLBaseActivity implements SwipeRefreshL
                 if (cb.getList().size() > 0) {
                     list = cb.getList();
                     eatReclerViewAdpter = new ColltentItemAdpter(ColltentMainActivit.this, list);
+                    eatReclerViewAdpter.getArrayLists().clear();
+                    eatReclerViewAdpter.getArrayLists().addAll(list);
                     eatRecycler.setAdapter(eatReclerViewAdpter);
                     eatReclerViewAdpter.notifyDataSetChanged();
-                    eatReclerViewAdpter.getArrayLists().addAll(list);
 
                 } else {
                     if (num == 0) {

@@ -121,7 +121,7 @@ public class FindActivity extends JLBaseActivity {
     };
 
     @OnClick({R.id.rl_tx, R.id.rl_name, R.id.rl_addr, R.id.rl_pwd,
-            R.id.rl_sex, R.id.rl_wx, R.id.rl_qq, R.id.rl_qm,R.id.exit})
+            R.id.rl_sex, R.id.rl_wx, R.id.rl_qq, R.id.rl_qm,R.id.exit,R.id.erwmas})
     public void onClick(View view) {
         Intent intent = new Intent();
         switch (view.getId()) {
@@ -174,6 +174,11 @@ public class FindActivity extends JLBaseActivity {
                 finish();
 
                 // startActivity(new Intent(getActivity(), ColltentMainActivit.class));
+
+                break;
+            case R.id.erwmas://二维码
+
+                startActivity(new Intent(FindActivity.this, ErWMain2Activity.class));
 
                 break;
         }

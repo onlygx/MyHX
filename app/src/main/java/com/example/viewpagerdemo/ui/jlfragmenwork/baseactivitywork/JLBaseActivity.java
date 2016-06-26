@@ -28,12 +28,12 @@ public class JLBaseActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        boolean title[]=TitleAndScreen();
-      if(title[0]) {
+        boolean title[] = TitleAndScreen();
+        if (title[0]) {
             getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         }
-        if(title[1]) {
-            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        if (title[1]) {
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         }
 
        /*   if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -48,12 +48,12 @@ public class JLBaseActivity extends Activity {
         initObject();
     }
 
-    public boolean[] TitleAndScreen(){
-        return new boolean[]{true,false};
+    public boolean[] TitleAndScreen() {
+        return new boolean[]{true, false};
     }
 
-    public int setColor(){
-        return  R.color.waiter;
+    public int setColor() {
+        return R.color.waiter;
     }
 
     public void initID() {
@@ -66,24 +66,23 @@ public class JLBaseActivity extends Activity {
         windowWidth = Tools.decodeDisplayMetrics(this)[0];
         windowHeight = Tools.decodeDisplayMetrics(this)[1];
 
-        if(!Tools.isNetwork(getApplicationContext())) {
+        if (!Tools.isNetwork(getApplicationContext())) {
             TS.longTime("请连接网络");
             return;
         }
     }
 
 
-    public void ReustData(){}
+    public void ReustData() {
+    }
 
-    public int setViewLayout(){
+    public int setViewLayout() {
         return 0;
     }
 
 
-
     /**
      * 标题栏返回按钮
-     *
      */
     public void goBack(View view) {
         finish();
@@ -118,7 +117,6 @@ public class JLBaseActivity extends Activity {
 
     /**
      * 隐藏软键盘
-     *
      */
     protected void hideKeyboard() {
         if (getWindow().getAttributes().softInputMode != WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN) {
@@ -126,6 +124,7 @@ public class JLBaseActivity extends Activity {
                 manager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         }
     }
+
     /**
      * 判断是否需要隐藏input
      */
@@ -148,15 +147,16 @@ public class JLBaseActivity extends Activity {
         }
         return false;
     }
-    protected void showWait(){
-        if(dialog==null){
-            dialog  = new LoadingDialog(this, R.style.LoadingDialog_style);
+
+    protected void showWait() {
+        if (dialog == null) {
+            dialog = new LoadingDialog(this, R.style.LoadingDialog_style);
         }
         dialog.show();
     }
 
-    protected void closeWait(){
-        if(dialog!=null)
+    protected void closeWait() {
+        if (dialog != null)
             dialog.dismiss();
     }
 }

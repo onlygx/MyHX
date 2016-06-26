@@ -199,6 +199,7 @@ public class EatShopInfoActivity extends JLBaseActivity implements View.OnClickL
                     Toast.makeText(EatShopInfoActivity.this, "请选择需要购买的商品！", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                DD.v("这是ID:"+id);
                 Intent it =new Intent(EatShopInfoActivity.this, ShoppingDDCarActivity.class);
                 it.putExtra("id",id);
                 it.putExtra("car",(Serializable)carLiat);

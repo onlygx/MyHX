@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.example.viewpagerdemo.ui.activity.IndexJieMainActivity;
 import com.example.viewpagerdemo.ui.activity.IndexMainActivity;
 import com.example.viewpagerdemo.ui.bean.MyOderListBean;
 import com.example.viewpagerdemo.ui.Contantor;
@@ -76,8 +78,13 @@ public class MyOderItemAdpter extends RecyclerView.Adapter<MyOderItemAdpter.View
         vh.add.setText(data.getProvince() + " " + data.getCity() + " " + data.getDistrict() + " " + data.getAddress());
 
         String url = data.getBannerList().get(0).getUrl();
-        Picasso.with(c).load(Contantor.Imagepost + url).placeholder(R.drawable.aliwx_default_photo_right)
-                .error(R.drawable.aliwx_fail_photo_right).into(vh.shopIocn);
+        if(!url.equals("")) {
+            Picasso.with(c).load(Contantor.Imagepost + url).placeholder(R.drawable.aliwx_default_photo_right)
+                    .error(R.drawable.aliwx_fail_photo_right).into(vh.shopIocn);
+        }else{
+            vh.shopIocn.setImageResource(R.drawable.aliwx_default_photo);
+        }
+
         /**
          *  1、待付款
          2、已支付
@@ -85,20 +92,20 @@ public class MyOderItemAdpter extends RecyclerView.Adapter<MyOderItemAdpter.View
          4、待评价
          5、已完成
          */
-        vh.findshopDel.setVisibility(View.VISIBLE);
+        vh.findshopDel.setVisibility(View.GONE);
         switch (data.getStatus()){
-            case 1:
+            /*case 1:
                 vh.findshopDel.setText("付款");
-                break;
+                break;*/
             case 2:
             case 3:
-                vh.findshopDel.setText("确认收货");
+                vh.findshopDel.setText("完成");
                 break;
             case 4:
                 vh.findshopDel.setText("评价");
                 break;
             default:
-                vh.findshopDel.setVisibility(View.INVISIBLE);
+                vh.findshopDel.setVisibility(View.GONE);
                 break;
         }
 
@@ -122,7 +129,7 @@ public class MyOderItemAdpter extends RecyclerView.Adapter<MyOderItemAdpter.View
         vh.shopIocn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent it =new Intent(c, IndexMainActivity.class);
+                Intent it =new Intent(c, IndexJieMainActivity.class);
                 it.putExtra("tag",1);
                 it.putExtra("id",data.getId()+"");
                 c.startActivity(it);
@@ -168,6 +175,7 @@ public class MyOderItemAdpter extends RecyclerView.Adapter<MyOderItemAdpter.View
         TextView newDate;
         @Bind(R.id.findshop_del)
         Button findshopDel;
+
         @Bind(R.id.info)
         LinearLayout info;
 

@@ -63,6 +63,7 @@ public class Contantor {
     public static  String OrderInfocancel=post+"/orderFrom/cancel";//订单取消
     public static  String Orderfinish=post+"/orderFrom/finish";//确认收货
     public static  String goodsComment=post+"/goodsComment/save";//评价
+    public static  String demandComment=post+"/demand/demandComment";//评价
     public static  String comment=post+"/orderFrom/comment";//评价完成
     public static  String commentInfo=post+"/demand/findById";//需求详情
     public static  String commentreceive=post+"/demand/receive";//需求承接

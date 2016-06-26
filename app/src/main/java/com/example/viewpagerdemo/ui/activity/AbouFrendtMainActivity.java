@@ -16,6 +16,7 @@ import com.example.viewpagerdemo.ui.MyApplication;
 import com.example.viewpagerdemo.ui.adapter.EatInfoContentReclerAdatper;
 import com.example.viewpagerdemo.ui.adapter.FindDDShopReclerViewAdpter;
 import com.example.viewpagerdemo.ui.adapter.TalkViewAdpter;
+import com.example.viewpagerdemo.ui.adapter.TalkViewAdpter2;
 import com.example.viewpagerdemo.ui.bean.ContentListBean;
 import com.example.viewpagerdemo.ui.bean.FindDDListBean;
 import com.example.viewpagerdemo.ui.bean.TalkingBean;
@@ -57,7 +58,7 @@ public class AbouFrendtMainActivity extends JLBaseActivity implements SwipeRefre
     int scrollPostion = 0;
     int num = 10;
     ArrayList<ContentListBean> contentList;
-    TalkViewAdpter ddv;
+    TalkViewAdpter2 ddv;
 
     @Override
     public int setViewLayout() {
@@ -124,6 +125,7 @@ public class AbouFrendtMainActivity extends JLBaseActivity implements SwipeRefre
                     @Override
                     public void onSuccess(String s) {
                         super.onSuccess(s);
+                        TS.shortTime("设置成功");
 
                         DD.v("与我相关已读s："+s);
 
@@ -166,7 +168,7 @@ public class AbouFrendtMainActivity extends JLBaseActivity implements SwipeRefre
                 TalkingListBean list = JSON.parseObject(s, TalkingListBean.class);
                 find=list.getList();
                 if (find.size() > 0) {
-                    ddv = new TalkViewAdpter(AbouFrendtMainActivity.this);
+                    ddv = new TalkViewAdpter2(AbouFrendtMainActivity.this);
                     ddv.getArrayList().addAll(find);
                     eatRecycler.setAdapter(ddv);
                     ddv.notifyDataSetChanged();

@@ -318,11 +318,12 @@ public class CircleAdapter extends BaseRecycleViewAdapter      {
 
 
         public void setNum(int num){
-            if(aboutme!=null){
+            /*if(aboutme!=null){
                 aboutme.setVisibility(View.VISIBLE);
                 tv_left_text_num.setVisibility(View.VISIBLE);
                 tv_left_text_num.setText(""+num);
-            }
+            }*/
+            abouts.setVisibility(View.VISIBLE);
         }
         public HeaderViewHolder(View itemView) {
             super(itemView);
@@ -507,12 +508,14 @@ public class CircleAdapter extends BaseRecycleViewAdapter      {
                     if (System.currentTimeMillis() - mLasttime < 700)//防止快速点击操作
                         return;
                     mLasttime = System.currentTimeMillis();
+                    String name=mListBean.getUser().getNickName();
+                    DD.v("赞："+name);
                     if (presenter != null) {
                         if ("赞".equals(actionitem.mTitle.toString())) {
-                            presenter.addFavort(mCirclePosition);
-                        } else {//取消点赞
+                            presenter.addFavort(mCirclePosition,mListBean);
+                        }/* else {//取消点赞
                             presenter.deleteFavort(mCirclePosition, mFavorId);
-                        }
+                        }*/
                     }
                     break;
                 case 1://评论

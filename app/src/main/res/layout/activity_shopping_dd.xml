@@ -36,7 +36,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
-                    android:text="就餐方式"
+                    android:text="配送"
 
                     android:textSize="15sp" />
 
@@ -188,6 +188,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="80dp"
                 android:background="#F0F0F0"
+                android:visibility="gone"
                 android:orientation="horizontal"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp">

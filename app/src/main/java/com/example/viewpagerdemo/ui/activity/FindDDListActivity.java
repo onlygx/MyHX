@@ -1,5 +1,6 @@
 package com.example.viewpagerdemo.ui.activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -60,7 +61,7 @@ public class FindDDListActivity extends JLBaseActivity implements SwipeRefreshLa
     public void initID() {
         iv_back.setVisibility(View.VISIBLE);
         iv_back.setImageResource(R.drawable.cp_fh);
-        tv_title.setText("订单");
+        tv_title.setText("订单列表");
         tv_title.setTextColor(getResources().getColor(R.color.black));
     }
 
@@ -86,7 +87,7 @@ public class FindDDListActivity extends JLBaseActivity implements SwipeRefreshLa
                         == ddv.getItemCount()) {
                     page = page + 1;
                     num = num + 10;
-                    getDDList();
+                    getDDList(page,num);
                     refreshlayout.setRefreshing(true);
                 }
             }
@@ -102,24 +103,32 @@ public class FindDDListActivity extends JLBaseActivity implements SwipeRefreshLa
 
         ddv = new FindDDShopReclerViewAdpter(FindDDListActivity.this);
         ddList.setAdapter(ddv);
-
-
         refreshlayout.setRefreshing(true);
-        getDDList();
-
+        getDDList(1,10);
 
     }
 
-    void getDDList() {
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(data!=null){
+            DD.v("可以刷新了：");
+            list.clear();
+            getDDList(1,10);
+        }
+    }
+
+    void getDDList(int pages, int nums) {
         if (isRuest) {
-            TS.shortTime("数据正在路上。。。请稍等");
+            TS.shortTime("数据正在路上。。。");
             return;
         }
         isRuest = true;
         AjaxParams map = new AjaxParams();
         map.put("userId", MyApplication.getInstan().getUser().getData().getId() + "");
-        map.put("page", page + "");
-        map.put("size", num + "");
+        map.put("page", pages + "");
+        map.put("size", nums + "");
         String url = Contantor.FindDDList;
         DD.d("订单列表请求:" + url + "?" + map.toString());
         new FinalHttp().post(url, map, new AjaxCallBack<String>() {
@@ -164,6 +173,6 @@ public class FindDDListActivity extends JLBaseActivity implements SwipeRefreshLa
         num = 10;
         list.clear();
         refreshlayout.setRefreshing(true);
-        getDDList();
+        getDDList(page,num);
     }
 }

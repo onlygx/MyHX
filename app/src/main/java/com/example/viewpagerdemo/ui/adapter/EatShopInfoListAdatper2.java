@@ -97,7 +97,7 @@ public class EatShopInfoListAdatper2 extends BaseAdapter {
         }
         DD.i("需要更新的位置================:"+nums);
         vh.listCongtent.setText(cb.getName());//商品名
-        vh.listGongx.setText(cb.getContent());//介绍
+       // vh.listGongx.setText(cb.getContent());//介绍
         vh.money.setText(cb.getPrice() + "");//现价
         vh.listOldmoney.setText(cb.getPrice() + "");//原价
         vh.listOldmoney.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG); //中划线

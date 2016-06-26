@@ -1,5 +1,6 @@
 package com.example.viewpagerdemo.ui.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
@@ -29,11 +30,11 @@ import butterknife.ButterKnife;
  */
 public class FindDDShopReclerViewAdpter extends RecyclerView.Adapter<FindDDShopReclerViewAdpter.ViewHolder> {
 
-    Context c;
+    Activity c;
     ArrayList<FindDDListShopBean> list;
 
 
-    public FindDDShopReclerViewAdpter(Context c) {
+    public FindDDShopReclerViewAdpter(Activity c) {
         this.c = c;
         this.list = new ArrayList<>();
         // DD.w("list:"+list.size());
@@ -74,6 +75,7 @@ public class FindDDShopReclerViewAdpter extends RecyclerView.Adapter<FindDDShopR
 
 //        vh.findshopNum.setText(data.getPrice() + "");//配送  未提供 暂时用快递
         //--------状态-------
+        //订单状态从0-5分别代表“已取消”、“待支付”、“已支付”、“已发货”、“待评价”、“已完成”
         if (statue == 1) {
             vh.fingshop_fk.setVisibility(View.VISIBLE);
             vh.fingshop_fk.setText("待付款");//付款
@@ -84,26 +86,23 @@ public class FindDDShopReclerViewAdpter extends RecyclerView.Adapter<FindDDShopR
             vh.fingshop_fk.setVisibility(View.VISIBLE);
             vh.fingshop_fk.setText("待评价");//付款
             vh.fingshopState.setText("已完成");
-        } else if (statue == 2) {//已付款
-            vh.fingshopPl.setText("查看物流");
-            vh.fingshop_fk.setVisibility(View.VISIBLE);
-            vh.fingshop_fk.setText("已付款");//付款
-            vh.fingshopState.setText("已付款");
-        } else if (statue == 3) {//已发货
-            vh.fingshopPl.setText("查看物流");
+        }else if (statue == 3 || statue == 2) {//已发货
+            vh.fingshopPl.setText("确认收货");
             vh.fingshop_fk.setVisibility(View.VISIBLE);
             vh.fingshop_fk.setText("已付款");//付款
             vh.fingshopState.setText("已付款");
         } else if (statue == 5) {//已失效
-            vh.fingshopPl.setText("已失效");
+            vh.fingshopPl.setText("已完成");
             vh.fingshopPl.setEnabled(false);
             vh.fingshop_fk.setVisibility(View.VISIBLE);
-            vh.fingshop_fk.setText("已失效");//付款
-            vh.fingshopState.setText("已失效");
-        } else if (statue == 0) {
-            vh.fingshopPl.setVisibility(4);
-            vh.fingshop_fk.setVisibility(4);
-            vh.fingshopState.setVisibility(4);
+            vh.fingshop_fk.setText("已完成");//付款
+            vh.fingshopState.setText("已完成");
+        } else if (statue == 0) {//已取消
+            vh.fingshopPl.setText("已取消");
+            vh.fingshopPl.setEnabled(false);
+            vh.fingshop_fk.setVisibility(View.VISIBLE);
+            vh.fingshop_fk.setText("已取消");
+            vh.fingshopState.setText("已取消");
         }
 
 
@@ -123,7 +122,7 @@ public class FindDDShopReclerViewAdpter extends RecyclerView.Adapter<FindDDShopR
                     it.putExtra("id", id + "");
                     it.putExtra("st", statue);
                     it.putExtra("name", name);
-                    c.startActivity(it);
+                    c.startActivityForResult(it,101);
 
                // }
             }

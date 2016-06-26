@@ -30,6 +30,7 @@ import com.example.viewpagerdemo.ui.jlfragmenwork.actvity.LoginActivity;
 import com.example.viewpagerdemo.ui.jlfragmenwork.baseactivitywork.JLBaseActivity;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.DD;
 import com.example.viewpagerdemo.ui.jlfragmenwork.share.SelectPicPopupWindowShare;
+import com.example.viewpagerdemo.ui.jlfragmenwork.util.TS;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.xingkesi.foodapp.R;
@@ -72,6 +73,7 @@ public class EatInfoActivity extends JLBaseActivity implements View.OnClickListe
     ImageView xsyh;
     @Bind(R.id.tv_right_text)
     TextView tv_right_text;
+    String scID;
 
     //--------------轮班---------------
     @Bind(R.id.eat_vpone)
@@ -265,7 +267,9 @@ public class EatInfoActivity extends JLBaseActivity implements View.OnClickListe
                 san_gm.setText(info.getPayCount() + "");
 
 
-
+                if(info.getCollection()!=null) {
+                    scID = info.getCollection().getId();
+                }
                 if (shopID==null || shopID.equals("")) {
                     shopID = info.getShopId() + "";
                 }
@@ -424,7 +428,7 @@ public class EatInfoActivity extends JLBaseActivity implements View.OnClickListe
                 intent.putExtra("id", id + "");
                 startActivity(intent);
 
-
+                break;
             case R.id.tv_sl://私聊
                 if (MyApplication.getInstan().getUser() == null || MyApplication.getInstan().getUser().getData().getId() == 0) {
                     intent.putExtra("tag", "finsh");
@@ -432,6 +436,7 @@ public class EatInfoActivity extends JLBaseActivity implements View.OnClickListe
                     startActivity(intent);
                 } else {
 
+                    TS.shortTime("私聊功能敬请期待");
                 }
                 break;
             case R.id.tv_sc://收藏
@@ -517,6 +522,8 @@ public class EatInfoActivity extends JLBaseActivity implements View.OnClickListe
                     DD.v("收藏商品:" + s);
                     if (js.getBoolean("success")) {
                         //  TS.shortTime("收藏成功");
+                        JSONObject jd=js.getJSONObject("data");
+                        scID=jd.getString("id");
 
                         isColl=1;
                         Drawable drawable = getApplicationContext().getResources().getDrawable(R.drawable.scl);
@@ -536,7 +543,8 @@ public class EatInfoActivity extends JLBaseActivity implements View.OnClickListe
         });
     }private void ChanSchouchang() {
         AjaxParams map = new AjaxParams();
-        map.put("Id", id);
+
+        map.put("Id", scID);
         DD.v("shan收藏商品:" + Contantor.delete+"?"+map.toString());
        // map.put("userId", MyApplication.getInstan().getUser().getData().getId() + "");
         new FinalHttp().post(Contantor.delete, map, new AjaxCallBack<String>() {

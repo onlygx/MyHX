@@ -1,5 +1,7 @@
 package com.example.viewpagerdemo.ui.activity;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -8,6 +10,7 @@ import com.example.viewpagerdemo.ui.MyApplication;
 import com.example.viewpagerdemo.ui.Contantor;
 import com.example.viewpagerdemo.ui.jlfragmenwork.baseactivitywork.JLBaseActivity;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.DD;
+import com.example.viewpagerdemo.ui.jlfragmenwork.util.MyDialog;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.TS;
 import com.xingkesi.foodapp.R;
 
@@ -72,8 +75,23 @@ public class PlayMainActivity extends JLBaseActivity {
                 try {
                     JSONObject js = new JSONObject(s);
                     if (js.getBoolean("success")) {
-                        TS.shortTime("付款成功");
-                        finish();
+                       // TS.shortTime("付款成功");
+                        final MyDialog md = new MyDialog(PlayMainActivity.this, R.style.WinDialog);
+                        md.setContentView(R.layout.playlayoutdialog);
+                        TextView con = (TextView) md.getWindow().findViewById(R.id.content_tel);
+                        con.setText("付款成功");
+                        TextView ok = (TextView) md.getWindow().findViewById(R.id.oktel);
+                        ok.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent it = new Intent(PlayMainActivity.this, OrderInfoActivity.class);
+                                it.putExtra("id", id);
+                                setResult(101, it);
+                                md.dismiss();
+                                finish();
+                            }
+                        });
+                        md.show();
                     } else {
                         if (js.getInt("code") == 3) {
                             TS.shortTime("余额不足");

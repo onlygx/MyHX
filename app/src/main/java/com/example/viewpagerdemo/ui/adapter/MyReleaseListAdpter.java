@@ -54,6 +54,22 @@ public class MyReleaseListAdpter extends RecyclerView.Adapter<MyReleaseListAdpte
     public void onBindViewHolder(ViewHolder vh, final int position) {
         //-------------------
         MyReleaseBean.ListBean data = adList.get(position);
+        switch (data.getStatus()){
+            case 1:
+                vh.findshopDel.setText("付款");
+                break;
+            case 2:
+            case 3:
+                vh.findshopDel.setText("确认收货");
+                break;
+            case 4:
+                vh.findshopDel.setText("评价");
+                break;
+            default:
+                vh.findshopDel.setVisibility(View.GONE);
+                break;
+        }
+
         String name =data.getTitle();
         vh.findshopTitle.setText(name);
         String content =data.getContent();
@@ -75,6 +91,8 @@ public class MyReleaseListAdpter extends RecyclerView.Adapter<MyReleaseListAdpte
                 del.del(position);
             }
         });
+
+//        findshop_del
     }
 
     @Override

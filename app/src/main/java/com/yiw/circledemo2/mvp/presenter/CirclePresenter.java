@@ -50,9 +50,9 @@ public class CirclePresenter extends BasePresenter<ICircleView> {
         mCircleModel = new CircleModel();
     }
 
-    public void loadData(final int loadType,int page,int num) {
+    public void loadData(final int loadType, int page, int num) {
         this.loadType = loadType;
-        getPY( page, num);
+        getPY(page, num);
     }
 
 
@@ -64,14 +64,11 @@ public class CirclePresenter extends BasePresenter<ICircleView> {
         }
     };
 
-    public void getPY(int page,int num) {
-        /*if(datas!=null && datas.size()>0){
-            datas.clear();
-        }*/
+    public void getPY(int page, int num) {
         AjaxParams ap = new AjaxParams();
         ap.put("userId", MyApplication.getInstan().getUser().getData().getId() + "");
-        ap.put("page", page+"");
-        ap.put("size",num+"");
+        ap.put("page", page + "");
+        ap.put("size",  "100");
         DD.v("LD 朋友圈:" + DatasUtil.userPY + "?" + ap.toString());
         new FinalHttp().post(DatasUtil.userPY, ap, new AjaxCallBack<String>() {
             @Override
@@ -81,6 +78,7 @@ public class CirclePresenter extends BasePresenter<ICircleView> {
                 DD.v("LD 朋友圈s:" + s);
                 if (test.getList().size() > 0) {
                     List<ListBean> datas = test.getList();
+                    MyApplication.datas.clear();
                     MyApplication.datas.addAll(datas);
                     for (int i = 0; i < datas.size(); i++) {
                         if (datas.get(i).getBannerList().size() > 0) {
@@ -101,9 +99,6 @@ public class CirclePresenter extends BasePresenter<ICircleView> {
     }
 
     public void getMyPY() {
-        /*if(datas!=null && datas.size()>0){
-            datas.clear();
-        }*/
         AjaxParams ap = new AjaxParams();
         ap.put("myId", MyApplication.getInstan().getUser().getData().getId() + "");
         ap.put("page", "1");
@@ -157,12 +152,13 @@ public class CirclePresenter extends BasePresenter<ICircleView> {
 
     /**
      * @param circlePosition
+     * @param mListBean
      * @return void    返回类型
      * @throws
      * @Title: addFavort
      * @Description: 点赞
      */
-    public void addFavort(final int circlePosition) {
+    public void addFavort(final int circlePosition, final ListBean mListBean) {
         mCircleModel.addFavort(new IDataRequestListener() {
 
             @Override
@@ -170,15 +166,16 @@ public class CirclePresenter extends BasePresenter<ICircleView> {
 
                 Log.d("LD", "消：" + circlePosition);
                 String id = MyApplication.datas.get(circlePosition).getId();
-                questZ(id, circlePosition);
+                questZ(id, circlePosition, mListBean);
             }
         });
     }
 
     //点
-    void questZ(String id, final int circlePosition) {
+    void questZ(String id, final int circlePosition, final ListBean mListBean) {
         String url = Contantor.record;
         AjaxParams ap = new AjaxParams();
+       // final String nikeName = mListBean.getUser().getNickName();
         ap.put("userId", MyApplication.getInstan().getUser().getData().getId() + "");
         ap.put("infoId", id);
         ap.put("type", "0");
@@ -193,15 +190,14 @@ public class CirclePresenter extends BasePresenter<ICircleView> {
                         JSONObject js = new JSONObject(s);
                         String id = js.getJSONObject("data").getString("id");
                         ZanListBean item = DatasUtil.createCurUserFavortItem(id);
+                        UserBean ub = mListBean.getUser();
+                        item.setUser(ub);
                         getView().update2AddFavorite(circlePosition, item);
 
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-
-
                 }
-
             }
 
             @Override

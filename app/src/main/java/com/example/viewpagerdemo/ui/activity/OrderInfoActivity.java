@@ -3,6 +3,7 @@ package com.example.viewpagerdemo.ui.activity;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -62,11 +63,13 @@ public class OrderInfoActivity extends JLBaseActivity {
     List<OderInfoBean.GoodsesBean> list;
     OderInfoListAdpter oa;
 
-    String moneys,name;
+    String moneys, name;
     @Bind(R.id.order_cancel)
     TextView orderCancel;
     @Bind(R.id.order_fk)
     TextView orderFk;
+    @Bind(R.id.ddstate)
+    TextView ddstate;
 
     int Status;
 
@@ -83,36 +86,82 @@ public class OrderInfoActivity extends JLBaseActivity {
     @Override
     public void initID() {
         super.initID();
+        //订单状态从0-5分别代表“已取消”、“待支付”、“已支付”、“已发货”、“待评价”、“已完成”
         iv_back.setVisibility(View.VISIBLE);
         iv_back.setImageResource(R.drawable.cp_fh);
-        tv_title.setText("添加收货地址");
+        tv_title.setText("订单详情");
         idNum = getIntent().getStringExtra("id");
         name = getIntent().getStringExtra("name");
-        Status = getIntent().getIntExtra("st",-1);
+        Status = getIntent().getIntExtra("st", -1);
         LinearLayoutManager man = new LinearLayoutManager(OrderInfoActivity.this);
         man.setOrientation(LinearLayoutManager.VERTICAL);
         orderListview.setLayoutManager(man);
 
-        //状态5 不在此显示
+
         if (Status == 4) {//已完成显示评价
             orderCancel.setVisibility(View.GONE);
-            orderFk.setText("已完成");
-            orderFk.setEnabled(false);
-        }else if(Status == 3){
-           // orderCancel.setVisibility(View.GONE);
+            orderFk.setText("待评价");
+            ddstate.setText("已完成");
+        } else if (Status == 3 || Status == 2) {
+            ddstate.setText("已发货");
             orderFk.setText("确认收货");
-        }else if(Status == 2){
-            orderFk.setText("已付款");
+        } else if (Status == 5) {
+            orderCancel.setVisibility(View.GONE);
             orderFk.setEnabled(false);
+            orderFk.setText("已完成");
+            ddstate.setText("已完成");
+        } else if (Status == 1) {
+            ddstate.setText("待支付");
+            orderFk.setText("付款");
         }
 
         if (idNum != null && !idNum.equals("")) {
-            getOrderInfo();
+            getOrderInfo(idNum);
+        }
+
+        iv_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setResult(101,new Intent(OrderInfoActivity.this,FindDDListActivity.class));
+                finish();
+            }
+        });
+
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode==KeyEvent.KEYCODE_BACK){
+            setResult(101,new Intent(OrderInfoActivity.this,FindDDListActivity.class));
+            finish();
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (data != null) {
+            switch (resultCode) {
+                case 101:
+                    String id = data.getStringExtra("id");
+                    getOrderInfo(id);
+                    break;
+                case 102:
+                    setResult(101,new Intent(OrderInfoActivity.this,FindDDListActivity.class));
+                    finish();
+                    break;
+            }
         }
     }
 
-
-    void getOrderInfo() {
+    void getOrderInfo(String idNum) {
         String url = Contantor.OrderInfo;
         AjaxParams ap = new AjaxParams();
         ap.put("id", idNum);
@@ -139,10 +188,29 @@ public class OrderInfoActivity extends JLBaseActivity {
                     orderName.setText(oder.getAddress().getName() + "    " + oder.getAddress().getPhone());//收货人
                     orderAddress.setText(oder.getAddress().getProvince() + oder.getAddress().getCity() +
                             oder.getAddress().getDistrict() + oder.getAddress().getAddress());//地址
-                    orderDdnum.setText(idNum);//订单号
+                    orderDdnum.setText(OrderInfoActivity.this.idNum);//订单号
 
+                    int Statuse = oder.getStatus();
+                    Status=Statuse;
 
-
+//订单状态从0-5分别代表“已取消”、“待支付”、“已支付”、“已发货”、“待评价”、“已完成”
+                    if (Statuse == 4) {//已完成显示评价
+                        orderCancel.setVisibility(View.GONE);
+                        orderFk.setText("待评价");
+                        ddstate.setText("已完成");
+                    } else if (Statuse == 3 || Statuse == 2) {
+                        orderCancel.setVisibility(View.GONE);
+                        ddstate.setText("已发货");
+                        orderFk.setText("确认收货");
+                    } else if (Statuse == 5) {
+                        orderCancel.setVisibility(View.GONE);
+                        orderFk.setEnabled(false);
+                        orderFk.setText("已完成");
+                        ddstate.setText("已完成");
+                    } else if (Statuse == 1) {
+                        ddstate.setText("待支付");
+                        orderFk.setText("付款");
+                    }
 
                 }
             }
@@ -200,26 +268,28 @@ public class OrderInfoActivity extends JLBaseActivity {
                 if (moneys == null || moneys.equals("")) {
                     return;
                 }
-                if(Status==3){//确认收货
+                if (Status == 3 || Status==2) {//确认收货
                     OKOder();
-                }else if(Status==1) {
+                } else if (Status == 1) {//去付款
                     Intent it = new Intent(OrderInfoActivity.this, PlayMainActivity.class);
                     it.putExtra("id", idNum + "");
                     it.putExtra("mo", moneys + "");
-                    startActivity(it);
-                }else if(Status==4){//去评价
+//                    startActivity(it);
+                    startActivityForResult(it, 101);
+                } else if (Status == 4) {//去评价
                     Intent it = new Intent(OrderInfoActivity.this, PingJiaMainActivity.class);
-                    it.putExtra("id", idNum + "");
+                    it.putExtra("id", list.get(0).getId()+ "");
                     it.putExtra("name", name);
-                    startActivity(it);
-                    finish();
+                    startActivityForResult(it, 102);
+//                    startActivity(it);
+//                    finish();
                 }
                 break;
         }
     }
 
     //确认收货
-    void OKOder(){
+    void OKOder() {
         showWait();
         String url = Contantor.Orderfinish;
         AjaxParams ap = new AjaxParams();
@@ -234,8 +304,9 @@ public class OrderInfoActivity extends JLBaseActivity {
                     JSONObject js = new JSONObject(s);
                     if (js.getBoolean("success")) {
                         orderCancel.setVisibility(View.GONE);
-                        Status=4;
+                        Status = 4;
                         orderFk.setText("去评价");
+                        ddstate.setText("已完成");
                     }
                     closeWait();
                 } catch (JSONException e) {

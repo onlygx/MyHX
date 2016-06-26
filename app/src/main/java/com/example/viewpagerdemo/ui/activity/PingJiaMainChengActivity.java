@@ -7,8 +7,8 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.example.viewpagerdemo.ui.MyApplication;
 import com.example.viewpagerdemo.ui.Contantor;
+import com.example.viewpagerdemo.ui.MyApplication;
 import com.example.viewpagerdemo.ui.jlfragmenwork.baseactivitywork.JLBaseActivity;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.DD;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.TS;
@@ -26,9 +26,9 @@ import butterknife.OnClick;
 
 
 /**
- * 评价商品
+ * 评价需求
  */
-public class PingJiaMainActivity extends JLBaseActivity {
+public class PingJiaMainChengActivity extends JLBaseActivity {
 
     @Bind(R.id.iv_back)
     ImageView iv_back;
@@ -42,7 +42,7 @@ public class PingJiaMainActivity extends JLBaseActivity {
     EditText PingJiaContent;
 
 
-    String id,name;
+    String id,name,goodsId;
 
     @Override
     public int setViewLayout() {
@@ -57,6 +57,7 @@ public class PingJiaMainActivity extends JLBaseActivity {
         tv_title.setText("评价");
         id = getIntent().getStringExtra("id");
         name =getIntent().getStringExtra("name");
+        goodsId =getIntent().getStringExtra("goodsId");
         PingJiaName.setText(name);
     }
 
@@ -71,10 +72,11 @@ public class PingJiaMainActivity extends JLBaseActivity {
         showWait();
         AjaxParams ap = new AjaxParams();
         ap.put("userId", MyApplication.getInstan().getUser().getData().getId()+"");
+        ap.put("tags", id);
         ap.put("goodsId", id);
         ap.put("content", PingJiaContent.getText().toString());
         ap.put("score", PingJiaRat.getRating()+"");
-        String url = Contantor.goodsComment;
+        String url = Contantor.demandComment;
 
         DD.v("评价：" + url + "?" + ap.toString());
 
@@ -87,8 +89,7 @@ public class PingJiaMainActivity extends JLBaseActivity {
                 try {
                     js = new JSONObject(s);
                     if (js.getBoolean("success")) {
-                        finish();
-                       // PingjiaReqFinsh();
+                        PingjiaReqFinsh();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -119,7 +120,7 @@ public class PingJiaMainActivity extends JLBaseActivity {
                     JSONObject js = new JSONObject(s);
                     if (js.getBoolean("success")) {
                         TS.shortTime("评价完成");
-                        setResult(102,new Intent(PingJiaMainActivity.this,OrderInfoActivity.class));
+                        setResult(102,new Intent(PingJiaMainChengActivity.this,OrderInfoActivity.class));
                         finish();
                     }
                     closeWait();

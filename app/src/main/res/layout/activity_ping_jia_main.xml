@@ -11,51 +11,64 @@
         layout="@layout/jl_base_title_layout" />
 
 
-
     <TextView
         android:id="@+id/PingJia_name"
-        android:paddingRight="10dp"
-        android:paddingLeft="10dp"
-        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:text=""
+        android:layout_marginTop="20dp"
         android:gravity="center"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:text=""
         android:textSize="17sp"
-        tools:text="商品名"
-        />
+        tools:text="商品名" />
 
     <LinearLayout
-        android:paddingRight="10dp"
-        android:paddingLeft="10dp"
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
 
-        <RatingBar
-            android:id="@+id/PingJia_rat"
-            android:layout_gravity="center_horizontal"
-            style="?android:attr/ratingBarStyleIndicator"
-            android:layout_marginTop="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:numStars="5"
-            android:stepSize="1"
-            android:rating="1"
-            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:gravity="center_vertical"
+                android:text="评分："
+                android:textSize="17sp"
+                />
+
+            <RatingBar
+                android:id="@+id/PingJia_rat"
+                style="?android:attr/ratingBarStyleIndicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:numStars="5"
+                android:isIndicator="false"
+                android:rating="1"
+                android:stepSize="1" />
+
+        </LinearLayout>
 
         <EditText
             android:id="@+id/PingJia_content"
-            android:padding="10dp"
-            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:text=""
+            android:layout_marginTop="20dp"
             android:background="@drawable/shape_grayline_writebody"
             android:gravity="left|top"
+            android:padding="10dp"
+            android:text=""
             android:textSize="17sp"
-            tools:text="商品名"
-            />
+            tools:text="商品名" />
 
 
     </LinearLayout>
@@ -64,15 +77,12 @@
         android:id="@+id/PingJia_sit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="提交"
-        android:layout_marginTop="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="10dp"
-        android:textColor="@color/white"
+        android:layout_marginTop="20dp"
         android:background="@drawable/shape_grenn_corners_pull"
-        />
-
-
+        android:text="提交"
+        android:textColor="@color/white" />
 
 
 </LinearLayout>

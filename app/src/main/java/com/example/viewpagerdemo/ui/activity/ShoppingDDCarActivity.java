@@ -38,31 +38,29 @@ import butterknife.OnClick;
  */
 public class ShoppingDDCarActivity extends JLBaseActivity implements DDCarReclerViewAdpter.Shope_jian_add {
 
-    @Bind(R.id.iv_back)
+   // @Bind(R.id.iv_back)
     ImageView iv_back;
-    @Bind(R.id.tv_title)
+  //  @Bind(R.id.tv_title)
     TextView tv_title;
 
 
-    @Bind(R.id.addr)
-    LinearLayout addr;
-    @Bind(R.id.money)
+   // @Bind(R.id.money)
     TextView money;//总价
-    @Bind(R.id.num)
+   // @Bind(R.id.num)
     TextView num;//总数
-    @Bind(R.id.dd_sc)
+   // @Bind(R.id.dd_sc)
     ScrollView dd_sc;
 
 
-    @Bind(R.id.dd_list)
+   // @Bind(R.id.dd_list)
     RecyclerView ddList;
     DDCarReclerViewAdpter ddv;
 
     int fnum = 0;//总数量
     double nmoneys = 0;
-    @Bind(R.id.text_add)
+   // @Bind(R.id.text_add)
     TextView textAdd;
-    @Bind(R.id.text_beiz)
+  //  @Bind(R.id.text_beiz)
     TextView textBeiz;
 
     String id, shopId, receiptAddressId;//商铺ID  地址ID
@@ -78,6 +76,15 @@ public class ShoppingDDCarActivity extends JLBaseActivity implements DDCarRecler
 
     @Override
     public void initID() {
+        iv_back= (ImageView) findViewById(R.id.iv_back);
+        tv_title= (TextView) findViewById(R.id.tv_title);
+        money= (TextView) findViewById(R.id.money);
+        num= (TextView) findViewById(R.id.num);
+        dd_sc= (ScrollView) findViewById(R.id.dd_sc);
+        ddList= (RecyclerView) findViewById(R.id.dd_list);
+        textAdd= (TextView) findViewById(R.id.text_add);
+        textBeiz= (TextView) findViewById(R.id.text_beiz);
+
         iv_back.setVisibility(View.VISIBLE);
         iv_back.setImageResource(R.drawable.cp_fh);
         tv_title.setText("订单");
@@ -87,7 +94,8 @@ public class ShoppingDDCarActivity extends JLBaseActivity implements DDCarRecler
         carLiat = (ArrayList<ShopInfoListBean>) getIntent().getSerializableExtra("car");
 
         for (ShopInfoListBean ib : carLiat) {
-            DD.v("订单中:" + id + "===" + ib.getCurrNum());
+            id=ib.getId()+"";
+            DD.v(ib.getId()+"订单中:" + id + "===" + ib.getCurrNum());
         }
 
         LinearLayoutManager man = new LinearLayoutManager(ShoppingDDCarActivity.this);
@@ -193,15 +201,24 @@ public class ShoppingDDCarActivity extends JLBaseActivity implements DDCarRecler
                     }
                     ap.put("goodsList", sb.toString());
                     String url = Contantor.submitAddr;
-
+                    DD.v("下单:"+url+"?"+ap.toString());
                     new FinalHttp().post(url, ap, new AjaxCallBack<String>() {
                         @Override
                         public void onSuccess(String s) {
                             super.onSuccess(s);
                             try {
+                                    DD.v("下单ds:"+s);
                                 JSONObject js = new JSONObject(s);
                                 if (js.getBoolean("success")) {
-                                    DD.v("下单成功");
+//                                    shopId
+                                    /*BigDecimal b = new BigDecimal(nmoneys);
+                                    double f1 = b.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();*/
+                                    //money.setText(StringUtils.toTwoDouble(f1)  + "");
+/*
+                                    Intent it =new Intent(ShoppingDDCarActivity.this,PlayMainActivity.class);
+                                    it.putExtra("id",shopId);
+                                    it.putExtra("mo",money.getText().toString());
+                                    startActivity(it);*/
                                     startActivity(new Intent(ShoppingDDCarActivity.this,FindDDListActivity.class));
                                     finish();
                                 }
