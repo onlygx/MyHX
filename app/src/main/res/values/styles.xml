@@ -1,4 +1,5 @@
 <resources>
+
     <style name="PhotoPickerTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -14,6 +15,7 @@
         <item name="colorPrimaryDark">@color/black</item>
         <item name="colorAccent">@color/gray_text</item>
     </style>
+
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -36,6 +38,7 @@
             o here.
         -->
     </style>
+
     <style name="popwin_anim_style">
         <item name="android:windowEnterAnimation">@anim/pop</item>
         <item name="android:windowExitAnimation">@anim/popout</item>
@@ -52,10 +55,24 @@
         <item name="android:backgroundDimAmount">0.6</item>
     </style>
 
+    <style name="AppSplash2" parent="android:Theme.Light.NoTitleBar">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowBackground">@android:color/transparent
+        </item>   <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    </style>
+
+    <style name="AppSplash" parent="android:Theme">
+        <item name="android:windowBackground">@drawable/startup</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
     <style name="Dialog_Fullscreen">
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowNoTitle">true</item>
     </style>
+
     <style name="popupDialog">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:backgroundDimEnabled">false</item>
@@ -79,7 +96,8 @@
     <!-- Dialog 背景透明-->
     <style name="Translucent_NoTitle" parent="android:style/Theme.Dialog">
         <item name="android:background">#00000000</item> <!-- 设置自定义布局的背景透明 -->
-        <item name="android:windowBackground">@android:color/transparent</item>  <!-- 设置window背景透明，也就是去边框 -->
+        <item name="android:windowBackground">@android:color/transparent
+        </item>  <!-- 设置window背景透明，也就是去边框 -->
     </style>
 
     <style name="MyDialog" parent="@android:style/Theme.Dialog">
@@ -94,7 +112,6 @@
         <attr name="border_width" format="dimension" />
         <attr name="border_color" format="color" />
     </declare-styleable>
-
 
 
     <!-- MainActivity theme. -->
@@ -167,6 +184,7 @@
     <style name="m_loading">
         <item name="android:indeterminateDrawable">@drawable/loading</item>
     </style>
+
     <style name="LoadingDialog_style">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowNoTitle">true</item>

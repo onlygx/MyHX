@@ -16,15 +16,15 @@ import java.util.List;
 public class CityAdapter extends ContactListAdapter {
 
     Context _context;
-    BookCall bcal;
+//    BookCall bcal;
     List<ContactItemInterface> _items;
 
     public CityAdapter(Context _context, int _resource,
-                       List<ContactItemInterface> _items, BookCall bcal) {
+                       List<ContactItemInterface> _items ) {
         super(_context, _resource, _items);
         this._context = _context;
         this._items = _items;
-        this.bcal = bcal;
+//        this.bcal = bcal;
     }
 
     //重写
@@ -78,9 +78,7 @@ public class CityAdapter extends ContactListAdapter {
     }
 
 
-    public interface BookCall {
-        void callbook(int pos, int state);
-    }
+
 
 
 

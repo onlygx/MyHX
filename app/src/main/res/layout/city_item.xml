@@ -35,7 +35,7 @@
             android:layout_gravity="right"
             android:layout_toLeftOf="@+id/hit_iv"
             android:background="@android:color/transparent"
-            android:clickable="true"
+
             android:gravity="center"
             android:hint="姓名"
             android:src="@drawable/pic"
@@ -67,7 +67,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerInParent="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="35dp"
+            android:layout_marginRight="45dp"
             android:background="@drawable/shape_bt_grenn_corners"
             android:gravity="center"
             android:text="邀请好友"

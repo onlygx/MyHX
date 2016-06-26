@@ -136,7 +136,7 @@ public class ColltentMainActivit extends JLBaseActivity implements SwipeRefreshL
                 ColltentBean cb = JSONObject.parseObject(s, ColltentBean.class);
                 if (cb.getList().size() > 0) {
                     list = cb.getList();
-                    eatReclerViewAdpter = new ColltentItemAdpter(ColltentMainActivit.this, ColltentMainActivit.this);
+                    eatReclerViewAdpter = new ColltentItemAdpter(ColltentMainActivit.this, list);
                     eatRecycler.setAdapter(eatReclerViewAdpter);
                     eatReclerViewAdpter.notifyDataSetChanged();
                     eatReclerViewAdpter.getArrayLists().addAll(list);
@@ -199,7 +199,7 @@ public class ColltentMainActivit extends JLBaseActivity implements SwipeRefreshL
                 try {
                     org.json.JSONObject js =new org.json.JSONObject(s);
                     if(js.getBoolean("success")){
-                        eatReclerViewAdpter = new ColltentItemAdpter(ColltentMainActivit.this, ColltentMainActivit.this);
+                        eatReclerViewAdpter = new ColltentItemAdpter(ColltentMainActivit.this, list);
                         list.remove(postion);
                         eatRecycler.setAdapter(eatReclerViewAdpter);
                         eatReclerViewAdpter.getArrayLists().clear();

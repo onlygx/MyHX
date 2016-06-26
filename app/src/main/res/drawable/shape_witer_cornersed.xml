@@ -6,5 +6,5 @@
         android:bottomRightRadius="3dp"
         android:bottomLeftRadius="3dp"/>
 
-    <stroke android:color="@color/white" android:width="0.3dp"></stroke>
+    <stroke android:color="@color/logding_bg" android:width="0.5dp"></stroke>
 </shape>

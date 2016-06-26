@@ -11,7 +11,9 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.viewpagerdemo.ui.activity.MainActivity;
 import com.example.viewpagerdemo.ui.jlfragmenwork.baseactivitywork.JLBaseActivity;
+import com.example.viewpagerdemo.ui.jlfragmenwork.util.DenisyUtil;
 import com.xingkesi.foodapp.R;
 
 /**
@@ -74,14 +76,17 @@ public class NavigationActivity extends JLBaseActivity {
                 frameLayout.addView(photoView);
 
                 if(position == imgs.length-1){
-                    FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(windowWidth, windowHeight);
-//                    layoutParams.setMargins(0,0,0, DenisyUtil.dip2px(60));
+                    int w=DenisyUtil.dip2px(getApplicationContext(),200);
+                    int h=DenisyUtil.dip2px(getApplicationContext(),50);
+                    FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(w, h);
+                    layoutParams.setMargins(0,0,0, DenisyUtil.dip2px(getApplicationContext(),50));
                     layoutParams.gravity = Gravity.CENTER_HORIZONTAL|Gravity.BOTTOM;
                     TextView textView = new TextView(NavigationActivity.this);
                     textView.setGravity(Gravity.CENTER);
-//                    textView.setBackgroundResource(R.mipmap.rectangle);
-//                    textView.setText("立即体验");
-//                    textView.setTextColor(getResourcesColor(R.color.main_color));
+                    textView.setBackgroundResource(R.drawable.shape_witer_cornersed);
+                    textView.setText("立即体验");
+                    textView.setTextSize(DenisyUtil.sp2px(getApplicationContext(),10));
+                    textView.setTextColor(getResources().getColor(R.color.main_color));
                     textView.setClickable(true);
                     textView.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -102,7 +107,7 @@ public class NavigationActivity extends JLBaseActivity {
     }
 
     public void goMain(){
-        Intent intent = new Intent(this, LoginActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("tag","logding");
         startActivity(intent);
         finish();

@@ -1,6 +1,7 @@
 package com.example.viewpagerdemo.ui.jlfragmenwork.city;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,9 +31,7 @@ public class ContactListAdapter extends ArrayAdapter<ContactItemInterface>
 
 		// need to sort the items array first, then pass it to the indexer
 
-		if(_items!=null) {
-			Collections.sort(_items, new ContactItemComparator());
-		}
+		Collections.sort(_items, new ContactItemComparator());
 		setIndexer(new ContactsSectionIndexer(_items));
 
 	}
@@ -82,7 +81,7 @@ public class ContactListAdapter extends ArrayAdapter<ContactItemInterface>
 		// default just draw the item only
 		View infoView = parentView.findViewById(R.id.infoRowContainer);
 		TextView nameView = (TextView) infoView.findViewById(R.id.cityName);
-		//Log.v("LD", "--:" + item.getItemForIndex());
+		Log.v("LD", "--:" + item.getItemForIndex());
 		nameView.setText(item.getItemForIndex());   //名字
 
 	}

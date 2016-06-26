@@ -49,9 +49,15 @@ public class SplashActivity extends JLBaseActivity {
 		AlphaAnimation animation = new AlphaAnimation(0.3f, 1.0f);
 		animation.setDuration(1500);
 		imageView.startAnimation(animation);
-		//启动页
-			MyCount count =new MyCount(2000,1000);
+
+		if (start <= 0) {//引导页
+			startActivity(new Intent(SplashActivity.this, NavigationActivity.class));
+			finish();
+		} else if (start == 1) {//首页
+			MyCount count = new MyCount(2000, 1000);
 			count.start();
+		}
+
 	}
 
 	class MyCount extends CountDownTimer {

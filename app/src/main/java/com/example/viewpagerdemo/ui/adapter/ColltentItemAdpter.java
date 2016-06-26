@@ -38,7 +38,7 @@ public class ColltentItemAdpter extends RecyclerView.Adapter<ColltentItemAdpter.
 
     public ColltentItemAdpter(Context c, List<ColltentBean.ListBean> list) {
         this.c = c;
-        this.adList = list;
+        this.adList = new ArrayList<>();
     }
 
     public List<ColltentBean.ListBean> getArrayLists() {

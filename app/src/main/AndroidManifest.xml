@@ -73,7 +73,7 @@
             android:name="com.example.viewpagerdemo.ui.jlfragmenwork.actvity.SplashActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppSplash2">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

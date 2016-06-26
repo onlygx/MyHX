@@ -53,14 +53,7 @@ public class CityData {
         //----------------------------------------------
         // 正式版
         for (AddBookBean abb:booklist) {
-            String cityName ;
-           /* if(abb.getFriendUser()==null || abb.getFriendUser().getNickName().equals(null)
-                    || abb.getFriendUser().getNickName()==null){
-                cityName="";
-            } else{
-                cityName = abb.getFriendUser().getNickName();
-            }*/
-            cityName=abb.getName();
+            String cityName=abb.getName();
             long id = abb.getId();
             long friendId = abb.getFriendId();
             String phone = abb.getPhone();
