@@ -478,6 +478,7 @@ public class LoginActivity extends JLBaseActivity implements View.OnClickListene
                 DD.i("login 旺旺 登录成功!");
                 MyApplication.getInstan().setUserName(userId.toString());
                 MyApplication.getInstan().setUserPwd(pwd);
+                new Tools().init(getApplicationContext());
                 closeWait();
                 if (tag.equals("logding")) {
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));

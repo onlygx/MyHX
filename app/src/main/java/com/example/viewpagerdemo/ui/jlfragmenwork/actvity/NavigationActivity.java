@@ -98,8 +98,7 @@ public class NavigationActivity extends JLBaseActivity {
                     frameLayout.addView(textView);
                 }
 
-                container.addView(frameLayout, ViewPager.LayoutParams.MATCH_PARENT,
-                        ViewPager.LayoutParams.MATCH_PARENT);
+                container.addView(frameLayout, ViewPager.LayoutParams.MATCH_PARENT,ViewPager.LayoutParams.MATCH_PARENT);
             }catch(Exception e){}
 
             return frameLayout;

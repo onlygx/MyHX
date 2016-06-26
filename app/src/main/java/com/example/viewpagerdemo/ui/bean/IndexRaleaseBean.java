@@ -7,27 +7,6 @@ import java.util.List;
  */
 public class IndexRaleaseBean {
 
-    /**
-     * size : 2
-     * total : 2
-     * hasPreviousPage : false
-     * navigatepageNums : [1]
-     * startRow : 1
-     * pageNum : 1
-     * pageSize : 10
-     * orderBy : null
-     * list : [{"address":"111","id":4308326996471532356,"content":"11111111","status":1,"setTime":1466320765000,"title":"山东的","bannerList":[{"id":9204805431003361743,"type":3,"info":4308326996471532356,"url":"/images/demand/9065134423808427121.jpg"}],"price":22,"province":"山东省","city":"济南市","district":"历下区","sendUserId":8984249178456606085,"sendUser":{"name":"","id":8984249178456606085,"head":"/images/account/defaultHead.jpg","phone":"13306400282","qq":"","thinksId":"13306400282","nickName":"13306400282","wechat":""}},{"address":"233","id":6797810865349608943,"content":"111","status":1,"setTime":1466320817000,"title":"山东2","bannerList":[{"id":5556461291625466071,"type":3,"info":6797810865349608943,"url":"/images/demand/5830667787874945792.jpg"}],"price":1,"province":"山东省","city":"济南市","district":"历下区","sendUserId":8984249178456606085,"sendUser":{"name":"","id":8984249178456606085,"head":"/images/account/defaultHead.jpg","phone":"13306400282","qq":"","thinksId":"13306400282","nickName":"13306400282","wechat":""}}]
-     * firstPage : 1
-     * lastPage : 1
-     * nextPage : 0
-     * isFirstPage : true
-     * pages : 1
-     * navigatePages : 8
-     * endRow : 2
-     * prePage : 0
-     * isLastPage : true
-     * hasNextPage : false
-     */
 
     private int size;
     private int total;
@@ -47,21 +26,6 @@ public class IndexRaleaseBean {
     private boolean isLastPage;
     private boolean hasNextPage;
     private List<Integer> navigatepageNums;
-    /**
-     * address : 111
-     * id : 4308326996471532356
-     * content : 11111111
-     * status : 1
-     * setTime : 1466320765000
-     * title : 山东的
-     * bannerList : [{"id":9204805431003361743,"type":3,"info":4308326996471532356,"url":"/images/demand/9065134423808427121.jpg"}]
-     * price : 22.0
-     * province : 山东省
-     * city : 济南市
-     * district : 历下区
-     * sendUserId : 8984249178456606085
-     * sendUser : {"name":"","id":8984249178456606085,"head":"/images/account/defaultHead.jpg","phone":"13306400282","qq":"","thinksId":"13306400282","nickName":"13306400282","wechat":""}
-     */
 
     private List<ListBean> list;
 

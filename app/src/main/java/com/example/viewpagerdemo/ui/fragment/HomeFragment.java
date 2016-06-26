@@ -6,7 +6,6 @@ import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.baidu.location.BDLocation;
@@ -16,18 +15,12 @@ import com.baidu.location.LocationClientOption;
 import com.baidu.location.Poi;
 import com.example.viewpagerdemo.ui.MyApplication;
 import com.example.viewpagerdemo.ui.activity.ListTopClassActivity;
-import com.example.viewpagerdemo.ui.activity.OhterListMainActivity;
 import com.example.viewpagerdemo.ui.activity.SearchActivity;
 import com.example.viewpagerdemo.ui.jlfragmenwork.adpter.FragmentArrayPageAdapter;
 import com.example.viewpagerdemo.ui.jlfragmenwork.basefregmetwork.JLBaseFragment;
-import com.example.viewpagerdemo.ui.jlfragmenwork.util.DD;
-import com.example.viewpagerdemo.ui.jlfragmenwork.util.MyDialog;
-import com.example.viewpagerdemo.ui.jlfragmenwork.util.TS;
 import com.example.viewpagerdemo.ui.jlfragmenwork.view.PagerSlidingTabStrip;
 import com.example.viewpagerdemo.ui.jlfragmenwork.view.WhiteTabStripController;
 import com.example.viewpagerdemo.ui.jlfragmenwork.view.WhiteTabViewFactory;
-import com.example.viewpagerdemo.ui.searchfrend.CityListActivity;
-import com.mining.app.ScanMainActivity;
 import com.xingkesi.foodapp.R;
 
 import java.util.List;

@@ -246,7 +246,7 @@
         <activity android:name="com.example.viewpagerdemo.ui.activity.ShenQFrendMainActivity" />
         <activity android:name="com.mining.app.ScanMainActivity" />
         <activity android:name="com.yiw.circledemo2.widgets.MyCircleFriendsActivity" />
-        <activity android:name="com.example.viewpagerdemo.ui.searchfrend.CityListActivity" />
+        <activity android:name="com.example.viewpagerdemo.ui.sarchcity.CityListActivity" />
         <activity android:name="com.example.viewpagerdemo.ui.activity.ListTopClassActivity" />
 
 

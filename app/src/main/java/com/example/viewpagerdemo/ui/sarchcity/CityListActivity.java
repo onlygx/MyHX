@@ -1,4 +1,4 @@
-package com.example.viewpagerdemo.ui.searchfrend;
+package com.example.viewpagerdemo.ui.sarchcity;
 
 import android.app.Activity;
 import android.os.AsyncTask;
@@ -15,8 +15,6 @@ import com.example.viewpagerdemo.ui.MyApplication;
 import com.example.viewpagerdemo.ui.bean.AddBookBean;
 import com.example.viewpagerdemo.ui.Contantor;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.DD;
-import com.example.viewpagerdemo.ui.sarchcity.CityItem;
-import com.example.viewpagerdemo.ui.sarchcity.ContactListViewImpl;
 import com.xingkesi.foodapp.R;
 
 import net.tsz.afinal.FinalHttp;
