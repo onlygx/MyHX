@@ -83,7 +83,7 @@ public class ContactListAdapter extends ArrayAdapter<ContactItemInterface>
 		View infoView = parentView.findViewById(R.id.infoRowContainer);
 		TextView nameView = (TextView) infoView.findViewById(R.id.cityName);
 		//Log.v("LD", "--:" + item.getItemForIndex());
-		nameView.setText(item.getDisplayInfo());   //名字
+		nameView.setText(item.getItemForIndex());   //名字
 
 	}
 

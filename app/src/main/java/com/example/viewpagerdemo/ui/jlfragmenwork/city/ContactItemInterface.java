@@ -15,4 +15,6 @@ public interface ContactItemInterface
 
 	public int getStute();
 	public long getFrendID();
+
+	public String getPhone();
 }

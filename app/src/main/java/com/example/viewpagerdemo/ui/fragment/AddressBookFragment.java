@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.mobileim.YWAPI;
 import com.alibaba.mobileim.YWIMKit;
 import com.example.viewpagerdemo.ui.Contantor;
 import com.example.viewpagerdemo.ui.MyApplication;
@@ -51,7 +52,7 @@ import butterknife.Bind;
 /**
  * 通讯录
  */
-public class AddressBookFragment extends JLBaseFragment implements TextWatcher, CityAdapter.BookCall {
+public class AddressBookFragment extends JLBaseFragment implements TextWatcher {
 
     @Bind(R.id.tv_title)
     TextView tv_title;
@@ -95,13 +96,12 @@ public class AddressBookFragment extends JLBaseFragment implements TextWatcher, 
     @Override
     public void onResume() {
         super.onResume();
-        DD.v("同学录-------------onResume--------------");
         //登录状态
         if (MyApplication.getInstan().getUser() != null &&
                 MyApplication.getInstan().getUser().getData().getThinksId() != null) {
             noLoa.setVisibility(View.GONE);
             getFrd();
-          //  getNewNum();
+            getNewNum();
         } else {
             noLoa.setVisibility(View.VISIBLE);
         }
@@ -114,7 +114,6 @@ public class AddressBookFragment extends JLBaseFragment implements TextWatcher, 
             //可见时加载数据相当于Fragment的onResume
             if (MyApplication.getInstan().getUser() != null &&
                     MyApplication.getInstan().getUser().getData().getThinksId() != null) {
-                DD.v("同学录-------------setUserVisibleHint--------------");
                 getFrd();
                 getNewNum();
             }
@@ -125,14 +124,13 @@ public class AddressBookFragment extends JLBaseFragment implements TextWatcher, 
     void getNewNum() {
         AjaxParams pa = new AjaxParams();
         pa.put("userId", MyApplication.getInstan().getUser().getData().getId() + "");
-
         String url = Contantor.applyListByUserId;
-       // DD.d("通讯录最新数量:" + url + "?" + pa.toString());
+        // DD.d("通讯录最新数量:" + url + "?" + pa.toString());
         new FinalHttp().post(url, pa, new AjaxCallBack<String>() {
             @Override
             public void onSuccess(String s) {
                 super.onSuccess(s);
-              //  DD.d("通讯录最新数量s:" + s);
+                //  DD.d("通讯录最新数量s:" + s);
                 if (s != null && !s.equals("")) {
                     list = JSONArray.parseArray(s, ShenQBean.class);
                     if (list.size() > 0) {
@@ -172,17 +170,18 @@ public class AddressBookFragment extends JLBaseFragment implements TextWatcher, 
         mContext = getActivity();
         list = new ArrayList<>();
         listview.setFastScrollEnabled(true);
+
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView parent, View v, int pos, long idse) {
-             //   DD.d("邀：111111111111111111111111111111111111");
+
                 AddBookBean abb = bookList.get(pos);
                 List<ContactItemInterface> searchList = inSearchMode ? filterList : contactList;
                 long ICtyF = searchList.get(pos).getFrendID();
                 int state = abb.getFriendStatus();
                 long id = abb.getId();
-                // long friendUserId = abb.getFriendId();
-             //   DD.v("邀：" + ICtyF + "====" + id + "==="+state);
+
+                DD.e(searchList.get(pos).getID()+"点击了："+searchList.get(pos).getDisplayInfo());
 
                 if (state == 1) {//1是好友  2邀请中  0可邀请
                     //是好友---开始聊天
@@ -194,8 +193,9 @@ public class AddressBookFragment extends JLBaseFragment implements TextWatcher, 
                             "==thinksId:" + thinksId, Toast.LENGTH_SHORT).show();
                     //---------------------------------------------------------------------
                     final String target = thinksId; //消息接收者ID
-                    final String appkey = "123456"; //消息接收者appKey
-                    Intent intent = mIMKit.getChattingActivityIntent(target, appkey);
+                    //final String appkey = "123456"; //消息接收者appKey
+                    YWIMKit mIMKit = YWAPI.getIMKitInstance(MyApplication.getInstan().getUserName(), MyApplication.APP_KEY);
+                    Intent intent = mIMKit.getChattingActivityIntent(target, MyApplication.APP_KEY);
                     startActivity(intent);
                 } else {
                     //邀请好友
@@ -205,10 +205,9 @@ public class AddressBookFragment extends JLBaseFragment implements TextWatcher, 
         });
 
 
-
         searchBox.addTextChangedListener(this);
         //登录按钮
-         _add_log.setOnClickListener(new View.OnClickListener() {
+        _add_log.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -227,7 +226,7 @@ public class AddressBookFragment extends JLBaseFragment implements TextWatcher, 
                         ) {
                     Intent it = new Intent(getActivity(), ShenQFrendMainActivity.class);
                     it.putExtra("list", (Serializable) list);
-                    startActivityForResult(it,101);
+                    startActivityForResult(it, 101);
                 }
             }
         });
@@ -247,16 +246,15 @@ public class AddressBookFragment extends JLBaseFragment implements TextWatcher, 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch (resultCode){
+        switch (resultCode) {
             case 101://好友表数量
 
-                Bundle bd=data.getExtras();
-                String num=bd.getString("num");
-                if(Integer.parseInt(num) >0) {
+                Bundle bd = data.getExtras();
+                String num = bd.getString("num");
+                if (Integer.parseInt(num) > 0) {
                     tv_left_text_num.setText(num);
-                }else{
+                } else {
                     tv_left_text_num.setVisibility(View.GONE);
-
                 }
                 break;
 
@@ -265,29 +263,27 @@ public class AddressBookFragment extends JLBaseFragment implements TextWatcher, 
 
     public void getFrd() {
 
-        showWait();
+        //  showWait();
         AjaxParams pa = new AjaxParams();
         pa.put("userId", MyApplication.getInstan().getUser().getData().getId() + "");
         String url = Contantor.UsersubmitAddr;
-      //  DD.d("通讯录:" + url + "?" + pa.toString());
+          DD.d("通讯录:" + url + "?" + pa.toString());
         new FinalHttp().post(url, pa, new AjaxCallBack<String>() {
             @Override
             public void onSuccess(String s) {
                 super.onSuccess(s);
-             //   DD.d("通讯录s:" + s);
-                closeWait();
+                   DD.d("通讯录s:" + s);
+                bookList.clear();
                 bookList = JSONArray.parseArray(s, AddBookBean.class);
                 contactList = CityData.getSampleContactList(bookList);
-                adapter = new CityAdapter(getActivity(), R.layout.city_item, contactList,
-                        AddressBookFragment.this);
+                adapter = new CityAdapter(getActivity(), R.layout.city_item, contactList);
                 listview.setAdapter(adapter);
-                //adapter.notifyDataSetChanged();
             }
 
             @Override
             public void onFailure(Throwable t, int errorNo, String strMsg) {
                 super.onFailure(t, errorNo, strMsg);
-                closeWait();
+                // closeWait();
             }
         });
 
@@ -321,7 +317,7 @@ public class AddressBookFragment extends JLBaseFragment implements TextWatcher, 
 
     }
 
-    @Override
+   /* @Override
     public void callbook(int pos, int states) {
 
         AddBookBean abb = bookList.get(pos);
@@ -330,7 +326,7 @@ public class AddressBookFragment extends JLBaseFragment implements TextWatcher, 
         int state = abb.getFriendStatus();
         long id = abb.getId();
         // long friendUserId = abb.getFriendId();
-       // DD.v("邀：" + ICtyF + "====" + id + "===");
+        // DD.v("邀：" + ICtyF + "====" + id + "===");
 
         if (state == 1) {//1是好友  2邀请中  0可邀请
             //是好友---开始聊天
@@ -350,11 +346,10 @@ public class AddressBookFragment extends JLBaseFragment implements TextWatcher, 
             //邀请好友
             userFriendUserId(id + "", ICtyF + "", abb);
         }
-    }
+    }*/
 
     /**
      * 使用riendUserId加好友
-     *
      * @param friendUserId
      */
     void userFriendUserId(String id, String friendUserId, final AddBookBean abb) {
@@ -363,12 +358,12 @@ public class AddressBookFragment extends JLBaseFragment implements TextWatcher, 
         ap.put("id", id);
         ap.put("friendUserId", friendUserId);
         String url = Contantor.applyUser;
-      //  DD.d("UserId+++好友：" + url + "?" + ap.toString());
+        //  DD.d("UserId+++好友：" + url + "?" + ap.toString());
         new FinalHttp().post(url, ap, new AjaxCallBack<String>() {
             @Override
             public void onSuccess(String s) {
                 super.onSuccess(s);
-           //     DD.d("UserId+++好友s：" + s);
+                //     DD.d("UserId+++好友s：" + s);
                 try {
                     JSONObject js = new JSONObject(s);
                     if (js.getBoolean("success")) {
@@ -426,14 +421,14 @@ public class AddressBookFragment extends JLBaseFragment implements TextWatcher, 
 
                 if (inSearchMode) {
 
-                    CityAdapter adapter = new CityAdapter(getActivity(), R.layout.city_item, filterList, AddressBookFragment.this);
+                    CityAdapter adapter = new CityAdapter(getActivity(), R.layout.city_item, filterList );
                     adapter.setInSearchMode(true);
                     listview.setInSearchMode(true);
                     if (listview != null && adapter != null) {
                         listview.setAdapter(adapter);
                     }
                 } else {
-                    CityAdapter adapter = new CityAdapter(getActivity(), R.layout.city_item, contactList, AddressBookFragment.this);
+                    CityAdapter adapter = new CityAdapter(getActivity(), R.layout.city_item, contactList );
                     adapter.setInSearchMode(false);
                     listview.setInSearchMode(false);
                     if (listview != null && adapter != null) {

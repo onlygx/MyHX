@@ -42,6 +42,8 @@ public class CityItem implements ContactItemInterface
 	}
 
 
+
+
 	@Override
 	public long getFrendID() {
 		return friendId;

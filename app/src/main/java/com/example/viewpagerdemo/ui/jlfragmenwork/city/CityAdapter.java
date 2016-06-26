@@ -16,15 +16,13 @@ import java.util.List;
 public class CityAdapter extends ContactListAdapter {
 
     Context _context;
-    BookCall bcal;
     List<ContactItemInterface> _items;
 
     public CityAdapter(Context _context, int _resource,
-                       List<ContactItemInterface> _items, BookCall bcal) {
+                       List<ContactItemInterface> _items) {
         super(_context, _resource, _items);
         this._context = _context;
         this._items = _items;
-        this.bcal = bcal;
     }
 
     //重写
@@ -34,13 +32,10 @@ public class CityAdapter extends ContactListAdapter {
         TextView nicknameView = (TextView) infoView.findViewById(R.id.cityName);
         CircleImageView infoRowContainer = (CircleImageView) infoView.findViewById(R.id.cityimage);
         TextView city_tag = (TextView) infoView.findViewById(R.id.city_tag);
-        infoRowContainer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DD.v("===================================0");
-            }
-        });
+        //String phone=item.getPhone();
         final int state = item.getStute();
+
+        //DD.v(item.getDisplayInfo() + "==" + state+"==="+phone);
         if (state == 1) {
             city_tag.setText("开始聊天");
             city_tag.setBackgroundResource(R.drawable.shape_bt_grenn_corners);
@@ -51,38 +46,22 @@ public class CityAdapter extends ContactListAdapter {
             city_tag.setBackgroundResource(R.drawable.shape_bt_grenn_corners);
             city_tag.setText("邀请好友");
         }
-        nicknameView.setText(item.getDisplayInfo());
-        if (!item.getIcons().equals("")) {
-            Picasso.with(_context).load(item.getIcons()).placeholder(R.drawable.aliwx_default_photo_right)
-                    .error(R.drawable.aliwx_fail_photo_right).into(infoRowContainer);
+
+
+        if (item.getDisplayInfo() != null && !item.getDisplayInfo().equals("")) {
+            nicknameView.setText(item.getDisplayInfo());
         } else {
-            infoRowContainer.setImageResource(R.drawable.aliwx_default_photo_right);
+            nicknameView.setText(item.getThinkeSId());
         }
 
-        /*city_tag.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DD.d("点击了==========" + bcal.toString());
-                if (state != 2) {
-                    bcal.callbook(position, state);
-                }
-            }
-        });
-        infoRowContainer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DD.d("点击了==========infoRowContainer");
-            }
-        });*/
+
+        if (!item.getIcons().equals("") && item.getIcons()!=null) {
+            Picasso.with(_context).load(item.getIcons()).placeholder(R.drawable.touxiang03)
+                    .error(R.drawable.touxiang03).into(infoRowContainer);
+        } else {
+            infoRowContainer.setImageResource(R.drawable.touxiang03);
+        }
 
     }
-
-
-    public interface BookCall {
-        void callbook(int pos, int state);
-    }
-
-
-
 
 }

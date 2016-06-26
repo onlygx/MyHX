@@ -26,7 +26,7 @@ import net.tsz.afinal.http.AjaxParams;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CityListActivity extends Activity implements TextWatcher, com.example.viewpagerdemo.ui.jlfragmenwork.city.CityAdapter.BookCall {
+public class CityListActivity extends Activity implements TextWatcher {
     private ContactListViewImpl listview;
     TextView tv_title;
 
@@ -95,7 +95,7 @@ public class CityListActivity extends Activity implements TextWatcher, com.examp
                 contactList = com.example.viewpagerdemo.ui.jlfragmenwork.city.CityData.getSampleContactList(bookList);
                 DD.d("contactList===" + contactList.size());
                 adapter = new com.example.viewpagerdemo.ui.jlfragmenwork.city.CityAdapter(CityListActivity.this,
-                        R.layout.city_item, contactList, CityListActivity.this);
+                        R.layout.city_item, contactList);
                 listview.setAdapter(adapter);
                 // adapter.notifyDataSetChanged();
 
@@ -120,10 +120,7 @@ public class CityListActivity extends Activity implements TextWatcher, com.examp
         // do nothing
     }
 
-    @Override
-    public void callbook(int pos, int state) {
 
-    }
 
     private class SearchListTask extends AsyncTask<String, Void, String> {
 
@@ -161,14 +158,14 @@ public class CityListActivity extends Activity implements TextWatcher, com.examp
 
                     com.example.viewpagerdemo.ui.jlfragmenwork.city.CityAdapter adapter = new com.example.viewpagerdemo.ui.
                             jlfragmenwork.city.CityAdapter(CityListActivity.this,
-                            R.layout.city_item, contactList, CityListActivity.this);
+                            R.layout.city_item, contactList);
                     adapter.setInSearchMode(true);
                     listview.setInSearchMode(true);
                     listview.setAdapter(adapter);
                 } else {
                     com.example.viewpagerdemo.ui.jlfragmenwork.city.CityAdapter adapter = new com.example.viewpagerdemo
                             .ui.jlfragmenwork.city.CityAdapter(CityListActivity.this,
-                            R.layout.city_item, contactList, CityListActivity.this);
+                            R.layout.city_item, contactList);
                     adapter.setInSearchMode(false);
                     listview.setInSearchMode(false);
                     listview.setAdapter(adapter);

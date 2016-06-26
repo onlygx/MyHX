@@ -60,7 +60,7 @@ public class ColltentItemAdpter extends RecyclerView.Adapter<ColltentItemAdpter.
         final ColltentBean.ListBean data = adList.get(position);
         final String name = data.getGoods().getName();
         vh.findshopTitle.setText(name);
-        vh.tv_price.setText("￥"+data.getGoods().getPrice());
+        vh.tv_price.setText("￥" + data.getGoods().getPrice());
         //图片地址
         if (data.getGoods().getBannerList().size() > 0) {
             String url = data.getGoods().getBannerList().get(0).getUrl();
@@ -106,6 +106,7 @@ public class ColltentItemAdpter extends RecyclerView.Adapter<ColltentItemAdpter.
         TextView tv_price;
         @Bind(R.id.rl_parent)
         RelativeLayout rl_parent;
+
         ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);

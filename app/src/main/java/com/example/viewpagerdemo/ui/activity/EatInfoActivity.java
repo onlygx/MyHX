@@ -97,16 +97,6 @@ public class EatInfoActivity extends JLBaseActivity implements View.OnClickListe
     WebView webview;
 
     double Qpic;
-    /*@Bind(R.id.iv_kd)
-    ImageView iv_kd;*/
-   /* @Bind(R.id.tv_kd)
-    TextView tv_kd;*/
-    /*@Bind(R.id.allcontent)//全部评价
-            TextView allcontent;*/
-    /*@Bind(R.id.mylist)
-    ListView mylist;//评价列表
-    ArrayList<ContentListBean> contentList;*/
-
 
     //---------------------------------------
     private ArrayList<View> dots; // 图片标题正文的那些点
@@ -124,7 +114,7 @@ public class EatInfoActivity extends JLBaseActivity implements View.OnClickListe
     ShoppingInfoBean info;
 
 
-    int isColl = 0;//默认没收藏  1收藏了
+    int isColl = -1;//默认没收藏  1收藏了
 
     @Override
     public int setViewLayout() {
@@ -147,8 +137,6 @@ public class EatInfoActivity extends JLBaseActivity implements View.OnClickListe
         dots = new ArrayList<>();
         // 广告数据
         adList = new ArrayList<>();
-//        allcontent.setOnClickListener(this);
-
         WebSettings webSettings = webview.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
@@ -409,12 +397,7 @@ public class EatInfoActivity extends JLBaseActivity implements View.OnClickListe
         getShoppingInfo();
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
-    }
+
 
     @OnClick({R.id.tv_sl, R.id.tv_sc, R.id.shopgg, R.id.shopme, R.id.pllb})
     public void onClick(View view) {
@@ -440,9 +423,9 @@ public class EatInfoActivity extends JLBaseActivity implements View.OnClickListe
                     intent.setClass(EatInfoActivity.this, LoginActivity.class);
                     startActivity(intent);
                 } else {
-                    if (isColl==0) {
+                    if (isColl==-1) {//收藏
                         Schouchang();
-                    } else {
+                    } else if(isColl==1) {//取消收藏
                         ChanSchouchang();
                     }
                 }
@@ -486,16 +469,6 @@ public class EatInfoActivity extends JLBaseActivity implements View.OnClickListe
                     it.putExtra("Sid", shopID);
                     it.putExtra("car", (Serializable) carLiat);
                     startActivity(it);
-
-
-                    /*intent.setClass(EatInfoActivity.this, ShoppingDDActivity.class);
-                    intent.putExtra("id", id);
-                    intent.putExtra("info",info);
-                    startActivity(intent);*/
-                  /*  intent.setClass(EatInfoActivity.this, EatShopInfoActivity.class);
-                    intent.putExtra("id", shopID);
-                    intent.putExtra("name", name);
-                    startActivity(intent);*/
                 }
 
                 break;
@@ -536,7 +509,8 @@ public class EatInfoActivity extends JLBaseActivity implements View.OnClickListe
         });
     }private void ChanSchouchang() {
         AjaxParams map = new AjaxParams();
-        map.put("Id", id);
+        String collID=info.getCollection().getId();
+        map.put("Id", collID);
         DD.v("shan收藏商品:" + Contantor.delete+"?"+map.toString());
        // map.put("userId", MyApplication.getInstan().getUser().getData().getId() + "");
         new FinalHttp().post(Contantor.delete, map, new AjaxCallBack<String>() {
@@ -548,7 +522,7 @@ public class EatInfoActivity extends JLBaseActivity implements View.OnClickListe
                     DD.v("取消收藏商品:" + s);
                     if (js.getBoolean("success")) {
                         //  TS.shortTime("收藏成功");
-                        isColl=0;
+                        isColl=-1;
                         Drawable drawable = getApplicationContext().getResources().getDrawable(R.drawable.shoucangs);
                         drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());//必须设置图片大小，否则不显示
                         sc.setCompoundDrawables(null, drawable, null, null);
