@@ -19,6 +19,7 @@ import com.example.viewpagerdemo.ui.adapter.TalkViewAdpter;
 import com.example.viewpagerdemo.ui.bean.ContentListBean;
 import com.example.viewpagerdemo.ui.bean.FindDDListBean;
 import com.example.viewpagerdemo.ui.bean.TalkingBean;
+import com.example.viewpagerdemo.ui.bean.TalkingListBean;
 import com.example.viewpagerdemo.ui.jlfragmenwork.baseactivitywork.JLBaseActivity;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.DD;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.TS;
@@ -45,6 +46,8 @@ public class AbouFrendtMainActivity extends JLBaseActivity implements SwipeRefre
     ImageView iv_back;
     @Bind(R.id.tv_title)
     TextView tv_title;
+    @Bind(R.id.tv_right_text)
+    TextView tv_right_text;
     @Bind(R.id.eat_recycler)
     RecyclerView eatRecycler;
     @Bind(R.id.refreshlayout)
@@ -103,9 +106,38 @@ public class AbouFrendtMainActivity extends JLBaseActivity implements SwipeRefre
     @Override
     public void initID() {
         super.initID();
+        tv_right_text.setVisibility(View.VISIBLE);
         iv_back.setVisibility(View.VISIBLE);
         iv_back.setImageResource(R.drawable.cp_fh);
         tv_title.setText("与我相关");
+        tv_right_text.setText("设为已读");
+
+        tv_right_text.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = Contantor.setAllRead;
+                AjaxParams map1 = new AjaxParams();
+                map1.put("userId", MyApplication.getInstan().getUser().getData().getId()+"");
+
+                DD.v("与我相关已读:"+url+"?"+map1.toString());
+                new FinalHttp().post(url, map1, new AjaxCallBack<String>() {
+                    @Override
+                    public void onSuccess(String s) {
+                        super.onSuccess(s);
+
+                        DD.v("与我相关已读s："+s);
+
+
+                    }
+
+                    @Override
+                    public void onFailure(Throwable t, int errorNo, String strMsg) {
+                        super.onFailure(t, errorNo, strMsg);
+                    }
+                });
+
+            }
+        });
     }
     @Override
     public void onRefresh() {
@@ -130,7 +162,9 @@ public class AbouFrendtMainActivity extends JLBaseActivity implements SwipeRefre
                 if (refreshlayout.isRefreshing()) {
                     refreshlayout.setRefreshing(false);
                 }
-                List<TalkingBean> find = JSON.parseArray(s, TalkingBean.class);
+                List<TalkingBean> find;
+                TalkingListBean list = JSON.parseObject(s, TalkingListBean.class);
+                find=list.getList();
                 if (find.size() > 0) {
                     //显示商铺
                     ddv = new TalkViewAdpter(AbouFrendtMainActivity.this);

@@ -68,7 +68,6 @@
         android:theme="@style/AppTheme"
         tools:replace="android:label,android:icon,android:allowBackup,android:name">
 
-        <!-- android:name="com.example.viewpagerdemo.ui.openimui.LoginActivity" -->
         <activity
             android:name="com.example.viewpagerdemo.ui.jlfragmenwork.actvity.SplashActivity"
             android:label="@string/app_name"
@@ -224,35 +223,6 @@
         <activity android:name="com.example.viewpagerdemo.ui.searchfrend.CityListActivity" />
         <activity android:name="com.example.viewpagerdemo.ui.activity.ListTopClassActivity" />
 
-       <!-- <activity android:name="com.example.viewpagerdemo.ui.activity.UpdataSexActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name="com.example.viewpagerdemo.ui.activity.UpdataWXActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name="com.example.viewpagerdemo.ui.activity.UpdataQQActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name="com.example.viewpagerdemo.ui.activity.UpdataQMActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name="com.example.viewpagerdemo.ui.activity.ErWMain2Activity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name="com.example.viewpagerdemo.ui.activity.OhterListMainActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name="com.example.viewpagerdemo.ui.activity.ShenQFrendMainActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name="com.mining.app.ScanMainActivity"></activity>
-        <activity android:name="com.yiw.circledemo2.widgets.MyCircleFriendsActivity"></activity>
-        <activity android:name="com.example.viewpagerdemo.ui.searchfrend.CityListActivity"></activity>
-
-        <activity android:name="com.example.viewpagerdemo.ui.activity.ListTopClassActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-            />-->
 
 
         <activity
@@ -302,13 +272,10 @@
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-        <!--
-            <activity
-            android:name="com.taobao.openimui.sample.ExpandableContactsActivitySample"
-            android:configChanges="keyboardHidden|orientation"
-            android:screenOrientation="portrait"
-            android:theme="@style/Aliwx_ConverationStyle_default" />
-        -->
+        <service
+            android:name="com.alibaba.tcms.service.TCMSService"
+            android:exported="true"
+            android:process=":TcmsService" />
         <activity
             android:name="com.taobao.openimui.test.MultiAccountTestActivity"
             android:configChanges="keyboardHidden|orientation"

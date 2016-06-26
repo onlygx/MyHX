@@ -133,13 +133,6 @@ public class FindDDListActivity extends JLBaseActivity implements SwipeRefreshLa
                 FindDDListBean find = JSON.parseObject(s, FindDDListBean.class);
                 if (find.getList().size() > 0) {
                     //显示商铺下商品
-                /*for (int i = 0; i < find.getList().size(); i++) {
-                    list.addAll(find.getList().get(i).getGoodses());
-                }
-
-
-                ddv = new FindDDReclerViewAdpter(FindDDListActivity.this);
-                */
                     //显示商铺
                     list.addAll(find.getList());
                     ddv = new FindDDShopReclerViewAdpter(FindDDListActivity.this);

@@ -28,6 +28,7 @@ import com.alibaba.mobileim.gingko.model.tribe.YWTribe;
 import com.alibaba.mobileim.gingko.model.tribe.YWTribeType;
 import com.alibaba.mobileim.tribe.IYWTribeService;
 import com.alibaba.mobileim.utility.ResourceLoader;
+import com.example.viewpagerdemo.ui.MyApplication;
 import com.xingkesi.foodapp.R;
 import com.taobao.openimui.imcore.TribeSampleHelper;
 import com.taobao.openimui.sample.LoginSampleHelper;
@@ -238,7 +239,7 @@ public class TribeFragment extends Fragment implements AdapterView.OnItemClickLi
      * @param v
      */
     private void showPopupMenu(View v) {
-        final View bgView = View.inflate(DemoApplication.getContext(), R.layout.demo_popup_window_bg, null);
+        final View bgView = View.inflate(MyApplication.getContext(), R.layout.demo_popup_window_bg, null);
         bgView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -250,7 +251,7 @@ public class TribeFragment extends Fragment implements AdapterView.OnItemClickLi
         }
         mPopupBackground.showAtLocation(v, Gravity.BOTTOM, 0, 0);
 
-        View view = View.inflate(DemoApplication.getContext(), R.layout.demo_popup_menu, null);
+        View view = View.inflate(MyApplication.getContext(), R.layout.demo_popup_menu, null);
         //创建群组
         TextView tribe = (TextView) view.findViewById(R.id.create_tribe);
         tribe.setOnClickListener(new View.OnClickListener() {

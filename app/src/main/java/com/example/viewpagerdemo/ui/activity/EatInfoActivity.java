@@ -67,15 +67,12 @@ public class EatInfoActivity extends JLBaseActivity implements View.OnClickListe
 
     @Bind(R.id.iv_right_text)
     ImageView iv_right_text;
-<<<<<<< HEAD
 
     @Bind(R.id.xsyh)
     ImageView xsyh;
-=======
     @Bind(R.id.tv_right_text)
     TextView tv_right_text;
 
->>>>>>> origin/master
     //--------------轮班---------------
     @Bind(R.id.eat_vpone)
     ViewPager eatVpone;

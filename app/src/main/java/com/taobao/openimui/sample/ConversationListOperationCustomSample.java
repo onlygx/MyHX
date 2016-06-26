@@ -9,6 +9,7 @@ import com.alibaba.mobileim.aop.custom.IMConversationListOperation;
 import com.alibaba.mobileim.conversation.YWConversation;
 import com.alibaba.mobileim.conversation.YWConversationType;
 import com.alibaba.mobileim.conversation.YWCustomConversationBody;
+import com.example.viewpagerdemo.ui.MyApplication;
 import com.xingkesi.foodapp.R;
 import com.taobao.openimui.contact.ContactSystemMessageActivity;
 import com.taobao.openimui.demo.FragmentTabs;
@@ -116,10 +117,10 @@ public class ConversationListOperationCustomSample extends IMConversationListOpe
             YWCustomConversationBody body = (YWCustomConversationBody) conversation.getConversationBody();
             String conversationId = body.getIdentity();
             if (conversationId.startsWith(FragmentTabs.SYSTEM_FRIEND_REQ_CONVERSATION)) {
-                Intent intent = new Intent(DemoApplication.getContext(), ContactSystemMessageActivity.class);
+                Intent intent = new Intent(MyApplication.getContext(), ContactSystemMessageActivity.class);
                 fragment.getActivity().startActivity(intent);
             }else if(conversationId.startsWith(FragmentTabs.SYSTEM_TRIBE_CONVERSATION)){
-                Intent intent = new Intent(DemoApplication.getContext(), TribeSystemMessageActivity.class);
+                Intent intent = new Intent(MyApplication.getContext(), TribeSystemMessageActivity.class);
                 fragment.getActivity().startActivity(intent);
             }
         }

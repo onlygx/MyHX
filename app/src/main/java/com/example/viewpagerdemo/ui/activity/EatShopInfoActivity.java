@@ -444,10 +444,9 @@ public class EatShopInfoActivity extends JLBaseActivity implements View.OnClickL
         buyNum--;//让购买数量加1
         buyNumView.setText(buyNum + "");//
         ShopInfoListBean sif = goodsList.get(sb);
-<<<<<<< HEAD
+
        // DD.v(carLiat.size() + "循环jian移除前甲烷：" + sif.getCurrNum());
-=======
->>>>>>> origin/master
+
         if (carLiat.size() > 0 &&  sif.getCurrNum()==0) {
                 for (int i = 0; i < carLiat.size(); i++) {
                     ShopInfoListBean si = carLiat.get(i);
@@ -466,12 +465,12 @@ public class EatShopInfoActivity extends JLBaseActivity implements View.OnClickL
             txtMoney = Double.parseDouble(str);
         }
         double num = txtMoney - money;
-<<<<<<< HEAD
+
         money_num.setText(num + "");
       //  DD.v(carLiat.size() + "循环jian移除--后甲烷：" + sif.getCurrNum());
-=======
+
         money_num.setText(StringUtils.toTwoDouble(num) + "");
->>>>>>> origin/master
+
     }
 
     @Override

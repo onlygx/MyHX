@@ -34,9 +34,10 @@ import com.alibaba.mobileim.ui.chat.widget.YWSmilyMgr;
 import com.alibaba.mobileim.utility.IMAutoLoginInfoStoreUtil;
 import com.alibaba.tcms.env.EnvManager;
 import com.alibaba.tcms.env.TcmsEnvType;
-import com.alibaba.openIMUIDemo.LoginActivity;
 import com.alibaba.tcms.env.YWEnvManager;
 import com.alibaba.tcms.env.YWEnvType;
+import com.example.viewpagerdemo.ui.MyApplication;
+import com.example.viewpagerdemo.ui.jlfragmenwork.actvity.LoginActivity;
 import com.taobao.openimui.common.Notification;
 import com.taobao.openimui.contact.ContactCacheUpdateListenerImpl;
 import com.taobao.openimui.contact.ContactOperateNotifyListenerImpl;
@@ -220,11 +221,11 @@ public class LoginSampleHelper {
                 sendAutoLoginState(YWLoginState.disconnect);
                 //在其它终端登录，当前用户被踢下线
                 LoginSampleHelper.getInstance().setAutoLoginState(YWLoginState.disconnect);
-                Toast.makeText(DemoApplication.getContext(), "被踢下线", Toast.LENGTH_LONG).show();
+                Toast.makeText(MyApplication.getContext(), "被踢下线", Toast.LENGTH_LONG).show();
                 YWLog.i("LoginSampleHelper", "被踢下线");
-                Intent intent = new Intent(DemoApplication.getContext(), LoginActivity.class);
+                Intent intent = new Intent(MyApplication.getContext(), LoginActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                DemoApplication.getContext().startActivity(intent);
+                MyApplication.getContext().startActivity(intent);
             }
         }
     }
@@ -292,7 +293,7 @@ public class LoginSampleHelper {
                             JSONObject object = new JSONObject(content);
                             if (object.has("text")){
                                 String text = object.getString("text");
-                                Notification.showToastMsgLong(DemoApplication.getContext(), "透传消息，content = " + text);
+                                Notification.showToastMsgLong(MyApplication.getContext(), "透传消息，content = " + text);
                             }
                         } catch (JSONException e){
 

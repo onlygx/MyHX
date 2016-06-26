@@ -132,8 +132,9 @@ public class ChildAdapter {
         commentTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("LD", "CCCCCC222222222222222setOnClickListener");
-                //ClilmDatas.get(position);
+                ChildBean cb=mDatas.get(position);
+                String str=cb.getType()+"=="+cb.getContent()+"=="+cb.getUser().getNickName();
+                Log.d("LD", "CCCCCC222222222222222setOnClickListener"+str);
 
                /* if (circleMovementMethod.isPassToTv()) {
                     mListview.getOnItemClickListener().onItemClick(position);

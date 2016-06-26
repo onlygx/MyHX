@@ -18,6 +18,7 @@ import com.alibaba.mobileim.contact.IYWContactHeadClickCallback;
 import com.alibaba.mobileim.contact.IYWContactService;
 import com.alibaba.mobileim.contact.IYWCrossContactProfileCallback;
 import com.alibaba.mobileim.lib.model.contact.Contact;
+import com.example.viewpagerdemo.ui.MyApplication;
 
 /**
  * 用户自定义昵称和头像
@@ -46,7 +47,7 @@ public class UserProfileSampleHelper {
         contactManager.setContactHeadClickCallback(new IYWContactHeadClickCallback() {
             @Override
             public Intent onShowProfileActivity(String userId, String appKey) {
-                Toast.makeText(DemoApplication.getContext(), String.format("你点击了 %s 的头像哦~", userId), Toast.LENGTH_SHORT).show();
+                Toast.makeText(MyApplication.getContext(), String.format("你点击了 %s 的头像哦~", userId), Toast.LENGTH_SHORT).show();
                 return null;
             }
 

@@ -31,7 +31,8 @@ import com.alibaba.mobileim.conversation.IYWMessageListener;
 import com.alibaba.mobileim.conversation.YWMessage;
 import com.alibaba.mobileim.fundamental.widget.YWAlertDialog;
 import com.alibaba.mobileim.login.YWLoginState;
-import com.alibaba.openIMUIDemo.LoginActivity;
+import com.example.viewpagerdemo.ui.MyApplication;
+import com.example.viewpagerdemo.ui.jlfragmenwork.actvity.LoginActivity;
 import com.xingkesi.foodapp.R;
 import com.taobao.openimui.common.Notification;
 import com.taobao.openimui.common.SimpleWebViewActivity;
@@ -307,11 +308,11 @@ public class MoreFragment extends Fragment implements View.OnClickListener {
             //此时logout已关闭所有基于IMBaseActivity的OpenIM相关Actiivity，s
             @Override
             public void onSuccess(Object... arg0) {
-                Toast.makeText(DemoApplication.getContext(), "退出成功", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MyApplication.getContext(), "退出成功", Toast.LENGTH_SHORT).show();
                 YWLog.i(TAG, "退出成功");
                 LoginSampleHelper.getInstance().setAutoLoginState(YWLoginState.idle);
                 getActivity().finish();
-                Intent intent = new Intent(DemoApplication.getContext(), LoginActivity.class);
+                Intent intent = new Intent(MyApplication.getContext(), LoginActivity.class);
                 startActivity(intent);
             }
 
@@ -322,7 +323,7 @@ public class MoreFragment extends Fragment implements View.OnClickListener {
 
             @Override
             public void onError(int arg0, String arg1) {
-                Toast.makeText(DemoApplication.getContext(), "退出失败,请重新登录", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MyApplication.getContext(), "退出失败,请重新登录", Toast.LENGTH_SHORT).show();
             }
         });
     }

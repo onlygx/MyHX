@@ -126,7 +126,7 @@ public class NotificationInitSampleHelper extends IMNotification{
         //以下仅为示例代码，需要Intent开发者根据不同目的自己实现
 //        Intent intent = new Intent(Intent.ACTION_MAIN);
 //        intent.addCategory(Intent.CATEGORY_LAUNCHER);
-//        intent.setClass(DemoApplication.getContext(), FragmentTabs.class);
+//        intent.setClass(MyApplication.getContext(), FragmentTabs.class);
 //        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 //        return intent;
 

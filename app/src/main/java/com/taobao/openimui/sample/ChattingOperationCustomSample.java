@@ -44,6 +44,7 @@ import com.alibaba.mobileim.fundamental.widget.WxAlertDialog;
 import com.alibaba.mobileim.fundamental.widget.YWAlertDialog;
 import com.alibaba.mobileim.kit.common.IMUtility;
 import com.alibaba.mobileim.kit.contact.YWContactHeadLoadHelper;
+import com.example.viewpagerdemo.ui.MyApplication;
 import com.xingkesi.foodapp.R;
 import com.taobao.openimui.common.Notification;
 
@@ -352,7 +353,7 @@ public class ChattingOperationCustomSample extends IMChattingPageOperateion {
 
         YWGeoMessageBody messageBody = (YWGeoMessageBody) message.getMessageBody();
         LinearLayout layout = (LinearLayout) View.inflate(
-                DemoApplication.getContext(),
+                MyApplication.getContext(),
                 R.layout.demo_geo_message_layout, null);
         TextView textView = (TextView) layout.findViewById(R.id.content);
         textView.setText(messageBody.getAddress());
@@ -442,7 +443,7 @@ public class ChattingOperationCustomSample extends IMChattingPageOperateion {
      */
     @Override
     public void onCustomMessageClick(Fragment fragment, YWMessage message) {
-        Toast.makeText(DemoApplication.getContext(), "onCustomMessageClick",
+        Toast.makeText(MyApplication.getContext(), "onCustomMessageClick",
                 Toast.LENGTH_SHORT).show();
     }
 
@@ -453,7 +454,7 @@ public class ChattingOperationCustomSample extends IMChattingPageOperateion {
      */
     @Override
     public void onCustomMessageLongClick(Fragment fragment, YWMessage message) {
-        Toast.makeText(DemoApplication.getContext(), "你长按了自定义消息",
+        Toast.makeText(MyApplication.getContext(), "你长按了自定义消息",
                 Toast.LENGTH_SHORT).show();
     }
 
@@ -464,7 +465,7 @@ public class ChattingOperationCustomSample extends IMChattingPageOperateion {
      */
     @Override
     public void onGeoMessageClick(Fragment fragment, YWMessage message) {
-        Toast.makeText(DemoApplication.getContext(), "onCustomMessageLongClick",
+        Toast.makeText(MyApplication.getContext(), "onCustomMessageLongClick",
                 Toast.LENGTH_SHORT).show();
     }
 
@@ -475,7 +476,7 @@ public class ChattingOperationCustomSample extends IMChattingPageOperateion {
      */
     @Override
     public void onGeoMessageLongClick(Fragment fragment, YWMessage message) {
-        Toast.makeText(DemoApplication.getContext(), "onGeoMessageLongClick",
+        Toast.makeText(MyApplication.getContext(), "onGeoMessageLongClick",
                 Toast.LENGTH_SHORT).show();
     }
 
@@ -629,7 +630,7 @@ public class ChattingOperationCustomSample extends IMChattingPageOperateion {
     public View getCustomUrlView(Fragment fragment, YWMessage message, String url, YWConversation ywConversation) {
         if (url.equals("https://www.baidu.com/ ")) {
             LinearLayout layout = (LinearLayout) View.inflate(
-                    DemoApplication.getContext(),
+                    MyApplication.getContext(),
                     R.layout.demo_custom_tribe_msg_layout, null);
             TextView textView = (TextView) layout.findViewById(R.id.msg_content);
             textView.setText("I'm from getCustomUrlView!");

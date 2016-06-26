@@ -2,6 +2,7 @@ package com.taobao.openimui.contact;
 
 import com.alibaba.mobileim.contact.IYWContact;
 import com.alibaba.mobileim.contact.IYWContactOperateNotifyListener;
+import com.example.viewpagerdemo.ui.MyApplication;
 import com.taobao.openimui.common.Notification;
 
 /**
@@ -17,7 +18,7 @@ public class ContactOperateNotifyListenerImpl implements IYWContactOperateNotify
      */
     @Override
     public void onVerifyAddRequest(IYWContact contact, String message) {
-        Notification.showToastMsg(DemoApplication.getContext(), contact.getUserId()+"用户请求加你为好友");
+        Notification.showToastMsg(MyApplication.getContext(), contact.getUserId()+"用户请求加你为好友");
 
 //                 //增加未读数的显示
 //                 YWConversation conversation = mIMKit.getConversationService().getCustomConversationByConversationId(SYSTEM_FRIEND_REQ_CONVERSATION);
@@ -43,7 +44,7 @@ public class ContactOperateNotifyListenerImpl implements IYWContactOperateNotify
      */
     @Override
     public void onAcceptVerifyRequest(IYWContact contact) {
-        Notification.showToastMsg(DemoApplication.getContext(),contact.getUserId()+"用户接受了你的好友请求");
+        Notification.showToastMsg(MyApplication.getContext(),contact.getUserId()+"用户接受了你的好友请求");
     }
     /**
      * 用户拒绝了你的好友请求
@@ -52,7 +53,7 @@ public class ContactOperateNotifyListenerImpl implements IYWContactOperateNotify
      */
     @Override
     public void onDenyVerifyRequest(IYWContact contact) {
-        Notification.showToastMsg(DemoApplication.getContext(),contact.getUserId()+"用户拒绝了你的好友请求");
+        Notification.showToastMsg(MyApplication.getContext(),contact.getUserId()+"用户拒绝了你的好友请求");
     }
 
     /**
@@ -63,7 +64,7 @@ public class ContactOperateNotifyListenerImpl implements IYWContactOperateNotify
      */
     @Override
     public void onSyncAddOKNotify(IYWContact contact) {
-        Notification.showToastMsg(DemoApplication.getContext(),"云旺服务端（或其它终端）进行了好友添加操作对"+contact.getUserId());
+        Notification.showToastMsg(MyApplication.getContext(),"云旺服务端（或其它终端）进行了好友添加操作对"+contact.getUserId());
 
     }
 
@@ -75,6 +76,6 @@ public class ContactOperateNotifyListenerImpl implements IYWContactOperateNotify
      */
     @Override
     public void onDeleteOKNotify(IYWContact contact) {
-        Notification.showToastMsg(DemoApplication.getContext(),contact.getUserId()+"用户从好友名单删除了您");
+        Notification.showToastMsg(MyApplication.getContext(),contact.getUserId()+"用户从好友名单删除了您");
     }
 }

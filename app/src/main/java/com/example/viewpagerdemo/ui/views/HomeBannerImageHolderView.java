@@ -4,8 +4,8 @@ import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.example.viewpagerdemo.ui.Contantor;
 import com.example.viewpagerdemo.ui.bean.ShoppingListBanerBean;
-import com.example.viewpagerdemo.ui.jlfragmenwork.Contantor;
 import com.example.viewpagerdemo.ui.views.banner.Holder;
 import com.squareup.picasso.Picasso;
 import com.xingkesi.foodapp.R;

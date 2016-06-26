@@ -39,6 +39,7 @@ public class Contantor {
     public static  String FindInfoADDAddr=post+"/receiptAddress/save";//我---添加收货地址
     public static  String FindInfoADelAddr=post+"/receiptAddress/delete";//我---删除收货地址
     public static  String listByUserId=post+"/message/listByUserId";//朋友圈---与我相关
+    public static  String setAllRead=post+"/message/setAllRead";//朋友圈---与我相关
     public static  String listByUnRead=post+"/message/listByUnRead";//朋友圈---数量
     public static  String FindInfoAUpAddr=post+"/receiptAddress/update";//我---删除收货地址
     public static  String submitAddr=post+"/orderFrom/submit";//下单

@@ -5,13 +5,9 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
-<<<<<<< HEAD
 import android.widget.AdapterView;
-=======
 import android.widget.Button;
->>>>>>> origin/master
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -19,7 +15,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONArray;
-import com.alibaba.mobileim.YWAPI;
 import com.alibaba.mobileim.YWIMKit;
 import com.example.viewpagerdemo.ui.Contantor;
 import com.example.viewpagerdemo.ui.MyApplication;
@@ -27,17 +22,12 @@ import com.example.viewpagerdemo.ui.activity.ABooksZActivity;
 import com.example.viewpagerdemo.ui.activity.ShenQFrendMainActivity;
 import com.example.viewpagerdemo.ui.bean.AddBookBean;
 import com.example.viewpagerdemo.ui.bean.ShenQBean;
-<<<<<<< HEAD
-=======
-import com.example.viewpagerdemo.ui.jlfragmenwork.Contantor;
 import com.example.viewpagerdemo.ui.jlfragmenwork.actvity.LoginActivity;
->>>>>>> origin/master
 import com.example.viewpagerdemo.ui.jlfragmenwork.basefregmetwork.JLBaseFragment;
 import com.example.viewpagerdemo.ui.jlfragmenwork.city.CityAdapter;
 import com.example.viewpagerdemo.ui.jlfragmenwork.city.CityData;
 import com.example.viewpagerdemo.ui.jlfragmenwork.city.CityItem;
 import com.example.viewpagerdemo.ui.jlfragmenwork.city.ContactItemInterface;
-import com.example.viewpagerdemo.ui.jlfragmenwork.util.DD;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.TS;
 import com.example.viewpagerdemo.ui.sarchcity.ContactListViewImpl;
 import com.xingkesi.foodapp.R;
@@ -134,7 +124,7 @@ public class AddressBookFragment extends JLBaseFragment implements TextWatcher, 
     void getNewNum() {
         AjaxParams pa = new AjaxParams();
         pa.put("userId", MyApplication.getInstan().getUser().getData().getId() + "");
-<<<<<<< HEAD
+
         String url = Contantor.applyListByUserId;
        // DD.d("通讯录最新数量:" + url + "?" + pa.toString());
         new FinalHttp().post(url, pa, new AjaxCallBack<String>() {
@@ -142,12 +132,6 @@ public class AddressBookFragment extends JLBaseFragment implements TextWatcher, 
             public void onSuccess(String s) {
                 super.onSuccess(s);
               //  DD.d("通讯录最新数量s:" + s);
-=======
-        new FinalHttp().post(Contantor.applyListByUserId, pa, new AjaxCallBack<String>() {
-            @Override
-            public void onSuccess(String s) {
-                super.onSuccess(s);
->>>>>>> origin/master
                 if (s != null && !s.equals("")) {
                     list = JSONArray.parseArray(s, ShenQBean.class);
                     if (list.size() > 0) {

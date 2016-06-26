@@ -160,10 +160,8 @@ public class HomeeateListFragment extends JLBaseFragment implements SwipeRefresh
             @Override
             public void onSuccess(String s) {
                 ShopingBean sb = JSON.parseObject(s, ShopingBean.class);
-<<<<<<< HEAD
-                list = sb.getList();
-=======
->>>>>>> origin/master
+                ArrayList<ShoppingListBean> list = sb.getList();
+
                 if (refreshlayout.isRefreshing()) {
                     refreshlayout.setRefreshing(false);
                 }
