@@ -1,22 +1,14 @@
 package com.example.viewpagerdemo.ui.bean;
 
+import java.util.ArrayList;
+
 /**
  * Created by Administrator on 2016/6/18.
  */
 public class QbaoBean {
 
-    /**
-     * msg :
-     * data : {"balance":"0.0000","detail":""}
-     * state : true
-     */
 
     private String msg;
-    /**
-     * balance : 0.0000
-     * detail :
-     */
-
     private DataBean data;
     private String state;
 
@@ -46,7 +38,17 @@ public class QbaoBean {
 
     public static class DataBean {
         private String balance;
-        private String detail;
+
+      /*  ArrayList<WallBean> detail;
+
+
+        public ArrayList<WallBean> getDetail() {
+            return detail;
+        }
+
+        public void setDetail(ArrayList<WallBean> detail) {
+            this.detail = detail;
+        }*/
 
         public String getBalance() {
             return balance;
@@ -56,12 +58,5 @@ public class QbaoBean {
             this.balance = balance;
         }
 
-        public String getDetail() {
-            return detail;
-        }
-
-        public void setDetail(String detail) {
-            this.detail = detail;
-        }
     }
 }

@@ -65,6 +65,7 @@ import com.taobao.openimui.demo.FragmentTabs;
 import com.taobao.openimui.sample.LoginSampleHelper;
 import com.taobao.openimui.sample.NotificationInitSampleHelper;
 import com.taobao.openimui.sample.UserProfileSampleHelper;
+import com.taobao.openimui.sample.YWSDKGlobalConfigSample;
 import com.xingkesi.foodapp.R;
 
 import net.tsz.afinal.FinalHttp;
@@ -96,39 +97,34 @@ public class LoginActivity extends JLBaseActivity implements View.OnClickListene
     //@Bind(R.id.appkey)
     // EditText appKeyView;
 
-    private boolean autoLogin = false;
-    boolean show = false;
+    private boolean autoLogin = true;
 
     private String currentUsername;
     private String currentPassword;
     MyCount mc;
 
+    YWSDKGlobalConfigSample sdk;
     //------------------------------
     public static final String AUTO_LOGIN_STATE_ACTION = "com.openim.autoLoginStateActionn";
     private static final int GUEST = 1;
     private static final String USER_ID = "userId";
     private static final String PASSWORD = "password";
     private static final String TAG = LoginActivity.class.getSimpleName();
+
     private LoginSampleHelper loginHelper;
-
-    //private ProgressBar progressBar;
     private Handler handler = new Handler(Looper.getMainLooper());
-    //private ImageView lg;
     public static String APPKEY;
-    private int mClickCount = 0;
-
-
     String tag;
-
 
     private BroadcastReceiver mAutoLoginStateReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             final int state = intent.getIntExtra("state", -1);
-            YWLog.i(TAG, "mAutoLoginStateReceiver, loginState = " + state);
+            DD.i( "自动登录状态mAutoLoginStateReceiver, loginState = " + state);
             if (state == -1) {
                 return;
             }
+
             handleAutoLoginState(state);
         }
     };
@@ -138,8 +134,10 @@ public class LoginActivity extends JLBaseActivity implements View.OnClickListene
     public void initID() {
         super.initID();
         tag = getIntent().getStringExtra("tag");
+
         loginHelper = LoginSampleHelper.getInstance();
-       /*
+        sdk = YWSDKGlobalConfigSample.getInstance();
+        sdk.enableAutoLogin();
         //读取登录成功后保存的用户名和密码
         String localId = IMPrefsTools.getStringPrefs(LoginActivity.this, USER_ID, "");
         if (!TextUtils.isEmpty(localId)) {
@@ -149,57 +147,10 @@ public class LoginActivity extends JLBaseActivity implements View.OnClickListene
                 passwordEditText.setText(localPassword);
             }
         }
-
-        if (LoginSampleHelper.sEnvType == YWEnvType.ONLINE) {
-            if (TextUtils.isEmpty(usernameEditText.getText())) {
-                usernameEditText.setText(getRandAccount());
-            }
-            if (TextUtils.isEmpty(passwordEditText.getText())) {
-                passwordEditText.setText("taobao1234");
-            }
-            if (TextUtils.isEmpty(appKeyView.getText())) {
-                appKeyView.setText(LoginSampleHelper.APP_KEY);
-            }
-        } else if (LoginSampleHelper.sEnvType == YWEnvType.TEST) {
-            if (TextUtils.isEmpty(usernameEditText.getText())) {
-                Random r = new Random();
-                int suffix = Math.abs(r.nextInt() % 100);
-                usernameEditText.setText("fk" + suffix);
-            }
-            if (TextUtils.isEmpty(passwordEditText.getText())) {
-                passwordEditText.setText("taobao1234");
-            }
-            if (TextUtils.isEmpty(appKeyView.getText())) {
-                appKeyView.setText(LoginSampleHelper.APP_KEY_TEST);
-            }
-
-        } else if (LoginSampleHelper.sEnvType == YWEnvType.PRE) {
-            if (TextUtils.isEmpty(usernameEditText.getText())) {
-                usernameEditText.setText("testpro74");
-            }
-            if (TextUtils.isEmpty(passwordEditText.getText())) {
-                passwordEditText.setText("taobao1234");
-            }
-            if (TextUtils.isEmpty(appKeyView.getText())) {
-                appKeyView.setText(LoginSampleHelper.APP_KEY);
-            }
-        }
-
-
-        init(usernameEditText.getText().toString(), appKeyView.getText().toString());
-
+        init(usernameEditText.getText().toString(), MyApplication.APP_KEY);
         myRegisterReceiver();
 
-        //一些其它的初始化
-        //自定义消息处理初始化(如果不需要自定义消息，则可以省去)
-//				CustomMessageSampleHelper.initHandler();
 
-        // bt_logoButton = (Button) findViewById(R.id.login);
-        // annoybt_logoButton = (Button) findViewById(R.id.annoylogin);
-
-
-        //  lg = (ImageView) findViewById(R.id.logo);
-        //  lg.setImageBitmap(logo);*/
         usernameEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -230,9 +181,6 @@ public class LoginActivity extends JLBaseActivity implements View.OnClickListene
         iv_show.setOnClickListener(this);
         bt_logoButton.setOnClickListener(this);
         mc = new MyCount(60000, 1000);
-        //String userid = "testpro1";
-        // String password = "taobao1234";
-//        usernameEditText.setText("13306400280");
         usernameEditText.setText("13306400282");
         passwordEditText.setText("1");
     }
@@ -289,10 +237,8 @@ public class LoginActivity extends JLBaseActivity implements View.OnClickListene
             final String paws = passwordEditText.getText().toString();
             AjaxParams ajaxParams = new AjaxParams();
             ajaxParams.put("thinksId", name);
-//            ajaxParams.put("password", MD5Util.md5xs(paws));
             ajaxParams.put("password", paws);
             DD.d(Contantor.logdin + "?" + ajaxParams.toString());
-           // LogdindOpenIME();
             new FinalHttp().post(Contantor.logdin, ajaxParams, new AjaxCallBack<String>() {
                 @Override
                 public void onSuccess(String s) {
@@ -304,8 +250,6 @@ public class LoginActivity extends JLBaseActivity implements View.OnClickListene
                         DD.d("登录ID:" + user.getData().getId() + "===" + user.getData().getThinksId());
                         MyApplication.getInstan().setUser(user);
                         MyApplication.getInstan().setUserName(name);
-                      //  MyApplication.getInstan().setUserPwd(paws);
-                        finish();
                         //---------正式版请将下面的放开--------------------
                         LogdindOpenIME();
 
@@ -433,72 +377,12 @@ public class LoginActivity extends JLBaseActivity implements View.OnClickListene
         }
     }
 
-
-
-    private YWEnvType envType = YWEnvType.ONLINE;
-    private AlertDialog dialog;
-
-    private void switchAndSaveEnv() {
-        final String[] items = {"线上", "预发", "测试"};
-        if (dialog == null) {
-            dialog = new YWAlertDialog.Builder(this)
-                    .setTitle("设置网络")
-                    .setItems(items,
-                            new DialogInterface.OnClickListener() {
-
-                                @Override
-                                public void onClick(
-                                        DialogInterface dialog,
-                                        int which) {
-
-                                    TcmsEnvType tcmsEnvType = TcmsEnvType.ONLINE;
-                                    if (which == 0) {
-                                        envType = YWEnvType.ONLINE;
-                                    } else if (which == 1) {
-                                        envType = YWEnvType.PRE;
-                                        tcmsEnvType = TcmsEnvType.PRE;
-                                    } else if (which == 2) {
-                                        envType = YWEnvType.TEST;
-                                        tcmsEnvType = TcmsEnvType.TEST;
-                                    }
-
-                                    EnvManager.getInstance().resetEnvType(MyApplication.getContext(), tcmsEnvType);
-                                    YWEnvManager.prepare(MyApplication.getContext(), envType);
-                                    IMNotificationUtils.showToast("切换环境，程序退出，请再次启动", LoginActivity.this);
-                                    ServiceChooseHelper.exitService(LoginActivity.this);//xianzhen: service must restart too.
-
-                                    AccountInfoTools.saveAnnoyAccount("", "");
-
-
-                                    handler.postDelayed(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            System.exit(0);
-                                        }
-                                    }, 1000);
-                                }
-                            }).setNegativeButton(
-                            getResources().getString(R.string.cancel),
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog,
-                                                    int id) {
-                                    dialog.cancel();
-                                }
-                            }).create();
-        }
-        dialog.show();
-    }
-
     private void handleAutoLoginState(int loginState) {
         if (loginState == YWLoginState.logining.getValue()) {
-           /* if (progressBar.getVisibility() != View.VISIBLE){
-                progressBar.setVisibility(View.VISIBLE);
-            }*/
             showWait();
             bt_logoButton.setClickable(false);
         } else if (loginState == YWLoginState.success.getValue()) {
             bt_logoButton.setClickable(true);
-            // progressBar.setVisibility(View.GONE);
             closeWait();
             Intent intent = new Intent(LoginActivity.this, FragmentTabs.class);
             LoginActivity.this.startActivity(intent);
@@ -541,9 +425,10 @@ public class LoginActivity extends JLBaseActivity implements View.OnClickListene
      * @param userId
      * @param password
      */
-    private void saveIdPasswordToLocal(String userId, String password) {
+    private void saveIdPasswordToLocal(String userId, String password,String thinkPwd) {
         IMPrefsTools.setStringPrefs(LoginActivity.this, USER_ID, userId);
         IMPrefsTools.setStringPrefs(LoginActivity.this, PASSWORD, password);
+        IMPrefsTools.setStringPrefs(LoginActivity.this, "thinkPwd", thinkPwd);
 
     }
 
@@ -557,41 +442,12 @@ public class LoginActivity extends JLBaseActivity implements View.OnClickListene
         LocalBroadcastManager.getInstance(YWChannel.getApplication()).unregisterReceiver(mAutoLoginStateReceiver);
     }
 
-  /*  void LogdindOpenIME(int i) {
-        //判断当前网络状态，若当前无网络则提示用户无网络
-        if (YWChannel.getInstance().getNetWorkState().isNetWorkNull()) {
-            Toast.makeText(LoginActivity.this, "网络已断开，请稍后再试哦~", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        //开始登录
-        String userid = "testpro1";
-        String password = "taobao1234";
-        init(userid, MyApplication.APP_KEY);
-        YWIMKit mIMKit = LoginSampleHelper.getInstance().getIMKit();
-        IYWLoginService loginService = mIMKit.getLoginService();
-        YWLoginParam loginParam = YWLoginParam.createLoginParam(userid, password);
-        loginService.login(loginParam, new IWxCallback() {
-
-            @Override
-            public void onSuccess(Object... arg0) {
-                DD.i("login 旺旺 登录!onSuccess");
-            }
-
-            @Override
-            public void onProgress(int arg0) {
-                // TODO Auto-generated method stub
-            }
-
-            @Override
-            public void onError(int errCode, String description) {
-                //如果登录失败，errCode为错误码,description是错误的具体描述信息
-                DD.i("login 旺旺 登录!onSuccess");
-            }
-        });
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        myUnregisterReceiver();
     }
-*/
+
     void LogdindOpenIME() {
         //判断当前网络状态，若当前无网络则提示用户无网络
         if (YWChannel.getInstance().getNetWorkState().isNetWorkNull()) {
@@ -600,6 +456,8 @@ public class LoginActivity extends JLBaseActivity implements View.OnClickListene
         }
         bt_logoButton.setClickable(false);
         final Editable userId = usernameEditText.getText();
+        final String pwd=passwordEditText.getText().toString();
+        passwordEditText.setText("123456");
         final Editable password = passwordEditText.getText();
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(usernameEditText.getWindowToken(), 0);
@@ -614,31 +472,19 @@ public class LoginActivity extends JLBaseActivity implements View.OnClickListene
 
             @Override
             public void onSuccess(Object... arg0) {
-                saveIdPasswordToLocal(userId.toString(), password.toString());
+                saveIdPasswordToLocal(userId.toString(), password.toString(),pwd);
 
                 bt_logoButton.setClickable(true);
-                // progressBar.setVisibility(View.GONE);
                 Toast.makeText(LoginActivity.this, "登录成功",
                         Toast.LENGTH_SHORT).show();
                 DD.i("login 旺旺 登录成功!");
-               /* Intent intent = new Intent(LoginActivity.this, FragmentTabs.class);
-                intent.putExtra(FragmentTabs.LOGIN_SUCCESS, "loginSuccess");
-                LoginActivity.this.startActivity(intent);
-                LoginActivity.this.finish();*/
-
-                // MyApplication.getInstan().setUser(user);
                 MyApplication.getInstan().setUserName(userId.toString());
-                MyApplication.getInstan().setUserPwd(password.toString());
+                MyApplication.getInstan().setUserPwd(pwd);
                 closeWait();
                 if (tag.equals("logding")) {
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 }
                 finish();
-
-//						YWIMKit mKit = LoginSampleHelper.getInstance().getIMKit();
-//						EServiceContact contact = new EServiceContact("qn店铺测试账号001:找鱼");
-//						LoginActivity.this.startActivity(mKit.getChattingActivityIntent(contact));
-//                        mockConversationForDemo();
             }
 
             @Override

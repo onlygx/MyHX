@@ -400,6 +400,9 @@ public class CircleAdapter extends BaseRecycleViewAdapter      {
 
         public CircleViewHolder(View itemView, int viewType) {
             super(itemView);
+            if(viewType==0){
+                viewType=2;
+            }
             this.viewType = viewType;
 
             ViewStub viewStub = (ViewStub) itemView.findViewById(R.id.viewStub);

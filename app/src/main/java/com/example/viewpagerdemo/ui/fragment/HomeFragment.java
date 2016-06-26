@@ -36,7 +36,6 @@ import butterknife.ButterKnife;
 
 public class HomeFragment extends JLBaseFragment {
 
-    int CurPage = 0;
 
     @Bind(R.id.tabStrip_viewPagerFragment_tabs)
     PagerSlidingTabStrip pagerSlidingTabStrip;

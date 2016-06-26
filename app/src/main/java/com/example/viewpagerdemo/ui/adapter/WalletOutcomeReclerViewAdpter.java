@@ -41,8 +41,8 @@ public class WalletOutcomeReclerViewAdpter extends RecyclerView.Adapter<WalletOu
     public void onBindViewHolder(ViewHolder vh, int position) {
         Log.d("LD","555postion:"+position);
         Wallet_IncomeBean data =list.get(position);
-        vh.walletIn_name.setText(data.getComeName());
-        vh.walletIn_money.setText(data.getComeMoney());
+       // vh.walletIn_name.setText(data.getComeName());
+       // vh.walletIn_money.setText(data.getComeMoney());
     }
     @Override
     public long getItemId(int position) {
@@ -62,11 +62,10 @@ public class WalletOutcomeReclerViewAdpter extends RecyclerView.Adapter<WalletOu
      * @author ButterKnifeZelezny, plugin for Android Studio by Avast Developers (http://github.com/avast)
      */
     static  class ViewHolder extends RecyclerView.ViewHolder{
-        @Bind(R.id.walletIn_name)
+     /*   @Bind(R.id.walletIn_name)
         TextView walletIn_name;
         @Bind(R.id.walletIn_money)
-        TextView walletIn_money;
-
+        TextView walletIn_money;*/
 
         ViewHolder(View view) {
             super(view);

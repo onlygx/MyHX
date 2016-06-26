@@ -76,11 +76,8 @@ public class ReleaseFrendActivity extends JLBaseActivity {
 
     int MAX_LENGTH = 100;                   //最大输入字符数500
     int Rest_Length = MAX_LENGTH;
-    @Bind(R.id.content)
-    EditText content;
-
-    @Bind(R.id.numz)
     TextView numz;
+
     @Override
     public int setViewLayout() {
         return R.layout.releasefrendactivitylayout;
@@ -97,18 +94,21 @@ public class ReleaseFrendActivity extends JLBaseActivity {
         gridView = (GridView) findViewById(R.id.gridView);
         mButton = (Button) findViewById(R.id.button);
         textView = (EditText) findViewById(R.id.et_context);
+
+
+        numz = (TextView) findViewById(R.id.numz);
         mSingleQueue = Volley.newRequestQueue(ReleaseFrendActivity.this);
-        content.addTextChangedListener(new TextWatcher() {
+        textView.addTextChangedListener(new TextWatcher() {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 // TODO Auto-generated method stub
-                if (content.length() >= MAX_LENGTH) {
+                if (textView.length() >= MAX_LENGTH) {
                     TS.shortTime("字数过多");
                     return;
                 }
                 if (Rest_Length > 0) {
-                    Rest_Length = MAX_LENGTH - content.getText().length();
+                    Rest_Length = MAX_LENGTH - textView.getText().length();
                 }
             }
 

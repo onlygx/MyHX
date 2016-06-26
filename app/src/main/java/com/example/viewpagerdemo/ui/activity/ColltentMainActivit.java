@@ -67,7 +67,8 @@ public class ColltentMainActivit extends JLBaseActivity implements SwipeRefreshL
     @Override
     protected void onResume() {
         super.onResume();
-        if(MyApplication.getInstan().getUser()!=null && MyApplication.getInstan().getUser().getData().getId()!=0) {
+        if(MyApplication.getInstan().getUser()!=null &&
+                MyApplication.getInstan().getUser().getData().getId()!=0) {
             RequsetDatas();
         }
     }

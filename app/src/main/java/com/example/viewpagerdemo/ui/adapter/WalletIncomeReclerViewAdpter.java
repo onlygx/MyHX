@@ -7,10 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.viewpagerdemo.ui.bean.WallBean;
 import com.example.viewpagerdemo.ui.bean.Wallet_IncomeBean;
 import com.xingkesi.foodapp.R;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -21,9 +24,9 @@ import butterknife.ButterKnife;
 public class WalletIncomeReclerViewAdpter extends RecyclerView.Adapter<WalletIncomeReclerViewAdpter.ViewHolder> {
 
     Context c;
-    ArrayList<Wallet_IncomeBean> list;
+    ArrayList<WallBean> list;
 
-    public WalletIncomeReclerViewAdpter(Context c, ArrayList<Wallet_IncomeBean> list) {
+    public WalletIncomeReclerViewAdpter(Context c, ArrayList<WallBean> list) {
         this.c = c;
         this.list = list;
 
@@ -38,7 +41,18 @@ public class WalletIncomeReclerViewAdpter extends RecyclerView.Adapter<WalletInc
 
     @Override
     public void onBindViewHolder(ViewHolder vh, int position) {
-        Wallet_IncomeBean data = list.get(position);
+        WallBean data = list.get(position);
+
+        vh.walletInBhao.setText(data.get编号());
+        vh.walletInLaiyuan.setText(data.get来源());
+        vh.walletInType.setText(data.get类型());
+        vh.walletInMoney.setText(data.get金额());
+        vh.walletInNote.setText(data.get备注());
+        SimpleDateFormat sdf =new SimpleDateFormat("MM-dd");
+        String date=sdf.format(new Date(data.get时间()));
+        vh.walletInDate.setText(date);
+
+
     }
 
     @Override

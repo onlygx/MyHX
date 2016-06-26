@@ -39,36 +39,19 @@ public class Wallet_IncomeFragment extends JLBaseFragment {
     @Override
     public void SetData() {
 
-        list =TestData();
+       /* list =new ArrayList<>();
         wallet_incomerv.setHasFixedSize(true);
         LinearLayoutManager manager =new LinearLayoutManager(getActivity());
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         wallet_incomerv.setLayoutManager(manager);
         adpter =new WalletIncomeReclerViewAdpter(getActivity(),list);
         wallet_incomerv.setAdapter(adpter);
-
+*/
 
 
 
 
     }
 
-    //----------测试数据-----------
-    ArrayList<Wallet_IncomeBean>  TestData(){
-        ArrayList<Wallet_IncomeBean> list =new ArrayList<>();
-        /*for(int i=0;i<10;i++){
-            Wallet_IncomeBean wb =new Wallet_IncomeBean();
-            wb.setComeId(i+"");
-            wb.setComeName("新疆苹果");
-            Random tan =new Random();
-            int ran =tan.nextInt(15);
-            int money =ran+50+i;
-            wb.setComeMoney(money+"");
-            list.add(wb);
-        }*/
 
-        return list;
-
-
-    }
 }

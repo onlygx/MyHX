@@ -19,6 +19,8 @@ import com.example.viewpagerdemo.ui.activity.WakketZhuangZActivity;
 import com.example.viewpagerdemo.ui.adapter.WalletIncomeReclerViewAdpter;
 import com.example.viewpagerdemo.ui.bean.QbaoBean;
 import com.example.viewpagerdemo.ui.Contantor;
+import com.example.viewpagerdemo.ui.bean.WallBean;
+import com.example.viewpagerdemo.ui.bean.WallDailtBean;
 import com.example.viewpagerdemo.ui.bean.Wallet_IncomeBean;
 import com.example.viewpagerdemo.ui.jlfragmenwork.actvity.LoginActivity;
 import com.example.viewpagerdemo.ui.jlfragmenwork.basefregmetwork.JLBaseFragment;
@@ -30,6 +32,9 @@ import com.xingkesi.foodapp.R;
 import net.tsz.afinal.FinalHttp;
 import net.tsz.afinal.http.AjaxCallBack;
 import net.tsz.afinal.http.AjaxParams;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -78,8 +83,10 @@ public class WalletFragment extends JLBaseFragment {
     @Bind(R.id.wallet_incomerv)
     RecyclerView wallet_incomerv;
 
-    ArrayList<Wallet_IncomeBean> list;
+    ArrayList<WallBean> list;
     WalletIncomeReclerViewAdpter adpter;
+
+
 
     @Override
     public int setViewLayout() {
@@ -111,7 +118,7 @@ public class WalletFragment extends JLBaseFragment {
         iv_right_image.setVisibility(View.GONE);
         tv_title.setText("钱包");
 
-        list = TestData();
+        list = new ArrayList<>();
         wallet_incomerv.setHasFixedSize(true);
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         manager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -246,12 +253,33 @@ public class WalletFragment extends JLBaseFragment {
                 if (s == null || s.equals("") || s.equals(null)) {
                     return;
                 }
-                QbaoBean qb = JSONObject.parseObject(s, QbaoBean.class);
 
-                if (qb != null && qb.getState().equals("true")) {
-                    String balance = qb.getData().getBalance();
-                    balancetv.setText(balance);
+                try {
+                    org.json.JSONObject js=new org.json.JSONObject(s);
+                    org.json.JSONObject data=js.getJSONObject("data");
+                    JSONArray ld=data.getJSONArray("detail");
+                    for(int i=0;i<ld.length();i++){
+                        org.json.JSONObject jb=ld.getJSONObject(i);
+                        String lai=jb.getString("来源");
+                        WallBean wb =new WallBean();
+                        wb.set来源(lai);
+                        wb.set备注(jb.getString("备注"));
+                        wb.set时间(jb.getLong("时间"));
+                        wb.set类型(jb.getString("类型"));
+                        wb.set编号(jb.getString("编号"));
+                        wb.set金额(jb.getString("金额"));
+                        list.add(wb);
+                    }
+
+                    balancetv.setText(data.getString("balance"));
+                    adpter = new WalletIncomeReclerViewAdpter(getActivity(), list);
+                    wallet_incomerv.setAdapter(adpter);
+                    adpter.notifyDataSetChanged();
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
+
+
             }
 
             @Override

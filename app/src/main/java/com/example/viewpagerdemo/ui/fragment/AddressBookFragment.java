@@ -3,6 +3,7 @@ package com.example.viewpagerdemo.ui.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -28,6 +29,7 @@ import com.example.viewpagerdemo.ui.jlfragmenwork.city.CityAdapter;
 import com.example.viewpagerdemo.ui.jlfragmenwork.city.CityData;
 import com.example.viewpagerdemo.ui.jlfragmenwork.city.CityItem;
 import com.example.viewpagerdemo.ui.jlfragmenwork.city.ContactItemInterface;
+import com.example.viewpagerdemo.ui.jlfragmenwork.util.DD;
 import com.example.viewpagerdemo.ui.jlfragmenwork.util.TS;
 import com.example.viewpagerdemo.ui.sarchcity.ContactListViewImpl;
 import com.xingkesi.foodapp.R;
@@ -86,24 +88,22 @@ public class AddressBookFragment extends JLBaseFragment implements TextWatcher, 
     @Override
     public int setViewLayout() {
         return R.layout.citylist;
+
     }
 
 
     @Override
     public void onResume() {
         super.onResume();
+        DD.v("同学录-------------onResume--------------");
         //登录状态
-        //登录状态
-        if (MyApplication.getInstan().getUser() != null && MyApplication.getInstan().getUser().getData().getThinksId() != null) {
-            noLoa.setVisibility(View.GONE);
-        } else {
-            noLoa.setVisibility(View.VISIBLE);
-        }
-
         if (MyApplication.getInstan().getUser() != null &&
                 MyApplication.getInstan().getUser().getData().getThinksId() != null) {
+            noLoa.setVisibility(View.GONE);
             getFrd();
-            getNewNum();
+          //  getNewNum();
+        } else {
+            noLoa.setVisibility(View.VISIBLE);
         }
     }
 
@@ -114,6 +114,7 @@ public class AddressBookFragment extends JLBaseFragment implements TextWatcher, 
             //可见时加载数据相当于Fragment的onResume
             if (MyApplication.getInstan().getUser() != null &&
                     MyApplication.getInstan().getUser().getData().getThinksId() != null) {
+                DD.v("同学录-------------setUserVisibleHint--------------");
                 getFrd();
                 getNewNum();
             }
@@ -153,7 +154,8 @@ public class AddressBookFragment extends JLBaseFragment implements TextWatcher, 
     @Override
     public void InitObject() {
         bookList = new ArrayList<>();
-        iv_back.setImageResource(R.drawable.tianjia);
+        iv_back.setImageResource(R.drawable.addbookleft);
+        iv_back.setVisibility(View.VISIBLE);
         tv_title.setText("通讯录");
 
         //登录状态
@@ -161,15 +163,11 @@ public class AddressBookFragment extends JLBaseFragment implements TextWatcher, 
             tv_title.setTextColor(getResources().getColor(R.color.waiter));
             iv_back.setVisibility(View.VISIBLE);
             noLoa.setVisibility(View.GONE);
-            iv_right_image.setVisibility(View.VISIBLE);
             noLoa.setVisibility(View.GONE);
 
-        } else {
-            noLoa.setVisibility(View.VISIBLE);
-            iv_back.setVisibility(View.GONE);
-            iv_right_image.setVisibility(View.GONE);
         }
-
+        iv_right_image.setVisibility(View.VISIBLE);
+        iv_right_image.setImageResource(R.drawable.addbookright);
         filterList = new ArrayList<>();
         mContext = getActivity();
         list = new ArrayList<>();
@@ -206,21 +204,14 @@ public class AddressBookFragment extends JLBaseFragment implements TextWatcher, 
             }
         });
 
-      /*  _add_log.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.putExtra("tag", "finsh");
-                intent.setClass(getActivity(), LoginActivity.class);
-                startActivity(intent);
-            }
-        });*/
+
 
         searchBox.addTextChangedListener(this);
         //登录按钮
          _add_log.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent = new Intent();
                 intent.putExtra("tag", "finsh");
                 intent.setClass(getActivity(), LoginActivity.class);
@@ -236,7 +227,7 @@ public class AddressBookFragment extends JLBaseFragment implements TextWatcher, 
                         ) {
                     Intent it = new Intent(getActivity(), ShenQFrendMainActivity.class);
                     it.putExtra("list", (Serializable) list);
-                    startActivity(it);
+                    startActivityForResult(it,101);
                 }
             }
         });
@@ -250,6 +241,26 @@ public class AddressBookFragment extends JLBaseFragment implements TextWatcher, 
                 }
             }
         });
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (resultCode){
+            case 101://好友表数量
+
+                Bundle bd=data.getExtras();
+                String num=bd.getString("num");
+                if(Integer.parseInt(num) >0) {
+                    tv_left_text_num.setText(num);
+                }else{
+                    tv_left_text_num.setVisibility(View.GONE);
+
+                }
+                break;
+
+        }
     }
 
     public void getFrd() {

@@ -26,18 +26,30 @@ import android.os.Message;
 import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.support.v7.graphics.Palette;
+import android.text.Editable;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.alibaba.mobileim.YWChannel;
+import com.alibaba.mobileim.channel.event.IWxCallback;
+import com.alibaba.mobileim.channel.util.YWLog;
+import com.alibaba.mobileim.login.YWLoginCode;
+import com.alibaba.mobileim.utility.IMPrefsTools;
 import com.example.viewpagerdemo.ui.MyApplication;
 import com.example.viewpagerdemo.ui.Contantor;
+import com.example.viewpagerdemo.ui.activity.MainActivity;
+import com.taobao.openimui.sample.LoginSampleHelper;
+import com.taobao.openimui.sample.NotificationInitSampleHelper;
+import com.taobao.openimui.sample.UserProfileSampleHelper;
 
 import net.tsz.afinal.FinalHttp;
 import net.tsz.afinal.http.AjaxCallBack;
@@ -607,26 +619,25 @@ public class Tools {
     /**
      * 初始化数据库查询参数
      */
-    public  void init(Context c) {
+    public void init(Context c) {
         // 实例化
-        MyAsyncQueryHandler  asyncQueryHandler = new MyAsyncQueryHandler(c.getContentResolver());
+        MyAsyncQueryHandler asyncQueryHandler = new MyAsyncQueryHandler(c.getContentResolver());
         Uri uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI; // 联系人Uri；
         // 查询的字段
-        String[] projection = { ContactsContract.CommonDataKinds.Phone._ID,
+        String[] projection = {ContactsContract.CommonDataKinds.Phone._ID,
                 ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
                 ContactsContract.CommonDataKinds.Phone.DATA1, "sort_key",
                 ContactsContract.CommonDataKinds.Phone.CONTACT_ID,
                 ContactsContract.CommonDataKinds.Phone.PHOTO_ID,
-                ContactsContract.CommonDataKinds.Phone.LOOKUP_KEY };
+                ContactsContract.CommonDataKinds.Phone.LOOKUP_KEY};
         // 按照sort_key升序查詢
         asyncQueryHandler.startQuery(0, null, uri, projection, null, null,
                 "sort_key COLLATE LOCALIZED asc");
 
     }
+
     /**
-     *
      * @author Administrator
-     *
      */
     private class MyAsyncQueryHandler extends AsyncQueryHandler {
 
@@ -637,9 +648,9 @@ public class Tools {
         @Override
         protected void onQueryComplete(int token, Object cookie, Cursor cursor) {
             if (cursor != null && cursor.getCount() > 0) {
-                HashMap  contactIdMap = new HashMap<Integer, ContactBean>();
-                ArrayList    list = new ArrayList<>();
-                StringBuffer sb=new StringBuffer();
+                HashMap contactIdMap = new HashMap<Integer, ContactBean>();
+                ArrayList list = new ArrayList<>();
+                StringBuffer sb = new StringBuffer();
                 cursor.moveToFirst(); // 游标移动到第一项
                 for (int i = 0; i < cursor.getCount(); i++) {
                     cursor.moveToPosition(i);
@@ -654,16 +665,16 @@ public class Tools {
                         // 无操作
                     } else {
                         // 创建联系人对象
-                       // ContactBean contact = new ContactBean();
+                        // ContactBean contact = new ContactBean();
                         //contact.setDesplayName(name);
-                       // contact.setPhoneNum(number);
-                            sb.append(name+":"+number+";");
-                       // contact.setSortKey(sortKey);
-                       // contact.setPhotoId(photoId);
-                       // contact.setLookUpKey(lookUpKey);
-                       // list.add(contact);
+                        // contact.setPhoneNum(number);
+                        sb.append(name + ":" + number + ";");
+                        // contact.setSortKey(sortKey);
+                        // contact.setPhotoId(photoId);
+                        // contact.setLookUpKey(lookUpKey);
+                        // list.add(contact);
 
-                       // contactIdMap.put(contactId, contact);
+                        // contactIdMap.put(contactId, contact);
                     }
                 }
                 TestContact(sb.toString());
@@ -676,17 +687,17 @@ public class Tools {
 
 
     //    /查询所有联系人的姓名，电话，邮箱
-    public  void TestContact(String sb) {
-        AjaxParams ap =new AjaxParams();
-        ap.put("userId", MyApplication.getInstan().getUser().getData().getId()+"");
-        ap.put("friends",sb);
+    public void TestContact(String sb) {
+        AjaxParams ap = new AjaxParams();
+        ap.put("userId", MyApplication.getInstan().getUser().getData().getId() + "");
+        ap.put("friends", sb);
         String url = Contantor.UpdaeFriend;
-        DD.w("上传s:"+url+"?"+ap.toString());
+        DD.w("上传s:" + url + "?" + ap.toString());
         new FinalHttp().post(url, ap, new AjaxCallBack<String>() {
             @Override
             public void onSuccess(String s) {
                 super.onSuccess(s);
-                DD.w("上传好哟s:"+s);
+                DD.w("上传好哟s:" + s);
             }
 
             @Override
@@ -695,5 +706,8 @@ public class Tools {
             }
         });
     }
+
+
+
 
 }
